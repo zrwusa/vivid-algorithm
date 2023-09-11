@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24">
+    <circle cx="5.5" cy="5.6" r="4.5" fill="none" stroke="#467487" stroke-miterlimit="10" stroke-width="2"
+            class="colorStroke467487 svgStroke"/>
+    <circle cx="5.5" cy="5.6" r="1.5" fill="#908ec3" class="color908EC3 svgShape"/>
+    <path fill="none" stroke="#467487" stroke-miterlimit="10" stroke-width="2" d="M13.3 1.1h9v9h-9z"
+          class="colorStroke467487 svgStroke"/>
+    <path fill="#fbcf4a" d="M16.3 4.1h3v3h-3z" class="colorFBCF4A svgShape"/>
+    <circle cx="30.2" cy="5.6" r="4.5" fill="none" stroke="#467487" stroke-miterlimit="10" stroke-width="2"
+            class="colorStroke467487 svgStroke"/>
+    <circle cx="30.2" cy="5.6" r="1.5" fill="#3bb3c0" class="color3BB3C0 svgShape"/>
+    <path fill="none" stroke="#467487" stroke-miterlimit="10" stroke-width="2" d="M38 1.1h9v9h-9z"
+          class="colorStroke467487 svgStroke"/>
+    <path fill="#f475b1" d="M41 4.1h3v3h-3z" class="colorF475B1 svgShape"/>
+    <circle cx="42.5" cy="18.9" r="4.5" fill="none" stroke="#467487" stroke-miterlimit="10" stroke-width="2"
+            class="colorStroke467487 svgStroke"/>
+    <circle cx="42.5" cy="18.9" r="1.5" fill="#fbcf4a" class="colorFBCF4A svgShape"/>
+    <path fill="none" stroke="#467487" stroke-miterlimit="10" stroke-width="2" d="M25.7 14.4h9v9h-9z"
+          class="colorStroke467487 svgStroke"/>
+    <path fill="#908ec3" d="M28.7 17.4h3v3h-3z" class="color908EC3 svgShape"/>
+    <circle cx="17.8" cy="18.9" r="4.5" fill="none" stroke="#467487" stroke-miterlimit="10" stroke-width="2"
+            class="colorStroke467487 svgStroke"/>
+    <circle cx="17.8" cy="18.9" r="1.5" fill="#d1dee0" class="colorD1DEE0 svgShape"/>
+    <path fill="none" stroke="#467487" stroke-miterlimit="10" stroke-width="2" d="M1 14.4h9v9H1z"
+          class="colorStroke467487 svgStroke"/>
+    <path fill="#2daacd" d="M4 17.4h3v3H4z" class="color2DAACD svgShape"/>
+    <path fill="none" stroke="#467487" stroke-miterlimit="10" stroke-width="2"
+          d="M24 37v2.9M10.1 31.9l2.5-1.4L24 37l11.4-6.5 2.5 1.4" class="colorStroke467487 svgStroke"/>
+    <circle cx="24" cy="43.4" r="3.5" fill="none" stroke="#908EC3" stroke-miterlimit="10" stroke-width="2"
+            class="colorStroke908EC3 svgStroke"/>
+    <circle cx="40.9" cy="33.7" r="3.5" fill="none" stroke="#3BB3C0" stroke-miterlimit="10" stroke-width="2"
+            class="colorStroke3BB3C0 svgStroke"/>
+    <circle cx="7.1" cy="33.7" r="3.5" fill="none" stroke="#FBCF4A" stroke-miterlimit="10" stroke-width="2"
+            class="colorStrokeFBCF4A svgStroke"/>
+</svg>

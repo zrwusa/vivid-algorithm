@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="24" height="24">
+    <polyline fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+              stroke-width="2" points="28.3 24.6 32 20.8 43.3 32.2 32 43.5 20.7 32.2 24.3 28.6"/>
+    <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+          stroke-width="2"
+          d="M43.3 32.2h7.9c2.2 0 4-1.8 4-4V25M20.7 32.2h-7.9c-2.2 0-4 1.8-4 4v2.5M32 43.5V54c0 2.2 1.8 4 4 4h6.1M32 20.8V10.3c0-2.2-1.8-4-4-4h-6.1"
+          class="colorStroke000 svgStroke"/>
+    <circle cx="16.5" cy="6.4" r="5.4" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round"
+            stroke-miterlimit="10" stroke-width="2" class="colorStroke000 svgStroke"/>
+    <circle cx="8.7" cy="44.4" r="5.4" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round"
+            stroke-miterlimit="10" stroke-width="2" class="colorStroke000 svgStroke"/>
+    <circle cx="47.6" cy="57.6" r="5.4" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round"
+            stroke-miterlimit="10" stroke-width="2" class="colorStroke000 svgStroke"/>
+    <circle cx="55.3" cy="19.7" r="5.4" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round"
+            stroke-miterlimit="10" stroke-width="2" class="colorStroke000 svgStroke"/>
+</svg>
