@@ -53,7 +53,7 @@ export const TreePage = () => {
 
   return <div style={{width: '100%'}}>
     <AlgorithmPanel algorithm={testBinaryTree} testCase={testBinaryTreeCase2} buttonLabel={'Test BinaryTree'}
-                    svgHeight={800} svgWidth={600}/>
+                    svgWidth={600} svgHeight={400}/>
     <AlgorithmPanel algorithm={testBST} testCase={testBSTCase1} buttonLabel={'Test BST'}/>
     <AlgorithmPanel algorithm={testAVLTree} testCase={testAVLCase1} buttonLabel={'Test AVL'}/>
     <AlgorithmPanel algorithm={testTreeMultiset} testCase={testBSTCase1} buttonLabel={'Test TreeMultiset'}/>

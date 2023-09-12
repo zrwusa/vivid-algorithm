@@ -1507,6 +1507,13 @@ damerau-levenshtein@^1.0.7:
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz#b43d286ccbd36bc5b2f7ed41caf2d0aba1f8a6e7"
   integrity sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==
 
+data-structure-typed@^1.21.2:
+  version "1.21.2"
+  resolved "https://registry.yarnpkg.com/data-structure-typed/-/data-structure-typed-1.21.2.tgz#e6ae11efa9c6badb67fbbdcc520bbcbd95eaa9e1"
+  integrity sha512-MW9hr60Ubl39DGDwK+EhHed9IjJnQJ8vwLgle4fk9w3K3AJnCCSFa7H6phkDaUhy7ONg4PbEFeuEu+ixNLbKtw==
+  dependencies:
+    zod "^3.22.2"
+
 data-uri-to-buffer@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-3.0.1.tgz#594b8973938c5bc2c33046535785341abc4f3636"

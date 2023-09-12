@@ -32,11 +32,11 @@ import {VerticalNavItemsType} from '../../layouts/types'
 
 const navigation = (): VerticalNavItemsType => {
   return [
-    // {
-    //   title: 'Dashboard',
-    //   icon: HomeOutline,
-    //   path: '/'
-    // },
+    {
+      title: 'Tree',
+      icon: TreeIcon,
+      path: '/'
+    },
     // {
     //   title: 'Account Settings',
     //   icon: AccountCogOutline,
@@ -45,11 +45,11 @@ const navigation = (): VerticalNavItemsType => {
     // {
     //   sectionTitle: 'Pages'
     // },
-    {
-      title: 'Tree',
-      icon: TreeIcon,
-      path: '/algorithm/tree',
-    },
+    // {
+    //   title: 'Tree',
+    //   icon: TreeIcon,
+    //   path: '/algorithm/tree',
+    // },
     {
       title: 'Graph',
       icon: GraphIcon,

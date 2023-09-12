@@ -34,7 +34,6 @@ export const AlgorithmPanel: React.FC<AlgorithmPanelProps> = ({
                                                                 svgBg,
                                                                 viewControl
                                                               }) => {
-
   const [values, setValues] = useState<{ [key in string]: unknown }>();
   const [loading, setLoading] = React.useState(false);
   const runClickHandler = async () => {
@@ -43,7 +42,6 @@ export const AlgorithmPanel: React.FC<AlgorithmPanelProps> = ({
     console.log('Result : ', result);
     setLoading(false);
   };
-
   const [svgWidth, setSvgWith] = useState<string | number>(svgWidthProp ?? '100%');
   const [svgHeight, setSvgHeight] = useState<string | number>(svgHeightProp ?? 480);
 
@@ -86,10 +84,10 @@ export const AlgorithmPanel: React.FC<AlgorithmPanelProps> = ({
               {
                 values
                   ? <VividAlgorithm data={values}
-                                    svgHeight={svgHeight}
-                                    svgWidth={svgWidth}
                                     relatedNodeKey={relatedNodeKey}
                                     referenceData={referenceData}
+                                    svgHeight={svgHeight}
+                                    svgWidth={svgWidth}
                                     svgBg={svgBg}
                                     viewControl={viewControl}
                                     relatedRouteKey={relatedRouteKey}/>

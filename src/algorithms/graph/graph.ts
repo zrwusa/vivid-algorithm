@@ -373,9 +373,9 @@ export function calcEquation(equations: [string, string][], values: number[], qu
   const ans: number[] = [];
   for (const query of queries) {
     const [q] = query;
-      if (q === 'get') {
-        graph.getVertex(1)
-      }
+    if (q === 'get') {
+      graph.getVertex(1)
+    }
   }
   return ans;
 }

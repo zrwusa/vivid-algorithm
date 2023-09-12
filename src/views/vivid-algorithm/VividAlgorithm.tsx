@@ -36,7 +36,7 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
     referenceData,
     relatedNodeKey,
     relatedRouteKey,
-    svgHeight = 300,
+    svgHeight = 480,
     svgWidth = '100%',
     svgBg,
     viewControl
