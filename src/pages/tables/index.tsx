@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
 
 // ** Demo Components Imports
-import TableBasic from 'src/views/tables/TableBasic'
-import TableDense from 'src/views/tables/TableDense'
-import TableSpanning from 'src/views/tables/TableSpanning'
-import TableCustomized from 'src/views/tables/TableCustomized'
-import TableCollapsible from 'src/views/tables/TableCollapsible'
-import TableStickyHeader from 'src/views/tables/TableStickyHeader'
+import TableBasic from '../../views/tables/TableBasic'
+import TableDense from '../../views/tables/TableDense'
+import TableSpanning from '../../views/tables/TableSpanning'
+import TableCustomized from '../../views/tables/TableCustomized'
+import TableCollapsible from '../../views/tables/TableCollapsible'
+import TableStickyHeader from '../../views/tables/TableStickyHeader'
 
 const MUITable = () => {
   return (

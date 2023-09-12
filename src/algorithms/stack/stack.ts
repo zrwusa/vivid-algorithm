@@ -1,7 +1,7 @@
 /* --- start stack --- */
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
 import {Stack} from 'data-structure-typed';
-import {wait} from '../../utils/utils';
+import {wait} from '../../utils';
 
 type HashKey = '(' | '{' | '[';
 // Matching Parenthesis problem

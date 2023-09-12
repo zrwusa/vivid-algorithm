@@ -3,7 +3,7 @@
 // Using Hash Tables TODO
 // 3. Longest Substring Without Repeating Characters
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
-import {wait} from '../../utils/utils';
+import {wait} from '../../utils';
 import {runAlgorithm} from '../helpers';
 import {groupAnagramsCase1, testIsAnagramCase1, testTopKFrequentCase9} from './cases';
 

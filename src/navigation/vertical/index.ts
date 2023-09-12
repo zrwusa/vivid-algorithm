@@ -16,13 +16,18 @@ import {
   GraphIcon,
   HashIcon,
   HeapIcon,
-  LinkedListIcon, MatrixIcon,
-  QueueIcon, SlidingWindowIcon, StackIcon,
-  TreeIcon, TwoPointersIcon, UncategorizedIcon
+  LinkedListIcon,
+  MatrixIcon,
+  QueueIcon,
+  SlidingWindowIcon,
+  StackIcon,
+  TreeIcon,
+  TwoPointersIcon,
+  UncategorizedIcon
 } from '../../components/icons';
 
 // ** Type import
-import { VerticalNavItemsType } from 'src/@core/layouts/types'
+import {VerticalNavItemsType} from '../../layouts/types'
 
 
 const navigation = (): VerticalNavItemsType => {

@@ -1,4 +1,4 @@
-import {bunnyConsole, timeStart} from '../utils/utils';
+import {bunnyConsole, timeStart} from '../utils';
 import {AnyFunction} from '../types';
 
 // Use Map:
@@ -191,6 +191,7 @@ export const runAlgorithm = async <T extends any[]>(algorithm: AnyFunction, outp
         output ? 'result -> ' : '',
         output === 'stringify' ? JSON.stringify(result) : output ? result : '',
         'time spent -> ', timeSpent.toFixed(2) + 'ms');
+
     return result;
 };
 
@@ -204,6 +205,7 @@ export const isOneDiffOrdered = (wordA: string, wordB: string) => {
             }
         }
     }
+
     return true;
 };
 
@@ -216,38 +218,9 @@ export const isOneDiffOrderedPieced = (wordA: string, wordB: string) => {
             }
         }
     }
+
     return false;
 };
-
-// export const genOneDiffOrderedPieced = (wordA: string) => {
-//     const result = [];
-//     let temp = [wordA];
-//
-//
-//     while (temp.length > 0) {
-//         const top = temp.shift();
-//         // const indexes = [Math.floor(Math.random() * wordA.length), Math.floor(Math.random() * wordA.length), Math.floor(Math.random() * wordA.length)];
-//         let indexes = top!
-//         for (let i = 0, len = indexes.length; i < len; i++) {
-//             const candidates = [Math.floor(Math.random() * 26), Math.floor(Math.random() * 26), Math.floor(Math.random() * 26)];
-//             for (let j of candidates) {
-//                 const piecedWord = top!.substr(0, i) + String.fromCharCode(97 + j) + top!.substr(i + 1);
-//                 result.push(piecedWord);
-//                 if (i === indexes.length - 1 && j === candidates.length - 1) {
-//                     temp.push(piecedWord);
-//                     break;
-//                 }
-//                 if (result.length > 99) {
-//                     return result;
-//                 }
-//             }
-//         }
-//
-//     }
-//
-//     return result;
-// }
-// runAlgorithm(genOneDiffOrderedPieced,true, 'hit').then()
 
 export const isOneDiff = (word1: string, word2: string) => {
     let diffCount = 0;
@@ -268,11 +241,12 @@ export const isOneDiff = (word1: string, word2: string) => {
             }
         }
     }
+
     return true;
 };
 
 
-const searchInSortedArray = function (nums: number[], target: number) {
+export const searchInSortedArray = function (nums: number[], target: number) {
     let left = 0, right = nums.length - 1;
     while (left <= right) {
         // const mid = Math.floor(left + right / 2);
@@ -288,8 +262,9 @@ const searchInSortedArray = function (nums: number[], target: number) {
             left = mid + 1;
         }
     }
+
     return -1;
-};
+}
 
 
 export type Direction = 'up' | 'down' | 'left' | 'right';
@@ -396,6 +371,7 @@ export const getRouteByParentsHash = (parents: { [key in string]: Coordinate }, 
             }
         }
     }
+
     return route.reverse();
 };
 
@@ -415,6 +391,7 @@ export const getDirectionVector = (from?: Coordinate, to?: Coordinate): { x: Hor
     if (to.y === from.y) {
         vertical = 0;
     }
+
     return {x: horizontal, y: vertical};
 };
 
@@ -423,6 +400,7 @@ export const nthSameBefore = (i: number, str: string) => {
     for (let s = 0; s < i + 1; s++) {
         if (str[s] === str[i]) count++;
     }
+
     return count;
 }
 
@@ -432,6 +410,7 @@ export const factorial = (n: number) => {
         total *= i;
         i++;
     }
+
     return total;
 }
 
@@ -449,7 +428,6 @@ export const getPointsByDelta = (src: Coordinate, dest: Coordinate, cutDelta?: n
     if (cutDelta === undefined) cutDelta = 0;
     const PI = Math.PI;
     let angle: number = Math.atan2((dest.y - src.y), (dest.x - src.x));
-    const theta: number = angle * (180 / Math.PI);
     const newSrc = new Coordinate(src.y, src.x);
     const newDest = new Coordinate(dest.y, dest.x);
     if (angle <= 0.5 * PI) {
@@ -467,5 +445,6 @@ export const getPointsByDelta = (src: Coordinate, dest: Coordinate, cutDelta?: n
 
     src = newSrc;
     dest = newDest;
+
     return {src, dest};
 };

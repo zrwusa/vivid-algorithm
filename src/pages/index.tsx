@@ -1,101 +1,88 @@
-// ** MUI Imports
-import Grid from '@mui/material/Grid'
+import * as React from 'react';
+import {useEffect, useState} from 'react';
 
-// ** Icons Imports
-import Poll from 'mdi-material-ui/Poll'
-import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
-import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
-import BriefcaseVariantOutline from 'mdi-material-ui/BriefcaseVariantOutline'
+import {
+  BFS, binaryTreeInorderTraversal, countSmallerBST, countSmallerCase1,
+  deleteLeaves, deleteLeavesCase1, DFS, ladderLengthCase1, ladderLengthDFS,
+  pathSumIII, pathSumIIICase5, runAllLongestCommonPrefix, runTestTrie, showBinaryTree,
+  testAVLCase1, testAVLTree, testBinaryTree, testBinaryTreeCase2, testBST,
+  testBST2, testBSTCase1, testSymmetricTree, testSymmetricTreeCase2, testTreeMultiset,
+  treeData, treeMaxDepth, trimABST, trimABSTCase2
+} from '../algorithms';
+import {BinaryTree} from 'data-structure-typed';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { AlgorithmPanel } from '../views/algorithm-panel';
 
-// ** Custom Components Imports
-import CardStatisticsVerticalComponent from 'src/@core/components/card-statistics/card-stats-vertical'
+export const TreePage = () => {
+  const binaryTree = new BinaryTree({});
+  binaryTree.fill([1, 2, 3]);
 
-// ** Styled Component Import
-import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
+  const [binaryTreeDataInput, setBinaryTreeDataInput] = useState('[-10,-10,-10,9,9,20,null,null,15,7,8,null,2,null,6,null,null,8,8,8]');
+  const [binaryTreeData, setBinaryTreeData] = useState('[-10,-10,-10,9,9,20,null,null,15,7,8,null,2,null,6,null,null,8,8,8]')
+  useEffect(() => {
+    try {
+      JSON.parse(binaryTreeDataInput);
+      setBinaryTreeData(binaryTreeDataInput);
+    } catch (e) {
+      console.log(e, 'Invalid input binary tree nodes')
+    }
+  }, [binaryTreeDataInput]);
 
-// ** Demo Components Imports
-import Table from 'src/views/dashboard/Table'
-import Trophy from 'src/views/dashboard/Trophy'
-import TotalEarning from 'src/views/dashboard/TotalEarning'
-import StatisticsCard from 'src/views/dashboard/StatisticsCard'
-import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
-import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
-import SalesByCountries from 'src/views/dashboard/SalesByCountries'
+  return <div style={{width: '100%'}}>
+    <AlgorithmPanel algorithm={testBinaryTree} testCase={testBinaryTreeCase2} buttonLabel={'Test BinaryTree'}
+                    svgHeight={800} svgWidth={600}/>
+    <AlgorithmPanel algorithm={testBST} testCase={testBSTCase1} buttonLabel={'Test BST'}/>
+    <AlgorithmPanel algorithm={testAVLTree} testCase={testAVLCase1} buttonLabel={'Test AVL'}/>
+    <AlgorithmPanel algorithm={testTreeMultiset} testCase={testBSTCase1} buttonLabel={'Test TreeMultiset'}/>
 
-const Dashboard = () => {
-  return (
-    <ApexChartWrapper>
-      <Grid container spacing={6}>
-        <Grid item xs={12} md={4}>
-          <Trophy />
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <StatisticsCard />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <WeeklyOverview />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <TotalEarning />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Grid container spacing={6}>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='$25.6k'
-                icon={<Poll />}
-                color='success'
-                trendNumber='+42%'
-                title='Total Profit'
-                subtitle='Weekly Profit'
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='$78'
-                title='Refunds'
-                trend='negative'
-                color='secondary'
-                trendNumber='-15%'
-                subtitle='Past Month'
-                icon={<CurrencyUsd />}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='862'
-                trend='negative'
-                trendNumber='-18%'
-                title='New Project'
-                subtitle='Yearly Project'
-                icon={<BriefcaseVariantOutline />}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='15'
-                color='warning'
-                trend='negative'
-                trendNumber='-18%'
-                subtitle='Last Week'
-                title='Sales Queries'
-                icon={<HelpCircleOutline />}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <SalesByCountries />
-        </Grid>
-        <Grid item xs={12} md={12} lg={8}>
-          <DepositWithdraw />
-        </Grid>
-        <Grid item xs={12}>
-          <Table />
-        </Grid>
-      </Grid>
-    </ApexChartWrapper>
-  )
+    <AlgorithmPanel algorithm={testBST2} testCase={[[3, 4, 2, 1, 2, 3, 4]]} buttonLabel={'Test BST II'}/>
+    <AlgorithmPanel algorithm={binaryTreeInorderTraversal} testCase={[binaryTree.root]}
+                    buttonLabel={'Binary Tree Inorder Traversal'}
+                    referenceData={binaryTree.root} relatedNodeKey="node"/>
+
+
+    <AlgorithmPanel algorithm={showBinaryTree} testCase={[binaryTreeData ? JSON.parse(binaryTreeData) : []]}
+                    buttonLabel={'Show BinaryTree'}><TextField fullWidth label="Array of Node Values"
+                                                               value={binaryTreeDataInput}
+                                                               onChange={(e) => {
+                                                                 setBinaryTreeDataInput(e.target.value);
+                                                               }}/></AlgorithmPanel>
+
+
+    <AlgorithmPanel algorithm={trimABST} testCase={trimABSTCase2} buttonLabel={'Trim a BST'}/>
+    <AlgorithmPanel algorithm={treeMaxDepth} testCase={[treeData]} buttonLabel={'Max Depth'}/>
+
+    <AlgorithmPanel algorithm={countSmallerBST} testCase={countSmallerCase1}
+                    buttonLabel={'Count Smaller BST'}/>
+    <AlgorithmPanel algorithm={DFS} testCase={[treeData, 'PreOrder']} buttonLabel={'DFS PreOrder'}
+                    referenceData={treeData}
+                    relatedNodeKey="nodeNeedPrint"/>
+    <AlgorithmPanel algorithm={DFS} testCase={[treeData, 'InOrder']} buttonLabel={'DFS InOrder'}
+                    referenceData={treeData}
+                    relatedNodeKey="nodeNeedPrint"/>
+    <AlgorithmPanel algorithm={DFS} testCase={[treeData, 'PostOrder']} buttonLabel={'DFS PostOrder'}
+                    referenceData={treeData}
+                    relatedNodeKey="nodeNeedPrint"/>
+    <AlgorithmPanel algorithm={BFS} testCase={[treeData]} buttonLabel={'BFS'} referenceData={treeData}
+                    relatedNodeKey="node"/>
+
+
+    <AlgorithmPanel algorithm={deleteLeaves} testCase={deleteLeavesCase1}
+                    buttonLabel={'Delete Leaves With a Given Value'}/>
+    <AlgorithmPanel algorithm={ladderLengthDFS} testCase={ladderLengthCase1} buttonLabel={'Ladder Length'}/>
+    <AlgorithmPanel algorithm={pathSumIII} testCase={pathSumIIICase5} buttonLabel={'Path Sum III'}/>
+    <AlgorithmPanel algorithm={testSymmetricTree} testCase={testSymmetricTreeCase2}
+                    buttonLabel={'Symmetric Tree'}/>
+    <Button onClick={() => {
+      runTestTrie().then();
+    }}>Test Trie
+    </Button>
+    <Button onClick={() => {
+      runAllLongestCommonPrefix().then();
+    }}>Longest Common Prefix - Trie
+    </Button>
+  </div>
 }
 
-export default Dashboard
+export default TreePage

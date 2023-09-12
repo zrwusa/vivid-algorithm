@@ -16,7 +16,7 @@ import ChevronDown from 'mdi-material-ui/ChevronDown'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 
 // ** Types
-import { ThemeColor } from 'src/@core/layouts/types'
+import { ThemeColor } from '../../layouts/types'
 
 interface DataType {
   title: string

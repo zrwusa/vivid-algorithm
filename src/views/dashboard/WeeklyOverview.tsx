@@ -15,7 +15,7 @@ import DotsVertical from 'mdi-material-ui/DotsVertical'
 import { ApexOptions } from 'apexcharts'
 
 // ** Custom Components Imports
-import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import ReactApexcharts from '../../components/react-apexcharts'
 
 const WeeklyOverview = () => {
   // ** Hook

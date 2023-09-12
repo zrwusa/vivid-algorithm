@@ -14,7 +14,8 @@ import Menu from 'mdi-material-ui/Menu'
 // import Magnify from 'mdi-material-ui/Magnify'
 
 // ** Type Import
-import { Settings } from 'src/@core/context/settingsContext'
+import { Settings } from '../../../context/settingsContext'
+import Link from '@mui/material/Link';
 
 // ** Components
 // import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
@@ -61,9 +62,29 @@ const AppBarContent = (props: Props) => {
         {/*  }}*/}
         {/*/>*/}
       </Box>
+
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
         {hiddenSm ? null : (
-          <></>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
+            <Link
+              target='_blank'
+              href='https://github.com/zrwusa/data-structure-typed/blob/main/LICENSE'
+            >
+              MIT License
+            </Link>
+            <Link target='_blank' href='https://github.com/zrwusa/data-structure-typed'>
+              Data Structure Typed
+            </Link>
+            <Link target='_blank' href='https://github.com/zrwusa/vivid-algorithm'>
+              Github
+            </Link>
+            <Link
+              target='_blank'
+              href='https://data-structure-typed-docs.vercel.app'
+            >
+              Docs
+            </Link>
+          </Box>
 
           // <Box
           //   component='a'

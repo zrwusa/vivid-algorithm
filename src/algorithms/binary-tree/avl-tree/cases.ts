@@ -1,4 +1,4 @@
-import {wait, WaitManager} from '../../../utils/utils';
+import {wait, WaitManager} from '../../../utils';
 import {AVLTree} from 'data-structure-typed';
 
 export const testAVLTreeCase1 = [];

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {AlgorithmPanel} from '../../../components';
+
 import {
   cutOffTree,
   cutOffTreeCase8,
@@ -11,6 +11,7 @@ import {
   testGraphs
 } from '../../../algorithms';
 import TextField from '@mui/material/TextField';
+import { AlgorithmPanel } from '../../../views/algorithm-panel';
 
 export const GraphScreen = () => {
   const [cutOffTreeCaseInput, setCutOffTreeCaseInput] = useState(JSON.stringify(cutOffTreeCase8[0]));

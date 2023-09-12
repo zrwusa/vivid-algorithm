@@ -2,7 +2,7 @@
 import { PaletteMode } from '@mui/material'
 
 // ** Types
-import { ContentWidth } from 'src/@core/layouts/types'
+import { ContentWidth } from '../layouts/types'
 
 type ThemeConfig = {
   mode: PaletteMode
@@ -17,7 +17,7 @@ type ThemeConfig = {
 
 const themeConfig: ThemeConfig = {
   // ** Layout Configs
-  templateName: 'DS Typed' /* App Name */,
+  templateName: 'Vivid Algorithm' /* App Name */,
   mode: 'light' /* light | dark */,
   contentWidth: 'boxed' /* full | boxed */,
 

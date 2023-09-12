@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AlgorithmPanel} from '../../../components';
+import { AlgorithmPanel } from '../../../views/algorithm-panel';
 import {canPartition, letterCombinations, runAllWordBreakII, runCombinationPermutation} from '../../../algorithms';
 import Button from '@mui/material/Button';
 import {canPartitionCase3} from '../../../algorithms/dp/cases';

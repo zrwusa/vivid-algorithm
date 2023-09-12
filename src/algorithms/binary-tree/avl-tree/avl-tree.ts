@@ -1,7 +1,7 @@
 import {AVLTree, AVLTreeNode, TreeMultiset, TreeMultisetNode} from 'data-structure-typed';
 import {runAlgorithm} from '../../helpers';
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
-import {wait, WaitManager} from '../../../utils/utils';
+import {wait, WaitManager} from '../../../utils';
 import {testBSTCase1} from '../bst';
 import {testAVLCase6} from './cases';
 import _ from 'lodash';

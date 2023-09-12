@@ -12,17 +12,17 @@ import { CacheProvider } from '@emotion/react'
 import type { EmotionCache } from '@emotion/cache'
 
 // ** Config Imports
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from '../configs/themeConfig'
 
 // ** Component Imports
-import UserLayout from 'src/layouts/UserLayout'
-import ThemeComponent from 'src/@core/theme/ThemeComponent'
+import UserLayout from '../layouts/UserLayout'
+import ThemeComponent from '../theme/ThemeComponent'
 
 // ** Contexts
-import { SettingsConsumer, SettingsProvider } from 'src/@core/context/settingsContext'
+import { SettingsConsumer, SettingsProvider } from '../context/settingsContext'
 
 // ** Utils Imports
-import { createEmotionCache } from 'src/@core/utils/create-emotion-cache'
+import { createEmotionCache } from '../utils/create-emotion-cache'
 
 // ** React Perfect Scrollbar Style
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -61,12 +61,12 @@ const App = (props: ExtendedAppProps) => {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>{`${themeConfig.templateName} - Material Design React Admin Template`}</title>
+        <title>{`${themeConfig.templateName}`}</title>
         <meta
           name='description'
-          content={`${themeConfig.templateName} – Material Design React Admin Dashboard Template – is the most developer friendly & highly customizable Admin Dashboard Template based on MUI v5.`}
+          content={`${themeConfig.templateName}`}
         />
-        <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
+        <meta name='keywords' content='' />
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
 

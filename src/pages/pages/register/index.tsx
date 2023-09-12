@@ -30,13 +30,13 @@ import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
 // ** Configs
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from '../../../configs/themeConfig'
 
 // ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
+import BlankLayout from '../../../layouts/BlankLayout'
 
 // ** Demo Imports
-import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
+import FooterIllustrationsV1 from '../../../views/pages/auth/FooterIllustration'
 
 interface State {
   password: string

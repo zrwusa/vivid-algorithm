@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AlgorithmPanel} from '../../../components';
+import { AlgorithmPanel } from '../../../views/algorithm-panel';
 import {runAllTestPriorityQueue, testHeap} from '../../../algorithms';
 
 export const HeapPriorityQueueScreen = () => {

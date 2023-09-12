@@ -1,5 +1,5 @@
 import {BinaryTree} from 'data-structure-typed';
-import {wait, WaitManager} from '../../../utils/utils';
+import {wait, WaitManager} from '../../../utils';
 
 export const testBinaryTreeCase1: [] = [];
 export const testBinaryTreeCase2: [(number | null)[]] = [[1, 2, 3, 4, 5, 6, 7, null, 8, 9]];

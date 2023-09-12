@@ -1,7 +1,7 @@
 import {runAlgorithm} from '../helpers';
 import {minCostTicketsCase1, numDistinctCase3} from './cases';
 import {TProxyHandler} from '@qiwi/deep-proxy';
-import {WaitManager} from '../../utils/utils';
+import {WaitManager} from '../../utils';
 
 const waitManager = new WaitManager(2);
 const {time1} = waitManager;
