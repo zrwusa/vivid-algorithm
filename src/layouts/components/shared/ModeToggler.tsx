@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { PaletteMode } from '@mui/material'
+import {PaletteMode} from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 
 // ** Icons Imports
@@ -7,7 +7,7 @@ import WeatherNight from 'mdi-material-ui/WeatherNight'
 import WeatherSunny from 'mdi-material-ui/WeatherSunny'
 
 // ** Type Import
-import { Settings } from '../../../context/settingsContext'
+import {Settings} from '../../../context/settingsContext'
 
 interface Props {
   settings: Settings
@@ -16,10 +16,10 @@ interface Props {
 
 const ModeToggler = (props: Props) => {
   // ** Props
-  const { settings, saveSettings } = props
+  const {settings, saveSettings} = props
 
   const handleModeChange = (mode: PaletteMode) => {
-    saveSettings({ ...settings, mode })
+    saveSettings({...settings, mode})
   }
 
   const handleModeToggle = () => {
@@ -31,8 +31,8 @@ const ModeToggler = (props: Props) => {
   }
 
   return (
-    <IconButton color='inherit' aria-haspopup='true' onClick={handleModeToggle}>
-      {settings.mode === 'dark' ? <WeatherSunny /> : <WeatherNight />}
+    <IconButton color="inherit" aria-haspopup="true" onClick={handleModeToggle}>
+      {settings.mode === 'dark' ? <WeatherSunny/> : <WeatherNight/>}
     </IconButton>
   )
 }

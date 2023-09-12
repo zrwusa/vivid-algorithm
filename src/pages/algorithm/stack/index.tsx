@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState} from 'react';
-import { AlgorithmPanel } from '../../../views/algorithm-panel';
+import {AlgorithmPanel} from '../../../views/algorithm-panel';
 import {isValidParenthesis} from '../../../algorithms';
 import TextField from '@mui/material/TextField';
 

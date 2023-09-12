@@ -8,7 +8,7 @@ import {
   runTopKFrequentHash
 } from '../../../algorithms';
 import Button from '@mui/material/Button';
-import { AlgorithmPanel } from '../../../views/algorithm-panel';
+import {AlgorithmPanel} from '../../../views/algorithm-panel';
 
 export const HashScreen = () => {
   const [lengthOfLongestSubstringValue, setLengthOfLongestSubstringValue] = useState('');

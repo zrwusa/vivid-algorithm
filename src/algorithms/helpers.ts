@@ -178,240 +178,240 @@ import {AnyFunction} from '../types';
 // KD Tree	            Θ(log(n))	Θ(log(n))	Θ(log(n))	Θ(log(n))	O(n)	    O(n)	    O(n)	    O(n)	    O(n)
 
 export const runAlgorithm = async <T extends any[]>(algorithm: AnyFunction, output: boolean | 'stringify' = true, args?: T) => {
-    const startTime = timeStart();
-    let result: ReturnType<typeof algorithm>;
-    if (args) {
-        result = await algorithm(...args);
-    } else {
-        result = await algorithm();
-    }
+  const startTime = timeStart();
+  let result: ReturnType<typeof algorithm>;
+  if (args) {
+    result = await algorithm(...args);
+  } else {
+    result = await algorithm();
+  }
 
-    const timeSpent = (performance ? performance.now() : new Date().getTime()) - startTime;
-    bunnyConsole.log(algorithm.name,
-        output ? 'result -> ' : '',
-        output === 'stringify' ? JSON.stringify(result) : output ? result : '',
-        'time spent -> ', timeSpent.toFixed(2) + 'ms');
+  const timeSpent = (performance ? performance.now() : new Date().getTime()) - startTime;
+  bunnyConsole.log(algorithm.name,
+    output ? 'result -> ' : '',
+    output === 'stringify' ? JSON.stringify(result) : output ? result : '',
+    'time spent -> ', timeSpent.toFixed(2) + 'ms');
 
-    return result;
+  return result;
 };
 
 export const isOneDiffOrdered = (wordA: string, wordB: string) => {
-    let diffCount = 0;
-    for (let i = 0, len = wordA.length; i < len; i++) {
-        if (wordA[i] !== wordB[i]) {
-            diffCount++;
-            if (diffCount > 1) {
-                return false;
-            }
-        }
+  let diffCount = 0;
+  for (let i = 0, len = wordA.length; i < len; i++) {
+    if (wordA[i] !== wordB[i]) {
+      diffCount++;
+      if (diffCount > 1) {
+        return false;
+      }
     }
+  }
 
-    return true;
+  return true;
 };
 
 export const isOneDiffOrderedPieced = (wordA: string, wordB: string) => {
-    for (let i = 0, len = wordA.length; i < len; i++) {
-        for (let j = 0; j < 26; j++) {
-            const piecedWord = wordA.substr(0, i) + String.fromCharCode(97 + j) + wordA.substr(i + 1);
-            if (piecedWord === wordB) {
-                return true;
-            }
-        }
+  for (let i = 0, len = wordA.length; i < len; i++) {
+    for (let j = 0; j < 26; j++) {
+      const piecedWord = wordA.substr(0, i) + String.fromCharCode(97 + j) + wordA.substr(i + 1);
+      if (piecedWord === wordB) {
+        return true;
+      }
     }
+  }
 
-    return false;
+  return false;
 };
 
 export const isOneDiff = (word1: string, word2: string) => {
-    let diffCount = 0;
-    for (const c1 of word1) {
-        if (!word2.includes(c1)) {
-            diffCount++;
-            if (diffCount > 1) {
-                return false;
-            }
-        }
+  let diffCount = 0;
+  for (const c1 of word1) {
+    if (!word2.includes(c1)) {
+      diffCount++;
+      if (diffCount > 1) {
+        return false;
+      }
     }
-    diffCount = 0;
-    for (const c2 of word2) {
-        if (!word1.includes(c2)) {
-            diffCount++;
-            if (diffCount > 1) {
-                return false;
-            }
-        }
+  }
+  diffCount = 0;
+  for (const c2 of word2) {
+    if (!word1.includes(c2)) {
+      diffCount++;
+      if (diffCount > 1) {
+        return false;
+      }
     }
+  }
 
-    return true;
+  return true;
 };
 
 
 export const searchInSortedArray = function (nums: number[], target: number) {
-    let left = 0, right = nums.length - 1;
-    while (left <= right) {
-        // const mid = Math.floor(left + right / 2);
-        const mid = left + Math.floor((right - left) / 2);
-        const midEle = nums[mid];
-        const leftEle = nums[left];
+  let left = 0, right = nums.length - 1;
+  while (left <= right) {
+    // const mid = Math.floor(left + right / 2);
+    const mid = left + Math.floor((right - left) / 2);
+    const midEle = nums[mid];
+    const leftEle = nums[left];
 
-        if (target === midEle) return mid;
+    if (target === midEle) return mid;
 
-        if (target < leftEle) {
-            right = mid - 1;
-        } else {
-            left = mid + 1;
-        }
+    if (target < leftEle) {
+      right = mid - 1;
+    } else {
+      left = mid + 1;
     }
+  }
 
-    return -1;
+  return -1;
 }
 
 
 export type Direction = 'up' | 'down' | 'left' | 'right';
 
 export class Coordinate {
-    y: number;
-    x: number;
+  y: number;
+  x: number;
 
-    constructor(y: number, x: number) {
-        this.y = y;
-        this.x = x;
-    }
+  constructor(y: number, x: number) {
+    this.y = y;
+    this.x = x;
+  }
 }
 
 export const fourthQuadrantMove = (departure: Coordinate, direction: Direction, matrix: number[][], judgeDeadOrDeadCells?: ((destination: Coordinate) => boolean) | Coordinate[]) => {
-    let destinationX: number = departure.x, destinationY: number = departure.y;
-    switch (direction) {
-        case 'up':
-            destinationY = departure.y + 1;
-            break;
-        case 'right':
-            destinationX = departure.x + 1;
-            break;
-        case 'down':
-            destinationY = departure.y - 1;
-            break;
-        case 'left':
-            destinationX = departure.x - 1;
-            break;
-    }
-    const destination = {y: destinationY, x: destinationX};
+  let destinationX: number = departure.x, destinationY: number = departure.y;
+  switch (direction) {
+    case 'up':
+      destinationY = departure.y + 1;
+      break;
+    case 'right':
+      destinationX = departure.x + 1;
+      break;
+    case 'down':
+      destinationY = departure.y - 1;
+      break;
+    case 'left':
+      destinationX = departure.x - 1;
+      break;
+  }
+  const destination = {y: destinationY, x: destinationX};
 
-    if (matrix) {
-        if (destinationY < 0 || destinationY > matrix.length - 1 || destinationX < 0 || destinationX > matrix[destinationY].length - 1) {
-            return undefined;
+  if (matrix) {
+    if (destinationY < 0 || destinationY > matrix.length - 1 || destinationX < 0 || destinationX > matrix[destinationY].length - 1) {
+      return undefined;
+    }
+  }
+
+  if (judgeDeadOrDeadCells) {
+    if (judgeDeadOrDeadCells instanceof Function) {
+      if (judgeDeadOrDeadCells(destination)) {
+        return undefined;
+      }
+    } else {
+      for (const deadCell of judgeDeadOrDeadCells) {
+        if (destination.x === deadCell.x && destination.y === deadCell.y) {
+          return undefined;
         }
+      }
     }
+  }
 
-    if (judgeDeadOrDeadCells) {
-        if (judgeDeadOrDeadCells instanceof Function) {
-            if (judgeDeadOrDeadCells(destination)) {
-                return undefined;
-            }
-        } else {
-            for (const deadCell of judgeDeadOrDeadCells) {
-                if (destination.x === deadCell.x && destination.y === deadCell.y) {
-                    return undefined;
-                }
-            }
-        }
-    }
-
-    return destination;
+  return destination;
 };
 
 export type MatrixCell = [number, number]
 export const fourthQuadrantMoveByIndex = (departure: MatrixCell, direction: Direction, matrix?: Array<Array<number>>, judgeDeadOrDeadCells?: ((destination: MatrixCell) => boolean) | Array<MatrixCell>) => {
-    const directions = {
-        up: [-1, 0],
-        right: [0, 1],
-        down: [1, 0],
-        left: [0, -1]
-    };
+  const directions = {
+    up: [-1, 0],
+    right: [0, 1],
+    down: [1, 0],
+    left: [0, -1]
+  };
 
-    const newRow = departure[0] + directions[direction][0];
-    const newCol = departure[1] + directions[direction][1];
-    const destination: MatrixCell = [newRow, newCol];
+  const newRow = departure[0] + directions[direction][0];
+  const newCol = departure[1] + directions[direction][1];
+  const destination: MatrixCell = [newRow, newCol];
 
-    if (matrix) {
-        if (newRow < 0 || newRow > matrix.length - 1 || newCol < 0 || newCol > matrix[newRow].length - 1) {
-            return undefined;
-        }
+  if (matrix) {
+    if (newRow < 0 || newRow > matrix.length - 1 || newCol < 0 || newCol > matrix[newRow].length - 1) {
+      return undefined;
     }
+  }
 
 
-    if (judgeDeadOrDeadCells) {
-        if (judgeDeadOrDeadCells instanceof Function) {
-            if (judgeDeadOrDeadCells(destination)) {
-                return undefined;
-            }
-        } else {
-            for (const deadCell of judgeDeadOrDeadCells) {
-                if (newRow === deadCell[0] && newCol === deadCell[1]) {
-                    return undefined;
-                }
-            }
+  if (judgeDeadOrDeadCells) {
+    if (judgeDeadOrDeadCells instanceof Function) {
+      if (judgeDeadOrDeadCells(destination)) {
+        return undefined;
+      }
+    } else {
+      for (const deadCell of judgeDeadOrDeadCells) {
+        if (newRow === deadCell[0] && newCol === deadCell[1]) {
+          return undefined;
         }
+      }
     }
+  }
 
-    return destination;
+  return destination;
 };
 
 
 export const getRouteByParentsHash = (parents: { [key in string]: Coordinate }, leaf: Coordinate, hashFunction: (cell: Coordinate) => string) => {
-    const route: Coordinate[] = [leaf];
-    const value: Coordinate[] = [leaf];
-    while (value.length > 0) {
-        const cur = value.shift();
-        if (cur !== undefined) {
-            const curParent = parents[hashFunction(cur)];
-            if (curParent) {
-                value.push(curParent);
-                route.push(curParent);
-            }
-        }
+  const route: Coordinate[] = [leaf];
+  const value: Coordinate[] = [leaf];
+  while (value.length > 0) {
+    const cur = value.shift();
+    if (cur !== undefined) {
+      const curParent = parents[hashFunction(cur)];
+      if (curParent) {
+        value.push(curParent);
+        route.push(curParent);
+      }
     }
+  }
 
-    return route.reverse();
+  return route.reverse();
 };
 
 export type HorizontalDirection = -1 | 1 | 0;
 export type VerticalDirection = 1 | -1 | 0;
 export const getDirectionVector = (from?: Coordinate, to?: Coordinate): { x: HorizontalDirection, y: VerticalDirection } => {
-    if (!from || !to) {
-        return {x: 0, y: 0};
-    }
-    let horizontal: HorizontalDirection;
-    let vertical: VerticalDirection;
-    horizontal = to.x > from.x ? 1 : -1;
-    vertical = to.y > from.y ? 1 : -1;
-    if (to.x === from.x) {
-        horizontal = 0;
-    }
-    if (to.y === from.y) {
-        vertical = 0;
-    }
+  if (!from || !to) {
+    return {x: 0, y: 0};
+  }
+  let horizontal: HorizontalDirection;
+  let vertical: VerticalDirection;
+  horizontal = to.x > from.x ? 1 : -1;
+  vertical = to.y > from.y ? 1 : -1;
+  if (to.x === from.x) {
+    horizontal = 0;
+  }
+  if (to.y === from.y) {
+    vertical = 0;
+  }
 
-    return {x: horizontal, y: vertical};
+  return {x: horizontal, y: vertical};
 };
 
 export const nthSameBefore = (i: number, str: string) => {
-    let count = 0;
-    for (let s = 0; s < i + 1; s++) {
-        if (str[s] === str[i]) count++;
-    }
+  let count = 0;
+  for (let s = 0; s < i + 1; s++) {
+    if (str[s] === str[i]) count++;
+  }
 
-    return count;
+  return count;
 }
 
 export const factorial = (n: number) => {
-    let total = 1, i = 1;
-    while (i <= n) {
-        total *= i;
-        i++;
-    }
+  let total = 1, i = 1;
+  while (i <= n) {
+    total *= i;
+    i++;
+  }
 
-    return total;
+  return total;
 }
 
 /**
@@ -425,26 +425,26 @@ export const factorial = (n: number) => {
  * @returns The function `getPointsByDelta` returns an object with properties `src` and `dest`.
  */
 export const getPointsByDelta = (src: Coordinate, dest: Coordinate, cutDelta?: number) => {
-    if (cutDelta === undefined) cutDelta = 0;
-    const PI = Math.PI;
-    let angle: number = Math.atan2((dest.y - src.y), (dest.x - src.x));
-    const newSrc = new Coordinate(src.y, src.x);
-    const newDest = new Coordinate(dest.y, dest.x);
-    if (angle <= 0.5 * PI) {
-        newSrc.x = src.x + Math.cos(angle) * cutDelta;
-        newSrc.y = src.y + Math.sin(angle) * cutDelta;
-        newDest.x = dest.x - Math.cos(angle) * cutDelta;
-        newDest.y = dest.y - Math.sin(angle) * cutDelta;
-    } else if (angle > 0.5 * PI && angle <= PI) {
-        angle = PI - angle;
-        newSrc.x = src.x - Math.cos(angle) * cutDelta;
-        newSrc.y = src.y + Math.sin(angle) * cutDelta;
-        newDest.x = dest.x + Math.cos(angle) * cutDelta;
-        newDest.y = dest.y - Math.sin(angle) * cutDelta;
-    }
+  if (cutDelta === undefined) cutDelta = 0;
+  const PI = Math.PI;
+  let angle: number = Math.atan2((dest.y - src.y), (dest.x - src.x));
+  const newSrc = new Coordinate(src.y, src.x);
+  const newDest = new Coordinate(dest.y, dest.x);
+  if (angle <= 0.5 * PI) {
+    newSrc.x = src.x + Math.cos(angle) * cutDelta;
+    newSrc.y = src.y + Math.sin(angle) * cutDelta;
+    newDest.x = dest.x - Math.cos(angle) * cutDelta;
+    newDest.y = dest.y - Math.sin(angle) * cutDelta;
+  } else if (angle > 0.5 * PI && angle <= PI) {
+    angle = PI - angle;
+    newSrc.x = src.x - Math.cos(angle) * cutDelta;
+    newSrc.y = src.y + Math.sin(angle) * cutDelta;
+    newDest.x = dest.x + Math.cos(angle) * cutDelta;
+    newDest.y = dest.y - Math.sin(angle) * cutDelta;
+  }
 
-    src = newSrc;
-    dest = newDest;
+  src = newSrc;
+  dest = newDest;
 
-    return {src, dest};
+  return {src, dest};
 };

@@ -2,17 +2,39 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 
 import {
-  BFS, binaryTreeInorderTraversal, countSmallerBST, countSmallerCase1,
-  deleteLeaves, deleteLeavesCase1, DFS, ladderLengthCase1, ladderLengthDFS,
-  pathSumIII, pathSumIIICase5, runAllLongestCommonPrefix, runTestTrie, showBinaryTree,
-  testAVLCase1, testAVLTree, testBinaryTree, testBinaryTreeCase2, testBST,
-  testBST2, testBSTCase1, testSymmetricTree, testSymmetricTreeCase2, testTreeMultiset,
-  treeData, treeMaxDepth, trimABST, trimABSTCase2
+  BFS,
+  binaryTreeInorderTraversal,
+  countSmallerBST,
+  countSmallerCase1,
+  deleteLeaves,
+  deleteLeavesCase1,
+  DFS,
+  ladderLengthCase1,
+  ladderLengthDFS,
+  pathSumIII,
+  pathSumIIICase5,
+  runAllLongestCommonPrefix,
+  runTestTrie,
+  showBinaryTree,
+  testAVLCase1,
+  testAVLTree,
+  testBinaryTree,
+  testBinaryTreeCase2,
+  testBST,
+  testBST2,
+  testBSTCase1,
+  testSymmetricTree,
+  testSymmetricTreeCase2,
+  testTreeMultiset,
+  treeData,
+  treeMaxDepth,
+  trimABST,
+  trimABSTCase2
 } from '../algorithms';
 import {BinaryTree} from 'data-structure-typed';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { AlgorithmPanel } from '../views/algorithm-panel';
+import {AlgorithmPanel} from '../views/algorithm-panel';
 
 export const TreePage = () => {
   const binaryTree = new BinaryTree({});

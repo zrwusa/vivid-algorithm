@@ -1,8 +1,8 @@
 // ** MUI Imports
-import { Theme } from '@mui/material/styles'
+import {Theme} from '@mui/material/styles'
 
 // ** Util Import
-import { hexToRGBA } from '../../utils/hex-to-rgba'
+import {hexToRGBA} from '../../utils/hex-to-rgba'
 
 const Timeline = (theme: Theme) => {
   return {
@@ -55,25 +55,25 @@ const Timeline = (theme: Theme) => {
           boxShadow: `0 0 0 3px ${hexToRGBA(theme.palette.grey[400], 0.12)}`
         },
         outlinedPrimary: {
-          '& svg': { color: theme.palette.primary.main }
+          '& svg': {color: theme.palette.primary.main}
         },
         outlinedSecondary: {
-          '& svg': { color: theme.palette.secondary.main }
+          '& svg': {color: theme.palette.secondary.main}
         },
         outlinedSuccess: {
-          '& svg': { color: theme.palette.success.main }
+          '& svg': {color: theme.palette.success.main}
         },
         outlinedError: {
-          '& svg': { color: theme.palette.error.main }
+          '& svg': {color: theme.palette.error.main}
         },
         outlinedWarning: {
-          '& svg': { color: theme.palette.warning.main }
+          '& svg': {color: theme.palette.warning.main}
         },
         outlinedInfo: {
-          '& svg': { color: theme.palette.info.main }
+          '& svg': {color: theme.palette.info.main}
         },
         outlinedGrey: {
-          '& svg': { color: theme.palette.grey[500] }
+          '& svg': {color: theme.palette.grey[500]}
         }
       }
     }

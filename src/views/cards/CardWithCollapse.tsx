@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import {useState} from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -27,16 +27,16 @@ const CardWithCollapse = () => {
 
   return (
     <Card>
-      <CardMedia sx={{ height: '14.5625rem' }} image='/images/cards/paper-boat.png' />
+      <CardMedia sx={{height: '14.5625rem'}} image="/images/cards/paper-boat.png"/>
       <CardContent>
-        <Typography variant='h6' sx={{ marginBottom: 2 }}>
+        <Typography variant="h6" sx={{marginBottom: 2}}>
           Popular Uses Of The Internet
         </Typography>
-        <Typography variant='body2'>
+        <Typography variant="body2">
           Although cards can support multiple actions, UI controls, and an overflow menu.
         </Typography>
       </CardContent>
-      <CardActions className='card-action-dense'>
+      <CardActions className="card-action-dense">
         <Box
           sx={{
             width: '100%',
@@ -46,15 +46,15 @@ const CardWithCollapse = () => {
           }}
         >
           <Button onClick={handleClick}>Details</Button>
-          <IconButton size='small' onClick={handleClick}>
-            {collapse ? <ChevronUp sx={{ fontSize: '1.875rem' }} /> : <ChevronDown sx={{ fontSize: '1.875rem' }} />}
+          <IconButton size="small" onClick={handleClick}>
+            {collapse ? <ChevronUp sx={{fontSize: '1.875rem'}}/> : <ChevronDown sx={{fontSize: '1.875rem'}}/>}
           </IconButton>
         </Box>
       </CardActions>
       <Collapse in={collapse}>
-        <Divider sx={{ margin: 0 }} />
+        <Divider sx={{margin: 0}}/>
         <CardContent>
-          <Typography variant='body2'>
+          <Typography variant="body2">
             I&prime;m a thing. But, like most politicians, he promised more than he could deliver. You won&prime;t have
             time for sleeping, soldier, not with all the bed making you&prime;ll be doing. Then we&prime;ll go with that
             data file! Hey, you add a one and two zeros to that or we walk! You&prime;re going to do his laundry?

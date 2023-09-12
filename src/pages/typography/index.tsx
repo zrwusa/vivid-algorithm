@@ -9,10 +9,10 @@ const TypographyPage = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <TypographyHeadings />
+        <TypographyHeadings/>
       </Grid>
       <Grid item xs={12}>
-        <TypographyTexts />
+        <TypographyTexts/>
       </Grid>
     </Grid>
   )

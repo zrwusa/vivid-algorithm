@@ -1,9 +1,9 @@
 // ** React Imports
-import { ReactNode } from 'react'
+import {ReactNode} from 'react'
 
 // ** MUI Imports
 // import Box from '@mui/material/Box'
-import { Theme } from '@mui/material/styles'
+import {Theme} from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 // ** Layout Imports
@@ -18,15 +18,15 @@ import UpgradeToProButton from './components/UpgradeToProButton'
 import VerticalAppBarContent from './components/vertical/AppBarContent'
 
 // ** Hook Import
-import { useSettings } from '../hooks/useSettings'
+import {useSettings} from '../hooks/useSettings'
 
 interface Props {
   children: ReactNode
 }
 
-const UserLayout = ({ children }: Props) => {
+const UserLayout = ({children}: Props) => {
   // ** Hooks
-  const { settings, saveSettings } = useSettings()
+  const {settings, saveSettings} = useSettings()
 
   /**
    *  The below variable will hide the current layout menu at given screen size.
@@ -71,7 +71,7 @@ const UserLayout = ({ children }: Props) => {
       )}
     >
       {children}
-      <UpgradeToProButton />
+      <UpgradeToProButton/>
     </VerticalLayout>
   )
 }

@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import {Fragment, useState} from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -43,52 +43,52 @@ const createData = (name: string, calories: number, fat: number, carbs: number, 
 
 const Row = (props: { row: ReturnType<typeof createData> }) => {
   // ** Props
-  const { row } = props
+  const {row} = props
 
   // ** State
   const [open, setOpen] = useState<boolean>(false)
 
   return (
     <Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
         <TableCell>
-          <IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)}>
-            {open ? <ChevronUp /> : <ChevronDown />}
+          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+            {open ? <ChevronUp/> : <ChevronDown/>}
           </IconButton>
         </TableCell>
-        <TableCell component='th' scope='row'>
+        <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align='right'>{row.calories}</TableCell>
-        <TableCell align='right'>{row.fat}</TableCell>
-        <TableCell align='right'>{row.carbs}</TableCell>
-        <TableCell align='right'>{row.protein}</TableCell>
+        <TableCell align="right">{row.calories}</TableCell>
+        <TableCell align="right">{row.fat}</TableCell>
+        <TableCell align="right">{row.carbs}</TableCell>
+        <TableCell align="right">{row.protein}</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell colSpan={6} sx={{ py: '0 !important' }}>
-          <Collapse in={open} timeout='auto' unmountOnExit>
-            <Box sx={{ m: 2 }}>
-              <Typography variant='h6' gutterBottom component='div'>
+        <TableCell colSpan={6} sx={{py: '0 !important'}}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{m: 2}}>
+              <Typography variant="h6" gutterBottom component="div">
                 History
               </Typography>
-              <Table size='small' aria-label='purchases'>
+              <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
                     <TableCell>Date</TableCell>
                     <TableCell>Customer</TableCell>
-                    <TableCell align='right'>Amount</TableCell>
-                    <TableCell align='right'>Total price ($)</TableCell>
+                    <TableCell align="right">Amount</TableCell>
+                    <TableCell align="right">Total price ($)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {row.history.map(historyRow => (
                     <TableRow key={historyRow.date}>
-                      <TableCell component='th' scope='row'>
+                      <TableCell component="th" scope="row">
                         {historyRow.date}
                       </TableCell>
                       <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align='right'>{historyRow.amount}</TableCell>
-                      <TableCell align='right'>{Math.round(historyRow.amount * row.price * 100) / 100}</TableCell>
+                      <TableCell align="right">{historyRow.amount}</TableCell>
+                      <TableCell align="right">{Math.round(historyRow.amount * row.price * 100) / 100}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -112,20 +112,20 @@ const rows = [
 const TableCollapsible = () => {
   return (
     <TableContainer component={Paper}>
-      <Table aria-label='collapsible table'>
+      <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell />
+            <TableCell/>
             <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align='right'>Calories</TableCell>
-            <TableCell align='right'>Fat (g)</TableCell>
-            <TableCell align='right'>Carbs (g)</TableCell>
-            <TableCell align='right'>Protein (g)</TableCell>
+            <TableCell align="right">Calories</TableCell>
+            <TableCell align="right">Fat (g)</TableCell>
+            <TableCell align="right">Carbs (g)</TableCell>
+            <TableCell align="right">Protein (g)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <Row key={row.name} row={row} />
+            <Row key={row.name} row={row}/>
           ))}
         </TableBody>
       </Table>

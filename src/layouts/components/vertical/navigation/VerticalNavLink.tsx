@@ -1,31 +1,31 @@
 // ** React Imports
-import { ElementType, ReactNode } from 'react'
+import {ElementType, ReactNode} from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 
 // ** MUI Imports
 import Chip from '@mui/material/Chip'
 import ListItem from '@mui/material/ListItem'
-import { styled } from '@mui/material/styles'
+import {styled} from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import Box, { BoxProps } from '@mui/material/Box'
+import Box, {BoxProps} from '@mui/material/Box'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemButton, { ListItemButtonProps } from '@mui/material/ListItemButton'
+import ListItemButton, {ListItemButtonProps} from '@mui/material/ListItemButton'
 
 // ** Configs Import
 import themeConfig from '../../../../configs/themeConfig'
 
 // ** Types
-import { NavLink } from '../../../types'
-import { Settings } from '../../../../context/settingsContext'
+import {NavLink} from '../../../types'
+import {Settings} from '../../../../context/settingsContext'
 
 // ** Custom Components Imports
 import UserIcon from '../../../../layouts/components/UserIcon'
 
 // ** Utils
-import { handleURLQueries } from '../../../utils'
+import {handleURLQueries} from '../../../utils'
 
 interface Props {
   item: NavLink
@@ -35,9 +35,7 @@ interface Props {
 }
 
 // ** Styled Components
-const MenuNavLink = styled(ListItemButton)<
-  ListItemButtonProps & { component?: ElementType; target?: '_blank' | undefined }
->(({ theme }) => ({
+const MenuNavLink = styled(ListItemButton)<ListItemButtonProps & { component?: ElementType; target?: '_blank' | undefined }>(({theme}) => ({
   width: '100%',
   borderTopRightRadius: 100,
   borderBottomRightRadius: 100,
@@ -59,10 +57,10 @@ const MenuItemTextMetaWrapper = styled(Box)<BoxProps>({
   alignItems: 'center',
   justifyContent: 'space-between',
   transition: 'opacity .25s ease-in-out',
-  ...(themeConfig.menuTextTruncate && { overflow: 'hidden' })
+  ...(themeConfig.menuTextTruncate && {overflow: 'hidden'})
 })
 
-const VerticalNavLink = ({ item, navVisible, toggleNavVisibility }: Props) => {
+const VerticalNavLink = ({item, navVisible, toggleNavVisibility}: Props) => {
   // ** Hooks
   const router = useRouter()
 
@@ -79,15 +77,15 @@ const VerticalNavLink = ({ item, navVisible, toggleNavVisibility }: Props) => {
   return (
     <ListItem
       disablePadding
-      className='nav-link'
+      className="nav-link"
       disabled={item.disabled || false}
-      sx={{ mt: 1.5, px: '0 !important' }}
+      sx={{mt: 1.5, px: '0 !important'}}
     >
       <Link passHref href={item.path === undefined ? '/' : `${item.path}`}>
         <MenuNavLink
           component={'a'}
           className={isNavLinkActive() ? 'active' : ''}
-          {...(item.openInNewTab ? { target: '_blank' } : null)}
+          {...(item.openInNewTab ? {target: '_blank'} : null)}
           onClick={e => {
             if (item.path === undefined) {
               e.preventDefault()
@@ -99,7 +97,7 @@ const VerticalNavLink = ({ item, navVisible, toggleNavVisibility }: Props) => {
           }}
           sx={{
             pl: 5.5,
-            ...(item.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' })
+            ...(item.disabled ? {pointerEvents: 'none'} : {cursor: 'pointer'})
           }}
         >
           <ListItemIcon
@@ -109,11 +107,11 @@ const VerticalNavLink = ({ item, navVisible, toggleNavVisibility }: Props) => {
               transition: 'margin .25s ease-in-out'
             }}
           >
-            <UserIcon icon={IconTag} />
+            <UserIcon icon={IconTag}/>
           </ListItemIcon>
 
           <MenuItemTextMetaWrapper>
-            <Typography {...(themeConfig.menuTextTruncate && { noWrap: true })}>{item.title}</Typography>
+            <Typography {...(themeConfig.menuTextTruncate && {noWrap: true})}>{item.title}</Typography>
             {item.badgeContent ? (
               <Chip
                 label={item.badgeContent}
@@ -122,7 +120,7 @@ const VerticalNavLink = ({ item, navVisible, toggleNavVisibility }: Props) => {
                   height: 20,
                   fontWeight: 500,
                   marginLeft: 1.25,
-                  '& .MuiChip-label': { px: 1.5, textTransform: 'capitalize' }
+                  '& .MuiChip-label': {px: 1.5, textTransform: 'capitalize'}
                 }}
               />
             ) : null}

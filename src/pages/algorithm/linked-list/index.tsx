@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AlgorithmPanel } from '../../../views/algorithm-panel';
+import {AlgorithmPanel} from '../../../views/algorithm-panel';
 import {reverseLinkedList} from '../../../algorithms';
 import {SinglyLinkedList} from 'data-structure-typed';
 

@@ -6,352 +6,352 @@ import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
 import {wait, WaitManager} from '../../utils';
 import {BinaryTreeNode, Queue, Stack, TreeNode} from 'data-structure-typed';
 import {
-    Coordinate,
-    Direction,
-    fourthQuadrantMove,
-    fourthQuadrantMoveByIndex,
-    isOneDiffOrdered,
-    isOneDiffOrderedPieced,
-    MatrixCell,
-    runAlgorithm
+  Coordinate,
+  Direction,
+  fourthQuadrantMove,
+  fourthQuadrantMoveByIndex,
+  isOneDiffOrdered,
+  isOneDiffOrderedPieced,
+  MatrixCell,
+  runAlgorithm
 } from '../helpers';
 import {
-    combinationCase2,
-    ladderLengthCase1,
-    ladderLengthCase2,
-    ladderLengthCase3,
-    ladderLengthCase4,
-    ladderLengthCase5,
-    ladderLengthCase6,
-    ladderLengthCase7,
-    permutationCase2,
-    updateMatrixCase1,
-    updateMatrixCase2,
-    updateMatrixCase3,
-    updateMatrixCase4
+  combinationCase2,
+  ladderLengthCase1,
+  ladderLengthCase2,
+  ladderLengthCase3,
+  ladderLengthCase4,
+  ladderLengthCase5,
+  ladderLengthCase6,
+  ladderLengthCase7,
+  permutationCase2,
+  updateMatrixCase1,
+  updateMatrixCase2,
+  updateMatrixCase3,
+  updateMatrixCase4
 } from './cases';
 import {OrderType} from '../../types';
 
 const waitManager = new WaitManager(10);
-const {time2, time5, time10} = waitManager;
+const {time2, time5} = waitManager;
 
 export async function binaryTreeInorderTraversal(root: BinaryTreeNode<number> | undefined, proxyHandler: TProxyHandler): Promise<number[]> {
-    type Variables = {
-        node: BinaryTreeNode<number> | null | undefined
-    }
+  type Variables = {
+    node: BinaryTreeNode<number> | null | undefined
+  }
 
-    const proxyVariables = new DeepProxy<Variables>({node: null}, proxyHandler);
+  const proxyVariables = new DeepProxy<Variables>({node: null}, proxyHandler);
 
-    if (!root) {
-        return [];
-    }
+  if (!root) {
+    return [];
+  }
 
-    const leftResult = root.left && await binaryTreeInorderTraversal(root.left, proxyHandler);
-    await wait(time2);
-    proxyVariables.node = root.left;
+  const leftResult = root.left && await binaryTreeInorderTraversal(root.left, proxyHandler);
+  await wait(time2);
+  proxyVariables.node = root.left;
 
-    await wait(time2);
-    proxyVariables.node = root;
+  await wait(time2);
+  proxyVariables.node = root;
 
-    const rightResult = root.right && await binaryTreeInorderTraversal(root.right, proxyHandler);
-    await wait(time2);
-    proxyVariables.node = root.right;
+  const rightResult = root.right && await binaryTreeInorderTraversal(root.right, proxyHandler);
+  await wait(time2);
+  proxyVariables.node = root.right;
 
-    if (leftResult && rightResult) {
-        return [
-            ...leftResult,
-            root.id,
-            ...rightResult
-        ];
-    } else if (leftResult) {
-        return [
-            ...leftResult,
-            root.id];
-    } else if (rightResult) {
-        return [
-            root.id,
-            ...rightResult
-        ];
-    } else {
-        return [root.id];
-    }
+  if (leftResult && rightResult) {
+    return [
+      ...leftResult,
+      root.id,
+      ...rightResult
+    ];
+  } else if (leftResult) {
+    return [
+      ...leftResult,
+      root.id];
+  } else if (rightResult) {
+    return [
+      root.id,
+      ...rightResult
+    ];
+  } else {
+    return [root.id];
+  }
 
 }
 
 export const DFS = async (node: TreeNode, type: OrderType, proxyHandler: TProxyHandler) => {
-    type Variables = { current: TreeNode, nodeNeedPrint: TreeNode }
+  type Variables = { current: TreeNode, nodeNeedPrint: TreeNode }
 
-    const variablesProxy = new DeepProxy<Variables>({
-        current: node,
-        nodeNeedPrint: node
-    }, proxyHandler);
+  const variablesProxy = new DeepProxy<Variables>({
+    current: node,
+    nodeNeedPrint: node
+  }, proxyHandler);
 
-    const dfs = async (node: TreeNode, type: OrderType) => {
-        if (!node) return;
+  const dfs = async (node: TreeNode, type: OrderType) => {
+    if (!node) return;
 
-        variablesProxy.current = node;
-        variablesProxy.nodeNeedPrint = node;
+    variablesProxy.current = node;
+    variablesProxy.nodeNeedPrint = node;
 
-        await wait(time5);
+    await wait(time5);
 
-        const {children} = node;
-        if (children && children.length > 0) {
-            const left = children[0];
-            const right = children[1];
-            switch (type) {
-                case 'InOrder':
-                    await dfs(left, type);
-                    variablesProxy.current = node;
-                    variablesProxy.nodeNeedPrint = node;
-                    await wait(time5);
-                    await dfs(right, type);
-                    break;
-                case 'PreOrder':
-                    variablesProxy.current = node;
-                    variablesProxy.nodeNeedPrint = node;
-                    await wait(time5);
-                    await dfs(left, type);
-                    await dfs(right, type);
-                    break;
-                case 'PostOrder':
-                    await dfs(left, type);
-                    await dfs(right, type);
-                    variablesProxy.current = node;
-                    variablesProxy.nodeNeedPrint = node;
-                    await wait(time5);
-                    break;
-            }
-        }
+    const {children} = node;
+    if (children && children.length > 0) {
+      const left = children[0];
+      const right = children[1];
+      switch (type) {
+        case 'InOrder':
+          await dfs(left, type);
+          variablesProxy.current = node;
+          variablesProxy.nodeNeedPrint = node;
+          await wait(time5);
+          await dfs(right, type);
+          break;
+        case 'PreOrder':
+          variablesProxy.current = node;
+          variablesProxy.nodeNeedPrint = node;
+          await wait(time5);
+          await dfs(left, type);
+          await dfs(right, type);
+          break;
+        case 'PostOrder':
+          await dfs(left, type);
+          await dfs(right, type);
+          variablesProxy.current = node;
+          variablesProxy.nodeNeedPrint = node;
+          await wait(time5);
+          break;
+      }
     }
-    await dfs(variablesProxy.current, type);
+  }
+  await dfs(variablesProxy.current, type);
 };
 
 // 102	Binary Tree Level Order Traversal	★★	107	429	872			collecting nodes
 export const BFS = async (node: TreeNode<number>, proxyHandler: TProxyHandler) => {
-    type Variables = { node: TreeNode<number> }
+  type Variables = { node: TreeNode<number> }
 
-    const nodes: TreeNode<number>[] = [];
+  const nodes: TreeNode<number>[] = [];
 
-    const variablesProxy = new DeepProxy<Variables>({node: node,}, proxyHandler);
+  const variablesProxy = new DeepProxy<Variables>({node: node,}, proxyHandler);
 
-    if (node) {
-        const queue = new Queue<TreeNode<number>>();
-        queue.add(node);
-        while (!queue.isEmpty()) {
-            const item = queue.poll() as TreeNode<number>;
-            nodes.push(item);
-            variablesProxy.node = item;
-            await wait(time2);
-            const {children} = item;
-            if (children) {
-                for (let i = 0; i < children.length; i++) {
-                    queue.add(children[i]);
-                }
-            }
+  if (node) {
+    const queue = new Queue<TreeNode<number>>();
+    queue.add(node);
+    while (!queue.isEmpty()) {
+      const item = queue.poll() as TreeNode<number>;
+      nodes.push(item);
+      variablesProxy.node = item;
+      await wait(time2);
+      const {children} = item;
+      if (children) {
+        for (let i = 0; i < children.length; i++) {
+          queue.add(children[i]);
         }
+      }
     }
-    return nodes;
+  }
+  return nodes;
 };
 
 /* --- start Search (BFS/DFS) ---*/
 
 // 17	Letter Combinations of a Phone Number	★★	39	40	77	78	90	216
 export async function letterCombinations(digits: string, proxyHandler: TProxyHandler): Promise<string[]> {
-    // corner case
-    if (digits.length === 0) return [];
+  // corner case
+  if (digits.length === 0) return [];
 
-    type PhoneKeys = '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+  type PhoneKeys = '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 
-    const proxyVariables = new DeepProxy<{ accumulated: string, result: string[] }>({
-        accumulated: '',
-        result: []
-    }, proxyHandler);
+  const proxyVariables = new DeepProxy<{ accumulated: string, result: string[] }>({
+    accumulated: '',
+    result: []
+  }, proxyHandler);
 
-    const digitsMap: { [key in PhoneKeys]: string } = {
-        '2': 'abc',
-        '3': 'def',
-        '4': 'ghi',
-        '5': 'jkl',
-        '6': 'mno',
-        '7': 'pqrs',
-        '8': 'tuv',
-        '9': 'wxyz'
-    };
+  const digitsMap: { [key in PhoneKeys]: string } = {
+    '2': 'abc',
+    '3': 'def',
+    '4': 'ghi',
+    '5': 'jkl',
+    '6': 'mno',
+    '7': 'pqrs',
+    '8': 'tuv',
+    '9': 'wxyz'
+  };
 
-    const dfs = async (level: number, accumulated: Stack<string>) => {
-        // base case
-        if (digits.length === level) {
-            proxyVariables.result.push(accumulated.toArray().join('').toString());
-            return;
-        }
+  const dfs = async (level: number, accumulated: Stack<string>) => {
+    // base case
+    if (digits.length === level) {
+      proxyVariables.result.push(accumulated.toArray().join('').toString());
+      return;
+    }
 
-        for (const char of digitsMap[digits[level] as PhoneKeys]) {
-            // recursive rule
-            accumulated.push(char);
-            await dfs(level + 1, accumulated);
-            await wait(time2);
-            accumulated.pop();
-        }
-    };
+    for (const char of digitsMap[digits[level] as PhoneKeys]) {
+      // recursive rule
+      accumulated.push(char);
+      await dfs(level + 1, accumulated);
+      await wait(time2);
+      accumulated.pop();
+    }
+  };
 
-    await dfs(0, new Stack<string>());
+  await dfs(0, new Stack<string>());
 
-    return proxyVariables.result;
+  return proxyVariables.result;
 }
 
 
 // 46	Permutations	★★	47	784	943	996				Permutation
 export const permute = function <T>(nums: T[]) {
-    if (nums.length === 1) {
-        return [nums];
+  if (nums.length === 1) {
+    return [nums];
+  }
+
+  const result: T[][] = [];
+
+  const dfs = (accumulated: T[], rest: T[]) => {
+    if (accumulated.length === nums.length) {
+      result.push([...accumulated]);
+      return;
     }
 
-    const result: T[][] = [];
+    for (let i = 0, len = rest.length; i < len; i++) {
+      accumulated.push(rest[i]);
+      const restBacktrack = [...rest];
+      rest.splice(i, 1); // delete ith element to generate rest,then pass in next recursion
+      dfs(accumulated, rest);
+      rest = restBacktrack;
+      accumulated.pop();
+    }
+  };
 
-    const dfs = (accumulated: T[], rest: T[]) => {
-        if (accumulated.length === nums.length) {
-            result.push([...accumulated]);
-            return;
-        }
+  dfs([], [...nums]);
 
-        for (let i = 0, len = rest.length; i < len; i++) {
-            accumulated.push(rest[i]);
-            const restBacktrack = [...rest];
-            rest.splice(i, 1); // delete ith element to generate rest,then pass in next recursion
-            dfs(accumulated, rest);
-            rest = restBacktrack;
-            accumulated.pop();
-        }
-    };
-
-    dfs([], [...nums]);
-
-    return result;
+  return result;
 };
 
 export const permuteMN = function <T>(nums: T[], n: number, excludeSelf = true) {
-    if (n > nums.length) {
-        return [];
+  if (n > nums.length) {
+    return [];
+  }
+  if (nums.length === 1 && n === 1) {
+    return [nums];
+  }
+
+  const result: T[][] = [];
+
+  const dfs = (accumulated: T[], rest: T[], level: number) => {
+    if (level === n) {
+      result.push([...accumulated]);
+      return;
     }
-    if (nums.length === 1 && n === 1) {
-        return [nums];
+
+    for (let i = 0, len = rest.length; i < len; i++) {
+      accumulated.push(rest[i]);
+
+      let restBackTrack: T[] = [];
+      if (excludeSelf) {
+        restBackTrack = [...rest];
+        rest.splice(i, 1);
+      }
+
+      dfs(accumulated, rest, level + 1);
+
+      accumulated.pop();
+      if (excludeSelf) {
+        rest = restBackTrack;
+      }
     }
-
-    const result: T[][] = [];
-
-    const dfs = (accumulated: T[], rest: T[], level: number) => {
-        if (level === n) {
-            result.push([...accumulated]);
-            return;
-        }
-
-        for (let i = 0, len = rest.length; i < len; i++) {
-            accumulated.push(rest[i]);
-
-            let restBackTrack: T[] = [];
-            if (excludeSelf) {
-                restBackTrack = [...rest];
-                rest.splice(i, 1);
-            }
-
-            dfs(accumulated, rest, level + 1);
-
-            accumulated.pop();
-            if (excludeSelf) {
-                rest = restBackTrack;
-            }
-        }
-    };
-    dfs([], nums, 0);
-    return result;
+  };
+  dfs([], nums, 0);
+  return result;
 };
 
 
 // Combination
 export const combineMN = function <T>(nums: T[], n: number, excludeSelf = true) {
-    if (n > nums.length) {
-        return [];
+  if (n > nums.length) {
+    return [];
+  }
+  if (nums.length === 1 && n === 1) {
+    return [nums];
+  }
+
+  const result: T[][] = [];
+  const hash: { [key in string]: 'exist' } = {};
+  const dfs = (accumulated: T[], rest: T[], level: number) => {
+    if (level === n) {
+      const key = [...accumulated].sort().join('');
+      if (!hash[key]) {
+        hash[key] = 'exist';
+        result.push([...accumulated]);
+      }
+      return;
     }
-    if (nums.length === 1 && n === 1) {
-        return [nums];
+
+    for (let i = 0, len = rest.length; i < len; i++) {
+      accumulated.push(rest[i]);
+
+      let restBackTrack: T[] = [];
+      if (excludeSelf) {
+        restBackTrack = [...rest];
+        rest.splice(i, 1);
+      }
+
+      dfs(accumulated, rest, level + 1);
+      accumulated.pop();
+
+      if (excludeSelf) {
+        rest = restBackTrack;
+      }
     }
-
-    const result: T[][] = [];
-    const hash: { [key in string]: 'exist' } = {};
-    const dfs = (accumulated: T[], rest: T[], level: number) => {
-        if (level === n) {
-            const key = [...accumulated].sort().join('');
-            if (!hash[key]) {
-                hash[key] = 'exist';
-                result.push([...accumulated]);
-            }
-            return;
-        }
-
-        for (let i = 0, len = rest.length; i < len; i++) {
-            accumulated.push(rest[i]);
-
-            let restBackTrack: T[] = [];
-            if (excludeSelf) {
-                restBackTrack = [...rest];
-                rest.splice(i, 1);
-            }
-
-            dfs(accumulated, rest, level + 1);
-            accumulated.pop();
-
-            if (excludeSelf) {
-                rest = restBackTrack;
-            }
-        }
-    };
-    dfs([], nums, 0);
-    return result;
+  };
+  dfs([], nums, 0);
+  return result;
 };
 
 // console.log(combineMN(['(','(',')',')'], 4, false))
 
 // 22	Generate Parentheses	★★★	301							DFS
 export function generateParenthesis(n: number): string[] {
-    // corner case
-    if (n === 1) {
-        return ['()'];
+  // corner case
+  if (n === 1) {
+    return ['()'];
+  }
+
+  const result: string[] = [];
+
+  let openCount = 0, closeCount = 0;
+
+  const dfs = (accumulated: string, level: number) => {
+    // base case
+    if (level === 2 * n) {
+      result.push(accumulated);
+      return;
     }
 
-    const result: string[] = [];
+    // recursion rule
+    if (openCount < n) {
+      accumulated += '(';
+      openCount++;
+      dfs(accumulated, level + 1);
+      openCount--;
+      accumulated = accumulated.substr(0, accumulated.length - 1);
+    }
 
-    let openCount = 0, closeCount = 0;
+    if (level !== 0) {
+      if (openCount > closeCount) {
+        accumulated += ')';
+        closeCount++;
+        dfs(accumulated, level + 1);
+        closeCount--;
+        accumulated = accumulated.substr(0, accumulated.length - 1);
+      }
+    }
+  };
 
-    const dfs = (accumulated: string, level: number) => {
-        // base case
-        if (level === 2 * n) {
-            result.push(accumulated);
-            return;
-        }
+  dfs('', 0);
 
-        // recursion rule
-        if (openCount < n) {
-            accumulated += '(';
-            openCount++;
-            dfs(accumulated, level + 1);
-            openCount--;
-            accumulated = accumulated.substr(0, accumulated.length - 1);
-        }
-
-        if (level !== 0) {
-            if (openCount > closeCount) {
-                accumulated += ')';
-                closeCount++;
-                dfs(accumulated, level + 1);
-                closeCount--;
-                accumulated = accumulated.substr(0, accumulated.length - 1);
-            }
-        }
-    };
-
-    dfs('', 0);
-
-    return result;
+  return result;
 }
 
 // 37	Sudoku Solver	★★★	51	52						DFS
@@ -360,300 +360,300 @@ export function generateParenthesis(n: number): string[] {
 
 export function ladderLengthDFS(beginWord: string, endWord: string, wordList: string[], proxyHandler: TProxyHandler): number {
 
-    const proxyVariables = new DeepProxy<{ tree: TreeNode<string> }>({tree: new TreeNode(beginWord, beginWord)}, proxyHandler);
+  const proxyVariables = new DeepProxy<{ tree: TreeNode<string> }>({tree: new TreeNode(beginWord, beginWord)}, proxyHandler);
 
-    const wordListLength = wordList.length;
-    // corner case
-    if (wordListLength < 1) {
-        return 0;
+  const wordListLength = wordList.length;
+  // corner case
+  if (wordListLength < 1) {
+    return 0;
+  }
+  if (!wordList.includes(endWord)) {
+    return 0;
+  }
+
+  let shortest = 0;
+
+  const dfs = (accumulated: string[], rest: string[], level: number, parentNode: TreeNode<string>) => {
+    // base case
+    if (accumulated[accumulated.length - 1] === endWord) {
+      if (shortest === 0 || accumulated.length < shortest) {
+        shortest = accumulated.length;
+      }
+      return;
     }
-    if (!wordList.includes(endWord)) {
-        return 0;
+
+    if (level === wordListLength) {
+      return;
     }
 
-    let shortest = 0;
+    if (level === 0) {
+      accumulated.push(beginWord);
+    }
 
-    const dfs = (accumulated: string[], rest: string[], level: number, parentNode: TreeNode<string>) => {
-        // base case
-        if (accumulated[accumulated.length - 1] === endWord) {
-            if (shortest === 0 || accumulated.length < shortest) {
-                shortest = accumulated.length;
-            }
-            return;
-        }
+    for (let i = 0, len = rest.length; i < len; i++) {
+      if (isOneDiffOrdered(rest[i], accumulated[accumulated.length - 1])) {
+        accumulated.push(rest[i]);
+        const newNode = new TreeNode(accumulated.join(), accumulated.join());
+        parentNode.addChildren(newNode);
+        const backTrackRest = [...rest];
+        rest.splice(i, 1);
+        dfs(accumulated, rest, level + 1, newNode);
+        accumulated.pop();
+        rest = backTrackRest;
+      }
+    }
+  };
 
-        if (level === wordListLength) {
-            return;
-        }
+  dfs([], wordList, 0, proxyVariables.tree);
 
-        if (level === 0) {
-            accumulated.push(beginWord);
-        }
-
-        for (let i = 0, len = rest.length; i < len; i++) {
-            if (isOneDiffOrdered(rest[i], accumulated[accumulated.length - 1])) {
-                accumulated.push(rest[i]);
-                const newNode = new TreeNode(accumulated.join(), accumulated.join());
-                parentNode.addChildren(newNode);
-                const backTrackRest = [...rest];
-                rest.splice(i, 1);
-                dfs(accumulated, rest, level + 1, newNode);
-                accumulated.pop();
-                rest = backTrackRest;
-            }
-        }
-    };
-
-    dfs([], wordList, 0, proxyVariables.tree);
-
-    return shortest;
+  return shortest;
 }
 
 // Plagiarized 3440 ms
-export const ladderLengthPlagiarized = function (beginWord: string, endWord: string, wordList: string[], proxyHandler: TProxyHandler) {
-    let queue = [beginWord];
-    let level = 1;
-    if (!wordList.includes(endWord)) {
-        return 0;
-    }
-    const map: { [key in string]: boolean } = {};
-    while (queue.length) {
-        const diffByOne = [];
-        while (queue.length) {
-            // console.log(queue)
-            const ele = queue.shift();
-            if (ele !== undefined) {
-                map[ele] = true;
-                const eleChar = ele.split('');
-                for (let i = 0; i < wordList.length; i++) {
-                    let count = 0;
-                    const wordChar = wordList[i].split('');
-                    for (let j = 0; j < eleChar.length; j++) {
-                        if (wordChar[j] !== eleChar[j]) {
-                            count++;
-                            if (count === 2) {
-                                break;
-                            }
-                        }
-                    }
-                    if (count === 1) {
-                        if (wordList[i] === endWord) {
-                            return level + 1;
-                        }
-                        if (!map[wordList[i]]) {
-                            diffByOne.push(wordList[i]);
-                            map[wordList[i]] = true;
-                        }
-                    }
-                }
-            }
-
-        }
-        if (diffByOne.length) {
-            queue = [...queue, ...diffByOne];
-        }
-        level++;
-    }
+export const ladderLengthPlagiarized = function (beginWord: string, endWord: string, wordList: string[]) {
+  let queue = [beginWord];
+  let level = 1;
+  if (!wordList.includes(endWord)) {
     return 0;
+  }
+  const map: { [key in string]: boolean } = {};
+  while (queue.length) {
+    const diffByOne = [];
+    while (queue.length) {
+      // console.log(queue)
+      const ele = queue.shift();
+      if (ele !== undefined) {
+        map[ele] = true;
+        const eleChar = ele.split('');
+        for (let i = 0; i < wordList.length; i++) {
+          let count = 0;
+          const wordChar = wordList[i].split('');
+          for (let j = 0; j < eleChar.length; j++) {
+            if (wordChar[j] !== eleChar[j]) {
+              count++;
+              if (count === 2) {
+                break;
+              }
+            }
+          }
+          if (count === 1) {
+            if (wordList[i] === endWord) {
+              return level + 1;
+            }
+            if (!map[wordList[i]]) {
+              diffByOne.push(wordList[i]);
+              map[wordList[i]] = true;
+            }
+          }
+        }
+      }
+
+    }
+    if (diffByOne.length) {
+      queue = [...queue, ...diffByOne];
+    }
+    level++;
+  }
+  return 0;
 };
 
 export const ladderLengthBFS = function (beginWord: string, endWord: string, wordList: string[]) {
-    if (wordList.length < 1 || !wordList.includes(endWord)) {
-        return 0;
-    }
-
-    const wordListSet = new Set();
-
-    let queue: string[] = [beginWord];
-    let level = 1;
-    let tempQueue: string[] = [];
-    while (queue.length > 0) {
-        const top = queue.shift();
-
-        for (const word of wordList) {
-            // TODO after no-non-null-assertion not ensure the logic
-            if (top !== undefined) {
-                if (isOneDiffOrdered(word, top) && !wordListSet.has(word)) {
-                    if (word === endWord) {
-                        return level + 1;
-                    }
-                    wordListSet.add(word);
-                    tempQueue.push(word);
-                }
-            }
-        }
-
-        if (queue.length === 0) {
-            queue = tempQueue;
-            tempQueue = [];
-            level++;
-        }
-    }
+  if (wordList.length < 1 || !wordList.includes(endWord)) {
     return 0;
+  }
+
+  const wordListSet = new Set();
+
+  let queue: string[] = [beginWord];
+  let level = 1;
+  let tempQueue: string[] = [];
+  while (queue.length > 0) {
+    const top = queue.shift();
+
+    for (const word of wordList) {
+      // TODO after no-non-null-assertion not ensure the logic
+      if (top !== undefined) {
+        if (isOneDiffOrdered(word, top) && !wordListSet.has(word)) {
+          if (word === endWord) {
+            return level + 1;
+          }
+          wordListSet.add(word);
+          tempQueue.push(word);
+        }
+      }
+    }
+
+    if (queue.length === 0) {
+      queue = tempQueue;
+      tempQueue = [];
+      level++;
+    }
+  }
+  return 0;
 };
 
 export const ladderLengthTwoWayBFS = function (beginWord: string, endWord: string, wordList: string[]) {
-    if (wordList.length < 1 || !wordList.includes(endWord)) {
-        return 0;
-    }
-
-    let queue1: string[] = [beginWord];
-    let queue2: string[] = [endWord];
-
-    let set1: Set<string> = new Set(queue1);
-    let set2: Set<string> = new Set(queue2);
-
-    let level = 1;
-    let tempQueue: string[] = [];
-    while (queue1.length > 0 && queue2.length > 0) {
-        if (queue1.length > queue2.length) {
-            const tempQ = queue2;
-            queue2 = queue1;
-            queue1 = tempQ;
-            const tempSet = set2;
-            set2 = set1;
-            set1 = tempSet;
-        }
-
-        const top = queue1.shift();
-
-        for (const word of wordList) {
-            // TODO after no-non-null-assertion not ensure the logic
-            if (top !== undefined) {
-                if (isOneDiffOrderedPieced(word, top) && !set1.has(word)) {
-                    if (set2.has(word)) {
-                        return level + 1;
-                    }
-                    set1.add(word);
-                    tempQueue.push(word);
-                }
-            }
-        }
-
-        if (queue1.length === 0) {
-            queue1 = tempQueue;
-            tempQueue = [];
-            level++;
-        }
-    }
+  if (wordList.length < 1 || !wordList.includes(endWord)) {
     return 0;
+  }
+
+  let queue1: string[] = [beginWord];
+  let queue2: string[] = [endWord];
+
+  let set1: Set<string> = new Set(queue1);
+  let set2: Set<string> = new Set(queue2);
+
+  let level = 1;
+  let tempQueue: string[] = [];
+  while (queue1.length > 0 && queue2.length > 0) {
+    if (queue1.length > queue2.length) {
+      const tempQ = queue2;
+      queue2 = queue1;
+      queue1 = tempQ;
+      const tempSet = set2;
+      set2 = set1;
+      set1 = tempSet;
+    }
+
+    const top = queue1.shift();
+
+    for (const word of wordList) {
+      // TODO after no-non-null-assertion not ensure the logic
+      if (top !== undefined) {
+        if (isOneDiffOrderedPieced(word, top) && !set1.has(word)) {
+          if (set2.has(word)) {
+            return level + 1;
+          }
+          set1.add(word);
+          tempQueue.push(word);
+        }
+      }
+    }
+
+    if (queue1.length === 0) {
+      queue1 = tempQueue;
+      tempQueue = [];
+      level++;
+    }
+  }
+  return 0;
 };
 
 export const runAllLadderLength = async () => {
-    await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase1);
-    await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase2);
-    await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase3);
-    await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase4);
-    await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase5);
-    await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase6);
-    await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase7);
+  await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase1);
+  await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase2);
+  await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase3);
+  await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase4);
+  await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase5);
+  await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase6);
+  await runAlgorithm(ladderLengthTwoWayBFS, false, ladderLengthCase7);
 };
 // runAllLadderLength().then()
 
 // 542	01 Matrix	★★★	675	934						BFS
 export const updateMatrix = (mat: number[][]): number[][] => {
-    const rowCount = mat.length, colCount = mat[0].length;
+  const rowCount = mat.length, colCount = mat[0].length;
 
-    let departureQueue: Coordinate[] = [];
-    const costMat: number[][] = [];
+  let departureQueue: Coordinate[] = [];
+  const costMat: number[][] = [];
 
-    for (let y = 0; y < rowCount; y++) {
-        const costMatRow = new Array(colCount);
-        costMatRow.fill(Infinity);
-        costMat.push(costMatRow);
-        for (let x = 0; x < colCount; x++) {
-            if (mat[y][x] === 0) {
-                costMat[y][x] = 0;
-                departureQueue.push({y, x});
-            }
+  for (let y = 0; y < rowCount; y++) {
+    const costMatRow = new Array(colCount);
+    costMatRow.fill(Infinity);
+    costMat.push(costMatRow);
+    for (let x = 0; x < colCount; x++) {
+      if (mat[y][x] === 0) {
+        costMat[y][x] = 0;
+        departureQueue.push({y, x});
+      }
+    }
+  }
+
+  let cost = 0;
+  let tempQueue: Coordinate[] = [];
+
+  while (departureQueue.length > 0) {
+    const top = departureQueue.shift();
+
+    const directions: Direction[] = ['up', 'down', 'left', 'right'];
+    for (const direction of directions) {
+      // TODO after no-non-null-assertion not ensure the logic
+      if (top !== undefined) {
+        const destination = fourthQuadrantMove(top, direction, mat);
+        if (destination) {
+          if (costMat[destination.y][destination.x] === Infinity) {
+            costMat[destination.y][destination.x] = cost + 1;
+            tempQueue.push(destination);
+          }
         }
+      }
     }
 
-    let cost = 0;
-    let tempQueue: Coordinate[] = [];
-
-    while (departureQueue.length > 0) {
-        const top = departureQueue.shift();
-
-        const directions: Direction[] = ['up', 'down', 'left', 'right'];
-        for (const direction of directions) {
-            // TODO after no-non-null-assertion not ensure the logic
-            if (top !== undefined) {
-                const destination = fourthQuadrantMove(top, direction, mat);
-                if (destination) {
-                    if (costMat[destination.y][destination.x] === Infinity) {
-                        costMat[destination.y][destination.x] = cost + 1;
-                        tempQueue.push(destination);
-                    }
-                }
-            }
-        }
-
-        if (departureQueue.length === 0) {
-            cost++;
-            departureQueue = tempQueue;
-            tempQueue = [];
-        }
+    if (departureQueue.length === 0) {
+      cost++;
+      departureQueue = tempQueue;
+      tempQueue = [];
     }
-    return costMat;
+  }
+  return costMat;
 };
 
 export const updateMatrixByIndex = (mat: number[][]): number[][] => {
-    const rowCount = mat.length, colCount = mat[0].length;
+  const rowCount = mat.length, colCount = mat[0].length;
 
-    let departureQueue: MatrixCell[] = [];
-    const costMat: number[][] = [];
+  let departureQueue: MatrixCell[] = [];
+  const costMat: number[][] = [];
 
-    for (let y = 0; y < rowCount; y++) {
-        const costMatRow = new Array(colCount);
-        costMatRow.fill(Infinity);
-        costMat.push(costMatRow);
-        for (let x = 0; x < colCount; x++) {
-            if (mat[y][x] === 0) {
-                costMat[y][x] = 0;
-                departureQueue.push([y, x]);
-            }
+  for (let y = 0; y < rowCount; y++) {
+    const costMatRow = new Array(colCount);
+    costMatRow.fill(Infinity);
+    costMat.push(costMatRow);
+    for (let x = 0; x < colCount; x++) {
+      if (mat[y][x] === 0) {
+        costMat[y][x] = 0;
+        departureQueue.push([y, x]);
+      }
+    }
+  }
+
+  let cost = 0;
+  let tempQueue: MatrixCell[] = [];
+
+  while (departureQueue.length > 0) {
+    const top = departureQueue.shift();
+
+    const directions: Direction[] = ['up', 'down', 'left', 'right'];
+    for (const direction of directions) {
+      // TODO after no-non-null-assertion not ensure the logic
+      if (top !== undefined) {
+        const destination = fourthQuadrantMoveByIndex(top, direction, mat);
+        if (destination) {
+          if (costMat[destination[0]][destination[1]] === Infinity) {
+            costMat[destination[0]][destination[1]] = cost + 1;
+            tempQueue.push(destination);
+          }
         }
+      }
     }
 
-    let cost = 0;
-    let tempQueue: MatrixCell[] = [];
-
-    while (departureQueue.length > 0) {
-        const top = departureQueue.shift();
-
-        const directions: Direction[] = ['up', 'down', 'left', 'right'];
-        for (const direction of directions) {
-            // TODO after no-non-null-assertion not ensure the logic
-            if (top !== undefined) {
-                const destination = fourthQuadrantMoveByIndex(top, direction, mat);
-                if (destination) {
-                    if (costMat[destination[0]][destination[1]] === Infinity) {
-                        costMat[destination[0]][destination[1]] = cost + 1;
-                        tempQueue.push(destination);
-                    }
-                }
-            }
-        }
-
-        if (departureQueue.length === 0) {
-            cost++;
-            departureQueue = tempQueue;
-            tempQueue = [];
-        }
+    if (departureQueue.length === 0) {
+      cost++;
+      departureQueue = tempQueue;
+      tempQueue = [];
     }
-    return costMat;
+  }
+  return costMat;
 };
 
 export const runAllUpdateMatrix = async () => {
-    await runAlgorithm(updateMatrix, false, updateMatrixCase1);
-    await runAlgorithm(updateMatrixByIndex, false, updateMatrixCase1);
-    await runAlgorithm(updateMatrix, false, updateMatrixCase2);
-    await runAlgorithm(updateMatrixByIndex, false, updateMatrixCase2);
-    await runAlgorithm(updateMatrix, false, updateMatrixCase3);
-    await runAlgorithm(updateMatrixByIndex, false, updateMatrixCase3);
-    await runAlgorithm(updateMatrix, false, updateMatrixCase4);
-    await runAlgorithm(updateMatrixByIndex, false, updateMatrixCase4);
+  await runAlgorithm(updateMatrix, false, updateMatrixCase1);
+  await runAlgorithm(updateMatrixByIndex, false, updateMatrixCase1);
+  await runAlgorithm(updateMatrix, false, updateMatrixCase2);
+  await runAlgorithm(updateMatrixByIndex, false, updateMatrixCase2);
+  await runAlgorithm(updateMatrix, false, updateMatrixCase3);
+  await runAlgorithm(updateMatrixByIndex, false, updateMatrixCase3);
+  await runAlgorithm(updateMatrix, false, updateMatrixCase4);
+  await runAlgorithm(updateMatrixByIndex, false, updateMatrixCase4);
 };
 // runAllUpdateMatrix().then()
 
@@ -673,58 +673,59 @@ export const runAllUpdateMatrix = async () => {
 
 
 export const treeMaxDepth = (node: TreeNode<number>): number => {
-    if (!node) {
-        return 0;
-    }
-    const {children} = node;
-    if (children && children.length > 0) {
-        const left = children[0];
-        const right = children[1];
-        const maxLeft = treeMaxDepth(left);
-        console.log(node.id);
-        const maxRight = treeMaxDepth(right);
-        return Math.max(maxLeft, maxRight) + 1;
-    } else {
-        return 1;
-    }
+  if (!node) {
+    return 0;
+  }
+  const {children} = node;
+  if (children && children.length > 0) {
+    const left = children[0];
+    const right = children[1];
+    const maxLeft = treeMaxDepth(left);
+    console.log(node.id);
+    const maxRight = treeMaxDepth(right);
+    return Math.max(maxLeft, maxRight) + 1;
+  } else {
+    return 1;
+  }
 };
 
 export const combination = (nums: number[]): number[][] => {
-    const ans: number[][] = [];
+  const ans: number[][] = [];
 
-    const dfs = (acc: number[], rest: number[]) => {
-        ans.push(acc);
-        for (let i = 0; i < rest.length; i++) {
-            const num = rest[i];
-            const newAcc = acc.concat(num);
-            const newRest = rest.slice(i + 1);
-            dfs(newAcc, newRest);
-        }
+  const dfs = (acc: number[], rest: number[]) => {
+    ans.push(acc);
+    for (let i = 0; i < rest.length; i++) {
+      const num = rest[i];
+      const newAcc = acc.concat(num);
+      const newRest = rest.slice(i + 1);
+      dfs(newAcc, newRest);
     }
+  }
 
-    dfs([], nums);
-    return ans;
+  dfs([], nums);
+  return ans;
 }
 
 export const permutation = (nums: number[]): number[][] => {
-    const ans: number[][] = [];
+  const ans: number[][] = [];
 
-    const dfs = (acc: number[], rest: number[]) => {
-        ans.push(acc);
-        for (let i = 0; i < rest.length; i++) {
-            const num = rest[i];
-            const newAcc = acc.concat(num);
-            const newRest = rest.slice(0, i).concat(rest.slice(i + 1));
-            dfs(newAcc, newRest);
-        }
+  const dfs = (acc: number[], rest: number[]) => {
+    ans.push(acc);
+    for (let i = 0; i < rest.length; i++) {
+      const num = rest[i];
+      const newAcc = acc.concat(num);
+      const newRest = rest.slice(0, i).concat(rest.slice(i + 1));
+      dfs(newAcc, newRest);
     }
+  }
 
-    dfs([], nums);
-    return ans;
+  dfs([], nums);
+  return ans;
 }
 
 export const runCombinationPermutation = async () => {
-    await runAlgorithm(combination, false, combinationCase2);
-    await runAlgorithm(permutation, false, permutationCase2);
+  await runAlgorithm(combination, false, combinationCase2);
+  await runAlgorithm(permutation, false, permutationCase2);
 }
+
 /* --- end tree ---*/

@@ -1,15 +1,15 @@
 // ** Next Imports
 import Head from 'next/head'
-import { Router } from 'next/router'
-import type { NextPage } from 'next'
-import type { AppProps } from 'next/app'
+import {Router} from 'next/router'
+import type {NextPage} from 'next'
+import type {AppProps} from 'next/app'
 
 // ** Loader Import
 import NProgress from 'nprogress'
 
 // ** Emotion Imports
-import { CacheProvider } from '@emotion/react'
-import type { EmotionCache } from '@emotion/cache'
+import {CacheProvider} from '@emotion/react'
+import type {EmotionCache} from '@emotion/cache'
 
 // ** Config Imports
 import themeConfig from '../configs/themeConfig'
@@ -19,10 +19,10 @@ import UserLayout from '../layouts/UserLayout'
 import ThemeComponent from '../theme/ThemeComponent'
 
 // ** Contexts
-import { SettingsConsumer, SettingsProvider } from '../context/settingsContext'
+import {SettingsConsumer, SettingsProvider} from '../context/settingsContext'
 
 // ** Utils Imports
-import { createEmotionCache } from '../utils/create-emotion-cache'
+import {createEmotionCache} from '../utils/create-emotion-cache'
 
 // ** React Perfect Scrollbar Style
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -53,7 +53,7 @@ if (themeConfig.routingLoader) {
 
 // ** Configure JSS & ClassName
 const App = (props: ExtendedAppProps) => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+  const {Component, emotionCache = clientSideEmotionCache, pageProps} = props
 
   // Variables
   const getLayout = Component.getLayout ?? (page => <UserLayout>{page}</UserLayout>)
@@ -63,16 +63,16 @@ const App = (props: ExtendedAppProps) => {
       <Head>
         <title>{`${themeConfig.templateName}`}</title>
         <meta
-          name='description'
+          name="description"
           content={`${themeConfig.templateName}`}
         />
-        <meta name='keywords' content='' />
-        <meta name='viewport' content='initial-scale=1, width=device-width' />
+        <meta name="keywords" content=""/>
+        <meta name="viewport" content="initial-scale=1, width=device-width"/>
       </Head>
 
       <SettingsProvider>
         <SettingsConsumer>
-          {({ settings }) => {
+          {({settings}) => {
             return <ThemeComponent settings={settings}>{getLayout(<Component {...pageProps} />)}</ThemeComponent>
           }}
         </SettingsConsumer>

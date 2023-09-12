@@ -1,9 +1,9 @@
 // ** MUI Theme Provider
-import { deepmerge } from '@mui/utils'
-import { ThemeOptions } from '@mui/material'
+import {deepmerge} from '@mui/utils'
+import {ThemeOptions} from '@mui/material'
 
 // ** Type Import
-import { Settings } from '../context/settingsContext'
+import {Settings} from '../context/settingsContext'
 
 // ** Theme Override Imports
 import palette from './palette'
@@ -13,7 +13,7 @@ import breakpoints from './breakpoints'
 
 const themeOptions = (settings: Settings): ThemeOptions => {
   // ** Vars
-  const { mode, themeColor } = settings
+  const {mode, themeColor} = settings
 
   const themeConfig = {
     palette: palette(mode, themeColor),

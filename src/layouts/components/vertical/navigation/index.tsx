@@ -1,17 +1,17 @@
 // ** React Import
-import { ReactNode, useRef, useState } from 'react'
+import {ReactNode, useRef, useState} from 'react'
 
 // ** MUI Import
 import List from '@mui/material/List'
-import Box, { BoxProps } from '@mui/material/Box'
-import { styled, useTheme } from '@mui/material/styles'
+import Box, {BoxProps} from '@mui/material/Box'
+import {styled, useTheme} from '@mui/material/styles'
 
 // ** Third Party Components
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
 // ** Type Import
-import { Settings } from '../../../../context/settingsContext'
-import { VerticalNavItemsType } from '../../../types'
+import {Settings} from '../../../../context/settingsContext'
+import {VerticalNavItemsType} from '../../../types'
 
 // ** Component Imports
 import Drawer from './Drawer'
@@ -19,7 +19,7 @@ import VerticalNavItems from './VerticalNavItems'
 import VerticalNavHeader from './VerticalNavHeader'
 
 // ** Util Import
-import { hexToRGBA } from '../../../../utils/hex-to-rgba'
+import {hexToRGBA} from '../../../../utils/hex-to-rgba'
 
 interface Props {
   hidden: boolean
@@ -79,7 +79,7 @@ const Navigation = (props: Props) => {
         // @ts-ignore
         const original = ref._getBoundingClientRect()
 
-        return { ...original, height: Math.floor(original.height) }
+        return {...original, height: Math.floor(original.height)}
       }
     }
   }
@@ -113,26 +113,26 @@ const Navigation = (props: Props) => {
           )} 95%,${hexToRGBA(theme.palette.background.default, 0.05)})`
         }}
       />
-      <Box sx={{ height: '100%', position: 'relative', overflow: 'hidden' }}>
+      <Box sx={{height: '100%', position: 'relative', overflow: 'hidden'}}>
         {/* @ts-ignore */}
         <ScrollWrapper
           {...(hidden
             ? {
-                onScroll: (container: any) => scrollMenu(container),
-                sx: { height: '100%', overflowY: 'auto', overflowX: 'hidden' }
-              }
+              onScroll: (container: any) => scrollMenu(container),
+              sx: {height: '100%', overflowY: 'auto', overflowX: 'hidden'}
+            }
             : {
-                options: { wheelPropagation: false },
-                onScrollY: (container: any) => scrollMenu(container),
-                containerRef: (ref: any) => handleInfiniteScroll(ref)
-              })}
+              options: {wheelPropagation: false},
+              onScrollY: (container: any) => scrollMenu(container),
+              containerRef: (ref: any) => handleInfiniteScroll(ref)
+            })}
         >
           {beforeVerticalNavMenuContent ? beforeVerticalNavMenuContent(props) : null}
-          <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <Box sx={{height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
             {userVerticalNavMenuContent ? (
               userVerticalNavMenuContent(props)
             ) : (
-              <List className='nav-items' sx={{ transition: 'padding .25s ease', pr: 4.5 }}>
+              <List className="nav-items" sx={{transition: 'padding .25s ease', pr: 4.5}}>
                 <VerticalNavItems
                   groupActive={groupActive}
                   setGroupActive={setGroupActive}

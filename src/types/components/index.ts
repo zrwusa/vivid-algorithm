@@ -1,1 +1,1 @@
-export  * from './algorithm-panel';
+export * from './algorithm-panel';

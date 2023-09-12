@@ -1,14 +1,14 @@
 // ** MUI Imports
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
-import { styled } from '@mui/material/styles'
+import {styled} from '@mui/material/styles'
 import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
-import TableRow, { TableRowProps } from '@mui/material/TableRow'
-import TableCell, { TableCellProps, tableCellClasses } from '@mui/material/TableCell'
+import TableRow, {TableRowProps} from '@mui/material/TableRow'
+import TableCell, {tableCellClasses, TableCellProps} from '@mui/material/TableCell'
 
-const StyledTableCell = styled(TableCell)<TableCellProps>(({ theme }) => ({
+const StyledTableCell = styled(TableCell)<TableCellProps>(({theme}) => ({
   [`&.${tableCellClasses.head}`]: {
     color: theme.palette.common.white,
     backgroundColor: theme.palette.common.black
@@ -18,7 +18,7 @@ const StyledTableCell = styled(TableCell)<TableCellProps>(({ theme }) => ({
   }
 }))
 
-const StyledTableRow = styled(TableRow)<TableRowProps>(({ theme }) => ({
+const StyledTableRow = styled(TableRow)<TableRowProps>(({theme}) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover
   },
@@ -30,7 +30,7 @@ const StyledTableRow = styled(TableRow)<TableRowProps>(({ theme }) => ({
 }))
 
 const createData = (name: string, calories: number, fat: number, carbs: number, protein: number) => {
-  return { name, calories, fat, carbs, protein }
+  return {name, calories, fat, carbs, protein}
 }
 
 const rows = [
@@ -44,26 +44,26 @@ const rows = [
 const TableCustomized = () => {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label='customized table'>
+      <Table sx={{minWidth: 700}} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align='right'>Calories</StyledTableCell>
-            <StyledTableCell align='right'>Fat (g)</StyledTableCell>
-            <StyledTableCell align='right'>Carbs (g)</StyledTableCell>
-            <StyledTableCell align='right'>Protein (g)</StyledTableCell>
+            <StyledTableCell align="right">Calories</StyledTableCell>
+            <StyledTableCell align="right">Fat (g)</StyledTableCell>
+            <StyledTableCell align="right">Carbs (g)</StyledTableCell>
+            <StyledTableCell align="right">Protein (g)</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map(row => (
             <StyledTableRow key={row.name}>
-              <StyledTableCell component='th' scope='row'>
+              <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align='right'>{row.calories}</StyledTableCell>
-              <StyledTableCell align='right'>{row.fat}</StyledTableCell>
-              <StyledTableCell align='right'>{row.carbs}</StyledTableCell>
-              <StyledTableCell align='right'>{row.protein}</StyledTableCell>
+              <StyledTableCell align="right">{row.calories}</StyledTableCell>
+              <StyledTableCell align="right">{row.fat}</StyledTableCell>
+              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+              <StyledTableCell align="right">{row.protein}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

@@ -1,5 +1,5 @@
 // ** Types
-import { NextRouter } from 'next/router'
+import {NextRouter} from 'next/router'
 
 /**
  * Check for URL queries as well for matching

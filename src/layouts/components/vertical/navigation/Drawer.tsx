@@ -1,12 +1,12 @@
 // ** React Imports
-import { ReactNode } from 'react'
+import {ReactNode} from 'react'
 
 // ** MUI Imports
-import { styled, useTheme } from '@mui/material/styles'
-import MuiSwipeableDrawer, { SwipeableDrawerProps } from '@mui/material/SwipeableDrawer'
+import {styled, useTheme} from '@mui/material/styles'
+import MuiSwipeableDrawer, {SwipeableDrawerProps} from '@mui/material/SwipeableDrawer'
 
 // ** Type Import
-import { Settings } from '../../../../context/settingsContext'
+import {Settings} from '../../../../context/settingsContext'
 
 interface Props {
   hidden: boolean
@@ -38,7 +38,7 @@ const SwipeableDrawer = styled(MuiSwipeableDrawer)<SwipeableDrawerProps>({
 
 const Drawer = (props: Props) => {
   // ** Props
-  const { hidden, children, navWidth, navVisible, setNavVisible } = props
+  const {hidden, children, navWidth, navVisible, setNavVisible} = props
 
   // ** Hook
   const theme = useTheme()
@@ -62,10 +62,10 @@ const Drawer = (props: Props) => {
 
   return (
     <SwipeableDrawer
-      className='layout-vertical-nav'
+      className="layout-vertical-nav"
       variant={hidden ? 'temporary' : 'permanent'}
-      {...(hidden ? { ...MobileDrawerProps } : { ...DesktopDrawerProps })}
-      PaperProps={{ sx: { width: navWidth } }}
+      {...(hidden ? {...MobileDrawerProps} : {...DesktopDrawerProps})}
+      PaperProps={{sx: {width: navWidth}}}
       sx={{
         width: navWidth,
         '& .MuiDrawer-paper': {

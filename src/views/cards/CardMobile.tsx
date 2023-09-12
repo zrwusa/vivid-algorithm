@@ -1,5 +1,5 @@
 // ** React Imports
-import { MouseEvent, useState } from 'react'
+import {MouseEvent, useState} from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -7,12 +7,12 @@ import Card from '@mui/material/Card'
 import Menu from '@mui/material/Menu'
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
-import { styled } from '@mui/material/styles'
+import {styled} from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
-import Grid, { GridProps } from '@mui/material/Grid'
+import Grid, {GridProps} from '@mui/material/Grid'
 
 // ** Icons Imports
 import Twitter from 'mdi-material-ui/Twitter'
@@ -23,7 +23,7 @@ import GooglePlus from 'mdi-material-ui/GooglePlus'
 import ShareVariant from 'mdi-material-ui/ShareVariant'
 
 // Styled Grid component
-const StyledGrid = styled(Grid)<GridProps>(({ theme }) => ({
+const StyledGrid = styled(Grid)<GridProps>(({theme}) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -52,8 +52,8 @@ const CardMobile = () => {
     <Card>
       <Grid container spacing={6}>
         <StyledGrid item md={5} xs={12}>
-          <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img width={137} height={176} alt='Apple iPhone 11 Pro' src='/images/cards/iPhone-11-pro.png' />
+          <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <img width={137} height={176} alt="Apple iPhone 11 Pro" src="/images/cards/iPhone-11-pro.png"/>
           </CardContent>
         </StyledGrid>
         <Grid
@@ -66,38 +66,38 @@ const CardMobile = () => {
           }}
         >
           <CardContent>
-            <Typography variant='h6' sx={{ marginBottom: 2 }}>
+            <Typography variant="h6" sx={{marginBottom: 2}}>
               Apple iPhone 11 Pro
             </Typography>
-            <Typography variant='body2' sx={{ marginBottom: 3.5 }}>
+            <Typography variant="body2" sx={{marginBottom: 3.5}}>
               Apple iPhone 11 Pro smartphone. Announced Sep 2019. Features 5.8″ display Apple A13 Bionic
             </Typography>
-            <Typography sx={{ fontWeight: 500, marginBottom: 3 }}>
+            <Typography sx={{fontWeight: 500, marginBottom: 3}}>
               Price:{' '}
-              <Box component='span' sx={{ fontWeight: 'bold' }}>
+              <Box component="span" sx={{fontWeight: 'bold'}}>
                 $899
               </Box>
             </Typography>
           </CardContent>
-          <CardActions className='card-action-dense'>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+          <CardActions className="card-action-dense">
+            <Box sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
               <Button>
-                <CartPlus fontSize='small' sx={{ marginRight: 2 }} />
+                <CartPlus fontSize="small" sx={{marginRight: 2}}/>
                 Add to Card
               </Button>
               <IconButton
-                id='long-button'
-                aria-label='share'
-                aria-haspopup='true'
+                id="long-button"
+                aria-label="share"
+                aria-haspopup="true"
                 onClick={handleClick}
-                aria-controls='long-menu'
+                aria-controls="long-menu"
                 aria-expanded={open ? 'true' : undefined}
               >
-                <ShareVariant fontSize='small' />
+                <ShareVariant fontSize="small"/>
               </IconButton>
               <Menu
                 open={open}
-                id='long-menu'
+                id="long-menu"
                 anchorEl={anchorEl}
                 onClose={handleClose}
                 MenuListProps={{
@@ -105,16 +105,16 @@ const CardMobile = () => {
                 }}
               >
                 <MenuItem onClick={handleClose}>
-                  <Facebook />
+                  <Facebook/>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Twitter />
+                  <Twitter/>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Linkedin />
+                  <Linkedin/>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <GooglePlus />
+                  <GooglePlus/>
                 </MenuItem>
               </Menu>
             </Box>

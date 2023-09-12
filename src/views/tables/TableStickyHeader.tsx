@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, ChangeEvent } from 'react'
+import {ChangeEvent, useState} from 'react'
 
 // ** MUI Imports
 import Paper from '@mui/material/Paper'
@@ -20,8 +20,8 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+  {id: 'name', label: 'Name', minWidth: 170},
+  {id: 'code', label: 'ISO\u00a0Code', minWidth: 100},
   {
     id: 'population',
     label: 'Population',
@@ -56,7 +56,7 @@ interface Data {
 function createData(name: string, code: string, population: number, size: number): Data {
   const density = population / size
 
-  return { name, code, population, size, density }
+  return {name, code, population, size, density}
 }
 
 const rows = [
@@ -92,13 +92,13 @@ const TableStickyHeader = () => {
   }
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label='sticky table'>
+    <Paper sx={{width: '100%', overflow: 'hidden'}}>
+      <TableContainer sx={{maxHeight: 440}}>
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map(column => (
-                <TableCell key={column.id} align={column.align} sx={{ minWidth: column.minWidth }}>
+                <TableCell key={column.id} align={column.align} sx={{minWidth: column.minWidth}}>
                   {column.label}
                 </TableCell>
               ))}
@@ -107,7 +107,7 @@ const TableStickyHeader = () => {
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
               return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                   {columns.map(column => {
                     const value = row[column.id]
 
@@ -125,7 +125,7 @@ const TableStickyHeader = () => {
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
-        component='div'
+        component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
         page={page}

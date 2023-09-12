@@ -1,20 +1,18 @@
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import { Theme } from '@mui/material/styles'
+import {Theme} from '@mui/material/styles'
 
 // import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 // import InputAdornment from '@mui/material/InputAdornment'
-
 // ** Icons Imports
 import Menu from 'mdi-material-ui/Menu'
 
 // import Magnify from 'mdi-material-ui/Magnify'
-
 // ** Type Import
-import { Settings } from '../../../context/settingsContext'
+import {Settings} from '../../../context/settingsContext'
 import Link from '@mui/material/Link';
 
 // ** Components
@@ -31,7 +29,7 @@ interface Props {
 
 const AppBarContent = (props: Props) => {
   // ** Props
-  const { hidden, toggleNavVisibility } = props
+  const {hidden, toggleNavVisibility} = props
 
   // const { hidden, settings, saveSettings, toggleNavVisibility } = props
 
@@ -39,15 +37,15 @@ const AppBarContent = (props: Props) => {
   const hiddenSm = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 
   return (
-    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <Box className='actions-left' sx={{ mr: 2, display: 'flex', alignItems: 'center' }}>
+    <Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+      <Box className="actions-left" sx={{mr: 2, display: 'flex', alignItems: 'center'}}>
         {hidden ? (
           <IconButton
-            color='inherit'
+            color="inherit"
             onClick={toggleNavVisibility}
-            sx={{ ml: -2.75, ...(hiddenSm ? {} : { mr: 3.5 }) }}
+            sx={{ml: -2.75, ...(hiddenSm ? {} : {mr: 3.5})}}
           >
-            <Menu />
+            <Menu/>
           </IconButton>
         ) : null}
         {/*<TextField*/}
@@ -63,24 +61,24 @@ const AppBarContent = (props: Props) => {
         {/*/>*/}
       </Box>
 
-      <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box className="actions-right" sx={{display: 'flex', alignItems: 'center'}}>
         {hiddenSm ? null : (
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
+          <Box sx={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': {mr: 4}}}>
             <Link
-              target='_blank'
-              href='https://github.com/zrwusa/data-structure-typed/blob/main/LICENSE'
+              target="_blank"
+              href="https://github.com/zrwusa/data-structure-typed/blob/main/LICENSE"
             >
               MIT License
             </Link>
-            <Link target='_blank' href='https://github.com/zrwusa/data-structure-typed'>
+            <Link target="_blank" href="https://github.com/zrwusa/data-structure-typed">
               Data Structure Typed
             </Link>
-            <Link target='_blank' href='https://github.com/zrwusa/vivid-algorithm'>
+            <Link target="_blank" href="https://github.com/zrwusa/vivid-algorithm">
               Github
             </Link>
             <Link
-              target='_blank'
-              href='https://data-structure-typed-docs.vercel.app'
+              target="_blank"
+              href="https://data-structure-typed-docs.vercel.app"
             >
               Docs
             </Link>

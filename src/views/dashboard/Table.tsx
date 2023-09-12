@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
 
 // ** Types Imports
-import { ThemeColor } from '../../layouts/types'
+import {ThemeColor} from '../../layouts/types'
 
 interface RowType {
   age: number
@@ -105,18 +105,18 @@ const rows: RowType[] = [
 ]
 
 const statusObj: StatusObj = {
-  applied: { color: 'info' },
-  rejected: { color: 'error' },
-  current: { color: 'primary' },
-  resigned: { color: 'warning' },
-  professional: { color: 'success' }
+  applied: {color: 'info'},
+  rejected: {color: 'error'},
+  current: {color: 'primary'},
+  resigned: {color: 'warning'},
+  professional: {color: 'success'}
 }
 
 const DashboardTable = () => {
   return (
     <Card>
       <TableContainer>
-        <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
+        <Table sx={{minWidth: 800}} aria-label="table in dashboard">
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
@@ -129,11 +129,11 @@ const DashboardTable = () => {
           </TableHead>
           <TableBody>
             {rows.map((row: RowType) => (
-              <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
-                <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.name}</Typography>
-                    <Typography variant='caption'>{row.designation}</Typography>
+              <TableRow hover key={row.name} sx={{'&:last-of-type td, &:last-of-type th': {border: 0}}}>
+                <TableCell sx={{py: theme => `${theme.spacing(0.5)} !important`}}>
+                  <Box sx={{display: 'flex', flexDirection: 'column'}}>
+                    <Typography sx={{fontWeight: 500, fontSize: '0.875rem !important'}}>{row.name}</Typography>
+                    <Typography variant="caption">{row.designation}</Typography>
                   </Box>
                 </TableCell>
                 <TableCell>{row.email}</TableCell>
@@ -148,7 +148,7 @@ const DashboardTable = () => {
                       height: 24,
                       fontSize: '0.75rem',
                       textTransform: 'capitalize',
-                      '& .MuiChip-label': { fontWeight: 500 }
+                      '& .MuiChip-label': {fontWeight: 500}
                     }}
                   />
                 </TableCell>

@@ -1,8 +1,8 @@
 // ** React Imports
-import { ReactNode } from 'react'
+import {ReactNode} from 'react'
 
 // ** MUI Imports
-import { SvgIconProps } from '@mui/material'
+import {SvgIconProps} from '@mui/material'
 
 interface UserIconProps {
   iconProps?: SvgIconProps
@@ -11,7 +11,7 @@ interface UserIconProps {
 
 const UserIcon = (props: UserIconProps) => {
   // ** Props
-  const { icon, iconProps } = props
+  const {icon, iconProps} = props
 
   const IconTag = icon
 
@@ -23,7 +23,7 @@ const UserIcon = (props: UserIconProps) => {
   } */
 
   // @ts-ignore
-  return <IconTag {...iconProps} style={{ ...styles }} />
+  return <IconTag {...iconProps} style={{...styles}}/>
 }
 
 export default UserIcon

@@ -1,13 +1,13 @@
 // ** React Imports
-import { ReactNode } from 'react'
+import {ReactNode} from 'react'
 
 // ** MUI Imports
 import CssBaseline from '@mui/material/CssBaseline'
 import GlobalStyles from '@mui/material/GlobalStyles'
-import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles'
+import {createTheme, responsiveFontSizes, ThemeProvider} from '@mui/material/styles'
 
 // ** Type Imports
-import { Settings } from '../context/settingsContext'
+import {Settings} from '../context/settingsContext'
 
 // ** Theme Config
 import themeConfig from '../configs/themeConfig'
@@ -29,7 +29,7 @@ interface Props {
 
 const ThemeComponent = (props: Props) => {
   // ** Props
-  const { settings, children } = props
+  const {settings, children} = props
 
   // ** Merged ThemeOptions of Core and User
   const coreThemeConfig = themeOptions(settings)
@@ -39,8 +39,8 @@ const ThemeComponent = (props: Props) => {
 
   // ** Continue theme creation and pass merged component overrides to CreateTheme function
   theme = createTheme(theme, {
-    components: { ...overrides(theme) },
-    typography: { ...typography(theme) }
+    components: {...overrides(theme)},
+    typography: {...typography(theme)}
   })
 
   // ** Set responsive font sizes to true
@@ -50,8 +50,8 @@ const ThemeComponent = (props: Props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <GlobalStyles styles={() => GlobalStyling(theme) as any} />
+      <CssBaseline/>
+      <GlobalStyles styles={() => GlobalStyling(theme) as any}/>
       {children}
     </ThemeProvider>
   )

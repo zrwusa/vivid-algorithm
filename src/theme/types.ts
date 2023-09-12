@@ -6,6 +6,7 @@ declare module '@mui/material/styles' {
       primaryGradient: string
     }
   }
+
   interface PaletteOptions {
     customColors?: {
       main?: string
