@@ -1,11 +1,11 @@
 {
-  "name": "materio-mui-react-nextjs-admin-template-free",
-  "description": "Most Powerful & Comprehensive Free MUI React NextJS Admin Dashboard Template built for developers! 🚀",
+  "name": "vivid-algorithm",
+  "description": "Examples of data-structure-typed, Javascript Data Structure, TypeScript Data Structure Library. And 150+ algorithms. Meticulously crafted to empower developers with a versatile set of essential data structures.",
   "license": "MIT",
   "version": "1.0.0",
   "author": {
-    "name": "ThemeSelection",
-    "url": "https://themeselection.com/"
+    "name": "Tyler Zeng @zrwusa@gmail.com",
+    "url": "https://tyler-zeng.vercel.app"
   },
   "bugs": {
     "url": ""
@@ -38,7 +38,7 @@
     "@qiwi/deep-proxy": "^2.0.3",
     "apexcharts-clevision": "3.28.5",
     "clsx": "^1.1.1",
-    "data-structure-typed": "^1.21.3",
+    "data-structure-typed": "^1.21.4",
     "lodash": "^4.17.21",
     "mdi-material-ui": "^7.1.0",
     "next": "12.0.4",
