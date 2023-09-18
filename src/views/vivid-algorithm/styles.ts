@@ -7,6 +7,7 @@ export const styles = {
   circleFillActiveColor: '#9155FD',
   rectStrokeColor: '#bbbbbb',
   arrowColor: 'rgb(0, 134, 114)',
+  lineTextColor: 'rgb(0, 134, 114)',
   lineStrokeColor: '#bbbbbb',
   circleStrokeColor: '#9155FD',
   matrixPanelWidth: 660,

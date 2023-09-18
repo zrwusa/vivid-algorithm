@@ -19,7 +19,7 @@ export const LineWithArrow = ({
   if (delta === undefined) delta = 0;
   const {src, dest} = getPointsByDelta(fromV, toV, delta);
   const markerId = `triangle_${src.y}_${src.x}_${dest.y}_${dest.x}`;
-  const {textFillColor, arrowColor} = styles;
+  const {lineTextColor, arrowColor} = styles;
 
   return <g>
     <defs>
@@ -49,9 +49,9 @@ export const LineWithArrow = ({
         ? <text
           strokeWidth={1}
           fontSize={'12px'}
-          fill={textFillColor}
+          fill={lineTextColor}
           fontWeight={100}
-          stroke={textFillColor}
+          stroke={lineTextColor}
           x={src.x + (dest.x - src.x) / 2 + (src.x > dest.x ? 10 : -10)}
           y={src.y + (dest.y - src.y) / 2 + (src.y > dest.y ? 3 : -3)}
           textAnchor="middle"
