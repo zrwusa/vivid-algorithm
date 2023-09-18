@@ -144,9 +144,9 @@ export const BFS = async (node: TreeNode<number>, proxyHandler: TProxyHandler) =
 
   if (node) {
     const queue = new Queue<TreeNode<number>>();
-    queue.add(node);
+    queue.enqueue(node);
     while (!queue.isEmpty()) {
-      const item = queue.poll() as TreeNode<number>;
+      const item = queue.dequeue() as TreeNode<number>;
       nodes.push(item);
       variablesProxy.node = item;
       variablesProxy.node = item;
@@ -154,7 +154,7 @@ export const BFS = async (node: TreeNode<number>, proxyHandler: TProxyHandler) =
       const {children} = item;
       if (children) {
         for (let i = 0; i < children.length; i++) {
-          queue.add(children[i]);
+          queue.enqueue(children[i]);
         }
       }
     }
