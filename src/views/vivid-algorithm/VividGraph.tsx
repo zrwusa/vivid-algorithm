@@ -29,15 +29,15 @@ export const VividGraphIllustrator: React.FC<{ graph: AbstractGraph }> = ({graph
   }
 
   const {
-    textFillActiveColor, circleFillActiveColor, lineStrokeColor, lineStrokeWidth,
+    textFillColor, circleFillColor,circleStrokeColor, lineStrokeColor, lineStrokeWidth,
     vertexDistance, fontSize, fontOffsetY, vertexR
   } = styles;
 
   vertices.forEach((vertex: AbstractVertex) => {
     const rowIndex = Math.floor(i / rowCount);
     const colIndex = Math.floor(i % rowCount);
-    const y = (rowIndex) * vertexDistance + vertexR;
-    const x = (rowIndex % 2 === 0 ? (colIndex + 1) : colIndex) * vertexDistance + vertexR;
+    const y = (rowIndex) * vertexDistance + vertexR + 10;
+    const x = (rowIndex % 2 === 0 ? (colIndex + 1) : colIndex) * vertexDistance + vertexR + 10;
     coordsMap.set(vertex, new Coordinate(y, x));
     i++;
   });
@@ -58,10 +58,11 @@ export const VividGraphIllustrator: React.FC<{ graph: AbstractGraph }> = ({graph
                   r={vertexR}
                   cx={coordinate.x}
                   cy={coordinate.y}
-                  fill={circleFillActiveColor}/>
+                  stroke={circleStrokeColor}
+                  fill={circleFillColor}/>
                 <text key={vertex.id + 'id'}
                       fill="none"
-                      stroke={textFillActiveColor}
+                      stroke={textFillColor}
                       fontSize={fontSize}
                       fontWeight={1}
                       x={coordinate.x}
@@ -124,7 +125,6 @@ export const VividGraph: React.FC<{
   return (<svg width={svgWidth ?? '100%'} height={svgHeight ?? 480} style={{
       backgroundImage: `url('${svgBg}')`,
       backgroundPosition: 'top left',
-
       backgroundRepeat: 'no-repeat'
     }}>
       {

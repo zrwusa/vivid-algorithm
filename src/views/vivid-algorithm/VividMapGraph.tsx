@@ -104,7 +104,6 @@ export const VividMapGraph: React.FC<{
   data: MapGraph,
   viewControl?: ViewControl
 } & SVGOptions> = ({data, svgHeight, svgWidth, svgBg, viewControl}) => {
-  console.log(svgBg)
 
   return (<svg width={svgWidth ?? '100%'} height={svgHeight ?? 480} style={{
       backgroundImage: `url('${svgBg}')`,

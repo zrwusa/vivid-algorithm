@@ -62,7 +62,7 @@ class MyDirectedGraph<V extends MyVertex<string>, E extends MyEdge<string>> exte
 
 const waitMan = new WaitManager(10);
 
-export const testGraphs = async (proxyHandler: TProxyHandler) => {
+export const testGraph = async (proxyHandler: TProxyHandler) => {
 
   const proxy: { myGraph: MyDirectedGraph<MyVertex<string>, MyEdge<string>> } = new DeepProxy({myGraph: new MyDirectedGraph<MyVertex<string>, MyEdge<string>>()}, proxyHandler);
   await wait(waitMan.time3);

@@ -79,7 +79,7 @@ const waitManager = new WaitManager(10);
 
 // 675. Cut Off Trees for Golf Event                BFS  ,A star is a kind of advanced BFS
 export async function cutOffTree(forest: number[][], proxyHandler?: TProxyHandler): Promise<number> {
-  const proxyVariables = proxyHandler ? new DeepProxy<{ forest: number[][], cur: Coordinate, route: Coordinate[][] }>({
+  const proxy = proxyHandler ? new DeepProxy<{ forest: number[][], cur: Coordinate, route: Coordinate[][] }>({
     forest,
     cur: {y: 0, x: 0},
     route: []
@@ -124,7 +124,7 @@ export async function cutOffTree(forest: number[][], proxyHandler?: TProxyHandle
 
     while (queue.length > 0) {
       const front = queue.shift();
-      // if (proxyVariables) proxyVariables.cur = front!;
+      // if (proxy) proxy.cur = front!;
 
       for (const direction of directions) {
         // TODO after no-non-null-assertion not ensure the logic
@@ -138,13 +138,13 @@ export async function cutOffTree(forest: number[][], proxyHandler?: TProxyHandle
             visited[hashFunction(destination)] = true;
             parents[hashFunction(destination)] = front;
             if (destination.y === to.y && destination.x === to.x) {
-              if (proxyVariables) proxyVariables.cur = destination;
+              if (proxy) proxy.cur = destination;
               await wait(waitManager.time5);
 
               const route = getRouteByParentsHash(parents, to, hashFunction);
               // TODO after no-non-null-assertion not ensure the logic
-              if (proxyVariables !== undefined) {
-                proxyVariables.route.push(route);
+              if (proxy !== undefined) {
+                proxy.route.push(route);
                 await wait(waitManager.time5);
               }
 

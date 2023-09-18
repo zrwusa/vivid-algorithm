@@ -45,7 +45,7 @@ export const VividMatrix: React.FC<{
               width={rectSize}
               height={rectSize}
               stroke={rectStrokeColor}
-              strokeDasharray={`${rectSize},${rectSize * 2},${rectSize}`}
+              // strokeDasharray={`${rectSize},${rectSize * 2},${rectSize}`}
               strokeWidth={matrixRectStrokeWidth}
               fill={isActive ? circleFillActiveColor : circleFillColor}
             />;
@@ -61,7 +61,7 @@ export const VividMatrix: React.FC<{
               strokeWidth={1}
               fontSize={12}
               fill={isActive ? textFillActiveColor : textFillColor}
-              fontWeight={100}
+              fontWeight={500}
               x={(j + 0.5) * rectSize}
               y={(i + 0.5) * rectSize}
               textAnchor="middle"

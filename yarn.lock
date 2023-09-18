@@ -325,6 +325,11 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.1.1.tgz#1a5b1959a528e374e8037c4396c3e825d6cf4a83"
   integrity sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==
 
+"@gullerya/object-observer@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@gullerya/object-observer/-/object-observer-6.1.1.tgz#29e7ae9b1d243af2b510d3ec850b17b2912040ef"
+  integrity sha512-bEfCYXWHbv3p10gnxTUGNOoTh96yQHl/uRCp0zXT+BgYJyV3Rte/bpFvBNp7SXYZvbsLjCi6jx6+/w7buNP0aw==
+
 "@hapi/accept@5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.2.tgz#ab7043b037e68b722f93f376afb05e85c0699523"

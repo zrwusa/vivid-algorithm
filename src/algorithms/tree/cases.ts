@@ -26,7 +26,7 @@ export const treeData: TreeNode<string> = new TreeNode('1', '1', [
           new TreeNode('1-2-2-2', '15', [
               new TreeNode('1-2-2-2-1', '16'),
               new TreeNode('1-2-2-2-2', '17'),
-              new TreeNode('1-2-2-2-3', '18'),
+              // new TreeNode('1-2-2-2-3', '18'),
             ]
           )
         ]

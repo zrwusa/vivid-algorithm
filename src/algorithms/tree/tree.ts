@@ -91,6 +91,8 @@ export const DFS = async (node: TreeNode, type: OrderType, proxyHandler: TProxyH
 
     variablesProxy.current = node;
     variablesProxy.nodeNeedPrint = node;
+    variablesProxy.current = node;
+    variablesProxy.nodeNeedPrint = node;
 
     await wait(time5);
 
@@ -103,10 +105,14 @@ export const DFS = async (node: TreeNode, type: OrderType, proxyHandler: TProxyH
           await dfs(left, type);
           variablesProxy.current = node;
           variablesProxy.nodeNeedPrint = node;
+          variablesProxy.current = node;
+          variablesProxy.nodeNeedPrint = node;
           await wait(time5);
           await dfs(right, type);
           break;
         case 'PreOrder':
+          variablesProxy.current = node;
+          variablesProxy.nodeNeedPrint = node;
           variablesProxy.current = node;
           variablesProxy.nodeNeedPrint = node;
           await wait(time5);
@@ -116,6 +122,8 @@ export const DFS = async (node: TreeNode, type: OrderType, proxyHandler: TProxyH
         case 'PostOrder':
           await dfs(left, type);
           await dfs(right, type);
+          variablesProxy.current = node;
+          variablesProxy.nodeNeedPrint = node;
           variablesProxy.current = node;
           variablesProxy.nodeNeedPrint = node;
           await wait(time5);
@@ -140,6 +148,7 @@ export const BFS = async (node: TreeNode<number>, proxyHandler: TProxyHandler) =
     while (!queue.isEmpty()) {
       const item = queue.poll() as TreeNode<number>;
       nodes.push(item);
+      variablesProxy.node = item;
       variablesProxy.node = item;
       await wait(time2);
       const {children} = item;

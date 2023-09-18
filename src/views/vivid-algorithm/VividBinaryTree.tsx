@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {useEffect, useRef, useState} from 'react';
-import {BinaryTreeNode} from 'data-structure-typed';
+import {BinaryTreeNode, TreeMultisetNode} from 'data-structure-typed';
 import styles from './styles';
 import {SVGOptions} from '../../types';
 
 const {
-  textFillColor, textFillActiveColor, circleFillColor, circleFillActiveColor,
-  lineStrokeColor, circleStrokeColor, treePanelWidth, lineStrokeWidth, strokeWidth,
+  textFillColor, textFillActiveColor, secondaryTextFillColor, secondaryFillActiveColor, circleFillColor, circleFillActiveColor,
+  lineStrokeColor, circleStrokeColor, treePanelWidth, lineStrokeWidth, strokeWidth,countCircleR,
   levelOffset, treeNodeR, nodeSpace, fontSize, fontOffsetY,
 } = styles;
 const VividBinaryTreeRecursive: React.FC<{
@@ -48,7 +48,10 @@ const VividBinaryTreeRecursive: React.FC<{
   }
 
   const isActive = node.id === relatedBinaryNode?.id;
-
+  const textX = offsetX, textY = offsetY !== undefined ? offsetY + fontOffsetY : 0,
+    countX = offsetX !== undefined ? offsetX + treeNodeR * 4 / 5 : 0,
+    countY = offsetY !== undefined ? offsetY - treeNodeR * 4 / 5 : 0,
+    countCircleX = countX, countCircleY = countY - fontOffsetY;
   return (
     <g key={node.id}>
       {
@@ -84,23 +87,48 @@ const VividBinaryTreeRecursive: React.FC<{
           ? <text
             fill="none"
             stroke={isActive ? textFillActiveColor : textFillColor}
+
             fontSize={fontSize}
             fontWeight={1}
-            x={offsetX}
-            y={offsetY + fontOffsetY}
+            x={textX}
+            y={textY}
             textAnchor="middle"
             onClick={() => {
               console.info(node);
 
             }}
           >
-            {/*<tspan x={offsetX} y={offsetY + fontOffsetY}>{node.id}</tspan>*/}
-            <tspan x={offsetX} y={offsetY + fontOffsetY}>{node.id}</tspan>
-            {/*<tspan x={offsetX} y={offsetY + fontOffsetY + fontSize + 2}>{node.val !== null ? node.val : 'null'}</tspan>*/}
-            {/*<tspan x={offsetX} y={offsetY + fontOffsetY + 2 * fontSize + 4}>{'q: ' + node.count}</tspan>*/}
-            {/*<tspan x={offsetX}*/}
-            {/*       y={offsetY + fontOffsetY + 3 * fontSize + 6}>{'s:' + node.allLesserSum}</tspan>*/}
+            <tspan x={textX} y={textY}>{node.id}</tspan>
+          </text>
+          : null
+      }
+      {
+        node instanceof TreeMultisetNode
+        ?       <circle style={{cursor: 'pointer'}} stroke={secondaryTextFillColor} r={countCircleR} cx={countCircleX} cy={countCircleY}
+                        fill={isActive ? circleFillActiveColor : circleFillColor}
+                        onClick={() => {
+                          console.info(node);
+                        }}
+          />
+          : null
+      }
+      {
+        node instanceof TreeMultisetNode
+          ? <text
+            fill="none"
+            stroke={isActive ? secondaryFillActiveColor : secondaryTextFillColor}
 
+            fontSize={fontSize}
+            fontWeight={1}
+            x={countX}
+            y={countY}
+            textAnchor="middle"
+            onClick={() => {
+              console.info(node);
+            }}
+          >
+            <tspan x={countX}
+                   y={countY}>{node.count}</tspan>
           </text>
           : null
       }

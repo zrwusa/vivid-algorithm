@@ -7,7 +7,7 @@ import {
   networkDelayTime,
   networkDelayTimeCase3,
   regionsBySlashes,
-  testGraphs,
+  testGraph,
   testMapGraph
 } from '../../../algorithms';
 import TextField from '@mui/material/TextField';
@@ -18,7 +18,7 @@ export const GraphScreen = () => {
   const [cutOffTreeCase, setCutOffTreeCase] = useState<Array<Array<Array<number>>>>(cutOffTreeCase8);
 
   return <>
-    <AlgorithmPanel algorithm={testGraphs} testCase={[]} buttonLabel={'Test Graphs'}/>
+    <AlgorithmPanel algorithm={testGraph} testCase={[]} buttonLabel={'Test Graph'}/>
     <AlgorithmPanel algorithm={testMapGraph} testCase={[]} buttonLabel={'Test Map Graph'} svgHeight={890}
                     svgWidth={871} svgBg={'/images/pages/transit.jpg'}
                     viewControl={{scale: {y: 1.1, x: 1.1}, offset: {y: 10, x: 0}}}/>
