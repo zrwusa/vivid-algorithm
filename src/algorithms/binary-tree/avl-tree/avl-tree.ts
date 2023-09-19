@@ -1,4 +1,4 @@
-import {AVLTree, AVLTreeNode, BST, BSTNode, LoopType, TreeMultiset, TreeMultisetNode} from 'data-structure-typed';
+import {AVLTree, AVLTreeNode, BST, BSTNode, TreeMultiset, TreeMultisetNode} from 'data-structure-typed';
 import {runAlgorithm} from '../../helpers';
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
 import {wait, WaitManager} from '../../../utils';
