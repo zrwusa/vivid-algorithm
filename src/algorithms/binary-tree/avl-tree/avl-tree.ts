@@ -295,60 +295,48 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
 
   return vars.treeMultiset;
 };
-const magnitude = 1000;
+const magnitude = 100000;
 
-export async function testBSTPerformance () {
-  const bst = new BST<BSTNode<number>>();
-  for (let i = 0; i < magnitude; i++) {
-    bst.add(i);
-  }
+const bst = new BST<BSTNode<number>>();
+
+export async function testBSTBalanceAddPerformance() {
+  bst.addMany(Array.from(new Array(magnitude), (item, index) => index), undefined, true);
   return bst;
 }
 
-export async function testBSTMidAddPerformance () {
-  const bst = new BST<BSTNode<number>>();
-  let l = Math.floor(magnitude / 2), r = Math.floor(magnitude / 2) + 1;
-  while (l > -1) {
-    bst.add(l);
-    l--;
-  }
-  while (r < magnitude) {
-    bst.add(r);
-    r++;
-  }
-  return bst;
+export async function testBSTUnbalancePerformance() {
+  const bst1 = new BST<BSTNode<number>>();
+  for (let i = 0; i < magnitude; i++) bst1.add(i);
+  return bst1;
 }
 
-export async function testAVLTreePerformance () {
-  const avl = new AVLTree<AVLTreeNode<number>>({loopType: LoopType.RECURSIVE});
-  for (let i = 0; i < magnitude; i++) {
-    avl.add(i);
-  }
+const avl = new AVLTree<AVLTreeNode<number>>();
+
+export async function testAVLTreeAddPerformance() {
+  for (let i = 0; i < magnitude; i++) avl.add(i);
   return avl;
 }
 
-export async function testAVLTreeSearchPerformance () {
-  const avl = new AVLTree<AVLTreeNode<number>>({loopType: LoopType.RECURSIVE});
+export async function testAVLTreeSearchPerformance() {
   const arr: (AVLTreeNode<number> | null)[] = [];
   for (let i = 0; i < magnitude; i++) {
     const node = avl.get(i);
     arr.push(node);
   }
-  return avl;
+  return arr;
 }
 
-export async function testTreeMultisetPerformance () {
-  const avl = new TreeMultiset<TreeMultisetNode<number>>();
-  for (let i = 0; i < magnitude; i++) {
-    avl.add(i, i, i);
-  }
-  return avl;
+const treeMultiset = new TreeMultiset<TreeMultisetNode<number>>();
+
+export async function testTreeMultisetAddPerformance() {
+  for (let i = 0; i < magnitude; i++) treeMultiset.add(i, i, i);
+  return treeMultiset;
 }
 
 export const runTestAVLTree = async () => {
-  await runAlgorithm(testAVLTreePerformance, true, []);
-  await runAlgorithm(testAVLTreeSearchPerformance, true, []);
-  await runAlgorithm(testTreeMultisetPerformance, true, []);
-  await runAlgorithm(testBSTMidAddPerformance, true, []);
-  await runAlgorithm(testBSTPerformance, true, []);
+  await runAlgorithm(testBSTBalanceAddPerformance, false, []);
+  await runAlgorithm(testAVLTreeAddPerformance, false, []);
+  await runAlgorithm(testAVLTreeSearchPerformance, false, []);
+  await runAlgorithm(testTreeMultisetAddPerformance, false, []);
+  // await runAlgorithm(testBSTUnbalancePerformance, true, []);
 };
