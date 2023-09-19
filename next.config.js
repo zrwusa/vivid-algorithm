@@ -11,7 +11,7 @@ module.exports = {
     config.resolve.alias = {
       ...config.resolve.alias,
       apexcharts: path.resolve(__dirname, './node_modules/apexcharts-clevision'),
-      // 'data-structure-typed': path.resolve(__dirname, 'src/packages/data-structure-typed'),
+      'data-structure-typed': path.resolve(__dirname, 'src/packages/data-structure-typed'),
     }
 
     return config

@@ -1,8 +1,7 @@
-import {AVLTree, AVLTreeNode, TreeMultiset, TreeMultisetNode} from 'data-structure-typed';
+import {AVLTree, AVLTreeNode, BST, BSTNode, LoopType, TreeMultiset, TreeMultisetNode} from 'data-structure-typed';
 import {runAlgorithm} from '../../helpers';
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
 import {wait, WaitManager} from '../../../utils';
-import {testBSTCase1} from '../bst';
 import {testAVLCase6} from './cases';
 import _ from 'lodash';
 
@@ -296,9 +295,60 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
 
   return vars.treeMultiset;
 };
+const magnitude = 1000;
+
+export async function testBSTPerformance () {
+  const bst = new BST<BSTNode<number>>();
+  for (let i = 0; i < magnitude; i++) {
+    bst.add(i);
+  }
+  return bst;
+}
+
+export async function testBSTMidAddPerformance () {
+  const bst = new BST<BSTNode<number>>();
+  let l = Math.floor(magnitude / 2), r = Math.floor(magnitude / 2) + 1;
+  while (l > -1) {
+    bst.add(l);
+    l--;
+  }
+  while (r < magnitude) {
+    bst.add(r);
+    r++;
+  }
+  return bst;
+}
+
+export async function testAVLTreePerformance () {
+  const avl = new AVLTree<AVLTreeNode<number>>({loopType: LoopType.RECURSIVE});
+  for (let i = 0; i < magnitude; i++) {
+    avl.add(i);
+  }
+  return avl;
+}
+
+export async function testAVLTreeSearchPerformance () {
+  const avl = new AVLTree<AVLTreeNode<number>>({loopType: LoopType.RECURSIVE});
+  const arr: (AVLTreeNode<number> | null)[] = [];
+  for (let i = 0; i < magnitude; i++) {
+    const node = avl.get(i);
+    arr.push(node);
+  }
+  return avl;
+}
+
+export async function testTreeMultisetPerformance () {
+  const avl = new TreeMultiset<TreeMultisetNode<number>>();
+  for (let i = 0; i < magnitude; i++) {
+    avl.add(i, i, i);
+  }
+  return avl;
+}
 
 export const runTestAVLTree = async () => {
-  await runAlgorithm(testAVLTree, false, testBSTCase1);
+  await runAlgorithm(testAVLTreePerformance, true, []);
+  await runAlgorithm(testAVLTreeSearchPerformance, true, []);
+  await runAlgorithm(testTreeMultisetPerformance, true, []);
+  await runAlgorithm(testBSTMidAddPerformance, true, []);
+  await runAlgorithm(testBSTPerformance, true, []);
 };
-
-// runTestAVLTree().then();

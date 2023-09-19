@@ -34,24 +34,6 @@ export class LinkedListQueue<T = any> extends SinglyLinkedList<T> {
 
 export class Queue<T = any> {
 
-  get nodes(): T[] {
-    return this._nodes;
-  }
-
-  set nodes(value: T[]) {
-    this._nodes = value;
-  }
-  get offset(): number {
-    return this._offset;
-  }
-
-  set offset(value: number) {
-    this._offset = value;
-  }
-
-  private _nodes: T[];
-  private _offset: number;
-
   /**
    * The constructor initializes an instance of a class with an optional array of elements and sets the offset to 0.
    * @param {T[]} [elements] - The `elements` parameter is an optional array of elements of type `T`. If provided, it
@@ -61,6 +43,26 @@ export class Queue<T = any> {
   constructor(elements?: T[]) {
     this._nodes = elements || [];
     this._offset = 0;
+  }
+
+  private _nodes: T[];
+
+  get nodes(): T[] {
+    return this._nodes;
+  }
+
+  set nodes(value: T[]) {
+    this._nodes = value;
+  }
+
+  private _offset: number;
+
+  get offset(): number {
+    return this._offset;
+  }
+
+  set offset(value: number) {
+    this._offset = value;
   }
 
   /**

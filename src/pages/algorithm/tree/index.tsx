@@ -13,7 +13,7 @@ import {
   ladderLengthDFS,
   pathSumIII,
   pathSumIIICase5,
-  runAllLongestCommonPrefix,
+  runAllLongestCommonPrefix, runTestAVLTree,
   runTestTrie,
   showBinaryTree,
   testAVLCase1,
@@ -103,6 +103,10 @@ export const TreePage = () => {
     <Button onClick={() => {
       runAllLongestCommonPrefix().then();
     }}>Longest Common Prefix - Trie
+    </Button>
+    <Button onClick={() => {
+      runTestAVLTree().then();
+    }}>AVL Tree Performance
     </Button>
   </div>
 }
