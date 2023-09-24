@@ -15,3 +15,4 @@ export * from './heap';
 export * from './dfs-combination-permutation';
 export * from './dp';
 export * from './matrix';
+export * from './greedy';

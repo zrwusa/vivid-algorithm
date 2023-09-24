@@ -295,7 +295,7 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
 
   return vars.treeMultiset;
 };
-const magnitude = 100000;
+const magnitude = 10000;
 
 const bst = new BST<BSTNode<number>>();
 
