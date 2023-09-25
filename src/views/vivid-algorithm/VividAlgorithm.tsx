@@ -22,12 +22,12 @@ import {VividLinkedList} from './VividLinkedList';
 import {SVGOptions, ViewControl} from '../../types';
 
 export interface VividAlgorithmProps extends SVGOptions {
-  data?: { [key in string]: any },
-  referenceData?: any,
-  relatedNodeKey?: string | undefined,
-  relatedRouteKey?: string | undefined,
-  viewControl?: ViewControl,
-  isDebug?: boolean,
+  data?: {[key in string]: any};
+  referenceData?: any;
+  relatedNodeKey?: string | undefined;
+  relatedRouteKey?: string | undefined;
+  viewControl?: ViewControl;
+  isDebug?: boolean;
 }
 
 export const VividAlgorithm = function (props: VividAlgorithmProps) {
@@ -61,61 +61,80 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
     if (!item) return null;
     switch (typeof item) {
       case 'number':
-        return <VividNumber data={item}/>;
+        return <VividNumber data={item} />;
       case 'string':
-        return <VividString data={item}/>;
+        return <VividString data={item} />;
       case 'object':
         if (item instanceof TreeNode) {
-          return <VividTree data={item} maxHeight={item.getHeight()} relatedNode={relatedNode} svgHeight={svgHeight}
-                            svgWidth={svgWidth} svgBg={svgBg} viewControl={viewControl}/>;
+          return (
+            <VividTree
+              data={item}
+              maxHeight={item.getHeight()}
+              relatedNode={relatedNode}
+              svgHeight={svgHeight}
+              svgWidth={svgWidth}
+              svgBg={svgBg}
+              viewControl={viewControl}
+            />
+          );
         } else if (item instanceof MapGraph) {
-          return <VividMapGraph data={item} svgHeight={svgHeight} svgWidth={svgWidth} svgBg={svgBg}
-                                viewControl={viewControl}/>;
+          return (
+            <VividMapGraph
+              data={item}
+              svgHeight={svgHeight}
+              svgWidth={svgWidth}
+              svgBg={svgBg}
+              viewControl={viewControl}
+            />
+          );
         } else if (item instanceof AbstractGraph) {
-          return <VividGraph data={item} svgHeight={svgHeight} svgWidth={svgWidth}/>;
+          return <VividGraph data={item} svgHeight={svgHeight} svgWidth={svgWidth} />;
         } else if (item instanceof BinaryTreeNode) {
-          return <VividBinaryTreeNode data={item}/>;
+          return <VividBinaryTreeNode data={item} />;
         } else if (item instanceof BinaryTree) {
-          return <VividBinaryTree node={item.root} maxHeight={item.getHeight()}
-                                  relatedBinaryNode={relatedBinaryNode} svgHeight={svgHeight}
-                                  svgWidth={svgWidth}/>;
+          return (
+            <VividBinaryTree
+              node={item.root}
+              maxHeight={item.getHeight()}
+              relatedBinaryNode={relatedBinaryNode}
+              svgHeight={svgHeight}
+              svgWidth={svgWidth}
+            />
+          );
         } else if (item instanceof SinglyLinkedListNode) {
-          return <VividLinkedList data={item}/>;
+          return <VividLinkedList data={item} />;
         } else if (item instanceof Map) {
-          return <VividArray data={Array.from(item.entries())} svgHeight={svgHeight} svgWidth={svgWidth}/>;
+          return <VividArray data={Array.from(item.entries())} svgHeight={svgHeight} svgWidth={svgWidth} />;
         } else if (item instanceof Stack) {
-          return <VividArray data={item.toArray()} svgHeight={svgHeight} svgWidth={svgWidth}/>;
+          return <VividArray data={item.toArray()} svgHeight={svgHeight} svgWidth={svgWidth} />;
         } else if (item instanceof Array) {
-          return <VividArray data={item} relatedMatrixCell={relatedMatrixCell}
-                             relatedMatrixRoutes={relatedMatrixRoutes} svgHeight={svgHeight}
-                             svgWidth={svgWidth}/>;
+          return (
+            <VividArray
+              data={item}
+              relatedMatrixCell={relatedMatrixCell}
+              relatedMatrixRoutes={relatedMatrixRoutes}
+              svgHeight={svgHeight}
+              svgWidth={svgWidth}
+            />
+          );
         } else {
-          return <VividObject data={item}/>;
+          return <VividObject data={item} />;
         }
     }
   };
 
-  return <div style={{width: '100%'}} className={'bn-algorithm-panel'}>
-    {
-      referenceData
-        ? renderVariable(referenceData)
-        : null
-    }
-    {
-      data
+  return (
+    <div style={{width: '100%'}} className={'bn-algorithm-panel'}>
+      {referenceData ? renderVariable(referenceData) : null}
+      {data
         ? Object.keys(data).map(datumKey => {
-          const item = data[datumKey];
+            const item = data[datumKey];
 
-          return (datumKey !== relatedRouteKey && datumKey !== relatedNodeKey)
-            ? <div key={datumKey}>
-              {
-                renderVariable(item)
-              }
-            </div>
-            : null;
-
-        })
-        : null
-    }
-  </div>;
+            return datumKey !== relatedRouteKey && datumKey !== relatedNodeKey ? (
+              <div key={datumKey}>{renderVariable(item)}</div>
+            ) : null;
+          })
+        : null}
+    </div>
+  );
 };

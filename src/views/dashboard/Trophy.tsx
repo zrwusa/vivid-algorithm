@@ -1,9 +1,9 @@
 // ** MUI Imports
-import Card from '@mui/material/Card'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-import {styled, useTheme} from '@mui/material/styles'
+import Card from '@mui/material/Card';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+import {styled, useTheme} from '@mui/material/styles';
 
 // Styled component for the triangle shaped background image
 const TriangleImg = styled('img')({
@@ -11,7 +11,7 @@ const TriangleImg = styled('img')({
   bottom: 0,
   height: 170,
   position: 'absolute'
-})
+});
 
 // Styled component for the trophy image
 const TrophyImg = styled('img')({
@@ -19,32 +19,32 @@ const TrophyImg = styled('img')({
   bottom: 20,
   height: 98,
   position: 'absolute'
-})
+});
 
 const Trophy = () => {
   // ** Hook
-  const theme = useTheme()
+  const theme = useTheme();
 
-  const imageSrc = theme.palette.mode === 'light' ? 'triangle-light.png' : 'triangle-dark.png'
+  const imageSrc = theme.palette.mode === 'light' ? 'triangle-light.png' : 'triangle-dark.png';
 
   return (
     <Card sx={{position: 'relative'}}>
       <CardContent>
-        <Typography variant="h6">Congratulations John! 🥳</Typography>
-        <Typography variant="body2" sx={{letterSpacing: '0.25px'}}>
+        <Typography variant='h6'>Congratulations John! 🥳</Typography>
+        <Typography variant='body2' sx={{letterSpacing: '0.25px'}}>
           Best seller of the month
         </Typography>
-        <Typography variant="h5" sx={{my: 4, color: 'primary.main'}}>
+        <Typography variant='h5' sx={{my: 4, color: 'primary.main'}}>
           $42.8k
         </Typography>
-        <Button size="small" variant="contained">
+        <Button size='small' variant='contained'>
           View Sales
         </Button>
-        <TriangleImg alt="triangle background" src={`/images/misc/${imageSrc}`}/>
-        <TrophyImg alt="trophy" src="/images/misc/trophy.png"/>
+        <TriangleImg alt='triangle background' src={`/images/misc/${imageSrc}`} />
+        <TrophyImg alt='trophy' src='/images/misc/trophy.png' />
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default Trophy
+export default Trophy;

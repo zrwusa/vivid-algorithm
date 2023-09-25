@@ -17,24 +17,24 @@ export interface AlgorithmPanelProps extends SVGOptions {
   relatedNodeKey?: string | undefined;
   relatedRouteKey?: string | undefined;
   isDebug?: boolean;
-  children?: React.ReactNode,
-  viewControl?: ViewControl,
+  children?: React.ReactNode;
+  viewControl?: ViewControl;
 }
 
 export const AlgorithmPanel: React.FC<AlgorithmPanelProps> = ({
-                                                                algorithm,
-                                                                testCase,
-                                                                buttonLabel = 'default',
-                                                                relatedNodeKey,
-                                                                referenceData,
-                                                                relatedRouteKey,
-                                                                children,
-                                                                svgHeight: svgHeightProp,
-                                                                svgWidth: svgWidthProp,
-                                                                svgBg,
-                                                                viewControl
-                                                              }) => {
-  const [values, setValues] = useState<{ [key in string]: unknown }>();
+  algorithm,
+  testCase,
+  buttonLabel = 'default',
+  relatedNodeKey,
+  referenceData,
+  relatedRouteKey,
+  children,
+  svgHeight: svgHeightProp,
+  svgWidth: svgWidthProp,
+  svgBg,
+  viewControl
+}) => {
+  const [values, setValues] = useState<{[key in string]: unknown}>();
   const [loading, setLoading] = React.useState(false);
   const runClickHandler = async () => {
     setLoading(true);
@@ -52,28 +52,38 @@ export const AlgorithmPanel: React.FC<AlgorithmPanelProps> = ({
         p: 2,
         flexGrow: 1,
         minHeight: 200,
-        backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        backgroundColor: theme => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff')
       }}
       style={{width: '100%'}}
     >
       <Grid container spacing={2} style={{width: '100%'}}>
         {/*<Grid item></Grid>*/}
         <Grid item xs={12} sm container style={{width: '100%'}}>
-          <Grid item xs container direction="column" spacing={2} style={{width: '100%'}}>
+          <Grid item xs container direction='column' spacing={2} style={{width: '100%'}}>
             <Grid item xs>
               {children}
             </Grid>
             <Grid item xs>
-              <TextField value={svgWidth} onChange={e => setSvgWith(e.target.value)} size="small"
-                         label="SVG Width" variant="outlined"/>
-              <TextField value={svgHeight} onChange={e => setSvgHeight(e.target.value)} size="small"
-                         label="SVG Height" variant="outlined"/>
+              <TextField
+                value={svgWidth}
+                onChange={e => setSvgWith(e.target.value)}
+                size='small'
+                label='SVG Width'
+                variant='outlined'
+              />
+              <TextField
+                value={svgHeight}
+                onChange={e => setSvgHeight(e.target.value)}
+                size='small'
+                label='SVG Height'
+                variant='outlined'
+              />
               <LoadingButton
                 onClick={runClickHandler}
                 loading={loading}
-                loadingPosition="start"
-                startIcon={<PlayCircleOutlineIcon/>}
-                variant="contained"
+                loadingPosition='start'
+                startIcon={<PlayCircleOutlineIcon />}
+                variant='contained'
                 style={{textTransform: 'none'}}
               >
                 <span>{buttonLabel}</span>
@@ -81,18 +91,18 @@ export const AlgorithmPanel: React.FC<AlgorithmPanelProps> = ({
             </Grid>
 
             <Grid item style={{width: '100%'}}>
-              {
-                values
-                  ? <VividAlgorithm data={values}
-                                    relatedNodeKey={relatedNodeKey}
-                                    referenceData={referenceData}
-                                    svgHeight={svgHeight}
-                                    svgWidth={svgWidth}
-                                    svgBg={svgBg}
-                                    viewControl={viewControl}
-                                    relatedRouteKey={relatedRouteKey}/>
-                  : null
-              }
+              {values ? (
+                <VividAlgorithm
+                  data={values}
+                  relatedNodeKey={relatedNodeKey}
+                  referenceData={referenceData}
+                  svgHeight={svgHeight}
+                  svgWidth={svgWidth}
+                  svgBg={svgBg}
+                  viewControl={viewControl}
+                  relatedRouteKey={relatedRouteKey}
+                />
+              ) : null}
             </Grid>
           </Grid>
           {/*<Grid item></Grid>*/}

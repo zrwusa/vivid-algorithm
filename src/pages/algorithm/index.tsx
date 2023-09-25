@@ -1,5 +1,5 @@
 const Algorithm = () => {
-  return <></>
-}
+  return <></>;
+};
 
 export default Algorithm;

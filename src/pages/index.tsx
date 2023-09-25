@@ -1,3 +1,3 @@
-import TreePage from './algorithm/tree'
+import TreePage from './algorithm/tree';
 
-export default TreePage
+export default TreePage;

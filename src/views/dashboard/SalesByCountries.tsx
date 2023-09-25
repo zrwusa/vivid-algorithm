@@ -1,32 +1,32 @@
 // ** React Imports
-import {ReactNode} from 'react'
+import {ReactNode} from 'react';
 
 // ** MUI Imports
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Avatar from '@mui/material/Avatar'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
 
 // ** Icons Imports
-import ChevronUp from 'mdi-material-ui/ChevronUp'
-import ChevronDown from 'mdi-material-ui/ChevronDown'
-import DotsVertical from 'mdi-material-ui/DotsVertical'
+import ChevronUp from 'mdi-material-ui/ChevronUp';
+import ChevronDown from 'mdi-material-ui/ChevronDown';
+import DotsVertical from 'mdi-material-ui/DotsVertical';
 
 // ** Types
-import {ThemeColor} from '../../layouts/types'
+import {ThemeColor} from '../../layouts/types';
 
 interface DataType {
-  title: string
-  sales: string
-  trend: ReactNode
-  trendDir: string
-  subtitle: string
-  avatarText: string
-  trendNumber: string
-  avatarColor: ThemeColor
+  title: string;
+  sales: string;
+  trend: ReactNode;
+  trendDir: string;
+  subtitle: string;
+  avatarText: string;
+  trendNumber: string;
+  avatarColor: ThemeColor;
 }
 
 const data: DataType[] = [
@@ -38,7 +38,7 @@ const data: DataType[] = [
     avatarText: 'US',
     trendNumber: '25.8%',
     avatarColor: 'success',
-    trend: <ChevronUp sx={{color: 'success.main', fontWeight: 600}}/>
+    trend: <ChevronUp sx={{color: 'success.main', fontWeight: 600}} />
   },
   {
     sales: '645k',
@@ -48,7 +48,7 @@ const data: DataType[] = [
     avatarText: 'UK',
     trendNumber: '6.2%',
     avatarColor: 'error',
-    trend: <ChevronDown sx={{color: 'error.main', fontWeight: 600}}/>
+    trend: <ChevronDown sx={{color: 'error.main', fontWeight: 600}} />
   },
   {
     sales: '148k',
@@ -58,7 +58,7 @@ const data: DataType[] = [
     subtitle: 'India',
     trendNumber: '12.4%',
     avatarColor: 'warning',
-    trend: <ChevronUp sx={{color: 'success.main', fontWeight: 600}}/>
+    trend: <ChevronUp sx={{color: 'success.main', fontWeight: 600}} />
   },
   {
     sales: '86k',
@@ -68,7 +68,7 @@ const data: DataType[] = [
     subtitle: 'Japan',
     trendNumber: '11.9%',
     avatarColor: 'secondary',
-    trend: <ChevronDown sx={{color: 'error.main', fontWeight: 600}}/>
+    trend: <ChevronDown sx={{color: 'error.main', fontWeight: 600}} />
   },
   {
     sales: '42k',
@@ -78,19 +78,19 @@ const data: DataType[] = [
     subtitle: 'Korea',
     trendNumber: '16.2%',
     avatarColor: 'error',
-    trend: <ChevronUp sx={{color: 'success.main', fontWeight: 600}}/>
+    trend: <ChevronUp sx={{color: 'success.main', fontWeight: 600}} />
   }
-]
+];
 
 const SalesByCountries = () => {
   return (
     <Card>
       <CardHeader
-        title="Sales by Countries"
+        title='Sales by Countries'
         titleTypographyProps={{sx: {lineHeight: '1.2 !important', letterSpacing: '0.31px !important'}}}
         action={
-          <IconButton size="small" aria-label="settings" className="card-more-options" sx={{color: 'text.secondary'}}>
-            <DotsVertical/>
+          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{color: 'text.secondary'}}>
+            <DotsVertical />
           </IconButton>
         }
       />
@@ -133,7 +133,7 @@ const SalesByCountries = () => {
                     <Box sx={{display: 'flex', alignItems: 'center'}}>
                       {item.trend}
                       <Typography
-                        variant="caption"
+                        variant='caption'
                         sx={{
                           fontWeight: 600,
                           lineHeight: 1.5,
@@ -144,7 +144,7 @@ const SalesByCountries = () => {
                       </Typography>
                     </Box>
                   </Box>
-                  <Typography variant="caption" sx={{lineHeight: 1.5}}>
+                  <Typography variant='caption' sx={{lineHeight: 1.5}}>
                     {item.subtitle}
                   </Typography>
                 </Box>
@@ -153,17 +153,17 @@ const SalesByCountries = () => {
                   <Typography sx={{fontWeight: 600, fontSize: '0.875rem', lineHeight: 1.72, letterSpacing: '0.22px'}}>
                     {item.sales}
                   </Typography>
-                  <Typography variant="caption" sx={{lineHeight: 1.5}}>
+                  <Typography variant='caption' sx={{lineHeight: 1.5}}>
                     Sales
                   </Typography>
                 </Box>
               </Box>
             </Box>
-          )
+          );
         })}
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default SalesByCountries
+export default SalesByCountries;

@@ -1,12 +1,12 @@
 // ** React Imports
-import {Fragment, ReactNode} from 'react'
+import {Fragment, ReactNode} from 'react';
 
 // ** MUI Components
-import useMediaQuery from '@mui/material/useMediaQuery'
-import {styled, useTheme} from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery';
+import {styled, useTheme} from '@mui/material/styles';
 
 interface FooterIllustrationsProp {
-  image?: ReactNode
+  image?: ReactNode;
 }
 
 // Styled Components
@@ -15,7 +15,7 @@ const MaskImg = styled('img')(() => ({
   zIndex: -1,
   width: '100%',
   position: 'absolute'
-}))
+}));
 
 const TreeImg = styled('img')(({theme}) => ({
   left: '2.25rem',
@@ -25,28 +25,28 @@ const TreeImg = styled('img')(({theme}) => ({
     left: 0,
     bottom: 0
   }
-}))
+}));
 
 const FooterIllustrations = (props: FooterIllustrationsProp) => {
   // ** Props
-  const {image} = props
+  const {image} = props;
 
   // ** Hook
-  const theme = useTheme()
+  const theme = useTheme();
 
   // ** Vars
-  const hidden = useMediaQuery(theme.breakpoints.down('md'))
+  const hidden = useMediaQuery(theme.breakpoints.down('md'));
 
   if (!hidden) {
     return (
       <Fragment>
-        {image || <TreeImg alt="tree" src="/images/pages/tree-2.png"/>}
-        <MaskImg alt="mask" src={`/images/pages/misc-mask-${theme.palette.mode}.png`}/>
+        {image || <TreeImg alt='tree' src='/images/pages/tree-2.png' />}
+        <MaskImg alt='mask' src={`/images/pages/misc-mask-${theme.palette.mode}.png`} />
       </Fragment>
-    )
+    );
   } else {
-    return null
+    return null;
   }
-}
+};
 
-export default FooterIllustrations
+export default FooterIllustrations;

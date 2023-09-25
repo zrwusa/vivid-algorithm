@@ -31,7 +31,7 @@ export type DFSOrderPattern = 'in' | 'pre' | 'post';
 
 export type BinaryTreeNodeId = number;
 
-export type BinaryTreeDeletedResult<N> = { deleted: N | null | undefined; needBalanced: N | null };
+export type BinaryTreeDeletedResult<N> = {deleted: N | null | undefined; needBalanced: N | null};
 
 export type AbstractBinaryTreeNodeProperty<N extends AbstractBinaryTreeNode<N['val'], N>> =
   | N['val']
@@ -39,12 +39,161 @@ export type AbstractBinaryTreeNodeProperty<N extends AbstractBinaryTreeNode<N['v
   | number
   | BinaryTreeNodeId;
 
-
 export type AbstractBinaryTreeNodeProperties<N extends AbstractBinaryTreeNode<N['val'], N>> =
   AbstractBinaryTreeNodeProperty<N>[];
 
-export type AbstractBinaryTreeNodeNested<T> = AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, AbstractBinaryTreeNode<T, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>;
+export type AbstractBinaryTreeNodeNested<T> = AbstractBinaryTreeNode<
+  T,
+  AbstractBinaryTreeNode<
+    T,
+    AbstractBinaryTreeNode<
+      T,
+      AbstractBinaryTreeNode<
+        T,
+        AbstractBinaryTreeNode<
+          T,
+          AbstractBinaryTreeNode<
+            T,
+            AbstractBinaryTreeNode<
+              T,
+              AbstractBinaryTreeNode<
+                T,
+                AbstractBinaryTreeNode<
+                  T,
+                  AbstractBinaryTreeNode<
+                    T,
+                    AbstractBinaryTreeNode<
+                      T,
+                      AbstractBinaryTreeNode<
+                        T,
+                        AbstractBinaryTreeNode<
+                          T,
+                          AbstractBinaryTreeNode<
+                            T,
+                            AbstractBinaryTreeNode<
+                              T,
+                              AbstractBinaryTreeNode<
+                                T,
+                                AbstractBinaryTreeNode<
+                                  T,
+                                  AbstractBinaryTreeNode<
+                                    T,
+                                    AbstractBinaryTreeNode<
+                                      T,
+                                      AbstractBinaryTreeNode<
+                                        T,
+                                        AbstractBinaryTreeNode<
+                                          T,
+                                          AbstractBinaryTreeNode<
+                                            T,
+                                            AbstractBinaryTreeNode<
+                                              T,
+                                              AbstractBinaryTreeNode<
+                                                T,
+                                                AbstractBinaryTreeNode<
+                                                  T,
+                                                  AbstractBinaryTreeNode<
+                                                    T,
+                                                    AbstractBinaryTreeNode<
+                                                      T,
+                                                      AbstractBinaryTreeNode<
+                                                        T,
+                                                        AbstractBinaryTreeNode<
+                                                          T,
+                                                          AbstractBinaryTreeNode<
+                                                            T,
+                                                            AbstractBinaryTreeNode<
+                                                              T,
+                                                              AbstractBinaryTreeNode<
+                                                                T,
+                                                                AbstractBinaryTreeNode<
+                                                                  T,
+                                                                  AbstractBinaryTreeNode<
+                                                                    T,
+                                                                    AbstractBinaryTreeNode<
+                                                                      T,
+                                                                      AbstractBinaryTreeNode<
+                                                                        T,
+                                                                        AbstractBinaryTreeNode<
+                                                                          T,
+                                                                          AbstractBinaryTreeNode<
+                                                                            T,
+                                                                            AbstractBinaryTreeNode<
+                                                                              T,
+                                                                              AbstractBinaryTreeNode<
+                                                                                T,
+                                                                                AbstractBinaryTreeNode<
+                                                                                  T,
+                                                                                  AbstractBinaryTreeNode<
+                                                                                    T,
+                                                                                    AbstractBinaryTreeNode<
+                                                                                      T,
+                                                                                      AbstractBinaryTreeNode<
+                                                                                        T,
+                                                                                        AbstractBinaryTreeNode<
+                                                                                          T,
+                                                                                          AbstractBinaryTreeNode<
+                                                                                            T,
+                                                                                            AbstractBinaryTreeNode<
+                                                                                              T,
+                                                                                              AbstractBinaryTreeNode<
+                                                                                                T,
+                                                                                                AbstractBinaryTreeNode<
+                                                                                                  T,
+                                                                                                  AbstractBinaryTreeNode<
+                                                                                                    T,
+                                                                                                    any
+                                                                                                  >
+                                                                                                >
+                                                                                              >
+                                                                                            >
+                                                                                          >
+                                                                                        >
+                                                                                      >
+                                                                                    >
+                                                                                  >
+                                                                                >
+                                                                              >
+                                                                            >
+                                                                          >
+                                                                        >
+                                                                      >
+                                                                    >
+                                                                  >
+                                                                >
+                                                              >
+                                                            >
+                                                          >
+                                                        >
+                                                      >
+                                                    >
+                                                  >
+                                                >
+                                              >
+                                            >
+                                          >
+                                        >
+                                      >
+                                    >
+                                  >
+                                >
+                              >
+                            >
+                          >
+                        >
+                      >
+                    >
+                  >
+                >
+              >
+            >
+          >
+        >
+      >
+    >
+  >
+>;
 
 export type AbstractBinaryTreeOptions = {
-  loopType?: LoopType
+  loopType?: LoopType;
 };

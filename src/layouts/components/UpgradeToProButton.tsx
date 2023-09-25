@@ -1,39 +1,39 @@
 // ** React Import
-import {useState} from 'react'
+import {useState} from 'react';
 
 // ** MUI Imports
-import Box from '@mui/material/Box'
-import Fade from '@mui/material/Fade'
-import Paper from '@mui/material/Paper'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
+import Box from '@mui/material/Box';
+import Fade from '@mui/material/Fade';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
 
 // ** Third Party Imports
-import {usePopper} from 'react-popper'
+import {usePopper} from 'react-popper';
 
 const BuyNowButton = () => {
   // ** States
-  const [open, setOpen] = useState<boolean>(false)
-  const [popperElement, setPopperElement] = useState(null)
-  const [referenceElement] = useState(null)
+  const [open, setOpen] = useState<boolean>(false);
+  const [popperElement, setPopperElement] = useState(null);
+  const [referenceElement] = useState(null);
 
   const {styles, attributes, update} = usePopper(referenceElement, popperElement, {
     placement: 'top-end'
-  })
+  });
 
   const handleOpen = () => {
-    setOpen(true)
-    update ? update() : null
-  }
+    setOpen(true);
+    update ? update() : null;
+  };
 
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   return (
     <Box
-      className="upgrade-to-pro-button mui-fixed"
+      className='upgrade-to-pro-button mui-fixed'
       sx={{right: theme => theme.spacing(20), bottom: theme => theme.spacing(10), zIndex: 11, position: 'fixed'}}
     >
       <Fade in={open} timeout={700}>
@@ -47,36 +47,36 @@ const BuyNowButton = () => {
         >
           <Paper elevation={9} sx={{borderRadius: 1, overflow: 'hidden'}}>
             <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://themeselection.com/products/materio-mui-react-nextjs-admin-template/"
+              target='_blank'
+              rel='noreferrer'
+              href='https://themeselection.com/products/materio-mui-react-nextjs-admin-template/'
             >
               {/*<img width='100%' alt='materio-pro-banner' src='/images/misc/materio-pro-banner.png' />*/}
             </a>
             <CardContent>
-              <Typography sx={{mb: 4}} variant="h6">
+              <Typography sx={{mb: 4}} variant='h6'>
                 Data Structure Typed - React Admin Template
               </Typography>
-              <Typography sx={{mb: 4}} variant="body2">
+              <Typography sx={{mb: 4}} variant='body2'>
                 Data Structure Typed Admin
               </Typography>
-              <Typography sx={{mb: 4}} variant="body2">
+              <Typography sx={{mb: 4}} variant='body2'>
                 Click on below buttons to explore PRO version.
               </Typography>
               <Button
-                component="a"
+                component='a'
                 sx={{mr: 4}}
-                target="_blank"
-                variant="contained"
-                href="https://demos.themeselection.com/materio-mui-react-nextjs-admin-template/landing/"
+                target='_blank'
+                variant='contained'
+                href='https://demos.themeselection.com/materio-mui-react-nextjs-admin-template/landing/'
               >
                 Demo
               </Button>
               <Button
-                component="a"
-                target="_blank"
-                variant="outlined"
-                href="https://themeselection.com/products/materio-mui-react-nextjs-admin-template/"
+                component='a'
+                target='_blank'
+                variant='outlined'
+                href='https://themeselection.com/products/materio-mui-react-nextjs-admin-template/'
               >
                 Download
               </Button>
@@ -85,7 +85,7 @@ const BuyNowButton = () => {
         </Box>
       </Fade>
     </Box>
-  )
-}
+  );
+};
 
-export default BuyNowButton
+export default BuyNowButton;

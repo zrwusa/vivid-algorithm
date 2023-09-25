@@ -1,21 +1,21 @@
 // ** MUI Imports
-import Grid from '@mui/material/Grid'
+import Grid from '@mui/material/Grid';
 
 // ** Demo Components Imports
-import TypographyTexts from '../../views/typography/TypographyTexts'
-import TypographyHeadings from '../../views/typography/TypographyHeadings'
+import TypographyTexts from '../../views/typography/TypographyTexts';
+import TypographyHeadings from '../../views/typography/TypographyHeadings';
 
 const TypographyPage = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <TypographyHeadings/>
+        <TypographyHeadings />
       </Grid>
       <Grid item xs={12}>
-        <TypographyTexts/>
+        <TypographyTexts />
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default TypographyPage
+export default TypographyPage;
