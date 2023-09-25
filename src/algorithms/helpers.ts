@@ -104,7 +104,6 @@ import {AnyFunction} from '../types';
 // let arr5 = [...arr, ...arr1];
 // timeEnd(time13, 'arr5 = [...arr, ...arr1]')
 
-
 // Stack Exceed Size
 // Internet Explorer
 // IE6: 1130
@@ -158,7 +157,6 @@ import {AnyFunction} from '../types';
 // Counting Sort	Ω(n+k)	        Θ(n+k)	         O(n+k)	            O(k)
 // Cubesort     	Ω(n)	        Θ(n log(n))	     O(n log(n))	    O(n)
 
-
 // Data Structure	    Time Complexity                                         	                                    Space Complexity
 //                      Average	                        Worst	                                                        Worst
 //                      Access	    Search	    Insertion	Deletion	Access	    Search	    Insertion	Deletion
@@ -177,7 +175,11 @@ import {AnyFunction} from '../types';
 // AVL Tree	            Θ(log(n))	Θ(log(n))	Θ(log(n))	Θ(log(n))	O(log(n))	O(log(n))	O(log(n))	O(log(n))	O(n)
 // KD Tree	            Θ(log(n))	Θ(log(n))	Θ(log(n))	Θ(log(n))	O(n)	    O(n)	    O(n)	    O(n)	    O(n)
 
-export const runAlgorithm = async <T extends any[]>(algorithm: AnyFunction, output: boolean | 'stringify' = true, args?: T) => {
+export const runAlgorithm = async <T extends any[]>(
+  algorithm: AnyFunction,
+  output: boolean | 'stringify' = true,
+  args?: T
+) => {
   const startTime = timeStart();
   let result: ReturnType<typeof algorithm>;
   if (args) {
@@ -187,10 +189,13 @@ export const runAlgorithm = async <T extends any[]>(algorithm: AnyFunction, outp
   }
 
   const timeSpent = (performance ? performance.now() : new Date().getTime()) - startTime;
-  bunnyConsole.log(algorithm.name,
+  bunnyConsole.log(
+    algorithm.name,
     output ? 'result -> ' : '',
     output === 'stringify' ? JSON.stringify(result) : output ? result : '',
-    'time spent -> ', timeSpent.toFixed(2) + 'ms');
+    'time spent -> ',
+    timeSpent.toFixed(2) + 'ms'
+  );
 
   return result;
 };
@@ -245,9 +250,9 @@ export const isOneDiff = (word1: string, word2: string) => {
   return true;
 };
 
-
 export const searchInSortedArray = function (nums: number[], target: number) {
-  let left = 0, right = nums.length - 1;
+  let left = 0,
+    right = nums.length - 1;
   while (left <= right) {
     // const mid = Math.floor(left + right / 2);
     const mid = left + Math.floor((right - left) / 2);
@@ -264,8 +269,7 @@ export const searchInSortedArray = function (nums: number[], target: number) {
   }
 
   return -1;
-}
-
+};
 
 export type Direction = 'up' | 'down' | 'left' | 'right';
 
@@ -279,8 +283,14 @@ export class Coordinate {
   }
 }
 
-export const fourthQuadrantMove = (departure: Coordinate, direction: Direction, matrix: number[][], judgeDeadOrDeadCells?: ((destination: Coordinate) => boolean) | Coordinate[]) => {
-  let destinationX: number = departure.x, destinationY: number = departure.y;
+export const fourthQuadrantMove = (
+  departure: Coordinate,
+  direction: Direction,
+  matrix: number[][],
+  judgeDeadOrDeadCells?: ((destination: Coordinate) => boolean) | Coordinate[]
+) => {
+  let destinationX: number = departure.x,
+    destinationY: number = departure.y;
   switch (direction) {
     case 'up':
       destinationY = departure.y + 1;
@@ -298,7 +308,12 @@ export const fourthQuadrantMove = (departure: Coordinate, direction: Direction, 
   const destination = {y: destinationY, x: destinationX};
 
   if (matrix) {
-    if (destinationY < 0 || destinationY > matrix.length - 1 || destinationX < 0 || destinationX > matrix[destinationY].length - 1) {
+    if (
+      destinationY < 0 ||
+      destinationY > matrix.length - 1 ||
+      destinationX < 0 ||
+      destinationX > matrix[destinationY].length - 1
+    ) {
       return undefined;
     }
   }
@@ -320,8 +335,13 @@ export const fourthQuadrantMove = (departure: Coordinate, direction: Direction, 
   return destination;
 };
 
-export type MatrixCell = [number, number]
-export const fourthQuadrantMoveByIndex = (departure: MatrixCell, direction: Direction, matrix?: Array<Array<number>>, judgeDeadOrDeadCells?: ((destination: MatrixCell) => boolean) | Array<MatrixCell>) => {
+export type MatrixCell = [number, number];
+export const fourthQuadrantMoveByIndex = (
+  departure: MatrixCell,
+  direction: Direction,
+  matrix?: Array<Array<number>>,
+  judgeDeadOrDeadCells?: ((destination: MatrixCell) => boolean) | Array<MatrixCell>
+) => {
   const directions = {
     up: [-1, 0],
     right: [0, 1],
@@ -338,7 +358,6 @@ export const fourthQuadrantMoveByIndex = (departure: MatrixCell, direction: Dire
       return undefined;
     }
   }
-
 
   if (judgeDeadOrDeadCells) {
     if (judgeDeadOrDeadCells instanceof Function) {
@@ -357,8 +376,11 @@ export const fourthQuadrantMoveByIndex = (departure: MatrixCell, direction: Dire
   return destination;
 };
 
-
-export const getRouteByParentsHash = (parents: { [key in string]: Coordinate }, leaf: Coordinate, hashFunction: (cell: Coordinate) => string) => {
+export const getRouteByParentsHash = (
+  parents: {[key in string]: Coordinate},
+  leaf: Coordinate,
+  hashFunction: (cell: Coordinate) => string
+) => {
   const route: Coordinate[] = [leaf];
   const value: Coordinate[] = [leaf];
   while (value.length > 0) {
@@ -377,7 +399,10 @@ export const getRouteByParentsHash = (parents: { [key in string]: Coordinate }, 
 
 export type HorizontalDirection = -1 | 1 | 0;
 export type VerticalDirection = 1 | -1 | 0;
-export const getDirectionVector = (from?: Coordinate, to?: Coordinate): { x: HorizontalDirection, y: VerticalDirection } => {
+export const getDirectionVector = (
+  from?: Coordinate,
+  to?: Coordinate
+): {x: HorizontalDirection; y: VerticalDirection} => {
   if (!from || !to) {
     return {x: 0, y: 0};
   }
@@ -402,17 +427,18 @@ export const nthSameBefore = (i: number, str: string) => {
   }
 
   return count;
-}
+};
 
 export const factorial = (n: number) => {
-  let total = 1, i = 1;
+  let total = 1,
+    i = 1;
   while (i <= n) {
     total *= i;
     i++;
   }
 
   return total;
-}
+};
 
 /**
  * The function calculates new source and destination coordinates based on a given cutDelta value and returns them.
@@ -427,7 +453,7 @@ export const factorial = (n: number) => {
 export const getPointsByDelta = (src: Coordinate, dest: Coordinate, cutDelta?: number) => {
   if (cutDelta === undefined) cutDelta = 0;
   const PI = Math.PI;
-  let angle: number = Math.atan2((dest.y - src.y), (dest.x - src.x));
+  let angle: number = Math.atan2(dest.y - src.y, dest.x - src.x);
   const newSrc = new Coordinate(src.y, src.x);
   const newDest = new Coordinate(dest.y, dest.x);
   if (angle <= 0.5 * PI) {

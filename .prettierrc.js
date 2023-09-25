@@ -1,6 +1,6 @@
 module.exports = {
   arrowParens: 'avoid',
-  bracketSpacing: true,
+  bracketSpacing: false,
   htmlWhitespaceSensitivity: 'css',
   insertPragma: false,
   bracketSameLine: false,
@@ -9,7 +9,6 @@ module.exports = {
   proseWrap: 'preserve',
   quoteProps: 'as-needed',
   requirePragma: false,
-  semi: false,
   singleQuote: true,
   tabWidth: 2,
   trailingComma: 'none',

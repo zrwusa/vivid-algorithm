@@ -1,5 +1,6 @@
 export function permute(nums: number[]): number[][] {
-  const ans: number[][] = [], len = nums.length;
+  const ans: number[][] = [],
+    len = nums.length;
 
   function dfs(acc: number[], visited: (number | true)[]) {
     if (acc.length === len) {
@@ -22,7 +23,8 @@ export function permute(nums: number[]): number[][] {
 }
 
 export function combineByDFS(n: number, k: number): number[][] {
-  const arr: number[] = [], ans: number[][] = [];
+  const arr: number[] = [],
+    ans: number[][] = [];
   for (let i = 0; i < n; i++) arr.push(i + 1);
   const len = arr.length;
 
@@ -42,4 +44,3 @@ export function combineByDFS(n: number, k: number): number[][] {
   dfs(0, []);
   return ans;
 }
-

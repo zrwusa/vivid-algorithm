@@ -1,5 +1,5 @@
 // ** MUI Imports
-import {Theme} from '@mui/material/styles'
+import {Theme} from '@mui/material/styles';
 
 const Card = (theme: Theme) => {
   return {
@@ -80,7 +80,7 @@ const Card = (theme: Theme) => {
         }
       }
     }
-  }
-}
+  };
+};
 
-export default Card
+export default Card;

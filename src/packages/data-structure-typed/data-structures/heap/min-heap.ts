@@ -30,5 +30,3 @@ export class MinHeap<T = number> extends Heap<T> {
     });
   }
 }
-
-

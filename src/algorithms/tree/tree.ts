@@ -1,6 +1,5 @@
 /* --- start tree --- */
 
-
 // 94 Binary Tree Inorder Traversal	★ 144 145 429 589 590 987 1302 traversal
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
 import {wait, WaitManager} from '../../utils';
@@ -35,10 +34,13 @@ import {OrderType} from '../../types';
 const waitManager = new WaitManager(10);
 const {time2, time5} = waitManager;
 
-export async function binaryTreeInorderTraversal(root: BinaryTreeNode<number> | undefined, proxyHandler: TProxyHandler): Promise<number[]> {
+export async function binaryTreeInorderTraversal(
+  root: BinaryTreeNode<number> | undefined,
+  proxyHandler: TProxyHandler
+): Promise<number[]> {
   type Variables = {
-    node: BinaryTreeNode<number> | null | undefined
-  }
+    node: BinaryTreeNode<number> | null | undefined;
+  };
 
   const proxyVariables = new DeepProxy<Variables>({node: null}, proxyHandler);
 
@@ -46,45 +48,38 @@ export async function binaryTreeInorderTraversal(root: BinaryTreeNode<number> | 
     return [];
   }
 
-  const leftResult = root.left && await binaryTreeInorderTraversal(root.left, proxyHandler);
+  const leftResult = root.left && (await binaryTreeInorderTraversal(root.left, proxyHandler));
   await wait(time2);
   proxyVariables.node = root.left;
 
   await wait(time2);
   proxyVariables.node = root;
 
-  const rightResult = root.right && await binaryTreeInorderTraversal(root.right, proxyHandler);
+  const rightResult = root.right && (await binaryTreeInorderTraversal(root.right, proxyHandler));
   await wait(time2);
   proxyVariables.node = root.right;
 
   if (leftResult && rightResult) {
-    return [
-      ...leftResult,
-      root.id,
-      ...rightResult
-    ];
+    return [...leftResult, root.id, ...rightResult];
   } else if (leftResult) {
-    return [
-      ...leftResult,
-      root.id];
+    return [...leftResult, root.id];
   } else if (rightResult) {
-    return [
-      root.id,
-      ...rightResult
-    ];
+    return [root.id, ...rightResult];
   } else {
     return [root.id];
   }
-
 }
 
 export const DFS = async (node: TreeNode, type: OrderType, proxyHandler: TProxyHandler) => {
-  type Variables = { current: TreeNode, nodeNeedPrint: TreeNode }
+  type Variables = {current: TreeNode; nodeNeedPrint: TreeNode};
 
-  const variablesProxy = new DeepProxy<Variables>({
-    current: node,
-    nodeNeedPrint: node
-  }, proxyHandler);
+  const variablesProxy = new DeepProxy<Variables>(
+    {
+      current: node,
+      nodeNeedPrint: node
+    },
+    proxyHandler
+  );
 
   const dfs = async (node: TreeNode, type: OrderType) => {
     if (!node) return;
@@ -130,17 +125,17 @@ export const DFS = async (node: TreeNode, type: OrderType, proxyHandler: TProxyH
           break;
       }
     }
-  }
+  };
   await dfs(variablesProxy.current, type);
 };
 
 // 102	Binary Tree Level Order Traversal	★★	107	429	872			collecting nodes
 export const BFS = async (node: TreeNode<number>, proxyHandler: TProxyHandler) => {
-  type Variables = { node: TreeNode<number> }
+  type Variables = {node: TreeNode<number>};
 
   const nodes: TreeNode<number>[] = [];
 
-  const variablesProxy = new DeepProxy<Variables>({node: node,}, proxyHandler);
+  const variablesProxy = new DeepProxy<Variables>({node: node}, proxyHandler);
 
   if (node) {
     const queue = new Queue<TreeNode<number>>();
@@ -171,12 +166,15 @@ export async function letterCombinations(digits: string, proxyHandler: TProxyHan
 
   type PhoneKeys = '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 
-  const proxyVariables = new DeepProxy<{ accumulated: string, result: string[] }>({
-    accumulated: '',
-    result: []
-  }, proxyHandler);
+  const proxyVariables = new DeepProxy<{accumulated: string; result: string[]}>(
+    {
+      accumulated: '',
+      result: []
+    },
+    proxyHandler
+  );
 
-  const digitsMap: { [key in PhoneKeys]: string } = {
+  const digitsMap: {[key in PhoneKeys]: string} = {
     '2': 'abc',
     '3': 'def',
     '4': 'ghi',
@@ -207,7 +205,6 @@ export async function letterCombinations(digits: string, proxyHandler: TProxyHan
 
   return proxyVariables.result;
 }
-
 
 // 46	Permutations	★★	47	784	943	996				Permutation
 export const permute = function <T>(nums: T[]) {
@@ -275,7 +272,6 @@ export const permuteMN = function <T>(nums: T[], n: number, excludeSelf = true) 
   return result;
 };
 
-
 // Combination
 export const combineMN = function <T>(nums: T[], n: number, excludeSelf = true) {
   if (n > nums.length) {
@@ -286,7 +282,7 @@ export const combineMN = function <T>(nums: T[], n: number, excludeSelf = true) 
   }
 
   const result: T[][] = [];
-  const hash: { [key in string]: 'exist' } = {};
+  const hash: {[key in string]: 'exist'} = {};
   const dfs = (accumulated: T[], rest: T[], level: number) => {
     if (level === n) {
       const key = [...accumulated].sort().join('');
@@ -329,7 +325,8 @@ export function generateParenthesis(n: number): string[] {
 
   const result: string[] = [];
 
-  let openCount = 0, closeCount = 0;
+  let openCount = 0,
+    closeCount = 0;
 
   const dfs = (accumulated: string, level: number) => {
     // base case
@@ -367,9 +364,16 @@ export function generateParenthesis(n: number): string[] {
 // 79	Word Search	★★★	212							DFS
 // 127	Word Ladder	★★★★	126	752	818					BFS
 
-export function ladderLengthDFS(beginWord: string, endWord: string, wordList: string[], proxyHandler: TProxyHandler): number {
-
-  const proxyVariables = new DeepProxy<{ tree: TreeNode<string> }>({tree: new TreeNode(beginWord, beginWord)}, proxyHandler);
+export function ladderLengthDFS(
+  beginWord: string,
+  endWord: string,
+  wordList: string[],
+  proxyHandler: TProxyHandler
+): number {
+  const proxyVariables = new DeepProxy<{tree: TreeNode<string>}>(
+    {tree: new TreeNode(beginWord, beginWord)},
+    proxyHandler
+  );
 
   const wordListLength = wordList.length;
   // corner case
@@ -425,7 +429,7 @@ export const ladderLengthPlagiarized = function (beginWord: string, endWord: str
   if (!wordList.includes(endWord)) {
     return 0;
   }
-  const map: { [key in string]: boolean } = {};
+  const map: {[key in string]: boolean} = {};
   while (queue.length) {
     const diffByOne = [];
     while (queue.length) {
@@ -456,7 +460,6 @@ export const ladderLengthPlagiarized = function (beginWord: string, endWord: str
           }
         }
       }
-
     }
     if (diffByOne.length) {
       queue = [...queue, ...diffByOne];
@@ -561,7 +564,8 @@ export const runAllLadderLength = async () => {
 
 // 542	01 Matrix	★★★	675	934						BFS
 export const updateMatrix = (mat: number[][]): number[][] => {
-  const rowCount = mat.length, colCount = mat[0].length;
+  const rowCount = mat.length,
+    colCount = mat[0].length;
 
   let departureQueue: Coordinate[] = [];
   const costMat: number[][] = [];
@@ -608,7 +612,8 @@ export const updateMatrix = (mat: number[][]): number[][] => {
 };
 
 export const updateMatrixByIndex = (mat: number[][]): number[][] => {
-  const rowCount = mat.length, colCount = mat[0].length;
+  const rowCount = mat.length,
+    colCount = mat[0].length;
 
   let departureQueue: MatrixCell[] = [];
   const costMat: number[][] = [];
@@ -666,7 +671,6 @@ export const runAllUpdateMatrix = async () => {
 };
 // runAllUpdateMatrix().then()
 
-
 // 698	Partition to K Equal Sum Subsets	★★★	93	131	241	282	842			Partition
 /* --- end Search (BFS/DFS) ---*/
 
@@ -679,7 +683,6 @@ export const runAllUpdateMatrix = async () => {
 // 508	Most Frequent Subtree Sum	★★★
 // 124	Binary Tree Maximum Path Sum	★★★	543	687	Use both children, return one
 // 968	Binary Tree Cameras	★★★★	337	979
-
 
 export const treeMaxDepth = (node: TreeNode<number>): number => {
   if (!node) {
@@ -709,11 +712,11 @@ export const combination = (nums: number[]): number[][] => {
       const newRest = rest.slice(i + 1);
       dfs(newAcc, newRest);
     }
-  }
+  };
 
   dfs([], nums);
   return ans;
-}
+};
 
 export const permutation = (nums: number[]): number[][] => {
   const ans: number[][] = [];
@@ -726,15 +729,15 @@ export const permutation = (nums: number[]): number[][] => {
       const newRest = rest.slice(0, i).concat(rest.slice(i + 1));
       dfs(newAcc, newRest);
     }
-  }
+  };
 
   dfs([], nums);
   return ans;
-}
+};
 
 export const runCombinationPermutation = async () => {
   await runAlgorithm(combination, false, combinationCase2);
   await runAlgorithm(permutation, false, permutationCase2);
-}
+};
 
 /* --- end tree ---*/

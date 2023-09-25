@@ -2,8 +2,8 @@ import _ from 'lodash';
 import {AnyFunction} from '../types';
 
 export type JSONSerializable = {
-  [key: string]: any
-}
+  [key: string]: any;
+};
 export type JSONValue = string | number | boolean | undefined | JSONObject;
 
 export interface JSONObject {
@@ -23,7 +23,8 @@ export function randomText(length: number) {
 
 export const uuidV4 = function () {
   return 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(/[x]/g, function (c) {
-    const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    const r = (Math.random() * 16) | 0,
+      v = c == 'x' ? r : (r & 0x3) | 0x8;
 
     return v.toString(16);
   });
@@ -67,7 +68,8 @@ export function incrementId(prefix?: string) {
 
 export const getValue = <T, K extends keyof T>(obj: T, names: K[]): Array<T[K]> => names.map(i => obj[i]);
 
-export const isObject = (object: string | JSONObject | boolean | AnyFunction | number) => object != null && typeof object === 'object';
+export const isObject = (object: string | JSONObject | boolean | AnyFunction | number) =>
+  object != null && typeof object === 'object';
 
 export const looseEqual = (a: any, b: any): boolean => a == b;
 
@@ -85,10 +87,7 @@ export const deepObjectStrictEqual = (object1: JSONSerializable, object2: JSONSe
     const val1 = object1[key];
     const val2 = object2[key];
     const areObjects = isObject(val1) && isObject(val2);
-    if (
-      areObjects && !deepObjectStrictEqual(val1, val2) ||
-      !areObjects && val1 !== val2
-    ) {
+    if ((areObjects && !deepObjectStrictEqual(val1, val2)) || (!areObjects && val1 !== val2)) {
       return false;
     }
   }
@@ -98,7 +97,7 @@ export const deepObjectStrictEqual = (object1: JSONSerializable, object2: JSONSe
 
 export function reverseColor(oldColor: string) {
   const oldColorTemp = '0x' + oldColor.replace(/#/g, '');
-  const str = '000000' + (0xFFFFFF - Number(oldColorTemp)).toString(16);
+  const str = '000000' + (0xffffff - Number(oldColorTemp)).toString(16);
 
   return '#' + str.substring(str.length - 6, str.length);
 }
@@ -110,11 +109,11 @@ export const isSameStructure = (objA: unknown, objB: unknown) => {
   const objBKeys = Object.keys(objBTraversable);
   let isSame = true;
   if (objAKeys.length !== objBKeys.length) {
-    return isSame = false;
+    return (isSame = false);
   } else {
-    objAKeys.forEach((i) => {
+    objAKeys.forEach(i => {
       if (!objBKeys.includes(i)) {
-        return isSame = false;
+        return (isSame = false);
       }
     });
 
@@ -132,10 +131,10 @@ export const isLeafParent = (obj: JSONObject) => {
         }
       });
 
-      return isLeaf = true;
+      return (isLeaf = true);
     }
-    if (!['string', 'boolean', 'number', 'undefined', 'function'].includes(typeof value) && (value !== null)) {
-      return isLeaf = false;
+    if (!['string', 'boolean', 'number', 'undefined', 'function'].includes(typeof value) && value !== null) {
+      return (isLeaf = false);
     }
   });
 
@@ -245,7 +244,7 @@ export class WaitManager {
 }
 
 export const wait = async (ms: number, resolveValue?: any) => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       const finalResolveValue = resolveValue || true;
       resolve(finalResolveValue);
@@ -253,7 +252,7 @@ export const wait = async (ms: number, resolveValue?: any) => {
   });
 };
 
-export function extractValue<Item>(data: { key: string, value: Item }[]) {
+export function extractValue<Item>(data: {key: string; value: Item}[]) {
   let result: Item[] = [];
   if (data && data.length > 0) {
     result = data.map(item => item.value);
@@ -262,7 +261,7 @@ export function extractValue<Item>(data: { key: string, value: Item }[]) {
   return result;
 }
 
-export function keyValueToArray<Item>(data: { [key: string]: Item }) {
+export function keyValueToArray<Item>(data: {[key: string]: Item}) {
   const itemArray: Array<Item> = [];
   const keys = Object.keys(data);
   for (const i of keys) {
@@ -274,7 +273,9 @@ export function keyValueToArray<Item>(data: { [key: string]: Item }) {
 
 export function minuted(time: number) {
   const minutes = Math.floor(time / 60000).toString();
-  const seconds = Math.floor((time % 60000) / 1000).toString().padStart(2, '0');
+  const seconds = Math.floor((time % 60000) / 1000)
+    .toString()
+    .padStart(2, '0');
 
   return `${minutes}:${seconds}`;
 }
@@ -286,7 +287,9 @@ export function randomDate(start?: Date, end?: Date, specificProbabilityStart?: 
   if (specificProbabilityStart) {
     if (!specificProbability) specificProbability = 0.5;
     if (Math.random() <= specificProbability) {
-      return new Date(specificProbabilityStart.getTime() + Math.random() * (end.getTime() - specificProbabilityStart.getTime()));
+      return new Date(
+        specificProbabilityStart.getTime() + Math.random() * (end.getTime() - specificProbabilityStart.getTime())
+      );
     }
   }
 
@@ -299,13 +302,15 @@ export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase(
 
 export const comparerArray = <T>(otherArray: T[], limitKeys?: string[]) => {
   return function (current: T) {
-    return otherArray.filter(function (other: T) {
-      if (!limitKeys) {
-        return _.isEqual(current, other);
-      } else {
-        // TODO
-      }
-    }).length == 0;
+    return (
+      otherArray.filter(function (other: T) {
+        if (!limitKeys) {
+          return _.isEqual(current, other);
+        } else {
+          // TODO
+        }
+      }).length == 0
+    );
   };
 };
 
@@ -368,7 +373,7 @@ export class StringUtil {
 }
 
 export type CaseType =
-  'camel'
+  | 'camel'
   | 'snake'
   | 'pascal'
   | 'constant'
@@ -383,52 +388,49 @@ export const deepKeysConvert = (obj: any, toType?: CaseType): any => {
   if (Array.isArray(obj)) {
     return obj.map(v => deepKeysConvert(v, _toType));
   } else if (obj !== null && obj.constructor === Object) {
-    return Object.keys(obj).reduce(
-      (result, key) => {
-        let newKey = '';
-        switch (_toType) {
-          case 'camel':
-            newKey = StringUtil.toCamelCase(key);
-            break;
-          case 'snake':
-            newKey = StringUtil.toSnakeCase(key);
-            break;
-          case 'pascal':
-            newKey = StringUtil.toPascalCase(key);
-            break;
-          case 'constant':
-            newKey = StringUtil.toConstantCase(key);
-            break;
-          case 'kebab':
-            newKey = StringUtil.toKebabCase(key);
-            break;
-          case 'lower':
-            newKey = StringUtil.toLowerCase(key);
-            break;
-          case 'title':
-            newKey = StringUtil.toTitleCase(key);
-            break;
-          case 'sentence':
-            newKey = StringUtil.toSentenceCase(key);
-            break;
-          case 'path':
-            newKey = StringUtil.toPathCase(key);
-            break;
-          case 'dot':
-            newKey = StringUtil.toDotCase(key);
-            break;
-          default:
-            newKey = StringUtil.toDotCase(key);
-            break;
-        }
+    return Object.keys(obj).reduce((result, key) => {
+      let newKey = '';
+      switch (_toType) {
+        case 'camel':
+          newKey = StringUtil.toCamelCase(key);
+          break;
+        case 'snake':
+          newKey = StringUtil.toSnakeCase(key);
+          break;
+        case 'pascal':
+          newKey = StringUtil.toPascalCase(key);
+          break;
+        case 'constant':
+          newKey = StringUtil.toConstantCase(key);
+          break;
+        case 'kebab':
+          newKey = StringUtil.toKebabCase(key);
+          break;
+        case 'lower':
+          newKey = StringUtil.toLowerCase(key);
+          break;
+        case 'title':
+          newKey = StringUtil.toTitleCase(key);
+          break;
+        case 'sentence':
+          newKey = StringUtil.toSentenceCase(key);
+          break;
+        case 'path':
+          newKey = StringUtil.toPathCase(key);
+          break;
+        case 'dot':
+          newKey = StringUtil.toDotCase(key);
+          break;
+        default:
+          newKey = StringUtil.toDotCase(key);
+          break;
+      }
 
-        return {
-          ...result,
-          [newKey]: deepKeysConvert(obj[key], _toType),
-        };
-      },
-      {},
-    );
+      return {
+        ...result,
+        [newKey]: deepKeysConvert(obj[key], _toType)
+      };
+    }, {});
   }
 
   return obj;
@@ -440,27 +442,30 @@ export const deepRemoveByKey = (obj: any, keysToBeRemoved: string[]) => {
       value = deepRemoveByKey(value, keysToBeRemoved);
     }
     if (!keysToBeRemoved.includes(key)) {
-      _.isArray(obj) ? result.push(value) : result[key] = value;
+      _.isArray(obj) ? result.push(value) : (result[key] = value);
     }
   });
 
   return result as typeof obj;
 };
 
-export const deepRenameKeys = (obj: JSONSerializable, keysMap: { [key in string]: string }) => {
+export const deepRenameKeys = (obj: JSONSerializable, keysMap: {[key in string]: string}) => {
   return _.transform(obj, function (result: JSONSerializable, value: any, key: string | number) {
     const currentKey = keysMap[key] || key;
     result[currentKey] = _.isObject(value) ? deepRenameKeys(value, keysMap) : value;
   });
 };
 
-export const deepReplaceValues = (obj: JSONSerializable, keyReducerMap: { [key in string]: (item: JSONSerializable) => any }) => {
+export const deepReplaceValues = (
+  obj: JSONSerializable,
+  keyReducerMap: {[key in string]: (item: JSONSerializable) => any}
+) => {
   const newObject = _.clone(obj) as JSONSerializable;
   _.each(obj, (val: any, key: string) => {
     for (const item in keyReducerMap) {
       if (key === item) {
         newObject[key] = keyReducerMap[item](newObject);
-      } else if (typeof (val) === 'object' || val instanceof Array) {
+      } else if (typeof val === 'object' || val instanceof Array) {
         newObject[key] = deepReplaceValues(val, keyReducerMap);
       }
     }
@@ -470,7 +475,11 @@ export const deepReplaceValues = (obj: JSONSerializable, keyReducerMap: { [key i
 };
 
 // TODO determine depth and pass root node as a param through callback
-export const deepAdd = (obj: JSONSerializable, keyReducerMap: { [key in string]: (item: JSONSerializable) => any }, isItemRootParent?: boolean) => {
+export const deepAdd = (
+  obj: JSONSerializable,
+  keyReducerMap: {[key in string]: (item: JSONSerializable) => any},
+  isItemRootParent?: boolean
+) => {
   const newObject = _.clone(obj) as JSONObject | [];
   if (_.isObject(newObject) && !_.isArray(newObject)) {
     for (const item in keyReducerMap) {
@@ -519,7 +528,8 @@ export const timeEnd = (startTime: number, headerLog?: string, consoleConditionF
 };
 
 export const arrayRemove = function <T>(array: T[], predicate: (item: T, index: number, array: T[]) => boolean): T[] {
-  let i = -1, len = array ? array.length : 0;
+  let i = -1,
+    len = array ? array.length : 0;
   const result = [];
 
   while (++i < len) {
@@ -535,7 +545,7 @@ export const arrayRemove = function <T>(array: T[], predicate: (item: T, index: 
 };
 
 export function memo() {
-  const cache: { [k: string]: any } = {};
+  const cache: {[k: string]: any} = {};
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   return function (target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
@@ -548,17 +558,17 @@ export function memo() {
       }
 
       return cache[cacheKey];
-    }
-  }
+    };
+  };
 }
 
-export function zip<T = number, T1 = number>(array1: T[], array2: T1[], options?: { isToObj: boolean }) {
+export function zip<T = number, T1 = number>(array1: T[], array2: T1[], options?: {isToObj: boolean}) {
   const zipped: [T, T1][] = [];
-  const zippedObjCoords: { x: T, y: T1 }[] = [];
+  const zippedObjCoords: {x: T; y: T1}[] = [];
   const {isToObj} = options ? options : {isToObj: false};
   for (let i = 0; i < array1.length; i++) {
     if (isToObj) {
-      zippedObjCoords.push({x: array1[i], y: array2[i]})
+      zippedObjCoords.push({x: array1[i], y: array2[i]});
     } else {
       zipped.push([array1[i], array2[i]]);
     }

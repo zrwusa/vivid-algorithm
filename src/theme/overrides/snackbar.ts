@@ -1,5 +1,5 @@
 // ** MUI Imports
-import {Theme} from '@mui/material/styles'
+import {Theme} from '@mui/material/styles';
 
 const Snackbar = (theme: Theme) => {
   return {
@@ -10,7 +10,7 @@ const Snackbar = (theme: Theme) => {
         }
       }
     }
-  }
-}
+  };
+};
 
-export default Snackbar
+export default Snackbar;

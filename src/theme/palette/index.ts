@@ -1,28 +1,28 @@
 // ** Type Imports
-import {PaletteMode} from '@mui/material'
-import {ThemeColor} from '../../layouts/types'
+import {PaletteMode} from '@mui/material';
+import {ThemeColor} from '../../layouts/types';
 
 const DefaultPalette = (mode: PaletteMode, themeColor: ThemeColor) => {
   // ** Vars
-  const lightColor = '58, 53, 65'
-  const darkColor = '231, 227, 252'
-  const mainColor = mode === 'light' ? lightColor : darkColor
+  const lightColor = '58, 53, 65';
+  const darkColor = '231, 227, 252';
+  const mainColor = mode === 'light' ? lightColor : darkColor;
 
   const primaryGradient = () => {
     if (themeColor === 'primary') {
-      return '#C6A7FE'
+      return '#C6A7FE';
     } else if (themeColor === 'secondary') {
-      return '#9C9FA4'
+      return '#9C9FA4';
     } else if (themeColor === 'success') {
-      return '#93DD5C'
+      return '#93DD5C';
     } else if (themeColor === 'error') {
-      return '#FF8C90'
+      return '#FF8C90';
     } else if (themeColor === 'warning') {
-      return '#FFCF5C'
+      return '#FFCF5C';
     } else {
-      return '#6ACDFF'
+      return '#6ACDFF';
     }
-  }
+  };
 
   return {
     customColors: {
@@ -105,7 +105,7 @@ const DefaultPalette = (mode: PaletteMode, themeColor: ThemeColor) => {
       disabledBackground: `rgba(${mainColor}, 0.18)`,
       focus: `rgba(${mainColor}, 0.12)`
     }
-  }
-}
+  };
+};
 
-export default DefaultPalette
+export default DefaultPalette;

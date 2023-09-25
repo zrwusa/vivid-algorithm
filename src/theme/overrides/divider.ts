@@ -1,5 +1,5 @@
 // ** MUI Imports
-import {Theme} from '@mui/material/styles'
+import {Theme} from '@mui/material/styles';
 
 const Divider = (theme: Theme) => {
   return {
@@ -10,7 +10,7 @@ const Divider = (theme: Theme) => {
         }
       }
     }
-  }
-}
+  };
+};
 
-export default Divider
+export default Divider;

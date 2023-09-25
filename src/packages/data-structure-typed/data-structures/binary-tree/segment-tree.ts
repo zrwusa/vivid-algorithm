@@ -158,7 +158,7 @@ export class SegmentTree {
     const dfs = (cur: SegmentTreeNode, index: number, sum: number, val?: SegmentTreeNodeVal) => {
       if (cur.start === cur.end && cur.start === index) {
         cur.sum = sum;
-        // cur.val = val;
+        if (val !== undefined) cur.val = val;
         return;
       }
       const mid = cur.start + Math.floor((cur.end - cur.start) / 2);
@@ -176,7 +176,7 @@ export class SegmentTree {
       }
     };
 
-    dfs(root, index, sum);
+    dfs(root, index, sum, val);
   }
 
   /**
@@ -209,7 +209,6 @@ export class SegmentTree {
         if (cur.right) {
           // TODO after no-non-null-assertion not ensure the logic
           return dfs(cur.right, i, j);
-
         } else {
           return NaN;
         }

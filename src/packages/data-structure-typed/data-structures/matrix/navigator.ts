@@ -119,4 +119,3 @@ export class Navigator<T = number> {
     this.onMove && this.onMove(this._cur);
   }
 }
-

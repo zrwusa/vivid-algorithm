@@ -8,7 +8,7 @@ import _ from 'lodash';
 const avlTree = new AVLTree();
 
 export const performanceAVLTree = () => {
-  for (let i = 0; i < 1e+5; i++) {
+  for (let i = 0; i < 1e5; i++) {
     avlTree.add(i, i);
   }
 };
@@ -22,9 +22,12 @@ const {time5} = waitManager;
 
 export const testAVLTree = async (arr: number[], proxyHandler?: TProxyHandler) => {
   const clonedData = [...arr];
-  const proxy = new DeepProxy({
-    tree: new AVLTree<AVLTreeNode<number>>()
-  }, proxyHandler);
+  const proxy = new DeepProxy(
+    {
+      tree: new AVLTree<AVLTreeNode<number>>()
+    },
+    proxyHandler
+  );
 
   for (const item of clonedData) {
     proxy.tree.add(item, item);
@@ -37,9 +40,12 @@ export const testAVLTree = async (arr: number[], proxyHandler?: TProxyHandler) =
 };
 
 export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandler) => {
-  const vars = new DeepProxy({
-    treeMultiset: new TreeMultiset()
-  }, proxyHandler);
+  const vars = new DeepProxy(
+    {
+      treeMultiset: new TreeMultiset()
+    },
+    proxyHandler
+  );
 
   console.log(vars.treeMultiset instanceof TreeMultiset);
   vars.treeMultiset.add(11);
@@ -74,7 +80,7 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
 
   console.log(vars.treeMultiset.size === 16);
   console.log(vars.treeMultiset.count === 26);
-  console.log(_.isEqual(vars.treeMultiset.BFS('id'), [11, 6, 15, 3, 8, 13, 16, 1, 4, 7, 9, 12, 14, 2, 5, 10]))
+  console.log(_.isEqual(vars.treeMultiset.BFS('id'), [11, 6, 15, 3, 8, 13, 16, 1, 4, 7, 9, 12, 14, 2, 5, 10]));
   await wait(time5);
 
   console.log(vars.treeMultiset.has(6));
@@ -104,7 +110,6 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
   console.log(subTreeSum === 70);
   const lesserSum = vars.treeMultiset.lesserSum(10);
   console.log(lesserSum === 45);
-
 
   console.log(node15 instanceof TreeMultisetNode);
   if (node15 instanceof TreeMultisetNode) {
@@ -272,7 +277,6 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
   console.log(vars.treeMultiset.getHeight() === 1);
   await wait(time5);
 
-
   console.log(vars.treeMultiset.isAVLBalanced() === true);
 
   const bfsIDs = vars.treeMultiset.BFS();
@@ -300,7 +304,11 @@ const magnitude = 10000;
 const bst = new BST<BSTNode<number>>();
 
 export async function testBSTBalanceAddPerformance() {
-  bst.addMany(Array.from(new Array(magnitude), (item, index) => index), undefined, true);
+  bst.addMany(
+    Array.from(new Array(magnitude), (item, index) => index),
+    undefined,
+    true
+  );
   return bst;
 }
 

@@ -35,7 +35,7 @@ export class TreeNode<T = any> {
     this._children = value;
   }
 
-  addChildren(children: TreeNode<T> | TreeNode<T> []) {
+  addChildren(children: TreeNode<T> | TreeNode<T>[]) {
     if (!this.children) {
       this.children = [];
     }

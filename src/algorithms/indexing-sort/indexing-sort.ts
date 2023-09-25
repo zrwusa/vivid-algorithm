@@ -9,7 +9,7 @@ export function findDisappearedNumbers(nums: number[]): number[] {
 
   const swap = (a: number, b: number) => {
     [nums[a], nums[b]] = [nums[b], nums[a]];
-  }
+  };
 
   for (let i = 1; i <= n; i++) {
     while (nums[i] !== i && nums[i] !== nums[nums[i]]) swap(i, nums[i]);
@@ -26,4 +26,4 @@ export function findDisappearedNumbers(nums: number[]): number[] {
 
 // 645
 
-export {}
+export {};

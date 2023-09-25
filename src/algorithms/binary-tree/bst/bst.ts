@@ -9,16 +9,19 @@ const {time1} = waitManager;
 
 export async function testBST(arr: number[], proxyHandler?: TProxyHandler) {
   const clonedData = [...arr];
-  const proxy = new DeepProxy({
-    tree: new BST({
-      // nodeOrData: {
-      //     id: clonedData[0],
-      //     val: clonedData[0]
-      // },
-      // comparator: (a, b) => b - a,
-      // loopType: LoopType.recursive
-    })
-  }, proxyHandler);
+  const proxy = new DeepProxy(
+    {
+      tree: new BST({
+        // nodeOrData: {
+        //     id: clonedData[0],
+        //     val: clonedData[0]
+        // },
+        // comparator: (a, b) => b - a,
+        // loopType: LoopType.recursive
+      })
+    },
+    proxyHandler
+  );
   // proxy.tree.put(clonedData[0], clonedData[0])
   for (const i of clonedData) {
     proxy.tree.add(i, i);
@@ -31,9 +34,12 @@ export async function testBST(arr: number[], proxyHandler?: TProxyHandler) {
 }
 
 export async function testBST2(nums: [], proxyHandler?: TProxyHandler) {
-  const proxy = new DeepProxy({
-    tree: new BST()
-  }, proxyHandler);
+  const proxy = new DeepProxy(
+    {
+      tree: new BST()
+    },
+    proxyHandler
+  );
 
   for (const i of nums) {
     await wait(time1);
@@ -45,7 +51,7 @@ export async function testBST2(nums: [], proxyHandler?: TProxyHandler) {
 
   await wait(time1);
   console.log(proxy.tree.remove(2));
-  console.log(proxy.tree)
+  console.log(proxy.tree);
 
   return proxy.tree;
 }
@@ -64,7 +70,7 @@ export const isValidBST = (root: BSTNode<number> | null | undefined): boolean =>
 
   function dfs(cur: BSTNode<number> | null | undefined, min: BinaryTreeNodeId, max: BinaryTreeNodeId): boolean {
     if (!cur) return true;
-    if ((cur.id <= min) || (cur.id >= max)) return false;
+    if (cur.id <= min || cur.id >= max) return false;
     return dfs(cur.left, min, cur.id) && dfs(cur.right, cur.id, max);
   }
 
@@ -80,8 +86,8 @@ export function searchBST(root: BSTNode<number> | null, id: number): BSTNode<num
       ans = cur;
     }
     if (!cur.left && !cur.right) return;
-    if ((id < cur.id) && cur.left) dfs(cur.left);
-    if ((id > cur.id) && cur.right) dfs(cur.right);
+    if (id < cur.id && cur.left) dfs(cur.left);
+    if (id > cur.id && cur.right) dfs(cur.right);
   };
 
   dfs(root);
@@ -90,7 +96,8 @@ export function searchBST(root: BSTNode<number> | null, id: number): BSTNode<num
 
 // 230	Kth Smallest Element in a BST	★★★					inorder
 export function kthSmallest(root: BSTNode<number> | null, k: number): number {
-  let rank = 0, target = 0;
+  let rank = 0,
+    target = 0;
   const dfsInOrder = (cur: BSTNode<number>) => {
     cur.left && dfsInOrder(cur.left);
     if (++rank === k) {
@@ -106,7 +113,6 @@ export function kthSmallest(root: BSTNode<number> | null, k: number): number {
 
 // 99	Recover Binary Search Tree	★★★						inorder
 export function recoverTree(root: BSTNode<number> | null | undefined): void {
-
   const swap = (nodeA: BSTNode<number>, nodeB: BSTNode<number>) => {
     const tempVal = nodeA.val;
     nodeA.val = nodeB.val;
@@ -143,7 +149,6 @@ export function recoverTree(root: BSTNode<number> | null | undefined): void {
           secondBad = cur;
         }
       }
-
     }
 
     prev = cur;
@@ -195,19 +200,29 @@ export function findMode(root: BSTNode<number> | null): number[] {
   return modes;
 }
 
-
 // 450	Delete Node in a BST	★★★★						binary search
 
-
 // 669. Trim a Binary Search Tree
-export async function trimABST(data: Array<number | null>, low: number, high: number, proxyHandler?: TProxyHandler): Promise<BSTNode<number | null> | null> {
+export async function trimABST(
+  data: Array<number | null>,
+  low: number,
+  high: number,
+  proxyHandler?: TProxyHandler
+): Promise<BSTNode<number | null> | null> {
   const clonedData = [...data];
-  const proxy: { tree: BST<BSTNode<number | null>> } = new DeepProxy({
-    tree: new BST({comparator: (a, b) => a - b})
-  }, proxyHandler);
+  const proxy: {tree: BST<BSTNode<number | null>>} = new DeepProxy(
+    {
+      tree: new BST({comparator: (a, b) => a - b})
+    },
+    proxyHandler
+  );
   proxy.tree.fill(clonedData);
 
-  async function trimBST(cur: BSTNode<number | null> | null | undefined, low: number, high: number): Promise<BSTNode<number | null> | null> {
+  async function trimBST(
+    cur: BSTNode<number | null> | null | undefined,
+    low: number,
+    high: number
+  ): Promise<BSTNode<number | null> | null> {
     await wait(time1);
     if (!cur) return null;
 
@@ -231,6 +246,5 @@ export const runTrimABST = async () => {
 };
 
 // runTrimABST().then();
-
 
 /** --- end BST --- **/

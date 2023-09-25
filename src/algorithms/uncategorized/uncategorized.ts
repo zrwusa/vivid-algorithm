@@ -3,7 +3,7 @@
 export const fallingSquaresMy = function (positions: number[][]): number[] {
   const h = [];
 
-  for (let i = 0; i < 1e+6; i++) {
+  for (let i = 0; i < 1e6; i++) {
     h.push(0);
   }
 
@@ -21,7 +21,7 @@ export const fallingSquaresMy = function (positions: number[][]): number[] {
       h[i + left] = newHeight;
     }
 
-    ans.push(max = Math.max(newHeight, max));
+    ans.push((max = Math.max(newHeight, max)));
   }
 
   return ans;
@@ -39,12 +39,15 @@ export const fallingSquaresMy = function (positions: number[][]): number[] {
 // 8  6,6 ~ 8,8
 export const isValidSudoku = function (board: string[][]): boolean {
   const subValid = (dotNums: number, size: number) => {
-    return dotNums === 9 || dotNums === 1 && size === 9 || 10 - dotNums === size;
+    return dotNums === 9 || (dotNums === 1 && size === 9) || 10 - dotNums === size;
   };
 
   const areBoxesValid = () => {
     for (let s = 0; s < 9; s++) {
-      const row1 = Math.floor(s / 3) * 3, row2 = row1 + 2, col1 = (s % 3) * 3, col2 = col1 + 2;
+      const row1 = Math.floor(s / 3) * 3,
+        row2 = row1 + 2,
+        col1 = (s % 3) * 3,
+        col2 = col1 + 2;
       const box = [];
       let dotNums = 0;
       for (let row = row1; row <= row2; row++) {
@@ -88,9 +91,7 @@ export const isValidSudoku = function (board: string[][]): boolean {
       }
       const set = new Set(col);
 
-
       if (!subValid(dotNums, set.size)) return false;
-
     }
     return true;
   };
@@ -116,7 +117,10 @@ export function solveSudokuBruteForceFailed(board: string[][]): void {
   };
 
   const getBoxValidSet = (r: number, c: number) => {
-    const row1 = Math.floor(r / 3) * 3, row2 = row1 + 3, col1 = Math.floor(c / 3) * 3, col2 = col1 + 3;
+    const row1 = Math.floor(r / 3) * 3,
+      row2 = row1 + 3,
+      col1 = Math.floor(c / 3) * 3,
+      col2 = col1 + 3;
     const set = new Set();
     for (let row = row1; row < row2; row++) {
       for (let col = col1; col < col2; col++) {
@@ -135,7 +139,6 @@ export function solveSudokuBruteForceFailed(board: string[][]): void {
       }
     }
     return possible;
-
   };
   const fill = () => {
     for (let a = 0; a < 81; a++) {

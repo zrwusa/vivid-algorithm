@@ -11,9 +11,12 @@ const {time1, time2, time5, time10} = waitManager;
 export async function testBinaryTree(arr: number[], proxyHandler?: TProxyHandler) {
   const clonedData = [...arr];
 
-  const proxy: { tree: BinaryTree } = new DeepProxy({
-    tree: new BinaryTree({loopType: LoopType.RECURSIVE})
-  }, proxyHandler);
+  const proxy: {tree: BinaryTree} = new DeepProxy(
+    {
+      tree: new BinaryTree({loopType: LoopType.RECURSIVE})
+    },
+    proxyHandler
+  );
   proxy.tree.fill(clonedData, clonedData);
   await wait(time10);
   proxy.tree.clear();
@@ -29,9 +32,12 @@ export async function testBinaryTree(arr: number[], proxyHandler?: TProxyHandler
 
 export async function showBinaryTree(arr: number[], proxyHandler?: TProxyHandler) {
   const clonedData = [...arr];
-  const proxy: { tree: BinaryTree } = new DeepProxy({
-    tree: new BinaryTree()
-  }, proxyHandler);
+  const proxy: {tree: BinaryTree} = new DeepProxy(
+    {
+      tree: new BinaryTree()
+    },
+    proxyHandler
+  );
   for (const id of clonedData) {
     proxy.tree.add(id, id);
     await wait(time2);
@@ -47,9 +53,12 @@ export const runTestBinaryTree = async () => {
 export async function testSymmetricTree(arr: Array<number | null>, proxyHandler?: TProxyHandler) {
   const clonedData = [...arr];
 
-  const proxy: { tree: BinaryTree<BinaryTreeNode<number | null>> } = new DeepProxy({tree: new BinaryTree<BinaryTreeNode<number | null>>({})}, proxyHandler);
+  const proxy: {tree: BinaryTree<BinaryTreeNode<number | null>>} = new DeepProxy(
+    {tree: new BinaryTree<BinaryTreeNode<number | null>>({})},
+    proxyHandler
+  );
 
-  proxy.tree.fill(clonedData)
+  proxy.tree.fill(clonedData);
   const root = proxy.tree.root;
 
   if (root) {
@@ -58,17 +67,20 @@ export async function testSymmetricTree(arr: Array<number | null>, proxyHandler?
     return true;
   }
 
-  function symmetricHelper(left: BinaryTreeNode<number | null> | null | undefined, right: BinaryTreeNode<number | null> | null | undefined): boolean {
+  function symmetricHelper(
+    left: BinaryTreeNode<number | null> | null | undefined,
+    right: BinaryTreeNode<number | null> | null | undefined
+  ): boolean {
     if (!left && !right) {
       return true;
     } else if (!left || !right) {
       return false;
     } else {
-      return left.val === right.val && symmetricHelper(left.left, right.right) && symmetricHelper(left.right, right.left);
+      return (
+        left.val === right.val && symmetricHelper(left.left, right.right) && symmetricHelper(left.right, right.left)
+      );
     }
   }
-
-
 }
 
 export const runTestSymmetricTree = async () => {
@@ -109,7 +121,6 @@ export function longestUnivaluePath(root: BinaryTreeNode<number> | null): number
     } else {
       return 0;
     }
-
   }
 
   if (root) {
@@ -127,11 +138,7 @@ export function rob(root: BinaryTreeNode<number> | null | undefined): number {
     const maxArrLeft = dfs(cur.left);
     const maxArrRight = dfs(cur.right);
 
-    return [
-      Math.max(...maxArrLeft) + Math.max(...maxArrRight),
-      maxArrLeft[0] + maxArrRight[0] + (cur.val || 0)
-    ];
-
+    return [Math.max(...maxArrLeft) + Math.max(...maxArrRight), maxArrLeft[0] + maxArrRight[0] + (cur.val || 0)];
   }
 
   return Math.max(...dfs(root));
@@ -170,7 +177,6 @@ export function pathSum(root: BinaryTreeNode<number> | null, targetSum: number):
     if (cur.left) dfs(cur.left, acc, rest);
     if (cur.right) dfs(cur.right, acc, rest);
     acc.pop();
-
   }
 
   if (root) {
@@ -192,7 +198,6 @@ export function pathSumIIIBruteForce1(root: BinaryTreeNode<number> | null, targe
   }
 
   flatDFS(root);
-
 
   let ans = 0;
 
@@ -238,27 +243,32 @@ export function pathSumIIIBruteForce2(root: BinaryTreeNode<number> | null, targe
 
   flatDFS(root);
 
-
   return ans;
 }
 
-
-export async function pathSumIII(data: Array<number | null>, targetSum: number, proxyHandler?: TProxyHandler): Promise<number> {
+export async function pathSumIII(
+  data: Array<number | null>,
+  targetSum: number,
+  proxyHandler?: TProxyHandler
+): Promise<number> {
   const clonedData = [...data];
-  const proxy: { tree: BinaryTree<BinaryTreeNode<number | null>> } = new DeepProxy({
-    tree: new BinaryTree<BinaryTreeNode<number | null>>({
-      // nodeOrData: {
-      //     id: 0,
-      //     val: clonedData[0]
-      // }
-    })
-  }, proxyHandler);
-  proxy.tree.fill(clonedData)
+  const proxy: {tree: BinaryTree<BinaryTreeNode<number | null>>} = new DeepProxy(
+    {
+      tree: new BinaryTree<BinaryTreeNode<number | null>>({
+        // nodeOrData: {
+        //     id: 0,
+        //     val: clonedData[0]
+        // }
+      })
+    },
+    proxyHandler
+  );
+  proxy.tree.fill(clonedData);
   // proxy.tree.insertMany(clonedData.slice(1));
   await wait(time1);
   const root = proxy.tree.root;
 
-  const freq: { [key in number]: number } = {0: 1};
+  const freq: {[key in number]: number} = {0: 1};
   let ans = 0;
 
   async function dfs(cur: BinaryTreeNode<number | null>, sum: number): Promise<void> {
@@ -289,15 +299,21 @@ export const runPathSumIII = async () => {
   await runAlgorithm(pathSumIII, false, pathSumIIICase3);
 };
 
-
 // 1325. Delete Leaves With a Given Value
-export async function deleteLeaves(data: Array<number | null>, target: number, proxyHandler?: TProxyHandler): Promise<BinaryTreeNode<number | null> | null> {
+export async function deleteLeaves(
+  data: Array<number | null>,
+  target: number,
+  proxyHandler?: TProxyHandler
+): Promise<BinaryTreeNode<number | null> | null> {
   const clonedData = [...data];
-  const proxy: { bst: BinaryTree<BinaryTreeNode<number | null>> } = new DeepProxy({
-    bst: new BinaryTree<BinaryTreeNode<number | null>>()
-  }, proxyHandler);
+  const proxy: {bst: BinaryTree<BinaryTreeNode<number | null>>} = new DeepProxy(
+    {
+      bst: new BinaryTree<BinaryTreeNode<number | null>>()
+    },
+    proxyHandler
+  );
 
-  proxy.bst.fill(clonedData)
+  proxy.bst.fill(clonedData);
 
   function dfs(root: BinaryTreeNode<number | null> | null) {
     if (!root) return null;
@@ -332,12 +348,9 @@ export function maxPathSum(root: BinaryTreeNode<number> | null): number {
       return curr.val + Math.max(0, lPMax, rPMax);
     }
     return 0;
-  }
+  };
 
   asPortionMax(root);
 
   return maxSum;
 }
-
-
-

@@ -7,10 +7,12 @@ import {SinglyLinkedListNode} from 'data-structure-typed';
 import {matrixUnique1} from '../matrix';
 
 export function maxArea(height: number[]): number {
-  let l = 0, r = height.length - 1;
+  let l = 0,
+    r = height.length - 1;
   let ans = 0;
   while (l < r) {
-    const lh = height[l], rh = height[r];
+    const lh = height[l],
+      rh = height[r];
     if (lh < rh) {
       ans = Math.max(ans, lh * (r - l));
       l++;
@@ -26,10 +28,12 @@ export function maxArea(height: number[]): number {
 // 917	Reverse Only Letters	★★	925	986	855
 // 167 Two Sum II – Input array is sorted ★★★	15	16
 export function twoSum(numbers: number[], target: number): number[] {
-  let l = 1, r = numbers.length;
+  let l = 1,
+    r = numbers.length;
 
   while (l < r) {
-    const ln = numbers[l - 1], rn = numbers[r - 1];
+    const ln = numbers[l - 1],
+      rn = numbers[r - 1];
     const sum = ln + rn;
     if (sum === target) {
       return [l, r];
@@ -50,7 +54,8 @@ export function twoSum(numbers: number[], target: number): number[] {
 // time complexity is O(n^2),not pass the big data case
 function subarraysWithKDistinct(nums: number[], k: number): number {
   const l = nums.length;
-  let p = 0, ans = 0;
+  let p = 0,
+    ans = 0;
 
   while (p <= l - k) {
     let subP = p;
@@ -79,7 +84,6 @@ export const runAllSubarraysWithKDistinct = async () => {
 
 // 76. Minimum Window Substring TODO not fully understood
 export function minWindow(s: string, t: string): string {
-
   const A = 'A'.charCodeAt(0);
   const z = 'z'.charCodeAt(0);
 
@@ -97,8 +101,10 @@ export function minWindow(s: string, t: string): string {
     return arr;
   };
   const tCounts = countChars(t);
-  let minStart = 0, minLength = Number.MAX_SAFE_INTEGER;
-  let start = 0, end = 0;
+  let minStart = 0,
+    minLength = Number.MAX_SAFE_INTEGER;
+  let start = 0,
+    end = 0;
   let counter = t.length;
 
   while (end < s.length) {
@@ -129,7 +135,8 @@ export function minWindow(s: string, t: string): string {
 
 // 141. Linked List Cycle
 export function hasCycle(head: SinglyLinkedListNode | null): boolean {
-  let fast = head, slow = head;
+  let fast = head,
+    slow = head;
 
   while (fast && fast.next && slow) {
     fast = fast.next.next;
@@ -142,7 +149,8 @@ export function hasCycle(head: SinglyLinkedListNode | null): boolean {
 
 // 876. Middle of the Linked List
 export function middleNode(head: SinglyLinkedListNode | null): SinglyLinkedListNode | null {
-  let fast = head, slow = head;
+  let fast = head,
+    slow = head;
 
   while (fast && fast.next && slow) {
     slow = slow.next;
@@ -153,9 +161,13 @@ export function middleNode(head: SinglyLinkedListNode | null): SinglyLinkedListN
 }
 
 // 2. Add Two Numbers
-export function addTwoNumbers(l1: SinglyLinkedListNode | null, l2: SinglyLinkedListNode | null): SinglyLinkedListNode | null {
+export function addTwoNumbers(
+  l1: SinglyLinkedListNode | null,
+  l2: SinglyLinkedListNode | null
+): SinglyLinkedListNode | null {
   const dummy = new SinglyLinkedListNode<number>(0);
-  let carry = 0, tail = dummy;
+  let carry = 0,
+    tail = dummy;
 
   while (l1 || l2 || carry) {
     let sum = (l1?.val || 0) + (l2?.val || 0) + carry;
@@ -181,7 +193,7 @@ export function threeSumDFS(nums: number[]): number[][] {
     if (acc.length > 3) return;
 
     for (let i = s; i < len; i++) dfs(i + 1, acc.concat(nums[i]), sum + nums[i]);
-  }
+  };
 
   dfs(0, [], 0);
 
@@ -189,15 +201,16 @@ export function threeSumDFS(nums: number[]): number[][] {
   return matrixUnique1(ans);
 }
 
-
 function threeSum(nums: number[]): number[][] {
-  const ans = [], len = nums.length;
+  const ans = [],
+    len = nums.length;
   nums.sort((a, b) => a - b);
 
   for (let i = 0; i < len - 1; i++) {
     if (nums[i] > 0) break;
 
-    let l = i + 1, r = len - 1;
+    let l = i + 1,
+      r = len - 1;
     while (l < r) {
       const sum = nums[i] + nums[l] + nums[r];
       if (sum === 0) {
@@ -216,11 +229,14 @@ function threeSum(nums: number[]): number[][] {
 }
 
 function fourSum(nums: number[], target: number): number[][] {
-  const sorted = nums.sort((a, b) => a - b), len = nums.length, ans: number[][] = [];
+  const sorted = nums.sort((a, b) => a - b),
+    len = nums.length,
+    ans: number[][] = [];
 
   for (let a = 0; a < len - 3; a++) {
     for (let b = a + 1; b < len - 2; b++) {
-      let l = b + 1, r = len - 1;
+      let l = b + 1,
+        r = len - 1;
       while (l < r) {
         const sum = nums[a] + nums[b] + nums[l] + nums[r];
         if (sum === target) {
@@ -244,7 +260,6 @@ export const runAllThreeSum = async () => {
   await runAlgorithm(threeSumDFS, false, threeSumCase6);
   await runAlgorithm(threeSum, false, threeSumCase6);
   await runAlgorithm(fourSum, false, [[1, 0, -1, 0, -2, 2], 0]);
-}
+};
 
 /* --- end Two Pointers --- */
-

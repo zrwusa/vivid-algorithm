@@ -1,5 +1,5 @@
 // ** MUI Imports
-import {Theme} from '@mui/material/styles'
+import {Theme} from '@mui/material/styles';
 
 const Popover = (theme: Theme) => {
   return {
@@ -12,7 +12,7 @@ const Popover = (theme: Theme) => {
         }
       }
     }
-  }
-}
+  };
+};
 
-export default Popover
+export default Popover;

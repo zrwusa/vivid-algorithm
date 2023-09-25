@@ -1,8 +1,8 @@
 // ** MUI Imports
-import {Theme} from '@mui/material/styles'
+import {Theme} from '@mui/material/styles';
 
 // ** Util Import
-import {hexToRGBA} from '../../utils/hex-to-rgba'
+import {hexToRGBA} from '../../utils/hex-to-rgba';
 
 const Pagination = (theme: Theme) => {
   return {
@@ -35,7 +35,7 @@ const Pagination = (theme: Theme) => {
         }
       }
     }
-  }
-}
+  };
+};
 
-export default Pagination
+export default Pagination;

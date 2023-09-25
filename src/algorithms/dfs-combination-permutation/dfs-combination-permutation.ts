@@ -26,7 +26,8 @@ export function partition(s: string): string[][] {
   const ans: string[][] = [];
   const n = s.length;
   const isPalindrome = (sub: string) => {
-    let l = 0, r = sub.length - 1;
+    let l = 0,
+      r = sub.length - 1;
     while (l < r) {
       if (sub[l] !== sub[r]) return false;
       l++;
@@ -47,7 +48,6 @@ export function partition(s: string): string[][] {
         dfs(acml, idx + i);
         acml.pop();
       }
-
     }
   };
   dfs([], 0);
@@ -55,7 +55,6 @@ export function partition(s: string): string[][] {
 }
 
 // 312. Burst Balloons
-
 
 // 139. Word Break
 // time complexity is O(2*wordDict.length^validWord)
@@ -78,7 +77,6 @@ export function wordBreakBruteForce(s: string, wordDict: string[]): boolean {
   dfs(s);
   return ans;
 }
-
 
 // 140. Word Break II
 // time complexity is O(2*wordDict.length^validWord)
@@ -181,7 +179,7 @@ export const runAllWordBreakII = async () => {
 
 // 416. Partition Equal Subset Sum (NP-Complete search, not DP) // todo not fully understood 0/1 knapsack problem
 export function canPartition(nums: number[]): boolean {
-  const target = nums.reduce((i, sum) => sum += i, 0) / 2;
+  const target = nums.reduce((i, sum) => (sum += i), 0) / 2;
   if (target % 2 === 1) return false;
   let ans = false;
 
@@ -207,4 +205,4 @@ export const runAllCanPartition = async () => {
   // await runAlgorithm(canPartition, true, canPartitionCase1);
   // await runAlgorithm(canPartition, true, canPartitionCase2);
   await runAlgorithm(canPartition, true, canPartitionCase3);
-}
+};

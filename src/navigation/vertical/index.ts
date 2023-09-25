@@ -27,8 +27,7 @@ import {
 } from '../../components/icons';
 
 // ** Type import
-import {VerticalNavItemsType} from '../../layouts/types'
-
+import {VerticalNavItemsType} from '../../layouts/types';
 
 const navigation = (): VerticalNavItemsType => {
   return [
@@ -53,63 +52,63 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Graph',
       icon: GraphIcon,
-      path: '/algorithm/graph',
+      path: '/algorithm/graph'
     },
     {
       title: 'LinkedList',
       icon: LinkedListIcon,
-      path: '/algorithm/linked-list',
+      path: '/algorithm/linked-list'
     },
     {
       title: 'DFS Combination Permutation',
       icon: DfsCPIcon,
-      path: '/algorithm/dfs-combination-permutation',
+      path: '/algorithm/dfs-combination-permutation'
     },
     {
       title: 'Dynamic Programing',
       icon: DPIcon,
-      path: '/algorithm/dp',
+      path: '/algorithm/dp'
     },
     {
       title: 'Hash (Map, Set)',
       icon: HashIcon,
-      path: '/algorithm/hash',
+      path: '/algorithm/hash'
     },
     {
       title: 'Heap Priority Queue',
       icon: HeapIcon,
-      path: '/algorithm/heap-priority-queue',
+      path: '/algorithm/heap-priority-queue'
     },
     {
       title: 'Queue Deque',
       icon: QueueIcon,
-      path: '/algorithm/queue-deque',
+      path: '/algorithm/queue-deque'
     },
     {
       title: 'Matrix',
       icon: MatrixIcon,
-      path: '/algorithm/matrix',
+      path: '/algorithm/matrix'
     },
     {
       title: 'Sliding Window',
       icon: SlidingWindowIcon,
-      path: '/algorithm/sliding-window',
+      path: '/algorithm/sliding-window'
     },
     {
       title: 'Stack',
       icon: StackIcon,
-      path: '/algorithm/stack',
+      path: '/algorithm/stack'
     },
     {
       title: 'Two Pointers',
       icon: TwoPointersIcon,
-      path: '/algorithm/two-pointers',
+      path: '/algorithm/two-pointers'
     },
     {
       title: 'Uncategorized',
       icon: UncategorizedIcon,
-      path: '/algorithm/uncategorized',
-    },
+      path: '/algorithm/uncategorized'
+    }
 
     // {
     //   title: 'Login',
@@ -158,7 +157,7 @@ const navigation = (): VerticalNavItemsType => {
     //   title: 'Form Layouts',
     //   path: '/form-layouts'
     // }
-  ]
-}
+  ];
+};
 
-export default navigation
+export default navigation;

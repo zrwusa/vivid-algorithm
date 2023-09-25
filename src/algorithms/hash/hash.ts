@@ -9,16 +9,19 @@ import {groupAnagramsCase1, testIsAnagramCase1, testTopKFrequentCase9} from './c
 
 export const lengthOfLongestSubstring = async function (input: string, proxyHandler: TProxyHandler) {
   type LengthOfLongestSubstringVariables = {
-    maxLen: number,
-    curr: number,
-    map: Map<string, number>
-  }
+    maxLen: number;
+    curr: number;
+    map: Map<string, number>;
+  };
 
-  const variablesProxy = new DeepProxy<LengthOfLongestSubstringVariables>({
-    maxLen: 0,
-    curr: 0,
-    map: new Map<string, number>(),
-  }, proxyHandler);
+  const variablesProxy = new DeepProxy<LengthOfLongestSubstringVariables>(
+    {
+      maxLen: 0,
+      curr: 0,
+      map: new Map<string, number>()
+    },
+    proxyHandler
+  );
 
   if (input.length < 2) {
     return input.length;
@@ -63,7 +66,7 @@ function isAnagram(s: string, t: string): boolean {
 }
 
 export async function runIsAnagram() {
-  await runAlgorithm(isAnagram, true, testIsAnagramCase1)
+  await runAlgorithm(isAnagram, true, testIsAnagramCase1);
 }
 
 function groupAnagrams(strs: string[]): string[][] {
@@ -85,25 +88,23 @@ function groupAnagramsChar(strs: string[]): string[][] {
   for (let i = 0; i < strs.length; i++) {
     // O(n * k)
     const p: number[] = new Array(26).fill(0);
-    for (let j = 0; j < strs[i].length; j++)
-      p[strs[i][j].charCodeAt(0) - 'a'.charCodeAt(0)]++;
+    for (let j = 0; j < strs[i].length; j++) p[strs[i][j].charCodeAt(0) - 'a'.charCodeAt(0)]++;
 
-    const ps = p.toString(), psVal = map.get(ps);
+    const ps = p.toString(),
+      psVal = map.get(ps);
     psVal ? psVal.push(strs[i]) : map.set(ps, [strs[i]]);
   }
 
   return Array.from(map.values());
 }
 
-
 export async function runGroupAnagrams() {
   await runAlgorithm(groupAnagrams, true, groupAnagramsCase1);
   await runAlgorithm(groupAnagramsChar, true, groupAnagramsCase1);
 }
 
-
 function topKFrequentHash(nums: number[], k: number): number[] {
-  const hash: { [key: string]: number } = {};
+  const hash: {[key: string]: number} = {};
 
   for (let i = 0; i < nums.length; i++) {
     const si = nums[i].toString();
@@ -124,10 +125,12 @@ export async function runTopKFrequentHash() {
 
 // 347. Top K Frequent Elements
 function topKFrequentBucket(nums: number[], k: number): number[] {
-  const freq: Map<number, number> = new Map(), n = nums.length;
+  const freq: Map<number, number> = new Map(),
+    n = nums.length;
 
   for (let i = 0; i < n; i++) {
-    const vi = nums[i], hi = freq.get(vi);
+    const vi = nums[i],
+      hi = freq.get(vi);
     if (hi === undefined) freq.set(vi, 1);
     else freq.set(vi, hi + 1);
   }
@@ -157,8 +160,10 @@ export async function runTopKFrequentBucket() {
 
 // 451. Sort Characters By Frequency
 export function frequencySortBucket(s: string): string {
-  const freq: { [key in string]: number } = {}, n = s.length;
-  let max = 0, min = Number.MAX_SAFE_INTEGER;
+  const freq: {[key in string]: number} = {},
+    n = s.length;
+  let max = 0,
+    min = Number.MAX_SAFE_INTEGER;
 
   for (let i = 0; i < n; i++) {
     if (freq[s[i]] !== undefined) freq[s[i]]++;

@@ -1,5 +1,5 @@
 // ** MUI Imports
-import {Theme} from '@mui/material/styles'
+import {Theme} from '@mui/material/styles';
 
 const Rating = (theme: Theme) => {
   return {
@@ -10,7 +10,7 @@ const Rating = (theme: Theme) => {
         }
       }
     }
-  }
-}
+  };
+};
 
-export default Rating
+export default Rating;

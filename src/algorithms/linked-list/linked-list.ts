@@ -2,7 +2,6 @@ import {SinglyLinkedListNode} from 'data-structure-typed';
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
 import {wait} from '../../utils';
 
-
 /* --- start Linked List ---*/
 // 2	Add Two Numbers	★★	445							traversal
 // 24	Swap Nodes in Pairs	★★								reverse
@@ -28,10 +27,13 @@ export function reverseList(head: SinglyLinkedListNode | null): SinglyLinkedList
 }
 
 export type ReverseLinkedListVariables = {
-  pre: SinglyLinkedListNode | null
-}
+  pre: SinglyLinkedListNode | null;
+};
 
-export async function reverseLinkedList(head: SinglyLinkedListNode | null, proxyHandler: TProxyHandler): Promise<SinglyLinkedListNode | null> {
+export async function reverseLinkedList(
+  head: SinglyLinkedListNode | null,
+  proxyHandler: TProxyHandler
+): Promise<SinglyLinkedListNode | null> {
   const pre = null;
   const variables: ReverseLinkedListVariables = {
     pre: null
@@ -48,7 +50,10 @@ export async function reverseLinkedList(head: SinglyLinkedListNode | null, proxy
 }
 
 // 21. Merge Two Sorted Lists
-export function mergeTwoLists(l1: SinglyLinkedListNode | null, l2: SinglyLinkedListNode | null): SinglyLinkedListNode | null {
+export function mergeTwoLists(
+  l1: SinglyLinkedListNode | null,
+  l2: SinglyLinkedListNode | null
+): SinglyLinkedListNode | null {
   const dummy = new SinglyLinkedListNode(0);
   let tail = dummy;
   while (l1 && l2) {

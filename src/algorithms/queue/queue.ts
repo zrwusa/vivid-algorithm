@@ -78,4 +78,4 @@ export const runTestQueue = async () => {
   await runAlgorithm(testLinkedLIstQueueAccess, true, []);
   await runAlgorithm(testQueueAccess, true, []);
   await runAlgorithm(testNativeArrayAccess, true, []);
-}
+};

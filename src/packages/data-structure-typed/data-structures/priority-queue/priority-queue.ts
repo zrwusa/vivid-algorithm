@@ -151,7 +151,10 @@ export class PriorityQueue<T = number> {
    * `comparator` properties as the original instance.
    */
   clone(): PriorityQueue<T> {
-    return new PriorityQueue<T>({nodes: this.nodes, comparator: this._comparator});
+    return new PriorityQueue<T>({
+      nodes: this.nodes,
+      comparator: this._comparator
+    });
   }
 
   // --- start additional methods ---
@@ -232,7 +235,8 @@ export class PriorityQueue<T = number> {
   }
 
   protected readonly _comparator: PriorityQueueComparator<T> = (a: T, b: T) => {
-    const aKey = a as unknown as number, bKey = b as unknown as number;
+    const aKey = a as unknown as number,
+      bKey = b as unknown as number;
     return aKey - bKey;
   };
 
@@ -284,7 +288,7 @@ export class PriorityQueue<T = number> {
    * @returns the left child of a given parent node in a binary tree.
    */
   protected _getLeft(parent: number): number {
-    return (2 * parent) + 1;
+    return 2 * parent + 1;
   }
 
   /**
@@ -293,7 +297,7 @@ export class PriorityQueue<T = number> {
    * @returns the right child of a given parent node in a binary tree.
    */
   protected _getRight(parent: number): number {
-    return (2 * parent) + 2;
+    return 2 * parent + 2;
   }
 
   /**
@@ -304,7 +308,8 @@ export class PriorityQueue<T = number> {
    */
   protected _getComparedChild(parent: number) {
     let min = parent;
-    const left = this._getLeft(parent), right = this._getRight(parent);
+    const left = this._getLeft(parent),
+      right = this._getRight(parent);
 
     if (left < this.size && this._compare(min, left)) {
       min = left;

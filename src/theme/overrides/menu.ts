@@ -1,5 +1,5 @@
 // ** MUI Imports
-import {Theme} from '@mui/material/styles'
+import {Theme} from '@mui/material/styles';
 
 const Menu = (theme: Theme) => {
   return {
@@ -13,7 +13,7 @@ const Menu = (theme: Theme) => {
         }
       }
     }
-  }
-}
+  };
+};
 
-export default Menu
+export default Menu;

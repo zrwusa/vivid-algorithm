@@ -93,7 +93,6 @@ export class NumArray {
       if (prev !== undefined) {
         this._cache.set(i, i === 0 ? nums[0] : prev + nums[i]);
       }
-
     }
   }
 
@@ -118,7 +117,6 @@ export class NumMatrixMy {
   private _cache: (number | undefined)[][] = [];
 
   constructor(matrix: number[][]) {
-
     for (let row = 0; row < matrix.length; row++) {
       const rowData: (number | undefined)[] = [];
       for (let col = 0; col < matrix[row].length; col++) {
@@ -157,7 +155,6 @@ export class NumMatrixMy {
   }
 
   sumRegion(row1: number, col1: number, row2: number, col2: number): number {
-
     let sum = 0;
 
     let t = this._cache[0][0] || 0;
@@ -202,10 +199,8 @@ export class NumMatrix {
 
     for (let row = 1; row < cLen; row++) {
       for (let col = 1; col < matrix[row - 1].length + 1; col++) {
-        cache[row][col] = cache[row - 1][col]
-          + cache[row][col - 1]
-          - cache[row - 1][col - 1]
-          + matrix[row - 1][col - 1];
+        cache[row][col] =
+          cache[row - 1][col] + cache[row][col - 1] - cache[row - 1][col - 1] + matrix[row - 1][col - 1];
       }
     }
 
@@ -214,15 +209,11 @@ export class NumMatrix {
 
   sumRegion(row1: number, col1: number, row2: number, col2: number): number {
     const {_cache: cache} = this;
-    return cache[row2 + 1][col2 + 1]
-      - cache[row2 + 1][col1]
-      - cache[row1][col2 + 1]
-      + cache[row1][col1];
+    return cache[row2 + 1][col2 + 1] - cache[row2 + 1][col1] - cache[row1][col2 + 1] + cache[row1][col1];
   }
 }
 
 // 307. Range Sum Query - Mutable
-
 
 //2180 ms
 export class NumArrayMyFirst {
@@ -247,11 +238,9 @@ export class NumArrayMyFirst {
     // console.log(val)
     // console.log(this._diffs)
     // console.log(this._sums)
-
   }
 
   sumRange(left: number, right: number): number {
-
     let sum = 0;
     sum = this._sums[right + 1] - this._sums[left];
     for (let i = 0; i < this._diffs.length; i++) {
@@ -305,7 +294,8 @@ export class NumArrayMySecond {
 
 export function spiralOrder(matrix: number[][]): number[] {
   const VISITED = Number.MIN_SAFE_INTEGER;
-  let i = 0, j = 0;
+  let i = 0,
+    j = 0;
   const ans = [matrix[0][0]];
   matrix[0][0] = VISITED;
 
@@ -328,10 +318,10 @@ export function spiralOrder(matrix: number[][]): number[] {
       }
       ans.push(matrix[i][j]);
       matrix[i][j] = VISITED;
-    }
-  }
+    };
+  };
 
-  const canMoveFac = (dir: Dir): () => boolean => {
+  const canMoveFac = (dir: Dir): (() => boolean) => {
     let forward: number, row;
     switch (dir) {
       case 'up':
@@ -352,20 +342,20 @@ export function spiralOrder(matrix: number[][]): number[] {
         break;
     }
     return () => forward !== undefined && forward !== VISITED;
-  }
+  };
 
   const turningFac = (dir: Dir) => {
     switch (dir) {
       case 'up':
-        return () => new Navigator('right')
+        return () => new Navigator('right');
       case 'right':
-        return () => new Navigator('down')
+        return () => new Navigator('down');
       case 'down':
-        return () => new Navigator('left')
+        return () => new Navigator('left');
       case 'left':
-        return () => new Navigator('up')
+        return () => new Navigator('up');
     }
-  }
+  };
 
   class Navigator {
     canMove: () => boolean;
@@ -395,7 +385,7 @@ export function spiralOrder(matrix: number[][]): number[] {
 // 56. Merge Intervals
 export function mergeIntervals(intervals: number[][]): number[][] {
   const merged = [];
-  const sorted = intervals.sort((a, b) => a[0] - b[0])
+  const sorted = intervals.sort((a, b) => a[0] - b[0]);
 
   for (const cur of sorted) {
     const last = merged[merged.length - 1];
@@ -405,12 +395,12 @@ export function mergeIntervals(intervals: number[][]): number[][] {
     }
     merged.push(cur);
   }
-  return merged
+  return merged;
 }
 
 // (todo looks like O(n) ?)
 export function mergeIntervalsBigON(intervals: number[][]): number[][] {
-  const counts: { [key: number]: [number, number] } = {};
+  const counts: {[key: number]: [number, number]} = {};
   let max = -1;
 
   for (const [start, end] of intervals) {
@@ -423,8 +413,10 @@ export function mergeIntervalsBigON(intervals: number[][]): number[][] {
     max = Math.max(max, end);
   }
 
-  const ans: number[][] = [], stack: number[] = [];
-  let mergedStart = -1, i = 0;
+  const ans: number[][] = [],
+    stack: number[] = [];
+  let mergedStart = -1,
+    i = 0;
 
   while (i <= max) {
     const countI = counts[i];
@@ -458,7 +450,9 @@ export function mergeIntervalsBigON(intervals: number[][]): number[][] {
 }
 
 export function insertToIntervals(intervals: number[][], newInterval: number[]): number[][] {
-  const front = [], tail = [], len = intervals.length;
+  const front = [],
+    tail = [],
+    len = intervals.length;
   let i = 0;
 
   while (i < len) {

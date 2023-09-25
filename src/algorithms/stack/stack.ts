@@ -9,24 +9,27 @@ type HashKey = '(' | '{' | '[';
 
 export const isValidParenthesis = async function (input: string, proxyHandler: TProxyHandler): Promise<boolean> {
   type IsValidParenthesisVariables = {
-    stack: Stack<HashKey>,
-    char: string,
-  }
+    stack: Stack<HashKey>;
+    char: string;
+  };
   const onlyHashKey = input.match(/[{}[\]()]/g)?.join('');
 
   if (!onlyHashKey) {
     return false;
   }
 
-  const variablesProxy = new DeepProxy<IsValidParenthesisVariables>({
-    stack: new Stack<HashKey>(),
-    char: ''
-  }, proxyHandler);
+  const variablesProxy = new DeepProxy<IsValidParenthesisVariables>(
+    {
+      stack: new Stack<HashKey>(),
+      char: ''
+    },
+    proxyHandler
+  );
 
-  const hash: { [key in HashKey]: string } = {
+  const hash: {[key in HashKey]: string} = {
     '(': ')',
     '{': '}',
-    '[': ']',
+    '[': ']'
   };
 
   for (const char of onlyHashKey) {

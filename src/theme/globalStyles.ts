@@ -1,5 +1,5 @@
 // ** MUI Imports
-import {Theme} from '@mui/material/styles'
+import {Theme} from '@mui/material/styles';
 
 const GlobalStyles = (theme: Theme) => {
   return {
@@ -41,7 +41,7 @@ const GlobalStyles = (theme: Theme) => {
         backgroundColor: theme.palette.primary.main
       }
     }
-  }
-}
+  };
+};
 
-export default GlobalStyles
+export default GlobalStyles;

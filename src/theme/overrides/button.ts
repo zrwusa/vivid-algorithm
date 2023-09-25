@@ -1,8 +1,8 @@
 // ** MUI Imports
-import {Theme} from '@mui/material/styles'
+import {Theme} from '@mui/material/styles';
 
 // ** Theme Config Imports
-import themeConfig from '../../configs/themeConfig'
+import themeConfig from '../../configs/themeConfig';
 
 const Button = (theme: Theme) => {
   return {
@@ -47,7 +47,7 @@ const Button = (theme: Theme) => {
         disableRipple: themeConfig.disableRipple
       }
     }
-  }
-}
+  };
+};
 
-export default Button
+export default Button;

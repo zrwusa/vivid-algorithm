@@ -25,15 +25,16 @@ export const matrixUnique = (arr: number[][]) => {
     arr2 = arr2.sort((a, b) => a - b);
     for (let i = 0; i < arr1.length; i++) if (arr1[i] !== arr2[i]) return false;
     return true;
-  }
-  for (let i = 0; i < arr.length; i++) for (let j = i + 1; j < arr.length; j++) {
-    if (isSame(arr[i], arr[j])) {
-      arr.splice(j, 1);
-      j--;
+  };
+  for (let i = 0; i < arr.length; i++)
+    for (let j = i + 1; j < arr.length; j++) {
+      if (isSame(arr[i], arr[j])) {
+        arr.splice(j, 1);
+        j--;
+      }
     }
-  }
   return arr;
-}
+};
 
 export const matrixUnique1 = (matrix: number[][]) => {
   for (let i = 0; i < matrix.length; i++) {
@@ -48,7 +49,7 @@ export const matrixUnique1 = (matrix: number[][]) => {
     }
   }
   return matrix;
-}
+};
 
 // 48. Rotate Image
 export function rotate(matrix: number[][]): void {
@@ -79,11 +80,16 @@ const waitManager = new WaitManager(10);
 
 // 675. Cut Off Trees for Golf Event                BFS  ,A star is a kind of advanced BFS
 export async function cutOffTree(forest: number[][], proxyHandler?: TProxyHandler): Promise<number> {
-  const proxy = proxyHandler ? new DeepProxy<{ forest: number[][], cur: Coordinate, route: Coordinate[][] }>({
-    forest,
-    cur: {y: 0, x: 0},
-    route: []
-  }, proxyHandler) : undefined;
+  const proxy = proxyHandler
+    ? new DeepProxy<{forest: number[][]; cur: Coordinate; route: Coordinate[][]}>(
+        {
+          forest,
+          cur: {y: 0, x: 0},
+          route: []
+        },
+        proxyHandler
+      )
+    : undefined;
 
   const rowCount = forest.length;
   if (rowCount < 1) return -1;
@@ -118,9 +124,9 @@ export async function cutOffTree(forest: number[][], proxyHandler?: TProxyHandle
     let queue: Coordinate[] = [from];
     let level = 0;
     let tempQueue: Coordinate[] = [];
-    const visited: { [key in string]: boolean } = {};
+    const visited: {[key in string]: boolean} = {};
     visited[hashFunction(from)] = true;
-    const parents: { [key in string]: Coordinate } = {};
+    const parents: {[key in string]: Coordinate} = {};
 
     while (queue.length > 0) {
       const front = queue.shift();
@@ -129,7 +135,7 @@ export async function cutOffTree(forest: number[][], proxyHandler?: TProxyHandle
       for (const direction of directions) {
         // TODO after no-non-null-assertion not ensure the logic
         if (front !== undefined) {
-          const destination = fourthQuadrantMove(front, direction, forest, (d) => {
+          const destination = fourthQuadrantMove(front, direction, forest, d => {
             return forest[d.y][d.x] === 0;
           });
 
@@ -218,14 +224,14 @@ function cutOffTreeByIndex(forest: number[][]): number {
     let queue: MatrixCell[] = [from];
     let level = 0;
     let tempQueue: MatrixCell[] = [];
-    const visited: { [key in string]: boolean } = {};
+    const visited: {[key in string]: boolean} = {};
     visited[hashFunction(from)] = true;
     while (queue.length > 0) {
       const front = queue.shift();
       // TODO after no-non-null-assertion not ensure the logic
       if (front !== undefined) {
         for (const direction of directions) {
-          const destination = fourthQuadrantMoveByIndex(front, direction, forest, (d) => {
+          const destination = fourthQuadrantMoveByIndex(front, direction, forest, d => {
             return forest[d[0]][d[1]] === 0;
           });
           if (destination && !visited[destination[0].toString() + ',' + destination[1].toString()]) {

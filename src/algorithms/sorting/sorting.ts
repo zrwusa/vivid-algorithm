@@ -1,13 +1,12 @@
-export const sorting = {}
+export const sorting = {};
 
 // 300. Longest Increasing Subsequence (patience sorting)
 
-
 const swap = (arr: number[], left: number, right: number) => {
-  const temp = arr[left]
-  arr[left] = arr[right]
+  const temp = arr[left];
+  arr[left] = arr[right];
   arr[right] = temp;
-}
+};
 
 const partition = (arr: number[], low: number, high: number) => {
   //Pick the first element as pivot
@@ -26,11 +25,11 @@ const partition = (arr: number[], low: number, high: number) => {
 
   //Return the pivot index
   return i;
-}
+};
 
 export const quickSortIterative = (arr: number[]) => {
   //Stack for storing start and end index
-  const stack: Array<{ x: number, y: number }> = [];
+  const stack: Array<{x: number; y: number}> = [];
 
   //Get the start and end index
   const start = 0;
@@ -57,7 +56,7 @@ export const quickSortIterative = (arr: number[]) => {
       stack.push({x: PI + 1, y: y});
     }
   }
-}
+};
 
 export function quickSortRecursive(arr: number[], start = 0, end = arr.length - 1) {
   // Base case or terminating case

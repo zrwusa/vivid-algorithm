@@ -19,9 +19,7 @@ import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
 import {canFinishCase1, canFinishCase3, criticalConnectionsCase1} from './cases';
 import _ from 'lodash';
 
-
 class MyVertex<V extends string> extends DirectedVertex<V> {
-
   constructor(id: VertexId, val?: V) {
     super(id, val);
     this._data = val;
@@ -39,7 +37,6 @@ class MyVertex<V extends string> extends DirectedVertex<V> {
 }
 
 class MyEdge<E extends string> extends DirectedEdge<E> {
-
   constructor(v1: VertexId, v2: VertexId, weight?: number, val?: E) {
     super(v1, v2, weight, val);
     this._data = val;
@@ -56,15 +53,15 @@ class MyEdge<E extends string> extends DirectedEdge<E> {
   }
 }
 
-class MyDirectedGraph<V extends MyVertex<string>, E extends MyEdge<string>> extends DirectedGraph<V, E> {
-
-}
+class MyDirectedGraph<V extends MyVertex<string>, E extends MyEdge<string>> extends DirectedGraph<V, E> {}
 
 const waitMan = new WaitManager(10);
 
 export const testGraph = async (proxyHandler: TProxyHandler) => {
-
-  const proxy: { myGraph: MyDirectedGraph<MyVertex<string>, MyEdge<string>> } = new DeepProxy({myGraph: new MyDirectedGraph<MyVertex<string>, MyEdge<string>>()}, proxyHandler);
+  const proxy: {myGraph: MyDirectedGraph<MyVertex<string>, MyEdge<string>>} = new DeepProxy(
+    {myGraph: new MyDirectedGraph<MyVertex<string>, MyEdge<string>>()},
+    proxyHandler
+  );
   await wait(waitMan.time3);
   console.log(`proxy.myGraph.addVertex(new MyVertex(1, 'data1'))`, proxy.myGraph.addVertex(new MyVertex(1, 'data1')));
   await wait(waitMan.time3);
@@ -84,13 +81,22 @@ export const testGraph = async (proxyHandler: TProxyHandler) => {
   await wait(waitMan.time3);
   console.log(`proxy.myGraph.addVertex(new MyVertex(9, 'data9'))`, proxy.myGraph.addVertex(new MyVertex(9, 'data9')));
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(1, 2, 10, 'edge-data1-2'))`, proxy.myGraph.addEdge(new MyEdge(1, 2, 10, 'edge-data1-2')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(1, 2, 10, 'edge-data1-2'))`,
+    proxy.myGraph.addEdge(new MyEdge(1, 2, 10, 'edge-data1-2'))
+  );
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(2, 1, 20, 'edge-data2-1'))`, proxy.myGraph.addEdge(new MyEdge(2, 1, 20, 'edge-data2-1')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(2, 1, 20, 'edge-data2-1'))`,
+    proxy.myGraph.addEdge(new MyEdge(2, 1, 20, 'edge-data2-1'))
+  );
   await wait(waitMan.time3);
   console.log(`proxy.myGraph.getEdge(1, 2)`, proxy.myGraph.getEdge(1, 2));
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.getEdge(proxy.myGraph.getVertex(1), proxy.myGraph.getVertex(2))`, proxy.myGraph.getEdge(proxy.myGraph.getVertex(1), proxy.myGraph.getVertex(2)));
+  console.log(
+    `proxy.myGraph.getEdge(proxy.myGraph.getVertex(1), proxy.myGraph.getVertex(2))`,
+    proxy.myGraph.getEdge(proxy.myGraph.getVertex(1), proxy.myGraph.getVertex(2))
+  );
   await wait(waitMan.time3);
   console.log(`proxy.myGraph.getEdge(1,'100')`, proxy.myGraph.getEdge(1, '100'));
   await wait(waitMan.time3);
@@ -100,36 +106,69 @@ export const testGraph = async (proxyHandler: TProxyHandler) => {
   await wait(waitMan.time3);
   console.log(`proxy.myGraph.getEdge(1, 2)`, proxy.myGraph.getEdge(1, 2));
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(3, 1, 3, 'edge-data-3-1'))`, proxy.myGraph.addEdge(new MyEdge(3, 1, 3, 'edge-data-3-1')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(3, 1, 3, 'edge-data-3-1'))`,
+    proxy.myGraph.addEdge(new MyEdge(3, 1, 3, 'edge-data-3-1'))
+  );
 
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(1, 9, 19, 'edge-data1-9'))`, proxy.myGraph.addEdge(new MyEdge(1, 9, 19, 'edge-data1-9')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(1, 9, 19, 'edge-data1-9'))`,
+    proxy.myGraph.addEdge(new MyEdge(1, 9, 19, 'edge-data1-9'))
+  );
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(9, 7, 97, 'edge-data9-7'))`, proxy.myGraph.addEdge(new MyEdge(9, 7, 97, 'edge-data9-7')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(9, 7, 97, 'edge-data9-7'))`,
+    proxy.myGraph.addEdge(new MyEdge(9, 7, 97, 'edge-data9-7'))
+  );
 
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(7, 9, 79, 'edge-data7-9'))`, proxy.myGraph.addEdge(new MyEdge(7, 9, 79, 'edge-data7-9')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(7, 9, 79, 'edge-data7-9'))`,
+    proxy.myGraph.addEdge(new MyEdge(7, 9, 79, 'edge-data7-9'))
+  );
 
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(1, 4, 14, 'edge-data1-4'))`, proxy.myGraph.addEdge(new MyEdge(1, 4, 14, 'edge-data1-4')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(1, 4, 14, 'edge-data1-4'))`,
+    proxy.myGraph.addEdge(new MyEdge(1, 4, 14, 'edge-data1-4'))
+  );
 
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(4, 7, 47, 'edge-data4-7'))`, proxy.myGraph.addEdge(new MyEdge(4, 7, 47, 'edge-data4-7')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(4, 7, 47, 'edge-data4-7'))`,
+    proxy.myGraph.addEdge(new MyEdge(4, 7, 47, 'edge-data4-7'))
+  );
 
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(1, 2, 12, 'edge-data1-2'))`, proxy.myGraph.addEdge(new MyEdge(1, 2, 12, 'edge-data1-2')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(1, 2, 12, 'edge-data1-2'))`,
+    proxy.myGraph.addEdge(new MyEdge(1, 2, 12, 'edge-data1-2'))
+  );
 
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(2, 3, 23, 'edge-data2-3'))`, proxy.myGraph.addEdge(new MyEdge(2, 3, 23, 'edge-data2-3')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(2, 3, 23, 'edge-data2-3'))`,
+    proxy.myGraph.addEdge(new MyEdge(2, 3, 23, 'edge-data2-3'))
+  );
 
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(3, 5, 35, 'edge-data3-5'))`, proxy.myGraph.addEdge(new MyEdge(3, 5, 35, 'edge-data3-5')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(3, 5, 35, 'edge-data3-5'))`,
+    proxy.myGraph.addEdge(new MyEdge(3, 5, 35, 'edge-data3-5'))
+  );
 
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(5, 7, 57, 'edge-data5-7'))`, proxy.myGraph.addEdge(new MyEdge(5, 7, 57, 'edge-data5-7')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(5, 7, 57, 'edge-data5-7'))`,
+    proxy.myGraph.addEdge(new MyEdge(5, 7, 57, 'edge-data5-7'))
+  );
 
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.addEdge(new MyEdge(7, 3, 73, 'edge-data7-3'))`, proxy.myGraph.addEdge(new MyEdge(7, 3, 73, 'edge-data7-3')));
+  console.log(
+    `proxy.myGraph.addEdge(new MyEdge(7, 3, 73, 'edge-data7-3'))`,
+    proxy.myGraph.addEdge(new MyEdge(7, 3, 73, 'edge-data7-3'))
+  );
 
   await wait(waitMan.time3);
   console.log('topologicalSort', proxy.myGraph.topologicalSort());
@@ -177,24 +216,26 @@ export const testGraph = async (proxyHandler: TProxyHandler) => {
 };
 
 export const testMapGraph = async (proxyHandler: TProxyHandler) => {
-
-  const proxy: { graph: MapGraph } = new DeepProxy({graph: new MapGraph([5.500338, 100.173665], [5.211458, 100.515407])}, proxyHandler);
+  const proxy: {graph: MapGraph} = new DeepProxy(
+    {graph: new MapGraph([5.500338, 100.173665], [5.211458, 100.515407])},
+    proxyHandler
+  );
 
   proxy.graph.addVertex(new MapVertex('Surin', 5.466724, 100.274805));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Batu Feringgi Beach', 5.475141, 100.276670));
+  proxy.graph.addVertex(new MapVertex('Batu Feringgi Beach', 5.475141, 100.27667));
   await wait(waitMan.time3);
   proxy.graph.addVertex(new MapVertex('Lotus', 5.459044, 100.308767));
   await wait(waitMan.time3);
   proxy.graph.addVertex(new MapVertex('The Breeza', 5.454197, 100.307859));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Hard Rock Hotel', 5.467850, 100.241876));
+  proxy.graph.addVertex(new MapVertex('Hard Rock Hotel', 5.46785, 100.241876));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Mira', 5.456749, 100.286650));
+  proxy.graph.addVertex(new MapVertex('Mira', 5.456749, 100.28665));
   await wait(waitMan.time3);
   proxy.graph.addVertex(new MapVertex('Penang Bible Church', 5.428683, 100.314825));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Queensbay', 5.332760, 100.306651));
+  proxy.graph.addVertex(new MapVertex('Queensbay', 5.33276, 100.306651));
   await wait(waitMan.time3);
   proxy.graph.addVertex(new MapVertex('Saanen Goat Farm', 5.405738, 100.207699));
   await wait(waitMan.time3);
@@ -230,9 +271,19 @@ export const testMapGraph = async (proxyHandler: TProxyHandler) => {
 
   const minPathBetween = proxy.graph.getMinPathBetween('Surin', 'Saanen Goat Farm');
   await wait(waitMan.time3);
-  console.log(_.isEqual(minPathBetween?.map(v => v.id), expected1));
+  console.log(
+    _.isEqual(
+      minPathBetween?.map(v => v.id),
+      expected1
+    )
+  );
   const surinToSaanenGoatFarmDij = proxy.graph.dijkstra('Surin', 'Saanen Goat Farm', true, true);
-  console.log(_.isEqual(surinToSaanenGoatFarmDij?.minPath.map(v => v.id), expected1));
+  console.log(
+    _.isEqual(
+      surinToSaanenGoatFarmDij?.minPath.map(v => v.id),
+      expected1
+    )
+  );
   console.log(surinToSaanenGoatFarmDij?.minDist === 41.1);
   await wait(waitMan.time3);
   proxy.graph.addEdge('Surin', 'Batu Feringgi Beach', 1.5);
@@ -240,19 +291,32 @@ export const testMapGraph = async (proxyHandler: TProxyHandler) => {
   const expected2 = ['Surin', 'Batu Feringgi Beach', 'Hard Rock Hotel', 'Saanen Goat Farm'];
   const minPathBetweenViaBFB = proxy.graph.getMinPathBetween('Surin', 'Saanen Goat Farm', true);
   await wait(waitMan.time3);
-  console.log(_.isEqual(minPathBetweenViaBFB?.map(v => v.id), expected2));
+  console.log(
+    _.isEqual(
+      minPathBetweenViaBFB?.map(v => v.id),
+      expected2
+    )
+  );
   const surinToSaanenGoatFarmViaDij = proxy.graph.dijkstra('Surin', 'Saanen Goat Farm', true, true);
   await wait(waitMan.time3);
-  console.log(_.isEqual(surinToSaanenGoatFarmViaDij?.minPath.map(v => v.id), expected2));
+  console.log(
+    _.isEqual(
+      surinToSaanenGoatFarmViaDij?.minPath.map(v => v.id),
+      expected2
+    )
+  );
   console.log(surinToSaanenGoatFarmViaDij?.minDist === 25.2);
-
 };
-
 
 export function numIslands(grid: string[][]): number {
   const boundY = grid.length - 1;
   const boundX = grid[0].length - 1;
-  const dirs = [{y: -1, x: 0}, {y: 1, x: 0}, {y: 0, x: -1}, {y: 0, x: 1}];
+  const dirs = [
+    {y: -1, x: 0},
+    {y: 1, x: 0},
+    {y: 0, x: -1},
+    {y: 0, x: 1}
+  ];
 
   const isLand = (cord: Coordinate) => {
     if (cord.y < 0 || cord.y > boundY || cord.x < 0 || cord.x > boundX) return false;
@@ -297,7 +361,7 @@ export class LinkedNode {
 }
 
 function canFinish(numCourses: number, prerequisites: number[][]): boolean {
-  const hash: { [key in number]: number[] } = {};
+  const hash: {[key in number]: number[]} = {};
   for (const [course, preRqt] of prerequisites) {
     if (!hash[preRqt]) hash[preRqt] = [];
     hash[preRqt].push(course);
@@ -346,7 +410,6 @@ function canFinishByGraph(numCourses: number, prerequisites: number[][]): boolea
   return !!sorted;
 }
 
-
 export const runAllCanFinish = async () => {
   await runAlgorithm(canFinish, false, canFinishCase1);
   await runAlgorithm(canFinishByGraph, false, canFinishCase1);
@@ -374,7 +437,7 @@ export function calcEquation(equations: [string, string][], values: number[], qu
   for (const query of queries) {
     const [q] = query;
     if (q === 'get') {
-      graph.getVertex(1)
+      graph.getVertex(1);
     }
   }
   return ans;
@@ -386,10 +449,18 @@ export function calcEquation(equations: [string, string][], values: number[], qu
 // unweighted shortest path / BFS
 // 684	Redundant Connection	★★★★	685	1319				cycle, union find
 // 743	Network Delay Time	★★★★	787	882	924	1334		weighted shortest path
-export async function networkDelayTime(times: number[][], n: number, k: number, proxyHandler?: TProxyHandler): Promise<number> {
+export async function networkDelayTime(
+  times: number[][],
+  n: number,
+  k: number,
+  proxyHandler?: TProxyHandler
+): Promise<number> {
   let graph;
   if (proxyHandler) {
-    const proxy: { graph: DirectedGraph<DirectedVertex, DirectedEdge> } = new DeepProxy({graph: new DirectedGraph()}, proxyHandler);
+    const proxy: {graph: DirectedGraph<DirectedVertex, DirectedEdge>} = new DeepProxy(
+      {graph: new DirectedGraph()},
+      proxyHandler
+    );
     graph = proxy.graph;
   } else {
     graph = new DirectedGraph();
@@ -430,7 +501,7 @@ export async function networkDelayTime(times: number[][], n: number, k: number, 
  * @param connections
  */
 function criticalConnections(n: number, connections: number[][]): number[][] {
-  const graph: { [key in number]: number[] } = {};
+  const graph: {[key in number]: number[]} = {};
 
   const time1 = timeStart();
   for (const conn of connections) {
@@ -558,10 +629,15 @@ export async function regionsBySlashes(grid: string[], proxyHandler?: TProxyHand
     graph2 = new DirectedGraph();
   }
   const grid2: [string, string][] = [
-    ['a', 'f'], ['f', 'g'], ['g', 'a'],
+    ['a', 'f'],
+    ['f', 'g'],
+    ['g', 'a'],
     ['a', 'b'],
-    ['b', 'c'], ['c', 'd'], ['d', 'b'],
-    ['c', 'e'], ['d', 'e']
+    ['b', 'c'],
+    ['c', 'd'],
+    ['d', 'b'],
+    ['c', 'e'],
+    ['d', 'e']
   ];
   for (const v of ['a', 'b', 'c', 'd', 'e', 'f', 'g']) {
     graph2.addVertex(new DirectedVertex(v));
@@ -583,14 +659,13 @@ export const runAllRegionsBySlashes = async () => {
 
 // runAllRegionsBySlashes().then();
 
-
 class Node {
-  val: number
-  neighbors: Node[]
+  val: number;
+  neighbors: Node[];
 
   constructor(val?: number, neighbors?: Node[]) {
-    this.val = (val === undefined ? 0 : val)
-    this.neighbors = (neighbors === undefined ? [] : neighbors)
+    this.val = val === undefined ? 0 : val;
+    this.neighbors = neighbors === undefined ? [] : neighbors;
   }
 }
 
@@ -606,10 +681,9 @@ export const cloneGraph = (node: Node | null): Node | null => {
     for (const n of node.neighbors) copy.neighbors.push(dfs(n, map));
 
     return copy;
-  }
+  };
 
   return node === null ? null : dfs(node);
-}
+};
 
 /* --- end Graph --- */
-

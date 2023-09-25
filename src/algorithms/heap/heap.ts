@@ -19,8 +19,7 @@ export const testHeap = () => {
   console.log(arrFromHeap[3] === 6);
   console.log(_.isEqual(minNumHeap.sort(), [2, 5, 6, 9]));
 
-
-  const minObjHeap = new MinHeap<{ a: string }>();
+  const minObjHeap = new MinHeap<{a: string}>();
 
   minObjHeap.add(1, {a: 'a1'});
   minObjHeap.add(6, {a: 'a6'});
@@ -28,24 +27,24 @@ export const testHeap = () => {
   minObjHeap.add(0, {a: 'a0'});
 
   console.log(_.isEqual(minObjHeap.peek(), {a: 'a0'}));
-  console.log(_.isEqual(minObjHeap.toArray(), ([{'a': 'a0'}, {'a': 'a1'}, {'a': 'a2'}, {'a': 'a6'}])));
+  console.log(_.isEqual(minObjHeap.toArray(), [{a: 'a0'}, {a: 'a1'}, {a: 'a2'}, {a: 'a6'}]));
   let i = 0;
-  const expectPolled = [{'a': 'a0'}, {'a': 'a1'}, {'a': 'a2'}, {'a': 'a6'}];
+  const expectPolled = [{a: 'a0'}, {a: 'a1'}, {a: 'a2'}, {a: 'a6'}];
   while (minObjHeap.size > 0) {
     console.log(_.isEqual(minObjHeap.poll(), expectPolled[i]));
     i++;
   }
 
-  const maxObjHeap = new MaxHeap<{ a: string }>();
+  const maxObjHeap = new MaxHeap<{a: string}>();
   maxObjHeap.add(1, {a: 'a1'});
   maxObjHeap.add(6, {a: 'a6'});
   maxObjHeap.add(5, {a: 'a5'});
   maxObjHeap.add(2, {a: 'a2'});
   maxObjHeap.add(0, {a: 'a0'});
   maxObjHeap.add(9, {a: 'a9'});
-  console.log(_.isEqual(maxObjHeap.peek(), {'a': 'a9'}));
-  console.log(_.isEqual(maxObjHeap.toArray(), [{'a': 'a9'}, {'a': 'a2'}, {'a': 'a6'}, {'a': 'a1'}, {'a': 'a0'}, {'a': 'a5'}]));
-  const maxExpectPolled = [{'a': 'a9'}, {'a': 'a6'}, {'a': 'a5'}, {'a': 'a2'}, {'a': 'a1'}, {'a': 'a0'}];
+  console.log(_.isEqual(maxObjHeap.peek(), {a: 'a9'}));
+  console.log(_.isEqual(maxObjHeap.toArray(), [{a: 'a9'}, {a: 'a2'}, {a: 'a6'}, {a: 'a1'}, {a: 'a0'}, {a: 'a5'}]));
+  const maxExpectPolled = [{a: 'a9'}, {a: 'a6'}, {a: 'a5'}, {a: 'a2'}, {a: 'a1'}, {a: 'a0'}];
   let maxI = 0;
   while (maxObjHeap.size > 0) {
     console.log(_.isEqual(maxObjHeap.poll(), maxExpectPolled[maxI]));

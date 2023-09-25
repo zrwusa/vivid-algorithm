@@ -22,7 +22,9 @@ export const searchInRotatedSortedArray = function (nums: number[], target: numb
   while (left <= right) {
     const mid = left + Math.floor((right - left) / 2);
 
-    const midEle = nums[mid], leftEle = nums[left], rightEle = nums[right];
+    const midEle = nums[mid],
+      leftEle = nums[left],
+      rightEle = nums[right];
 
     if (midEle === target) return mid;
 
@@ -142,7 +144,7 @@ export const countSmallerBITPlagiarized = (nums: number[]): number[] => {
   const ans: number[] = [];
   // O(log(n))
   const bit = new BinaryIndexedTree(nums.length);
-  nums.reverse().forEach((num) => {
+  nums.reverse().forEach(num => {
     const numRank = ranks.get(num);
     if (numRank !== undefined) {
       ans.push(bit.getPrefixSum(numRank - 1));
@@ -184,15 +186,18 @@ const countSmallerBIT = function (nums: number[]): number[] {
 //  sorted case BST will give a time complexity O(n^2)
 export const countSmallerBST = async (nums: number[], proxyHandler: TProxyHandler) => {
   const rootIndex = nums.length - 1;
-  const proxyVariables = new DeepProxy<{ bst: BST }>({
-    bst: new BST({
-      // nodeOrData: {
-      //     id: nums[rootIndex],
-      //     val: nums[rootIndex],
-      // }
-    })
-  }, proxyHandler);
-  proxyVariables.bst.add(nums[rootIndex], nums[rootIndex])
+  const proxyVariables = new DeepProxy<{bst: BST}>(
+    {
+      bst: new BST({
+        // nodeOrData: {
+        //     id: nums[rootIndex],
+        //     val: nums[rootIndex],
+        // }
+      })
+    },
+    proxyHandler
+  );
+  proxyVariables.bst.add(nums[rootIndex], nums[rootIndex]);
   const outputArr = new Array(nums.length).fill(0);
 
   for (let j = nums.length - 1; j > -1; j--) {
@@ -217,7 +222,6 @@ export const runAllCountSmaller = async () => {
   // await runAlgorithm(countSmallerBIT, false, countSmallerCase8);
   // await runAlgorithm(countSmallerBST, false, countSmallerCase8);
 })();
-
 
 // 278 First Bad Version
 export const solutionFirstBadVersion = function (isBadVersion: any) {
@@ -254,7 +258,9 @@ export function mySqrt(x: number): number {
   if (x === 1) {
     return 1;
   }
-  let l = 1, r = x, ans = x;
+  let l = 1,
+    r = x,
+    ans = x;
   while (r - l >= 1) {
     const mid = l + Math.floor((r - l) / 2);
     const midSquare = mid * mid;
@@ -272,7 +278,6 @@ export function mySqrt(x: number): number {
     }
   }
   return ans;
-
 }
 
 /* --- start Binary Search --- */
@@ -298,8 +303,8 @@ export function minEatingSpeed(piles: number[], h: number): number {
     return needTime <= h;
   };
 
-
-  let l = 1, r = maxPile;
+  let l = 1,
+    r = maxPile;
   let minK = maxPile;
   while (l < r) {
     const mid = l + Math.floor((r - l) / 2);
@@ -316,7 +321,8 @@ export function minEatingSpeed(piles: number[], h: number): number {
 // 378
 // 35	Search Insert Position	★★	34	704	981					upper_bound
 export function searchInsert(nums: number[], target: number): number {
-  let l = 0, r = nums.length;
+  let l = 0,
+    r = nums.length;
 
   while (l < r) {
     const mid = l + Math.floor((r - l) / 2);
@@ -341,7 +347,8 @@ export function searchMatrix(matrix: number[][], target: number): boolean {
     arr = arr.concat(arrI);
   }
 
-  let l = 0, r = arr.length;
+  let l = 0,
+    r = arr.length;
   while (l <= r) {
     const mid = l + Math.floor((r - l) / 2);
     const midVal = arr[mid];
@@ -355,7 +362,6 @@ export function searchMatrix(matrix: number[][], target: number): boolean {
   }
   return false;
 }
-
 
 // 4	Median of Two Sorted Arrays	★★★★
 // 378 Kth Smallest Element in a Sorted Matrix ★★★★	668							kth + matrix
@@ -374,16 +380,18 @@ export function kthSmallestDC(matrix: number[][], k: number): number {
 export function smallestDistancePair(nums: number[], k: number): number {
   nums.sort((a, b) => a - b);
 
-  let min = Infinity, max = nums[nums.length - 1] - nums[0];
+  let min = Infinity,
+    max = nums[nums.length - 1] - nums[0];
   for (let i = 0; i < nums.length - 1; i++) {
     min = Math.min(min, nums[i + 1] - nums[i]);
   }
 
   function countLessThan(nums: number[], target: number) {
-    let right = 0, count = 0;
+    let right = 0,
+      count = 0;
     for (let i = 0; i < nums.length; i++) {
       while (nums[i] - nums[right] > target && right <= i) right++;
-      count += (i - right);
+      count += i - right;
     }
     return count;
   }

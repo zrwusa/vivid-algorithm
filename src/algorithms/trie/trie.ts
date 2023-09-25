@@ -16,7 +16,7 @@ export const testTrie = async (words: string[]) => {
   console.log(trie.isPrefix('do'), 'Is prefix: do');
   console.log(trie.has('do'), 'Is word: do');
   console.log(trie.isPrefix('dorm'), 'Is prefix: dorm');
-  const allPreDor = trie.getAll('dor')
+  const allPreDor = trie.getAll('dor');
   console.log(allPreDor[0] === 'dork' && allPreDor[1] === 'dorm', 'Get all words with prefix: dor');
   const all1 = trie.getAll();
   console.log(all1.length === 8 && all1[4] === 'dorm', 'Get all words');
@@ -53,17 +53,20 @@ const testTrie2 = async (words: string[]) => {
   console.log(trie.isCommonPrefix('fl'), 'is "fl" a common prefix');
   console.log(trie.isCommonPrefix('f'), 'is "f" a common prefix');
   return trie;
-}
+};
 
 export async function runTestTrie() {
   await runAlgorithm(testTrie, true, testTrieCase1);
   await runAlgorithm(testTrie2, true, testTrieCase2);
 }
 
-type Coordinate = [number, number]
+type Coordinate = [number, number];
 
 export function findWords(board: string[][], words: string[]): string[] {
-  const m = board.length, n = board[0].length, trie = new Trie(), ans: string[] = [];
+  const m = board.length,
+    n = board[0].length,
+    trie = new Trie(),
+    ans: string[] = [];
 
   for (const w of words) trie.add(w);
 
@@ -86,7 +89,7 @@ export function findWords(board: string[][], words: string[]): string[] {
     dfs([y - 1, x], child, acc + cur);
     dfs([y + 1, x], child, acc + cur);
     board[y][x] = cur;
-  }
+  };
 
   for (let i = 0; i < m; i++) {
     for (let j = 0; j < n; j++) {
@@ -104,4 +107,4 @@ function longestCommonPrefix(strs: string[]): string {
 
 export const runAllLongestCommonPrefix = async () => {
   await runAlgorithm(longestCommonPrefix, true, trieCase6);
-}
+};

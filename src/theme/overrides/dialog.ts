@@ -1,8 +1,8 @@
 // ** MUI Imports
-import {Theme} from '@mui/material/styles'
+import {Theme} from '@mui/material/styles';
 
 // ** Util Import
-import {hexToRGBA} from '../../utils/hex-to-rgba'
+import {hexToRGBA} from '../../utils/hex-to-rgba';
 
 const Dialog = (theme: Theme) => {
   return {
@@ -101,7 +101,7 @@ const Dialog = (theme: Theme) => {
         }
       }
     }
-  }
-}
+  };
+};
 
-export default Dialog
+export default Dialog;

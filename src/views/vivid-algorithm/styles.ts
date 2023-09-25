@@ -24,7 +24,7 @@ export const styles = {
 
   nodeSpace: 40,
   fontSize: 12,
-  fontOffsetY: 12 / 3,
-}
+  fontOffsetY: 12 / 3
+};
 
-export default styles
+export default styles;

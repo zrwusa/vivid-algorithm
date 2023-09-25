@@ -80,7 +80,6 @@ function mergeKLists(lists: DoublyLinkedListNode[]): DoublyLinkedListNode | null
         }
       }
     }
-
   }
   return ans;
 }
@@ -89,7 +88,6 @@ export const runAllMergeKLists = async () => {
   await runAlgorithm(mergeKLists, false, mergeKListsCase1);
   await runAlgorithm(mergeKLists, false, mergeKListsCase2);
 };
-
 
 //347. Top K Frequent Elements
 function topKFrequent(nums: number[], k: number): number[] {
@@ -170,7 +168,6 @@ export const runAllTopKFrequent = async () => {
   await runAlgorithm(topKFrequent, false, topKFrequentCase1);
   await runAlgorithm(topKFrequentByBucket, false, topKFrequentCase1);
 };
-
 
 //253
 //295. Find Median from Data Stream  ★★★★
@@ -310,9 +307,8 @@ function reorganizeString(s: string): string {
             }
           }
         }
-
       }
-      const needOrderedCount = conveyor.length - processCount % conveyor.length;
+      const needOrderedCount = conveyor.length - (processCount % conveyor.length);
 
       for (let m = 0; m < needOrderedCount; m++) {
         // TODO after no-non-null-assertion not ensure the logic
@@ -351,7 +347,6 @@ class KthLargest {
     const size = this._heap.size;
     if (size < this._k) {
       this._heap.add(val);
-
     } else if (size === this._k) {
       // TODO after no-non-null-assertion not ensure the logic
       const peek = this._heap.peek();
@@ -359,7 +354,6 @@ class KthLargest {
         this._heap.poll();
         this._heap.add(val);
       }
-
     }
     // TODO after no-non-null-assertion not ensure the logic
     return this._heap.peek() || NaN;
@@ -389,10 +383,15 @@ const testPriorityQueue1 = () => {
   minPriorityQueue.poll();
   console.log(_.isEqual(minPriorityQueue.toArray(), [4, 5, 6]));
   console.log(minPriorityQueue.peek() === 4);
-  console.log(_.isEqual(PriorityQueue.heapify({
-    nodes: [3, 2, 1, 5, 6, 7, 8, 9, 10],
-    comparator: (a, b) => a - b
-  }).toArray(), [1, 2, 3, 5, 6, 7, 8, 9, 10]));
+  console.log(
+    _.isEqual(
+      PriorityQueue.heapify({
+        nodes: [3, 2, 1, 5, 6, 7, 8, 9, 10],
+        comparator: (a, b) => a - b
+      }).toArray(),
+      [1, 2, 3, 5, 6, 7, 8, 9, 10]
+    )
+  );
   return;
 };
 
@@ -404,38 +403,45 @@ const testPriorityQueue2 = () => {
   maxPriorityQueue.poll();
   console.log(_.isEqual(maxPriorityQueue.toArray(), [3, 2, 1]));
   console.log(maxPriorityQueue.peek() === 3);
-  console.log(_.isEqual(PriorityQueue.heapify({
-    nodes: [3, 2, 1, 5, 6, 7, 8, 9, 10],
-    comparator: (a, b) => a - b
-  }).toArray(), [1, 2, 3, 5, 6, 7, 8, 9, 10]));
+  console.log(
+    _.isEqual(
+      PriorityQueue.heapify({
+        nodes: [3, 2, 1, 5, 6, 7, 8, 9, 10],
+        comparator: (a, b) => a - b
+      }).toArray(),
+      [1, 2, 3, 5, 6, 7, 8, 9, 10]
+    )
+  );
 };
-
 
 const testPriorityQueue3 = () => {
   const heap = new PriorityQueue<number>({nodes: [2, 5, 8, 3, 1, 6, 7, 4], comparator: (a, b) => a - b});
   const clonedPriorityQueue = heap.clone();
   console.log(_.isEqual(clonedPriorityQueue.getNodes(), heap.getNodes()));
-  console.log(_.isEqual(clonedPriorityQueue.sort(), [1, 2, 3, 4, 5, 6, 7, 8]))
+  console.log(_.isEqual(clonedPriorityQueue.sort(), [1, 2, 3, 4, 5, 6, 7, 8]));
   console.log(_.isEqual(heap.DFS('in'), [4, 3, 2, 5, 1, 8, 6, 7]));
   console.log(_.isEqual(heap.DFS('post'), [4, 3, 5, 2, 8, 7, 6, 1]));
   console.log(_.isEqual(heap.DFS('pre'), [1, 2, 3, 4, 5, 6, 8, 7]));
 };
 
-
 const heapSort = async () => {
   const values = Array.from(new Array(10000), () => getRandomInt(1, 10000000));
   const minPriorityQueue = new PriorityQueue<number>({nodes: values, comparator: (a, b) => a - b});
-  const sorted = minPriorityQueue.sort()
-  console.log(_.isEqual(sorted, values.sort((a, b) => a - b)));
-  console.log('heap sorted')
+  const sorted = minPriorityQueue.sort();
+  console.log(
+    _.isEqual(
+      sorted,
+      values.sort((a, b) => a - b)
+    )
+  );
+  console.log('heap sorted');
 };
-
 
 const nativeSort = () => {
   const values = Array.from(new Array(10000), () => getRandomInt(1, 10000000));
   values.sort((a, b) => a - b);
   console.log('sorted native');
-}
+};
 
 export const runAllTestPriorityQueue = async () => {
   await runAlgorithm(heapSort, false);
@@ -446,7 +452,7 @@ export const runAllTestPriorityQueue = async () => {
 
   // await runAlgorithm(quickSortIterative, false, [sortCase5]);
   // await runAlgorithm(quickSortRecursive, false, [sortCase6]);
-}
+};
 
 export const testPriorityQueue = () => {
   const minPriorityQueue = new PriorityQueue({nodes: [3, 2, 4, 5, 1, 9], comparator: (a, b) => a - b});
@@ -457,10 +463,9 @@ export const testPriorityQueue = () => {
   console.log(maxPriorityQueue.sort());
 };
 
-
 // 378. Kth Smallest Element in a Sorted Matrix
 export function kthSmallestInSortedMatrix(matrix: number[][], k: number): number {
-  const minHeap = new PriorityQueue<{ val: number, y: number, x: number }>({comparator: (a, b) => a.val - b.val});
+  const minHeap = new PriorityQueue<{val: number; y: number; x: number}>({comparator: (a, b) => a.val - b.val});
 
   minHeap.add({val: matrix[0][0], y: 0, x: 0});
 
@@ -485,6 +490,5 @@ export function kthSmallestInSortedMatrix(matrix: number[][], k: number): number
 
   return minHeap.peek()?.val || 0;
 }
-
 
 /* --- end heap --- */

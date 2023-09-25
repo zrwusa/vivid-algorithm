@@ -9,9 +9,7 @@ import {DoublyLinkedList} from '../linked-list';
 
 // O(n) time complexity of obtaining the value
 // O(1) time complexity of adding at the beginning and the end
-export class Deque<T> extends DoublyLinkedList<T> {
-
-}
+export class Deque<T> extends DoublyLinkedList<T> {}
 
 // O(1) time complexity of obtaining the value
 // O(n) time complexity of adding at the beginning and the end
@@ -21,9 +19,9 @@ export class ObjectDeque<T = number> {
     if (capacity !== undefined) this._capacity = capacity;
   }
 
-  private _nodes: { [key: number]: T } = {};
+  private _nodes: {[key: number]: T} = {};
 
-  get nodes(): { [p: number]: T } {
+  get nodes(): {[p: number]: T} {
     return this._nodes;
   }
 
@@ -37,7 +35,7 @@ export class ObjectDeque<T = number> {
     this._capacity = value;
   }
 
-  private _first: number = -1;
+  private _first = -1;
 
   get first(): number {
     return this._first;
@@ -47,7 +45,7 @@ export class ObjectDeque<T = number> {
     this._first = value;
   }
 
-  private _last: number = -1;
+  private _last = -1;
 
   get last(): number {
     return this._last;
@@ -57,7 +55,7 @@ export class ObjectDeque<T = number> {
     this._last = value;
   }
 
-  private _size: number = 0;
+  private _size = 0;
 
   get size(): number {
     return this._size;
@@ -158,7 +156,7 @@ export class ObjectDeque<T = number> {
     return this._size <= 0;
   }
 
-  protected _seNodes(value: { [p: number]: T }) {
+  protected _seNodes(value: {[p: number]: T}) {
     this._nodes = value;
   }
 
@@ -261,7 +259,7 @@ export class ArrayDeque<T> {
    * @returns The value that is being set at the specified index in the `_nodes` array.
    */
   set(index: number, value: T) {
-    return this._nodes[index] = value;
+    return (this._nodes[index] = value);
   }
 
   /**
