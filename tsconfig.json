@@ -27,7 +27,7 @@
       "apexcharts/*": [
         "./node_modules/apexcharts-clevision/*"
       ],
-      "data-structure-typed": ["src/packages/data-structure-typed"]
+//      "data-structure-typed": ["src/packages/data-structure-typed"]
     }
   },
   "include": [

@@ -53,7 +53,7 @@ const VividBinaryTreeRecursive: React.FC<{
     }
   }
 
-  const isActive = node.id === relatedBinaryNode?.id;
+  const isActive = node.key === relatedBinaryNode?.key;
   const textX = offsetX,
     textY = offsetY !== undefined ? offsetY + fontOffsetY : 0,
     countX = offsetX !== undefined ? offsetX + (treeNodeR * 4) / 5 : 0,
@@ -61,7 +61,7 @@ const VividBinaryTreeRecursive: React.FC<{
     countCircleX = countX,
     countCircleY = countY - fontOffsetY;
   return (
-    <g key={node.id}>
+    <g key={node.key}>
       {level > 1 ? (
         <line
           x1={parentX}
@@ -120,7 +120,7 @@ const VividBinaryTreeRecursive: React.FC<{
           }}
         >
           <tspan x={textX} y={textY}>
-            {node.id}
+            {node.key}
           </tspan>
         </text>
       ) : null}

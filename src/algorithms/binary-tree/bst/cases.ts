@@ -36,17 +36,17 @@ export const testBSTCase6 = async (proxy: {tree: BST}) => {
   console.log(node6 && proxy.tree.getHeight(node6) === 2, 'getHeight(getNode 6)');
   console.log(node6 && proxy.tree.getDepth(node6) === 3, 'getDepth(getNode 6)');
   await wait(time2);
-  const getNodeById = proxy.tree.get(10, 'id');
-  console.log(getNodeById?.id === 10, 'getNode, 10, id', getNodeById);
+  const getNodeById = proxy.tree.get(10, 'key');
+  console.log(getNodeById?.key === 10, 'getNode, 10, key', getNodeById);
 
   await wait(time2);
   const getMinNodeByRoot = proxy.tree.getLeftMost();
-  console.log(getMinNodeByRoot?.id === 1, 'getLeftMost');
+  console.log(getMinNodeByRoot?.key === 1, 'getLeftMost');
 
   await wait(time2);
   const node15 = proxy.tree.get(15);
   const getMinNodeBySpecificNode = node15 && proxy.tree.getLeftMost(node15);
-  console.log(getMinNodeBySpecificNode?.id === 12, 'getLeftMost, 15');
+  console.log(getMinNodeBySpecificNode?.key === 12, 'getLeftMost, 15');
 
   await wait(time2);
   const subTreeSum = node15 && proxy.tree.subTreeSum(node15);
@@ -63,66 +63,66 @@ export const testBSTCase6 = async (proxy: {tree: BST}) => {
 
   await wait(time3);
   const dfs = proxy.tree.DFS('in', 'node');
-  console.log(dfs[0].id === 1 && dfs[dfs.length - 1].id === 16, 'DFS ,in, node', dfs);
+  console.log(dfs[0].key === 1 && dfs[dfs.length - 1].key === 16, 'DFS ,in, node', dfs);
   await wait(time3);
   proxy.tree.perfectlyBalance();
   const bfs = proxy.tree.BFS('node');
   console.log(
-    proxy.tree.isPerfectlyBalanced() && bfs[0].id === 8 && bfs[bfs.length - 1].id === 16,
+    proxy.tree.isPerfectlyBalanced() && bfs[0].key === 8 && bfs[bfs.length - 1].key === 16,
     'balanced BFS, node'
   );
 
   await wait(time3);
-  console.log(proxy.tree.remove(11)[0].deleted?.id === 11, 'remove, 11');
+  console.log(proxy.tree.remove(11)[0].deleted?.key === 11, 'remove, 11');
   console.log(proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(node15 && proxy.tree.getHeight(node15) === 2, 'getHeight, getNode(15)');
   await wait(time3);
-  console.log(proxy.tree.remove(1)[0].deleted?.id === 1, 'remove, 1');
+  console.log(proxy.tree.remove(1)[0].deleted?.key === 1, 'remove, 1');
   console.log(proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 4, 'getHeight');
   await wait(time3);
-  console.log(proxy.tree.remove(4)[0].deleted?.id === 4, 'remove, 4');
+  console.log(proxy.tree.remove(4)[0].deleted?.key === 4, 'remove, 4');
   console.log(proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 4, 'getHeight');
   await wait(time3);
-  console.log(proxy.tree.remove(10)[0].deleted?.id === 10, 'remove, 10');
+  console.log(proxy.tree.remove(10)[0].deleted?.key === 10, 'remove, 10');
   console.log(!proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 4, 'getHeight');
   await wait(time3);
-  console.log(proxy.tree.remove(15)[0].deleted?.id === 15, 'remove, 15');
+  console.log(proxy.tree.remove(15)[0].deleted?.key === 15, 'remove, 15');
   console.log(proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 3, 'getHeight');
   await wait(time3);
-  console.log(proxy.tree.remove(5)[0].deleted?.id === 5, 'remove, 5');
+  console.log(proxy.tree.remove(5)[0].deleted?.key === 5, 'remove, 5');
   console.log(proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 3, 'getHeight');
   await wait(time3);
-  console.log(proxy.tree.remove(13)[0].deleted?.id === 13, 'remove, 13');
+  console.log(proxy.tree.remove(13)[0].deleted?.key === 13, 'remove, 13');
   console.log(proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 3, 'getHeight');
   await wait(time3);
-  console.log(proxy.tree.remove(3)[0].deleted?.id === 3, 'remove, 3');
+  console.log(proxy.tree.remove(3)[0].deleted?.key === 3, 'remove, 3');
   console.log(!proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 3, 'getHeight');
   await wait(time3);
-  console.log(proxy.tree.remove(8)[0].deleted?.id === 8, 'remove, 8');
+  console.log(proxy.tree.remove(8)[0].deleted?.key === 8, 'remove, 8');
   console.log(proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 3, 'getHeight');
   await wait(time3);
-  console.log(proxy.tree.remove(6)[0].deleted?.id === 6, 'remove, 6');
+  console.log(proxy.tree.remove(6)[0].deleted?.key === 6, 'remove, 6');
   console.log(proxy.tree.remove(6).length === 0, 'remove, 6');
   console.log(!proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 3, 'getHeight');
   await wait(time3);
-  console.log(proxy.tree.remove(7)[0].deleted?.id === 7, 'remove, 7');
+  console.log(proxy.tree.remove(7)[0].deleted?.key === 7, 'remove, 7');
   console.log(!proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 3, 'getHeight');
   await wait(time3);
-  console.log(proxy.tree.remove(9)[0].deleted?.id === 9, 'remove, 9');
+  console.log(proxy.tree.remove(9)[0].deleted?.key === 9, 'remove, 9');
   console.log(!proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 3, 'getHeight');
   await wait(time3);
-  console.log(proxy.tree.remove(14)[0].deleted?.id === 14, 'remove, 14');
+  console.log(proxy.tree.remove(14)[0].deleted?.key === 14, 'remove, 14');
   console.log(!proxy.tree.isAVLBalanced(), 'isAVLBalanced');
   console.log(proxy.tree.getHeight() === 2, 'getHeight');
   await wait(time3);
@@ -135,5 +135,5 @@ export const testBSTCase6 = async (proxy: {tree: BST}) => {
 
   await wait(time1);
   const lastBFSNodes = proxy.tree.BFS('node');
-  console.log(lastBFSNodes[0].id === 2 && lastBFSNodes[1].id === 12 && lastBFSNodes[2].id === 16, 'BFS, node');
+  console.log(lastBFSNodes[0].key === 2 && lastBFSNodes[1].key === 12 && lastBFSNodes[2].key === 16, 'BFS, node');
 };

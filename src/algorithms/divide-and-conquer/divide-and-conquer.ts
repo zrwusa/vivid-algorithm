@@ -190,7 +190,7 @@ export const countSmallerBST = async (nums: number[], proxyHandler: TProxyHandle
     {
       bst: new BST({
         // nodeOrData: {
-        //     id: nums[rootIndex],
+        //     key: nums[rootIndex],
         //     val: nums[rootIndex],
         // }
       })

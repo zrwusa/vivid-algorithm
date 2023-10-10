@@ -58,27 +58,27 @@ export function removeDuplicates(nums: number[]): number {
 }
 
 export function moveZeroesPlagiarized(nums: number[]): void {
-  let id = 0;
+  let key = 0;
   for (let i = 0; i < nums.length; i++) {
     if (nums[i] !== 0) {
-      nums[id] = nums[i];
-      id++;
+      nums[key] = nums[i];
+      key++;
     }
   }
 
-  for (let i = id; i < nums.length; i++) {
+  for (let i = key; i < nums.length; i++) {
     nums[i] = 0;
   }
 }
 
 export function moveZeroes(nums: number[]): void {
-  let id = 0;
+  let key = 0;
   for (let i = 0; i < nums.length; i++) {
     if (nums[i] !== 0) {
-      const temp = nums[id];
-      nums[id] = nums[i];
+      const temp = nums[key];
+      nums[key] = nums[i];
       nums[i] = temp;
-      id++;
+      key++;
     }
   }
 }

@@ -107,7 +107,12 @@ export class MapGraph<V extends MapVertex<V['val']> = MapVertex, E extends MapEd
    * @param {number} long - The `long` parameter represents the longitude coordinate of the vertex.
    * @returns The method is returning a new instance of the `MapVertex` class, casted as type `V`.
    */
-  override createVertex(key: VertexKey, val?: V['val'], lat: number = this.origin[0], long: number = this.origin[1]): V {
+  override createVertex(
+    key: VertexKey,
+    val?: V['val'],
+    lat: number = this.origin[0],
+    long: number = this.origin[1]
+  ): V {
     return new MapVertex(key, lat, long, val) as V;
   }
 

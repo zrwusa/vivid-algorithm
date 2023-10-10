@@ -28,8 +28,8 @@ export const testBinaryTreeCase6 = async (proxy: {tree: BinaryTree}) => {
   console.log(node9 && proxy.tree.getDepth(node9) === 3, 'getDepth(getNode 9)'); //3
 
   await wait(time2);
-  const getNodeById = proxy.tree.get(10, 'id');
-  console.log(getNodeById === null, 'getNode, 10, id'); // null
+  const getNodeById = proxy.tree.get(10, 'key');
+  console.log(getNodeById === null, 'getNode, 10, key'); // null
 
   await wait(time2);
   const node3 = proxy.tree.get(3);
@@ -39,12 +39,12 @@ export const testBinaryTreeCase6 = async (proxy: {tree: BinaryTree}) => {
   await wait(time3);
   const dfsNodes = proxy.tree.DFS('in', 'node');
   console.log(
-    dfsNodes[0].id === 4 &&
-      dfsNodes[1].id === 8 &&
-      dfsNodes[2].id === 2 &&
-      dfsNodes[3].id === 9 &&
-      dfsNodes[4].id === 5 &&
-      dfsNodes[5].id === 1,
+    dfsNodes[0].key === 4 &&
+      dfsNodes[1].key === 8 &&
+      dfsNodes[2].key === 2 &&
+      dfsNodes[3].key === 9 &&
+      dfsNodes[4].key === 5 &&
+      dfsNodes[5].key === 1,
     'DFS ,in, node'
   ); // [4, 8, 2, 9, 5, 1, 6, 3, 7]
 
@@ -63,12 +63,12 @@ export const testBinaryTreeCase6 = async (proxy: {tree: BinaryTree}) => {
   await wait(time3);
   const dfsPreNodes = proxy.tree.DFS('pre', 'node');
   console.log(
-    dfsPreNodes[0].id === 1 &&
-      dfsPreNodes[1].id === 2 &&
-      dfsPreNodes[2].id === 4 &&
-      dfsPreNodes[3].id === 8 &&
-      dfsPreNodes[4].id === 5 &&
-      dfsPreNodes[5].id === 9,
+    dfsPreNodes[0].key === 1 &&
+      dfsPreNodes[1].key === 2 &&
+      dfsPreNodes[2].key === 4 &&
+      dfsPreNodes[3].key === 8 &&
+      dfsPreNodes[4].key === 5 &&
+      dfsPreNodes[5].key === 9,
     'DFS ,pre, node'
   ); // [1, 2, 4, 8, 5, 9, 3, 6, 7]
 
@@ -87,17 +87,17 @@ export const testBinaryTreeCase6 = async (proxy: {tree: BinaryTree}) => {
   await wait(time1);
   const levelIteNodes = proxy.tree.levelIterative(null, 'node');
   console.log(
-    levelIteNodes[0].id === 1 &&
-      levelIteNodes[1].id === 2 &&
-      levelIteNodes[2].id === 3 &&
-      levelIteNodes[3].id === 4 &&
-      levelIteNodes[4].id === 5 &&
-      levelIteNodes[5].id === 6,
+    levelIteNodes[0].key === 1 &&
+      levelIteNodes[1].key === 2 &&
+      levelIteNodes[2].key === 3 &&
+      levelIteNodes[3].key === 4 &&
+      levelIteNodes[4].key === 5 &&
+      levelIteNodes[5].key === 6,
     'levelIterative, node'
   ); // [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
   await wait(time1);
-  const lvIteIds = proxy.tree.levelIterative(null, 'id');
+  const lvIteIds = proxy.tree.levelIterative(null, 'key');
   console.log(
     lvIteIds[0] === 1 &&
       lvIteIds[1] === 2 &&
@@ -105,7 +105,7 @@ export const testBinaryTreeCase6 = async (proxy: {tree: BinaryTree}) => {
       lvIteIds[3] === 4 &&
       lvIteIds[4] === 5 &&
       lvIteIds[5] === 6,
-    'levelIterative, id'
+    'levelIterative, key'
   ); // [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
   await wait(time1);
@@ -128,8 +128,8 @@ export const testBinaryTreeCase6 = async (proxy: {tree: BinaryTree}) => {
   ); // 0:1 1:2 2:4 3:2
 
   await wait(time1);
-  const lvIds = proxy.tree.listLevels(null, 'id');
-  console.log(lvIds[2][0] === 4 && lvIds[2][1] === 5 && lvIds[2][2] === 6 && lvIds[2][3] === 7, 'listLevels, id'); // 0:1 1:2 2:4 3:2 [4, 5, 6, 7]
+  const lvIds = proxy.tree.listLevels(null, 'key');
+  console.log(lvIds[2][0] === 4 && lvIds[2][1] === 5 && lvIds[2][2] === 6 && lvIds[2][3] === 7, 'listLevels, key'); // 0:1 1:2 2:4 3:2 [4, 5, 6, 7]
 
   await wait(time1);
   const lvValues = proxy.tree.listLevels(null, 'val');
@@ -138,12 +138,12 @@ export const testBinaryTreeCase6 = async (proxy: {tree: BinaryTree}) => {
   await wait(time1);
   const mInNodes = proxy.tree.morris('in', 'node');
   console.log(
-    mInNodes[0].id === 4 &&
-      mInNodes[1].id === 8 &&
-      mInNodes[2].id === 2 &&
-      mInNodes[3].id === 9 &&
-      mInNodes[4].id === 5 &&
-      mInNodes[5].id === 1,
+    mInNodes[0].key === 4 &&
+      mInNodes[1].key === 8 &&
+      mInNodes[2].key === 2 &&
+      mInNodes[3].key === 9 &&
+      mInNodes[4].key === 5 &&
+      mInNodes[5].key === 1,
     'morris, in, node'
   ); // [4,8,2,9,5,1,6,3,7]
 
@@ -174,24 +174,24 @@ export const testBinaryTreeCase6 = async (proxy: {tree: BinaryTree}) => {
   await wait(time3);
   const dfsPostNodes = proxy.tree.DFS('post', 'node');
   console.log(
-    dfsPostNodes[0].id === 8 &&
-      dfsPostNodes[1].id === 4 &&
-      dfsPostNodes[2].id === 9 &&
-      dfsPostNodes[3].id === 5 &&
-      dfsPostNodes[4].id === 2 &&
-      dfsPostNodes[5].id === 6,
+    dfsPostNodes[0].key === 8 &&
+      dfsPostNodes[1].key === 4 &&
+      dfsPostNodes[2].key === 9 &&
+      dfsPostNodes[3].key === 5 &&
+      dfsPostNodes[4].key === 2 &&
+      dfsPostNodes[5].key === 6,
     'DFS ,post, node'
   ); // [8,4,9,5,2,6,7,3,1]
 
   await wait(time1);
   const dfsItePNodes = proxy.tree.DFSIterative('post', 'node');
   console.log(
-    dfsItePNodes[0].id === 8 &&
-      dfsItePNodes[1].id === 4 &&
-      dfsItePNodes[2].id === 9 &&
-      dfsItePNodes[3].id === 5 &&
-      dfsItePNodes[4].id === 2 &&
-      dfsItePNodes[5].id === 6,
+    dfsItePNodes[0].key === 8 &&
+      dfsItePNodes[1].key === 4 &&
+      dfsItePNodes[2].key === 9 &&
+      dfsItePNodes[3].key === 5 &&
+      dfsItePNodes[4].key === 2 &&
+      dfsItePNodes[5].key === 6,
     'DFSIterative, post, node'
   ); // [8,4,9,5,2,6,7,3,1]
 
@@ -207,22 +207,22 @@ export const testBinaryTreeCase6 = async (proxy: {tree: BinaryTree}) => {
       bfsValues[5] === 6,
     'BFS, val'
   ); // [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  // XXX[0].id === 0
-  // && XXX[1].id === 1
-  // && XXX[2].id === 2
-  // && XXX[3].id === 4
-  // && XXX[4].id === 5
-  // && XXX[5].id === 6
+  // XXX[0].key === 0
+  // && XXX[1].key === 1
+  // && XXX[2].key === 2
+  // && XXX[3].key === 4
+  // && XXX[4].key === 5
+  // && XXX[5].key === 6
 
   await wait(time1);
   const bfsNodes = proxy.tree.BFS('node');
   console.log(
-    bfsNodes[0].id === 1 &&
-      bfsNodes[1].id === 2 &&
-      bfsNodes[2].id === 3 &&
-      bfsNodes[3].id === 4 &&
-      bfsNodes[4].id === 5 &&
-      bfsNodes[5].id === 6,
+    bfsNodes[0].key === 1 &&
+      bfsNodes[1].key === 2 &&
+      bfsNodes[2].key === 3 &&
+      bfsNodes[3].key === 4 &&
+      bfsNodes[4].key === 5 &&
+      bfsNodes[5].key === 6,
     'BFS, node'
   ); // [1,2,3,4,5,6,7,8,9]
 

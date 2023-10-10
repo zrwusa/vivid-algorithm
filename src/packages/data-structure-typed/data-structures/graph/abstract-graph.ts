@@ -169,11 +169,11 @@ export abstract class AbstractGraph<
 
   addVertex(key: VertexKey, val?: V['val']): boolean;
 
-  addVertex(idOrVertex: VertexKey | V, val?: V['val']): boolean {
-    if (idOrVertex instanceof AbstractVertex) {
-      return this._addVertexOnly(idOrVertex);
+  addVertex(keyOrVertex: VertexKey | V, val?: V['val']): boolean {
+    if (keyOrVertex instanceof AbstractVertex) {
+      return this._addVertexOnly(keyOrVertex);
     } else {
-      const newVertex = this.createVertex(idOrVertex, val);
+      const newVertex = this.createVertex(keyOrVertex, val);
       return this._addVertexOnly(newVertex);
     }
   }
@@ -593,7 +593,12 @@ export abstract class AbstractGraph<
    * shortest paths from the source vertex to all other vertices in the graph. If `genPaths
    * @returns The function `dijkstra` returns an object of type `DijkstraResult<V>`.
    */
-  dijkstra(src: V | VertexKey, dest?: V | VertexKey | null, getMinDist?: boolean, genPaths?: boolean): DijkstraResult<V> {
+  dijkstra(
+    src: V | VertexKey,
+    dest?: V | VertexKey | null,
+    getMinDist?: boolean,
+    genPaths?: boolean
+  ): DijkstraResult<V> {
     if (getMinDist === undefined) getMinDist = false;
     if (genPaths === undefined) genPaths = false;
 

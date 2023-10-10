@@ -53,10 +53,10 @@ const VividTreeRecursive: React.FC<{
       offsetY = level * levelOffset + treeNodeR + strokeWidth;
     }
   }
-  const isActive = node.id === relatedNode?.id;
+  const isActive = node.key === relatedNode?.key;
 
   return (
-    <g key={node.id}>
+    <g key={node.key}>
       {level > 1 ? (
         <line
           x1={parentX}
@@ -70,7 +70,7 @@ const VividTreeRecursive: React.FC<{
       {node.children
         ? node.children.map((child, index, family) => (
             <VividTreeRecursive
-              key={child.id}
+              key={child.key}
               node={child}
               level={level + 1}
               index={index}
@@ -101,7 +101,7 @@ const VividTreeRecursive: React.FC<{
         y={offsetY + fontOffsetY}
         textAnchor='middle'
       >
-        {node.value || node.id}
+        {node.value || node.key}
       </text>
     </g>
   );

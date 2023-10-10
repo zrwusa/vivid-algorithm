@@ -59,7 +59,7 @@ export const VividGraphIllustrator: React.FC<{graph: AbstractGraph}> = ({graph})
             <circle
               onClick={() => handleVertexClick(vertex)}
               style={{cursor: 'pointer'}}
-              key={vertex.id}
+              key={vertex.key}
               r={vertexR}
               cx={coordinate.x}
               cy={coordinate.y}
@@ -67,7 +67,7 @@ export const VividGraphIllustrator: React.FC<{graph: AbstractGraph}> = ({graph})
               fill={circleFillColor}
             />
             <text
-              key={vertex.id + 'id'}
+              key={vertex.key + 'key'}
               fill='none'
               stroke={textFillColor}
               fontSize={fontSize}
@@ -77,7 +77,7 @@ export const VividGraphIllustrator: React.FC<{graph: AbstractGraph}> = ({graph})
               textAnchor='middle'
             >
               <tspan x={coordinate.x} y={coordinate.y + fontOffsetY}>
-                {vertex.id}
+                {vertex.key}
               </tspan>
             </text>
           </g>

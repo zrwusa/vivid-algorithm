@@ -13,7 +13,7 @@ export async function testBST(arr: number[], proxyHandler?: TProxyHandler) {
     {
       tree: new BST({
         // nodeOrData: {
-        //     id: clonedData[0],
+        //     key: clonedData[0],
         //     val: clonedData[0]
         // },
         // comparator: (a, b) => b - a,
@@ -70,24 +70,24 @@ export const isValidBST = (root: BSTNode<number> | null | undefined): boolean =>
 
   function dfs(cur: BSTNode<number> | null | undefined, min: BinaryTreeNodeId, max: BinaryTreeNodeId): boolean {
     if (!cur) return true;
-    if (cur.id <= min || cur.id >= max) return false;
-    return dfs(cur.left, min, cur.id) && dfs(cur.right, cur.id, max);
+    if (cur.key <= min || cur.key >= max) return false;
+    return dfs(cur.left, min, cur.key) && dfs(cur.right, cur.key, max);
   }
 
   return dfs(root, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
 };
 
 // 700	Search in a Binary Search Tree	★★	701				binary search
-export function searchBST(root: BSTNode<number> | null, id: number): BSTNode<number> | null {
+export function searchBST(root: BSTNode<number> | null, key: number): BSTNode<number> | null {
   let ans = null;
   if (root === null) return ans;
   const dfs = (cur: BSTNode<number>) => {
-    if (cur.id === id) {
+    if (cur.key === key) {
       ans = cur;
     }
     if (!cur.left && !cur.right) return;
-    if (id < cur.id && cur.left) dfs(cur.left);
-    if (id > cur.id && cur.right) dfs(cur.right);
+    if (key < cur.key && cur.left) dfs(cur.left);
+    if (key > cur.key && cur.right) dfs(cur.right);
   };
 
   dfs(root);
@@ -101,7 +101,7 @@ export function kthSmallest(root: BSTNode<number> | null, k: number): number {
   const dfsInOrder = (cur: BSTNode<number>) => {
     cur.left && dfsInOrder(cur.left);
     if (++rank === k) {
-      target = cur.id;
+      target = cur.key;
       return;
     }
     cur.right && dfsInOrder(cur.right);
@@ -184,14 +184,14 @@ export function findMode(root: BSTNode<number> | null): number[] {
   const inorderDFS = (cur: BSTNode<number> | null | undefined) => {
     if (!cur) return;
     inorderDFS(cur.left);
-    count = prev === cur.id ? count + 1 : 1;
+    count = prev === cur.key ? count + 1 : 1;
     if (count > max) {
-      modes = [cur.id];
+      modes = [cur.key];
       max = count;
     } else if (count === max) {
-      modes.push(cur.id);
+      modes.push(cur.key);
     }
-    prev = cur.id;
+    prev = cur.key;
     inorderDFS(cur.right);
   };
 

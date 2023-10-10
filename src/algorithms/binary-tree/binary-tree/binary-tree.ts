@@ -38,8 +38,8 @@ export async function showBinaryTree(arr: number[], proxyHandler?: TProxyHandler
     },
     proxyHandler
   );
-  for (const id of clonedData) {
-    proxy.tree.add(id, id);
+  for (const key of clonedData) {
+    proxy.tree.add(key, key);
     await wait(time2);
   }
 
@@ -256,7 +256,7 @@ export async function pathSumIII(
     {
       tree: new BinaryTree<BinaryTreeNode<number | null>>({
         // nodeOrData: {
-        //     id: 0,
+        //     key: 0,
         //     val: clonedData[0]
         // }
       })

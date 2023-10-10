@@ -20,8 +20,8 @@ import {canFinishCase1, canFinishCase3, criticalConnectionsCase1} from './cases'
 import _ from 'lodash';
 
 class MyVertex<V extends string> extends DirectedVertex<V> {
-  constructor(id: VertexId, val?: V) {
-    super(id, val);
+  constructor(key: VertexId, val?: V) {
+    super(key, val);
     this._data = val;
   }
 
@@ -273,14 +273,14 @@ export const testMapGraph = async (proxyHandler: TProxyHandler) => {
   await wait(waitMan.time3);
   console.log(
     _.isEqual(
-      minPathBetween?.map(v => v.id),
+      minPathBetween?.map(v => v.key),
       expected1
     )
   );
   const surinToSaanenGoatFarmDij = proxy.graph.dijkstra('Surin', 'Saanen Goat Farm', true, true);
   console.log(
     _.isEqual(
-      surinToSaanenGoatFarmDij?.minPath.map(v => v.id),
+      surinToSaanenGoatFarmDij?.minPath.map(v => v.key),
       expected1
     )
   );
@@ -293,7 +293,7 @@ export const testMapGraph = async (proxyHandler: TProxyHandler) => {
   await wait(waitMan.time3);
   console.log(
     _.isEqual(
-      minPathBetweenViaBFB?.map(v => v.id),
+      minPathBetweenViaBFB?.map(v => v.key),
       expected2
     )
   );
@@ -301,7 +301,7 @@ export const testMapGraph = async (proxyHandler: TProxyHandler) => {
   await wait(waitMan.time3);
   console.log(
     _.isEqual(
-      surinToSaanenGoatFarmViaDij?.minPath.map(v => v.id),
+      surinToSaanenGoatFarmViaDij?.minPath.map(v => v.key),
       expected2
     )
   );

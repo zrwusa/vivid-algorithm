@@ -37,24 +37,24 @@ const VividMapGraphIllustrator: React.FC<{
     <g>
       {[...vertices].map(([index, vertex]) => {
         const coordinate = coordsMap.get(vertex);
-        const {id} = vertex;
+        const {key} = vertex;
 
         return coordinate ? (
           <g key={index}>
-            <Tooltip title={id}>
+            <Tooltip title={key}>
               <circle
                 onClick={() => handleVertexClick(vertex)}
                 style={{cursor: 'pointer'}}
-                key={id}
+                key={key}
                 r={vertexR}
                 cx={coordinate.x}
                 cy={coordinate.y}
                 fill={circleFillActiveColor}
               />
             </Tooltip>
-            <Tooltip title={id}>
+            <Tooltip title={key}>
               <text
-                key={id + 'id'}
+                key={key + 'key'}
                 fill='none'
                 stroke={textFillActiveColor}
                 fontSize={fontSize}
@@ -64,7 +64,7 @@ const VividMapGraphIllustrator: React.FC<{
                 textAnchor='middle'
               >
                 <tspan x={coordinate.x} y={coordinate.y + fontOffsetY} onClick={() => handleVertexClick(vertex)}>
-                  {typeof id === 'string' && id.length > 1 ? id.substr(0, 1).toUpperCase() : id}
+                  {typeof key === 'string' && key.length > 1 ? key.substr(0, 1).toUpperCase() : key}
                 </tspan>
               </text>
             </Tooltip>

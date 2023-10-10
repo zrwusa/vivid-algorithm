@@ -60,13 +60,13 @@ export async function binaryTreeInorderTraversal(
   proxyVariables.node = root.right;
 
   if (leftResult && rightResult) {
-    return [...leftResult, root.id, ...rightResult];
+    return [...leftResult, root.key, ...rightResult];
   } else if (leftResult) {
-    return [...leftResult, root.id];
+    return [...leftResult, root.key];
   } else if (rightResult) {
-    return [root.id, ...rightResult];
+    return [root.key, ...rightResult];
   } else {
-    return [root.id];
+    return [root.key];
   }
 }
 
@@ -693,7 +693,7 @@ export const treeMaxDepth = (node: TreeNode<number>): number => {
     const left = children[0];
     const right = children[1];
     const maxLeft = treeMaxDepth(left);
-    console.log(node.id);
+    console.log(node.key);
     const maxRight = treeMaxDepth(right);
     return Math.max(maxLeft, maxRight) + 1;
   } else {
