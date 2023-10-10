@@ -1,41 +1,41 @@
-export class TreeNode<T = any> {
-  constructor(id: string, value?: T, children?: TreeNode<T>[]) {
-    this._id = id;
+export class TreeNode<V = any> {
+  constructor(key: string, value?: V, children?: TreeNode<V>[]) {
+    this._key = key;
     this._value = value || undefined;
     this._children = children || [];
   }
 
-  private _id: string;
+  private _key: string;
 
-  get id(): string {
-    return this._id;
+  get key(): string {
+    return this._key;
   }
 
-  set id(value: string) {
-    this._id = value;
+  set key(value: string) {
+    this._key = value;
   }
 
-  private _value?: T | undefined;
+  private _value?: V | undefined;
 
-  get value(): T | undefined {
+  get value(): V | undefined {
     return this._value;
   }
 
-  set value(value: T | undefined) {
+  set value(value: V | undefined) {
     this._value = value;
   }
 
-  private _children?: TreeNode<T>[] | undefined;
+  private _children?: TreeNode<V>[] | undefined;
 
-  get children(): TreeNode<T>[] | undefined {
+  get children(): TreeNode<V>[] | undefined {
     return this._children;
   }
 
-  set children(value: TreeNode<T>[] | undefined) {
+  set children(value: TreeNode<V>[] | undefined) {
     this._children = value;
   }
 
-  addChildren(children: TreeNode<T> | TreeNode<T>[]) {
+  addChildren(children: TreeNode<V> | TreeNode<V>[]) {
     if (!this.children) {
       this.children = [];
     }
@@ -51,7 +51,7 @@ export class TreeNode<T = any> {
     const beginRoot = this;
     let maxDepth = 1;
     if (beginRoot) {
-      const bfs = (node: TreeNode<T>, level: number) => {
+      const bfs = (node: TreeNode<V>, level: number) => {
         if (level > maxDepth) {
           maxDepth = level;
         }
