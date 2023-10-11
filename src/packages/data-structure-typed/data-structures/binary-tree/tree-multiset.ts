@@ -15,29 +15,21 @@ export class TreeMultisetNode<V = any, NEIGHBOR extends TreeMultisetNode<V, NEIG
   implements ITreeMultisetNode<V, NEIGHBOR>
 {
   /**
-   * The constructor function initializes a BinaryTreeNode object with an key, value, and count.
+   * The constructor function initializes a BinaryTreeNode object with a key, value, and count.
    * @param {BinaryTreeNodeKey} key - The `key` parameter is of type `BinaryTreeNodeKey` and represents the unique identifier
    * of the binary tree node.
    * @param {V} [val] - The `val` parameter is an optional parameter of type `V`. It represents the value of the binary
    * tree node. If no value is provided, it will be `undefined`.
    * @param {number} [count=1] - The `count` parameter is a number that represents the number of times a particular value
    * occurs in a binary tree node. It has a default value of 1, which means that if no value is provided for the `count`
-   * parameter when creating a new instance of the `BinaryTreeNode` class,
+   * parameter when creating a new instance of the `BinaryTreeNode` class.
    */
   constructor(key: BinaryTreeNodeKey, val?: V, count = 1) {
     super(key, val);
-    this._count = count;
+    this.count = count;
   }
 
-  private _count: number;
-
-  get count(): number {
-    return this._count;
-  }
-
-  set count(v: number) {
-    this._count = v;
-  }
+  count: number;
 }
 
 /**
@@ -54,7 +46,7 @@ export class TreeMultiset<N extends TreeMultisetNode<N['val'], N> = TreeMultiset
    * TreeMultiset.
    */
   constructor(options?: TreeMultisetOptions) {
-    super({...options});
+    super(options);
   }
 
   private _count = 0;
@@ -113,8 +105,7 @@ export class TreeMultiset<N extends TreeMultisetNode<N['val'], N> = TreeMultiset
    * value should be added to the binary tree. If the `count` parameter is not provided, it defaults to 1.
    * @returns The method `add` returns either the inserted node (`N`), `null`, or `undefined`.
    */
-  override add(keyOrNode: BinaryTreeNodeKey | N | null, val?: N['val'], count?: number): N | null | undefined {
-    count = count ?? 1;
+  override add(keyOrNode: BinaryTreeNodeKey | N | null, val?: N['val'], count = 1): N | null | undefined {
     let inserted: N | null | undefined = undefined,
       newNode: N | null;
     if (keyOrNode instanceof TreeMultisetNode) {
@@ -219,7 +210,7 @@ export class TreeMultiset<N extends TreeMultisetNode<N['val'], N> = TreeMultiset
   /**
    * The `addMany` function takes an array of node IDs or nodes and adds them to the tree multiset, returning an array of
    * the inserted nodes.
-   * @param {(BinaryTreeNodeKey | null)[] | (N | null)[]} idsOrNodes - An array of BinaryTreeNodeKey or BinaryTreeNode
+   * @param {(BinaryTreeNodeKey | null)[] | (N | null)[]} keysOrNodes - An array of BinaryTreeNodeKey or BinaryTreeNode
    * objects, or null values.
    * @param {N['val'][]} [data] - The `data` parameter is an optional array of values (`N['val'][]`) that corresponds to
    * the nodes being added. It is used when adding nodes using the `keyOrNode` and `data` arguments in the `this.add()`
@@ -227,13 +218,13 @@ export class TreeMultiset<N extends TreeMultisetNode<N['val'], N> = TreeMultiset
    * @returns The function `addMany` returns an array of `N`, `null`, or `undefined` values.
    */
   override addMany(
-    idsOrNodes: (BinaryTreeNodeKey | null)[] | (N | null)[],
+    keysOrNodes: (BinaryTreeNodeKey | null)[] | (N | null)[],
     data?: N['val'][]
   ): (N | null | undefined)[] {
     const inserted: (N | null | undefined)[] = [];
 
-    for (let i = 0; i < idsOrNodes.length; i++) {
-      const keyOrNode = idsOrNodes[i];
+    for (let i = 0; i < keysOrNodes.length; i++) {
+      const keyOrNode = keysOrNodes[i];
 
       if (keyOrNode instanceof TreeMultisetNode) {
         inserted.push(this.add(keyOrNode.key, keyOrNode.val, keyOrNode.count));
@@ -256,7 +247,7 @@ export class TreeMultiset<N extends TreeMultisetNode<N['val'], N> = TreeMultiset
    * @returns The function `perfectlyBalance()` returns a boolean value.
    */
   override perfectlyBalance(): boolean {
-    const sorted = this.DFS('in', 'node'),
+    const sorted = this.dfs('in', 'node'),
       n = sorted.length;
     if (sorted.length < 1) return false;
 
@@ -302,7 +293,7 @@ export class TreeMultiset<N extends TreeMultisetNode<N['val'], N> = TreeMultiset
    * not be taken into account when removing it. If `ignoreCount` is set to `false
    * @returns The function `remove` returns an array of `BinaryTreeDeletedResult<N>` objects.
    */
-  override remove(nodeOrKey: N | BinaryTreeNodeKey, ignoreCount?: boolean): BinaryTreeDeletedResult<N>[] {
+  override remove(nodeOrKey: N | BinaryTreeNodeKey, ignoreCount = false): BinaryTreeDeletedResult<N>[] {
     const bstDeletedResult: BinaryTreeDeletedResult<N>[] = [];
     if (!this.root) return bstDeletedResult;
 
@@ -483,7 +474,7 @@ export class TreeMultiset<N extends TreeMultisetNode<N['val'], N> = TreeMultiset
    * to `true`, the function will return only one node. If `onlyOne`
    * @returns an array of nodes that match the given nodeProperty.
    */
-  getNodesByCount(nodeProperty: BinaryTreeNodeKey | N, onlyOne?: boolean): N[] {
+  getNodesByCount(nodeProperty: BinaryTreeNodeKey | N, onlyOne = false): N[] {
     if (!this.root) return [];
     const result: N[] = [];
 
@@ -522,10 +513,10 @@ export class TreeMultiset<N extends TreeMultisetNode<N['val'], N> = TreeMultiset
   /**
    * The BFSCount function returns an array of counts from a breadth-first search of nodes.
    * @returns The BFSCount() function returns an array of numbers, specifically the count property of each node in the
-   * BFS traversal.
+   * bfs traversal.
    */
   BFSCount(): number[] {
-    const nodes = super.BFS('node');
+    const nodes = super.bfs('node');
     return nodes.map(node => node.count);
   }
 
@@ -549,36 +540,33 @@ export class TreeMultiset<N extends TreeMultisetNode<N['val'], N> = TreeMultiset
    * traversal pattern for the Morris traversal algorithm. It can have one of three values: 'in', 'pre', or 'post'.
    * @returns The function `morrisCount` returns an array of numbers.
    */
-  morrisCount(pattern?: 'in' | 'pre' | 'post'): number[] {
-    pattern = pattern || 'in';
+  morrisCount(pattern: DFSOrderPattern = 'in'): number[] {
     const nodes = super.morris(pattern, 'node');
     return nodes.map(node => node.count);
   }
 
   /**
-   * The function DFSIterativeCount performs an iterative depth-first search and returns an array of node counts based on
+   * The function dfsCountIterative performs an iterative depth-first search and returns an array of node counts based on
    * the specified traversal pattern.
    * @param {'in' | 'pre' | 'post'} [pattern] - The pattern parameter is a string that specifies the traversal order for
-   * the Depth-First Search (DFS) algorithm. It can have three possible values: 'in', 'pre', or 'post'.
-   * @returns The DFSIterativeCount function returns an array of numbers, which represents the count property of each node
-   * in the DFS traversal.
+   * the Depth-First Search (dfs) algorithm. It can have three possible values: 'in', 'pre', or 'post'.
+   * @returns The dfsCountIterative function returns an array of numbers, which represents the count property of each node
+   * in the dfs traversal.
    */
-  DFSIterativeCount(pattern?: 'in' | 'pre' | 'post'): number[] {
-    pattern = pattern ?? 'in';
-    const nodes = super.DFSIterative(pattern, 'node');
+  dfsCountIterative(pattern: DFSOrderPattern = 'in'): number[] {
+    const nodes = super.dfsIterative(pattern, 'node');
     return nodes.map(node => node.count);
   }
 
   /**
-   * The DFSCount function returns an array of counts for each node in a depth-first search traversal.
+   * The dfsCount function returns an array of counts for each node in a depth-first search traversal.
    * @param {DFSOrderPattern} [pattern] - The pattern parameter is an optional parameter that specifies the order in which
-   * the Depth-First Search (DFS) algorithm should traverse the nodes. It can have one of the following values:
-   * @returns The DFSCount function returns an array of numbers, specifically the count property of each node in the DFS
+   * the Depth-First Search (dfs) algorithm should traverse the nodes. It can have one of the following values:
+   * @returns The dfsCount function returns an array of numbers, specifically the count property of each node in the dfs
    * traversal.
    */
-  DFSCount(pattern?: DFSOrderPattern): number[] {
-    pattern = pattern ?? 'in';
-    const nodes = super.DFS(pattern, 'node');
+  dfsCount(pattern: DFSOrderPattern = 'in'): number[] {
+    const nodes = super.dfs(pattern, 'node');
     return nodes.map(node => node.count);
   }
 

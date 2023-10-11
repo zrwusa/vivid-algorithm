@@ -9,8 +9,8 @@ export const testAVLCase6 = async (proxy: {tree: AVLTree}) => {
   console.log(node6 && proxy.tree.getHeight(node6) === 3, 'getHeight(getNode 6)');
   console.log(node6 && proxy.tree.getDepth(node6) === 1, 'getDepth(getNode 6)');
   await wait(time2);
-  const getNodeById = proxy.tree.get(10, 'key');
-  console.log(getNodeById?.key === 10, 'getNode, 10, key', getNodeById);
+  const getNodeByKey = proxy.tree.get(10, 'key');
+  console.log(getNodeByKey?.key === 10, 'getNode, 10, key', getNodeByKey);
 
   await wait(time2);
   const getMinNodeByRoot = proxy.tree.getLeftMost();
@@ -34,14 +34,14 @@ export const testAVLCase6 = async (proxy: {tree: AVLTree}) => {
   console.log(node11?.key === 11);
 
   await wait(time3);
-  const dfs = proxy.tree.DFS('in', 'node');
-  console.log(dfs[0].key === 1 && dfs[dfs.length - 1].key === 16, 'DFS ,in, node', dfs);
+  const dfs = proxy.tree.dfs('in', 'node');
+  console.log(dfs[0].key === 1 && dfs[dfs.length - 1].key === 16, 'dfs ,in, node', dfs);
   await wait(time3);
   proxy.tree.perfectlyBalance();
-  const bfs = proxy.tree.BFS('node');
+  const bfs = proxy.tree.bfs('node');
   console.log(
     proxy.tree.isPerfectlyBalanced() && bfs[0].key === 8 && bfs[bfs.length - 1].key === 16,
-    'balanced BFS, node'
+    'balanced bfs, node'
   );
 
   await wait(time3);
@@ -102,10 +102,10 @@ export const testAVLCase6 = async (proxy: {tree: AVLTree}) => {
   await wait(time1);
   console.log(proxy.tree.isAVLBalanced(), 'isAVLBalanced()');
   await wait(time1);
-  const lastBFSIds = proxy.tree.BFS();
-  console.log(lastBFSIds[0] === 12 && lastBFSIds[1] === 2 && lastBFSIds[2] === 16, 'BFS');
+  const lastBFSKeys = proxy.tree.bfs();
+  console.log(lastBFSKeys[0] === 12 && lastBFSKeys[1] === 2 && lastBFSKeys[2] === 16, 'bfs');
 
   await wait(time1);
-  const lastBFSNodes = proxy.tree.BFS('node');
-  console.log(lastBFSNodes[0].key === 12 && lastBFSNodes[1].key === 2 && lastBFSNodes[2].key === 16, 'BFS, node');
+  const lastBFSNodes = proxy.tree.bfs('node');
+  console.log(lastBFSNodes[0].key === 12 && lastBFSNodes[1].key === 2 && lastBFSNodes[2].key === 16, 'bfs, node');
 };

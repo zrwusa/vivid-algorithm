@@ -419,9 +419,9 @@ const testPriorityQueue3 = () => {
   const clonedPriorityQueue = heap.clone();
   console.log(_.isEqual(clonedPriorityQueue.getNodes(), heap.getNodes()));
   console.log(_.isEqual(clonedPriorityQueue.sort(), [1, 2, 3, 4, 5, 6, 7, 8]));
-  console.log(_.isEqual(heap.DFS('in'), [4, 3, 2, 5, 1, 8, 6, 7]));
-  console.log(_.isEqual(heap.DFS('post'), [4, 3, 5, 2, 8, 7, 6, 1]));
-  console.log(_.isEqual(heap.DFS('pre'), [1, 2, 3, 4, 5, 6, 8, 7]));
+  console.log(_.isEqual(heap.dfs('in'), [4, 3, 2, 5, 1, 8, 6, 7]));
+  console.log(_.isEqual(heap.dfs('post'), [4, 3, 5, 2, 8, 7, 6, 1]));
+  console.log(_.isEqual(heap.dfs('pre'), [1, 2, 3, 4, 5, 6, 8, 7]));
 };
 
 const heapSort = async () => {

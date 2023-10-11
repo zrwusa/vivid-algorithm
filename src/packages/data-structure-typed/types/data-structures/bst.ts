@@ -7,7 +7,11 @@ export type BSTComparator = (a: BinaryTreeNodeKey, b: BinaryTreeNodeKey) => numb
 // prettier-ignore
 export type BSTNodeNested<T> = BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, BSTNode<T, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 export type BSTOptions = BinaryTreeOptions & {
-  comparator?: BSTComparator,
-}
+  comparator?: BSTComparator;
+};
 
-export enum CP {lt = 'lt', eq = 'eq', gt = 'gt'}
+export enum CP {
+  lt = 'lt',
+  eq = 'eq',
+  gt = 'gt'
+}

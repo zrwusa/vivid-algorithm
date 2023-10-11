@@ -1,4 +1,4 @@
-import {BinaryTreeNodeId, BST, BSTNode} from 'data-structure-typed';
+import {BinaryTreeNodeKey, BST, BSTNode} from 'data-structure-typed';
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
 import {testBSTCase1, testBSTCase6, trimABSTCase1} from './cases';
 import {runAlgorithm} from '../../helpers';
@@ -68,7 +68,7 @@ export const runTestBST = async () => {
 export const isValidBST = (root: BSTNode<number> | null | undefined): boolean => {
   if (!root) return true;
 
-  function dfs(cur: BSTNode<number> | null | undefined, min: BinaryTreeNodeId, max: BinaryTreeNodeId): boolean {
+  function dfs(cur: BSTNode<number> | null | undefined, min: BinaryTreeNodeKey, max: BinaryTreeNodeKey): boolean {
     if (!cur) return true;
     if (cur.key <= min || cur.key >= max) return false;
     return dfs(cur.left, min, cur.key) && dfs(cur.right, cur.key, max);
@@ -216,7 +216,7 @@ export async function trimABST(
     },
     proxyHandler
   );
-  proxy.tree.fill(clonedData);
+  proxy.tree.refill(clonedData);
 
   async function trimBST(
     cur: BSTNode<number | null> | null | undefined,
@@ -237,7 +237,7 @@ export async function trimABST(
   const ans = await trimBST(proxy.tree.root, low, high);
 
   // TODO proxy bug needs to be fixed, last time not effective, with a DFS hack can apply another effect
-  proxy.tree.DFS();
+  proxy.tree.dfs();
   return ans;
 }
 

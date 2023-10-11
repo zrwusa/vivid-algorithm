@@ -130,7 +130,7 @@ export class BST<N extends BSTNode<N['val'], N> = BSTNode> extends BinaryTree<N>
   /**
    * The `addMany` function overrides the base class method to add multiple nodes to a binary search tree in a balanced
    * manner.
-   * @param {[BinaryTreeNodeKey | N , N['val']][]} idsOrNodes - The `idsOrNodes` parameter in the `addMany` function is an array of
+   * @param {[BinaryTreeNodeKey | N , N['val']][]} keysOrNodes - The `keysOrNodes` parameter in the `addMany` function is an array of
    * `BinaryTreeNodeKey` or `N` (node) objects, or `null` values. It represents the nodes or node IDs that need to be added
    * to the binary search tree.
    * @param {N['val'][]} data - The values of tree nodes
@@ -138,18 +138,18 @@ export class BST<N extends BSTNode<N['val'], N> = BSTNode> extends BinaryTree<N>
    * @returns The function `addMany` returns an array of `N`, `null`, or `undefined` values.
    */
   override addMany(
-    idsOrNodes: (BinaryTreeNodeKey | null)[] | (N | null)[],
+    keysOrNodes: (BinaryTreeNodeKey | null)[] | (N | null)[],
     data?: N['val'][],
     isBalanceAdd = false
   ): (N | null | undefined)[] {
     function hasNoNull(arr: (BinaryTreeNodeKey | null)[] | (N | null)[]): arr is BinaryTreeNodeKey[] | N[] {
       return arr.indexOf(null) === -1;
     }
-    if (!isBalanceAdd || !hasNoNull(idsOrNodes)) {
-      return super.addMany(idsOrNodes, data);
+    if (!isBalanceAdd || !hasNoNull(keysOrNodes)) {
+      return super.addMany(keysOrNodes, data);
     }
     const inserted: (N | null | undefined)[] = [];
-    const combinedArr: [BinaryTreeNodeKey | N, N['val']][] = idsOrNodes.map((value, index) => [value, data?.[index]]);
+    const combinedArr: [BinaryTreeNodeKey | N, N['val']][] = keysOrNodes.map((value, index) => [value, data?.[index]]);
     let sorted = [];
     function isNodeOrNullTuple(arr: [BinaryTreeNodeKey | N, N['val']][]): arr is [N, N['val']][] {
       for (const [keyOrNode] of arr) if (keyOrNode instanceof BSTNode) return true;
@@ -169,7 +169,7 @@ export class BST<N extends BSTNode<N['val'], N> = BSTNode> extends BinaryTree<N>
     } else if (isBinaryTreeKeyOrNullTuple(combinedArr)) {
       sorted = combinedArr.sort((a, b) => a[0] - b[0]);
     } else {
-      throw new Error('Invalid input idsOrNodes');
+      throw new Error('Invalid input keysOrNodes');
     }
     sortedKeysOrNodes = sorted.map(([keyOrNode]) => keyOrNode);
     sortedData = sorted.map(([, val]) => val);
@@ -216,8 +216,7 @@ export class BST<N extends BSTNode<N['val'], N> = BSTNode> extends BinaryTree<N>
    * specifies the property name to use for searching the binary tree nodes. If not provided, it defaults to `'key'`.
    * @returns The method is returning either a BinaryTreeNodeKey or N (generic type) or null.
    */
-  override get(nodeProperty: BinaryTreeNodeKey | N, propertyName?: BinaryTreeNodePropertyName): N | null {
-    propertyName = propertyName ?? 'key';
+  override get(nodeProperty: BinaryTreeNodeKey | N, propertyName: BinaryTreeNodePropertyName = 'key'): N | null {
     return this.getNodes(nodeProperty, propertyName, true)[0] ?? null;
   }
 
@@ -248,7 +247,7 @@ export class BST<N extends BSTNode<N['val'], N> = BSTNode> extends BinaryTree<N>
   override getNodes(
     nodeProperty: BinaryTreeNodeKey | N,
     propertyName: BinaryTreeNodePropertyName = 'key',
-    onlyOne?: boolean
+    onlyOne = false
   ): N[] {
     if (!this.root) return [];
     const result: N[] = [];
@@ -298,8 +297,7 @@ export class BST<N extends BSTNode<N['val'], N> = BSTNode> extends BinaryTree<N>
    * @returns The function `lesserSum` returns a number, which represents the sum of the values of the nodes in the
    * binary tree that have a lesser value than the specified `beginNode` based on the `propertyName`.
    */
-  lesserSum(beginNode: N | BinaryTreeNodeKey | null, propertyName?: BinaryTreeNodePropertyName): number {
-    propertyName = propertyName ?? 'key';
+  lesserSum(beginNode: N | BinaryTreeNodeKey | null, propertyName: BinaryTreeNodePropertyName = 'key'): number {
     if (typeof beginNode === 'number') beginNode = this.get(beginNode, 'key');
     if (!beginNode) return 0;
     if (!this.root) return 0;
@@ -378,9 +376,8 @@ export class BST<N extends BSTNode<N['val'], N> = BSTNode> extends BinaryTree<N>
   allGreaterNodesAdd(
     node: N | BinaryTreeNodeKey | null,
     delta: number,
-    propertyName?: BinaryTreeNodePropertyName
+    propertyName: BinaryTreeNodePropertyName = 'key'
   ): boolean {
-    propertyName = propertyName ?? 'key';
     if (typeof node === 'number') node = this.get(node, 'key');
     if (!node) return false;
     const key = node.key;
@@ -440,7 +437,7 @@ export class BST<N extends BSTNode<N['val'], N> = BSTNode> extends BinaryTree<N>
    * @returns The function `perfectlyBalance()` returns a boolean value.
    */
   perfectlyBalance(): boolean {
-    const sorted = this.DFS('in', 'node'),
+    const sorted = this.dfs('in', 'node'),
       n = sorted.length;
     this.clear();
 
@@ -529,7 +526,7 @@ export class BST<N extends BSTNode<N['val'], N> = BSTNode> extends BinaryTree<N>
   /**
    * The function compares two binary tree node IDs using a comparator function and returns whether the first ID is
    * greater than, less than, or equal to the second ID.
-   * @param {BinaryTreeNodeKey} a - a is a BinaryTreeNodeKey, which represents the identifier of a binary tree node.
+   * @param {BinaryTreeNodeKey} a - "a" is a BinaryTreeNodeKey, which represents the identifier of a binary tree node.
    * @param {BinaryTreeNodeKey} b - The parameter "b" in the above code refers to a BinaryTreeNodeKey.
    * @returns a value of type CP (ComparisonResult). The possible return values are CP.gt (greater than), CP.lt (less
    * than), or CP.eq (equal).

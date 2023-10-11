@@ -24,7 +24,8 @@
     "export": "next export",
     "lint": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
-    "fix": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
+    "fix": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "update": "yarn add data-structure-typed"
   },
   "dependencies": {
     "@emotion/cache": "^11.6.0",
@@ -40,7 +41,7 @@
     "@qiwi/deep-proxy": "^2.0.3",
     "apexcharts-clevision": "3.28.5",
     "clsx": "^1.1.1",
-    "data-structure-typed": "^1.34.8",
+    "data-structure-typed": "^1.35.0",
     "lodash": "^4.17.21",
     "mdi-material-ui": "^7.1.0",
     "next": "12.0.4",

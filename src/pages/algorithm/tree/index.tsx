@@ -38,7 +38,7 @@ import TextField from '@mui/material/TextField';
 
 export const TreePage = () => {
   const binaryTree = new BinaryTree({});
-  binaryTree.fill([1, 2, 3]);
+  binaryTree.refill([1, 2, 3]);
 
   const [binaryTreeDataInput, setBinaryTreeDataInput] = useState(
     '[-10,-10,-10,9,9,20,null,null,15,7,8,null,2,null,6,null,null,8,8,8]'

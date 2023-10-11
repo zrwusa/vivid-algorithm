@@ -80,7 +80,7 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
 
   console.log(vars.treeMultiset.size === 16);
   console.log(vars.treeMultiset.count === 26);
-  console.log(_.isEqual(vars.treeMultiset.BFS('key'), [11, 6, 15, 3, 8, 13, 16, 1, 4, 7, 9, 12, 14, 2, 5, 10]));
+  console.log(_.isEqual(vars.treeMultiset.bfs('key'), [11, 6, 15, 3, 8, 13, 16, 1, 4, 7, 9, 12, 14, 2, 5, 10]));
   await wait(time5);
 
   console.log(vars.treeMultiset.has(6));
@@ -88,8 +88,8 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
   console.log(vars.treeMultiset.getHeight(6) === 3);
   console.log(vars.treeMultiset.getDepth(6) === 1);
   await wait(time5);
-  const nodeId10 = vars.treeMultiset.get(10);
-  console.log(nodeId10?.key === 10);
+  const nodeKey10 = vars.treeMultiset.get(10);
+  console.log(nodeKey10?.key === 10);
 
   const nodeVal9 = vars.treeMultiset.get(9, 'val');
   console.log(nodeVal9?.key === undefined);
@@ -124,7 +124,7 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
   }
   await wait(time5);
 
-  const dfsInorderNodes = vars.treeMultiset.DFS('in', 'node');
+  const dfsInorderNodes = vars.treeMultiset.dfs('in', 'node');
   console.log(dfsInorderNodes[0].key === 1);
   console.log(dfsInorderNodes[dfsInorderNodes.length - 1].key === 16);
   await wait(time5);
@@ -138,7 +138,7 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
 
   await wait(time5);
 
-  const bfsNodesAfterBalanced = vars.treeMultiset.BFS('node');
+  const bfsNodesAfterBalanced = vars.treeMultiset.bfs('node');
   console.log(bfsNodesAfterBalanced[0].key === 8);
   console.log(bfsNodesAfterBalanced[bfsNodesAfterBalanced.length - 1].key === 16);
 
@@ -279,7 +279,7 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
 
   console.log(vars.treeMultiset.isAVLBalanced() === true);
 
-  const bfsIDs = vars.treeMultiset.BFS();
+  const bfsIDs = vars.treeMultiset.bfs();
   await wait(time5);
 
   console.log(bfsIDs[0] === 12);
@@ -287,7 +287,7 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
   console.log(bfsIDs[2] === 16);
   await wait(time5);
 
-  const bfsNodes = vars.treeMultiset.BFS('node');
+  const bfsNodes = vars.treeMultiset.bfs('node');
   await wait(time5);
 
   console.log(bfsNodes[0].key === 12);

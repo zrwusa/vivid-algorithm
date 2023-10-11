@@ -17,7 +17,7 @@ export async function testBinaryTree(arr: number[], proxyHandler?: TProxyHandler
     },
     proxyHandler
   );
-  proxy.tree.fill(clonedData, clonedData);
+  proxy.tree.refill(clonedData, clonedData);
   await wait(time10);
   proxy.tree.clear();
   await wait(time5);
@@ -58,7 +58,7 @@ export async function testSymmetricTree(arr: Array<number | null>, proxyHandler?
     proxyHandler
   );
 
-  proxy.tree.fill(clonedData);
+  proxy.tree.refill(clonedData);
   const root = proxy.tree.root;
 
   if (root) {
@@ -263,7 +263,7 @@ export async function pathSumIII(
     },
     proxyHandler
   );
-  proxy.tree.fill(clonedData);
+  proxy.tree.refill(clonedData);
   // proxy.tree.insertMany(clonedData.slice(1));
   await wait(time1);
   const root = proxy.tree.root;
@@ -313,7 +313,7 @@ export async function deleteLeaves(
     proxyHandler
   );
 
-  proxy.bst.fill(clonedData);
+  proxy.bst.refill(clonedData);
 
   function dfs(root: BinaryTreeNode<number | null> | null) {
     if (!root) return null;

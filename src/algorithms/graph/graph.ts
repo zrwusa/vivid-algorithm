@@ -12,7 +12,7 @@ import {
   UndirectedEdge,
   UndirectedGraph,
   UndirectedVertex,
-  VertexId
+  VertexKey
 } from 'data-structure-typed';
 import {timeEnd, timeStart, wait, WaitManager} from '../../utils';
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
@@ -20,7 +20,7 @@ import {canFinishCase1, canFinishCase3, criticalConnectionsCase1} from './cases'
 import _ from 'lodash';
 
 class MyVertex<V extends string> extends DirectedVertex<V> {
-  constructor(key: VertexId, val?: V) {
+  constructor(key: VertexKey, val?: V) {
     super(key, val);
     this._data = val;
   }
@@ -37,7 +37,7 @@ class MyVertex<V extends string> extends DirectedVertex<V> {
 }
 
 class MyEdge<E extends string> extends DirectedEdge<E> {
-  constructor(v1: VertexId, v2: VertexId, weight?: number, val?: E) {
+  constructor(v1: VertexKey, v2: VertexKey, weight?: number, val?: E) {
     super(v1, v2, weight, val);
     this._data = val;
   }
@@ -590,8 +590,8 @@ function criticalConnectionsByGraph(n: number, connections: number[][]): number[
 
   const ans: number[][] = [];
   for (const bridge of bridges) {
-    const vertexIds: number[] = bridge.vertices.map(v => v as number);
-    ans.push(vertexIds);
+    const vertexKeys: number[] = bridge.vertices.map(v => v as number);
+    ans.push(vertexKeys);
   }
   return ans;
 }
