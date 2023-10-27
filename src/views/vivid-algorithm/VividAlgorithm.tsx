@@ -6,7 +6,7 @@ import {
   MapGraph,
   SinglyLinkedListNode,
   Stack,
-  TreeNode
+  TreeNode, Trie, TrieNode
 } from 'data-structure-typed';
 import {Coordinate} from '../../algorithms';
 import {VividMapGraph} from './VividMapGraph';
@@ -20,6 +20,7 @@ import {VividArray} from './VividArray';
 import {VividObject} from './VividObject';
 import {VividLinkedList} from './VividLinkedList';
 import {SVGOptions, ViewControl} from '../../types';
+import {VividTrie} from "./VividTrie";
 
 export interface VividAlgorithmProps extends SVGOptions {
   data?: {[key in string]: any};
@@ -42,7 +43,7 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
     viewControl
   } = props;
 
-  let relatedNode: TreeNode | undefined;
+  let relatedNode: TreeNode | TrieNode |undefined;
   let relatedBinaryNode: BinaryTreeNode | undefined;
   let relatedMatrixCell: Coordinate | undefined;
   if (relatedNodeKey) {
@@ -59,18 +60,32 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
 
   const renderVariable = (item: any) => {
     if (!item) return null;
+
     switch (typeof item) {
       case 'number':
         return <VividNumber data={item} />;
       case 'string':
         return <VividString data={item} />;
       case 'object':
-        if (item instanceof TreeNode) {
+        if (item instanceof Trie) {
+          return (
+            <VividTrie
+              data={item.root}
+              maxHeight={item.getHeight() - 1}
+              relatedNode={relatedNode instanceof TrieNode ? relatedNode : undefined}
+              svgHeight={svgHeight}
+              svgWidth={svgWidth}
+              svgBg={svgBg}
+              viewControl={viewControl}
+            />
+          );
+        }
+        else if (item instanceof TreeNode) {
           return (
             <VividTree
               data={item}
               maxHeight={item.getHeight()}
-              relatedNode={relatedNode}
+              relatedNode={relatedNode instanceof TreeNode ? relatedNode : undefined}
               svgHeight={svgHeight}
               svgWidth={svgWidth}
               svgBg={svgBg}

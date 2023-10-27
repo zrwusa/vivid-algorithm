@@ -12,3 +12,4 @@ export * from './VividNumber';
 export * from './VividObject';
 export * from './VividString';
 export * from './VividTree';
+export * from './VividTrie';

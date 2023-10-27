@@ -56,6 +56,19 @@ export async function testBST2(nums: [], proxyHandler?: TProxyHandler) {
   return proxy.tree;
 }
 
+export async function testBSTOrderedData(nums: [], proxyHandler?: TProxyHandler) {
+  const proxy = new DeepProxy(
+    {
+      tree: new BST<BSTNode<number>>()
+    },
+    proxyHandler
+  );
+
+  proxy.tree.addMany(nums, nums, true)
+
+  return proxy.tree;
+}
+
 export const runTestBST = async () => {
   await runAlgorithm(testBST, false, testBSTCase1);
 };

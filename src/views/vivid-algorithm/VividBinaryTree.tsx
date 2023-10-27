@@ -33,7 +33,7 @@ const VividBinaryTreeRecursive: React.FC<{
   maxHeight?: number;
   containerWidth?: number;
   relatedBinaryNode?: BinaryTreeNode;
-}> = ({node, level = 1, index = 0, parentX, parentY, maxHeight, relatedBinaryNode, containerWidth}) => {
+}> = ({node, level = 1, index = 0, familyLength = 1, parentX, parentY, maxHeight, relatedBinaryNode, containerWidth}) => {
   if (!node) {
     return null;
   }
@@ -48,7 +48,7 @@ const VividBinaryTreeRecursive: React.FC<{
     offsetY = level * levelOffset + treeNodeR + strokeWidth;
   } else {
     if (parentX !== undefined) {
-      offsetX = parentX - (index < 1 ? levelNodeSpace : -levelNodeSpace);
+      offsetX = parentX - (familyLength / 2) * levelNodeSpace + (index + 0.5) * levelNodeSpace;
       offsetY = level * levelOffset + treeNodeR + strokeWidth;
     }
   }
@@ -58,7 +58,6 @@ const VividBinaryTreeRecursive: React.FC<{
     textY = offsetY !== undefined ? offsetY + fontOffsetY : 0,
     countX = offsetX !== undefined ? offsetX + (treeNodeR * 4) / 5 : 0,
     countY = offsetY !== undefined ? offsetY - (treeNodeR * 4) / 5 : 0,
-    countCircleX = countX,
     countCircleY = countY - fontOffsetY;
   return (
     <g key={node.key}>
@@ -129,7 +128,7 @@ const VividBinaryTreeRecursive: React.FC<{
           style={{cursor: 'pointer'}}
           stroke={secondaryTextFillColor}
           r={countCircleR}
-          cx={countCircleX}
+          cx={countX}
           cy={countCircleY}
           fill={isActive ? circleFillActiveColor : circleFillColor}
           onClick={() => {

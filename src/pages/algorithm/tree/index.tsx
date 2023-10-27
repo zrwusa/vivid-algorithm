@@ -15,7 +15,6 @@ import {
   pathSumIIICase5,
   runAllLongestCommonPrefix,
   runTestAVLTree,
-  runTestTrie,
   showBinaryTree,
   testAVLCase1,
   testAVLTree,
@@ -23,10 +22,10 @@ import {
   testBinaryTreeCase2,
   testBST,
   testBST2,
-  testBSTCase1,
+  testBSTCase1, testBSTOrderedData,
   testSymmetricTree,
   testSymmetricTreeCase2,
-  testTreeMultiset,
+  testTreeMultiset, testTrie, testTrie3, testTrie4, testTrieCase1, testTrieCase3, testTrieCase4,
   treeData,
   treeMaxDepth,
   trimABST,
@@ -61,7 +60,7 @@ export const TreePage = () => {
         algorithm={testBinaryTree}
         testCase={testBinaryTreeCase2}
         buttonLabel={'Test BinaryTree'}
-        svgWidth={600}
+        svgWidth={'100%'}
         svgHeight={400}
       />
       <AlgorithmPanel algorithm={testBST} testCase={testBSTCase1} buttonLabel={'Test BST'} />
@@ -69,6 +68,7 @@ export const TreePage = () => {
       <AlgorithmPanel algorithm={testTreeMultiset} testCase={testBSTCase1} buttonLabel={'Test TreeMultiset'} />
 
       <AlgorithmPanel algorithm={testBST2} testCase={[[3, 4, 2, 1, 2, 3, 4]]} buttonLabel={'Test BST II'} />
+      <AlgorithmPanel algorithm={testBSTOrderedData} testCase={[[1, 2, 3, 4, 5, 6, 7, 8]]} buttonLabel={'Test BST ordered data'} />
       <AlgorithmPanel
         algorithm={binaryTreeInorderTraversal}
         testCase={[binaryTree.root]}
@@ -133,13 +133,25 @@ export const TreePage = () => {
       <AlgorithmPanel algorithm={ladderLengthDFS} testCase={ladderLengthCase1} buttonLabel={'Ladder Length'} />
       <AlgorithmPanel algorithm={pathSumIII} testCase={pathSumIIICase5} buttonLabel={'Path Sum III'} />
       <AlgorithmPanel algorithm={testSymmetricTree} testCase={testSymmetricTreeCase2} buttonLabel={'Symmetric Tree'} />
-      <Button
-        onClick={() => {
-          runTestTrie().then();
-        }}
-      >
-        Test Trie
-      </Button>
+      <AlgorithmPanel
+        algorithm={testTrie}
+        testCase={testTrieCase1}
+        buttonLabel={'Test Trie'}
+      />
+      <AlgorithmPanel
+        svgWidth={'100%'}
+        svgHeight={1080}
+        algorithm={testTrie3}
+        testCase={testTrieCase3}
+        buttonLabel={'Test Trie3'}
+      />
+      <AlgorithmPanel
+        svgWidth={'100%'}
+        svgHeight={1560}
+        algorithm={testTrie4}
+        testCase={testTrieCase4}
+        buttonLabel={'Test Trie4'}
+      />
       <Button
         onClick={() => {
           runAllLongestCommonPrefix().then();

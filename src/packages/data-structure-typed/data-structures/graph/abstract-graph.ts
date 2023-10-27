@@ -1,14 +1,14 @@
 /**
  * data-structure-typed
  *
- * @author Tyler Zeng
- * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
+ * @author Kirk Qi
+ * @copyright Copyright (c) 2022 Kirk Qi <qilinaus@gmail.com>
  * @license MIT License
  */
 import {arrayRemove, uuidV4} from '../../utils';
 import {PriorityQueue} from '../priority-queue';
 import type {DijkstraResult, VertexKey} from '../../types';
-import {IAbstractGraph} from '../../interfaces';
+import {IGraph} from '../../interfaces';
 
 export abstract class AbstractVertex<V = any> {
   /**
@@ -104,7 +104,7 @@ export abstract class AbstractEdge<V = any> {
 export abstract class AbstractGraph<
   V extends AbstractVertex<any> = AbstractVertex<any>,
   E extends AbstractEdge<any> = AbstractEdge<any>
-> implements IAbstractGraph<V, E>
+> implements IGraph<V, E>
 {
   private _vertices: Map<VertexKey, V> = new Map<VertexKey, V>();
 
@@ -622,9 +622,7 @@ export abstract class AbstractGraph<
       if (vertexOrKey instanceof AbstractVertex) distMap.set(vertexOrKey, Infinity);
     }
 
-    const heap = new PriorityQueue<{key: number; val: V}>({
-      comparator: (a, b) => a.key - b.key
-    });
+    const heap = new PriorityQueue<{key: number; val: V}>((a, b) => a.key - b.key);
     heap.add({key: 0, val: srcVertex});
 
     distMap.set(srcVertex, 0);
