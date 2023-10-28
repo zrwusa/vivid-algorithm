@@ -102,7 +102,7 @@ export const testGraph = async (proxyHandler: TProxyHandler) => {
   await wait(waitMan.time3);
   console.log(JSON.stringify(proxy.myGraph.edgeSet()), proxy.myGraph.vertices);
   await wait(waitMan.time3);
-  console.log(`proxy.myGraph.removeEdgeBetween(1,2)`, proxy.myGraph.removeEdgeSrcToDest(1, 2));
+  console.log(`proxy.myGraph.removeEdgeBetween(1,2)`, proxy.myGraph.deleteEdgeSrcToDest(1, 2));
   await wait(waitMan.time3);
   console.log(`proxy.myGraph.getEdge(1, 2)`, proxy.myGraph.getEdge(1, 2));
   await wait(waitMan.time3);
@@ -196,19 +196,19 @@ export const testGraph = async (proxyHandler: TProxyHandler) => {
   console.log(proxy.myGraph.dijkstraWithoutHeap(1, null, true, true));
 
   await wait(waitMan.time3);
-  console.log(proxy.myGraph.removeEdgesBetween(1, 2));
+  console.log(proxy.myGraph.deleteEdgesBetween(1, 2));
 
   await wait(waitMan.time3);
-  console.log(proxy.myGraph.removeEdgesBetween(1, 3));
+  console.log(proxy.myGraph.deleteEdgesBetween(1, 3));
 
   await wait(waitMan.time3);
-  console.log(proxy.myGraph.removeEdgeSrcToDest(1, 9));
+  console.log(proxy.myGraph.deleteEdgeSrcToDest(1, 9));
 
   await wait(waitMan.time3);
-  console.log(proxy.myGraph.removeEdgeSrcToDest(9, 7));
+  console.log(proxy.myGraph.deleteEdgeSrcToDest(9, 7));
   await wait(waitMan.time3);
 
-  console.log(proxy.myGraph.removeEdgeSrcToDest(7, 9));
+  console.log(proxy.myGraph.deleteEdgeSrcToDest(7, 9));
   await wait(waitMan.time3);
 
   console.log(proxy.myGraph.outEdgeMap.size === 6, proxy.myGraph.outEdgeMap);

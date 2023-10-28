@@ -2,7 +2,7 @@ import * as React from 'react';
 import {TrieNode} from 'data-structure-typed';
 import styles from './styles';
 import {SVGOptions, ViewControl} from '../../types';
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from 'react';
 
 const {
   textFillColor,
@@ -43,7 +43,7 @@ const VividTrieRecursive: React.FC<{
     console.log(node);
   };
 
-  const levelNodeSpace = nodeSpace * Math.pow(2, (maxHeight ? maxHeight > 5 ?  5 : maxHeight: 5) - level);
+  const levelNodeSpace = nodeSpace * Math.pow(2, (maxHeight ? (maxHeight > 5 ? 5 : maxHeight) : 5) - level);
   if (level === 1) {
     space = containerWidth ? containerWidth / 2 : treePanelWidth / 2;
     offsetX = space - treeNodeR;
@@ -54,10 +54,10 @@ const VividTrieRecursive: React.FC<{
       offsetY = level * levelOffset + treeNodeR + strokeWidth;
     }
   }
-  const isActive = node.val === relatedNode?.val;
+  const isActive = node.key === relatedNode?.key;
 
   return (
-    <g key={node.val}>
+    <g key={node.key}>
       {level > 1 ? (
         <line
           x1={parentX}
@@ -70,20 +70,20 @@ const VividTrieRecursive: React.FC<{
       ) : null}
       {node.children
         ? Array.from(node.children.entries()).map((child, index, family) => {
-          return (
-            <VividTrieRecursive
-              key={child[0]}
-              node={child[1]}
-              level={level + 1}
-              index={index}
-              familyLength={family.length}
-              parentX={offsetX}
-              parentY={offsetY}
-              maxHeight={maxHeight}
-              relatedNode={relatedNode}
-            />
-          )
-        })
+            return (
+              <VividTrieRecursive
+                key={child[0]}
+                node={child[1]}
+                level={level + 1}
+                index={index}
+                familyLength={family.length}
+                parentX={offsetX}
+                parentY={offsetY}
+                maxHeight={maxHeight}
+                relatedNode={relatedNode}
+              />
+            );
+          })
         : null}
       <circle
         style={{cursor: 'pointer'}}
@@ -104,7 +104,7 @@ const VividTrieRecursive: React.FC<{
         y={offsetY + fontOffsetY}
         textAnchor='middle'
       >
-        {node.val || node.val}
+        {node.key || node.key}
       </text>
     </g>
   );

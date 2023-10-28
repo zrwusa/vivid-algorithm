@@ -9,6 +9,7 @@ import {arrayRemove, uuidV4} from '../../utils';
 import {PriorityQueue} from '../priority-queue';
 import type {DijkstraResult, VertexKey} from '../../types';
 import {IGraph} from '../../interfaces';
+import {Queue} from '../queue';
 
 export abstract class AbstractVertex<V = any> {
   /**
@@ -104,8 +105,7 @@ export abstract class AbstractEdge<V = any> {
 export abstract class AbstractGraph<
   V extends AbstractVertex<any> = AbstractVertex<any>,
   E extends AbstractEdge<any> = AbstractEdge<any>
-> implements IGraph<V, E>
-{
+> implements IGraph<V, E> {
   private _vertices: Map<VertexKey, V> = new Map<VertexKey, V>();
 
   get vertices(): Map<VertexKey, V> {
@@ -130,7 +130,7 @@ export abstract class AbstractGraph<
    */
   abstract createEdge(srcOrV1: VertexKey | string, destOrV2: VertexKey | string, weight?: number, val?: E): E;
 
-  abstract removeEdge(edge: E): E | null;
+  abstract deleteEdge(edge: E): E | null;
 
   abstract getEdge(srcOrKey: V | VertexKey, destOrKey: V | VertexKey): E | null;
 
@@ -179,12 +179,12 @@ export abstract class AbstractGraph<
   }
 
   /**
-   * The `removeVertex` function removes a vertex from a graph by its ID or by the vertex object itself.
+   * The `deleteVertex` function removes a vertex from a graph by its ID or by the vertex object itself.
    * @param {V | VertexKey} vertexOrKey - The parameter `vertexOrKey` can be either a vertex object (`V`) or a vertex ID
    * (`VertexKey`).
    * @returns The method is returning a boolean value.
    */
-  removeVertex(vertexOrKey: V | VertexKey): boolean {
+  deleteVertex(vertexOrKey: V | VertexKey): boolean {
     const vertexKey = this._getVertexKey(vertexOrKey);
     return this._vertices.delete(vertexKey);
   }
@@ -199,7 +199,7 @@ export abstract class AbstractGraph<
   removeAllVertices(vertices: V[] | VertexKey[]): boolean {
     const removed: boolean[] = [];
     for (const v of vertices) {
-      removed.push(this.removeVertex(v));
+      removed.push(this.deleteVertex(v));
     }
     return removed.length > 0;
   }
@@ -342,11 +342,11 @@ export abstract class AbstractGraph<
       }
 
       const visited: Map<V, boolean> = new Map();
-      const queue: V[] = [vertex1];
+      const queue = new Queue<V>([vertex1]);
       visited.set(vertex1, true);
       let cost = 0;
-      while (queue.length > 0) {
-        for (let i = 0; i < queue.length; i++) {
+      while (queue.size > 0) {
+        for (let i = 0; i < queue.size; i++) {
           const cur = queue.shift();
           if (cur === vertex2) {
             return cost;
@@ -553,14 +553,14 @@ export abstract class AbstractGraph<
     }
 
     getMinDist &&
-      distMap.forEach((d, v) => {
-        if (v !== srcVertex) {
-          if (d < minDist) {
-            minDist = d;
-            if (genPaths) minDest = v;
-          }
+    distMap.forEach((d, v) => {
+      if (v !== srcVertex) {
+        if (d < minDist) {
+          minDist = d;
+          if (genPaths) minDest = v;
         }
-      });
+      }
+    });
 
     genPaths && getPaths(minDest);
 
@@ -622,7 +622,7 @@ export abstract class AbstractGraph<
       if (vertexOrKey instanceof AbstractVertex) distMap.set(vertexOrKey, Infinity);
     }
 
-    const heap = new PriorityQueue<{key: number; val: V}>((a, b) => a.key - b.key);
+    const heap = new PriorityQueue<{ key: number; val: V }>({comparator: (a, b) => a.key - b.key});
     heap.add({key: 0, val: srcVertex});
 
     distMap.set(srcVertex, 0);
@@ -851,7 +851,7 @@ export abstract class AbstractGraph<
    * `predecessor` property is a 2D array of vertices (or `null`) representing the predecessor vertices in the shortest
    * path between vertices in the
    */
-  floyd(): {costs: number[][]; predecessor: (V | null)[][]} {
+  floyd(): { costs: number[][]; predecessor: (V | null)[][] } {
     const idAndVertices = [...this._vertices];
     const n = idAndVertices.length;
 

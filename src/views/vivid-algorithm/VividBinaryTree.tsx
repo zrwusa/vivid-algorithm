@@ -33,7 +33,17 @@ const VividBinaryTreeRecursive: React.FC<{
   maxHeight?: number;
   containerWidth?: number;
   relatedBinaryNode?: BinaryTreeNode;
-}> = ({node, level = 1, index = 0, familyLength = 1, parentX, parentY, maxHeight, relatedBinaryNode, containerWidth}) => {
+}> = ({
+  node,
+  level = 1,
+  index = 0,
+  familyLength = 1,
+  parentX,
+  parentY,
+  maxHeight,
+  relatedBinaryNode,
+  containerWidth
+}) => {
   if (!node) {
     return null;
   }

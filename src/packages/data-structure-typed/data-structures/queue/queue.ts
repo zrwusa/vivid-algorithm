@@ -106,7 +106,7 @@ export class Queue<E = any> {
 
     if (this.offset * 2 < this.nodes.length) return first;
 
-    // only remove dequeued elements when reaching half size
+    // only delete dequeued elements when reaching half size
     // to decrease latency of shifting elements.
     this.nodes = this.nodes.slice(this.offset);
     this.offset = 0;
@@ -183,7 +183,7 @@ export class Queue<E = any> {
     return new Queue(this.nodes.slice(this.offset));
   }
 
-  *[Symbol.iterator]() {
+  * [Symbol.iterator]() {
     for (const item of this.nodes) {
       yield item;
     }

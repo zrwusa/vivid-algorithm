@@ -2,16 +2,13 @@ import {BinaryTreeNodeKey, RBColor, RBTreeNodeNested, RBTreeOptions} from '../..
 import {IBinaryTree} from '../../interfaces';
 import {BST, BSTNode} from './bst';
 
-export class RBTreeNode<V = any, FAMILY extends RBTreeNode<V, FAMILY> = RBTreeNodeNested<V>> extends BSTNode<
-  V,
-  FAMILY
-> {
-  private _color: RBColor;
-
+export class RBTreeNode<V = any, N extends RBTreeNode<V, N> = RBTreeNodeNested<V>> extends BSTNode<V, N> {
   constructor(key: BinaryTreeNodeKey, val?: V) {
     super(key, val);
     this._color = RBColor.RED;
   }
+
+  private _color: RBColor;
 
   get color(): RBColor {
     return this._color;
@@ -22,16 +19,18 @@ export class RBTreeNode<V = any, FAMILY extends RBTreeNode<V, FAMILY> = RBTreeNo
   }
 }
 
-export class RBTree<N extends RBTreeNode<N['val'], N> = RBTreeNode> extends BST<N> implements IBinaryTree<N> {
+export class RBTree<V, N extends RBTreeNode<V, N> = RBTreeNode<V, RBTreeNodeNested<V>>>
+  extends BST<V, N>
+  implements IBinaryTree<V, N> {
   constructor(options?: RBTreeOptions) {
     super(options);
   }
 
-  override createNode(key: BinaryTreeNodeKey, val?: N['val']): N {
+  override createNode(key: BinaryTreeNodeKey, val?: V): N {
     return new RBTreeNode(key, val) as N;
   }
 
-  // override add(keyOrNode: BinaryTreeNodeKey | N | null, val?: N['val']): N | null | undefined {
+  // override add(keyOrNode: BinaryTreeNodeKey | N | null, val?: V): N | null | undefined {
   //   const inserted = super.add(keyOrNode, val);
   //   if (inserted) this._fixInsertViolation(inserted);
   //   return inserted;
@@ -164,10 +163,10 @@ export class RBTree<N extends RBTreeNode<N['val'], N> = RBTreeNode> extends BST<
   // // Remove a node
   // private _removeNode(node: N, replacement: N | null | undefined): void {
   //   if (node === this.root && !replacement) {
-  //     // If there's only the root node and no replacement, simply remove the root node
+  //     // If there's only the root node and no replacement, simply delete the root node
   //     this._setRoot(null);
   //   } else if (node === this.root || this._isNodeRed(node)) {
-  //     // If the node is the root or a red node, remove it directly
+  //     // If the node is the root or a red node, delete it directly
   //     if (node.parent!.left === node) {
   //       node.parent!.left = replacement;
   //     } else {
@@ -205,8 +204,8 @@ export class RBTree<N extends RBTreeNode<N['val'], N> = RBTreeNode> extends BST<
   //   node.right = null;
   // }
   //
-  // override remove(nodeOrKey: BinaryTreeNodeKey | N): BinaryTreeDeletedResult<N>[] {
-  //   const node = this.get(nodeOrKey);
+  // override delete(keyOrNode: BinaryTreeNodeKey | N): BinaryTreeDeletedResult<N>[] {
+  //   const node = this.get(keyOrNode);
   //   const result: BinaryTreeDeletedResult<N>[] = [{deleted: undefined, needBalanced: null}];
   //   if (!node) return result; // Node does not exist
   //

@@ -1,6 +1,6 @@
 import {runAlgorithm} from '../helpers';
 import {maxSlidingWindowCase6} from './cases';
-import {ArrayDeque, BST, Deque, LoopType, ObjectDeque, PriorityQueue} from 'data-structure-typed';
+import {ArrayDeque, BST, Deque, IterationType, ObjectDeque, PriorityQueue} from 'data-structure-typed';
 
 // 239. Sliding Window Maximum
 export function maxSlidingWindow(nums: number[], k: number): number[] {
@@ -76,14 +76,14 @@ export function maxSlidingWindowBST(nums: number[], k: number): number[] {
     ans: number[] = [],
     bst: BST = new BST({
       comparator: (a, b) => b - a,
-      loopType: LoopType.ITERATIVE
+      iterationType: IterationType.ITERATIVE
     });
 
   let j = 0;
   for (let i = 0; i < n; i++) {
     bst.add(nums[i], 1);
     if (i + 1 >= k) {
-      bst.remove(nums[i - k]);
+      bst.delete(nums[i - k]);
       ans[j++] = bst.lastKey();
     }
   }
@@ -96,14 +96,14 @@ export function maxSlidingWindowBST2(nums: number[], k: number): number[] {
     ans: number[] = [],
     bst: BST = new BST({
       comparator: (a, b) => b - a,
-      loopType: LoopType.RECURSIVE
+      iterationType: IterationType.RECURSIVE
     });
 
   let j = 0;
   for (let i = 0; i < n; i++) {
     bst.add(nums[i], 1);
     if (i + 1 >= k) {
-      bst.remove(nums[i - k]);
+      bst.delete(nums[i - k]);
       ans[j++] = bst.lastKey();
     }
   }
@@ -116,12 +116,12 @@ export function maxSlidingWindowBST3(nums: number[], k: number): number[] {
     ans: number[] = [],
     bst: BST = new BST({
       comparator: (a, b) => b - a,
-      loopType: LoopType.ITERATIVE
+      iterationType: IterationType.ITERATIVE
     });
 
   const removeElement = (x: number) => {
     bst.add(x, (bst.get(x)?.val ?? 0) - 1);
-    if (bst.get(x)?.val === 0) bst.remove(x);
+    if (bst.get(x)?.val === 0) bst.delete(x);
   };
 
   let j = 0;
@@ -140,12 +140,12 @@ export function maxSlidingWindowBST4(nums: number[], k: number): number[] {
     ans: number[] = [],
     bst: BST = new BST({
       comparator: (a, b) => b - a,
-      loopType: LoopType.RECURSIVE
+      iterationType: IterationType.RECURSIVE
     });
 
   const removeElement = (x: number) => {
     bst.add(x, (bst.get(x)?.val ?? 0) - 1);
-    if (bst.get(x)?.val === 0) bst.remove(x);
+    if (bst.get(x)?.val === 0) bst.delete(x);
   };
 
   let j = 0;

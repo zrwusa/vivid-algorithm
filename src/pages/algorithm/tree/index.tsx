@@ -22,10 +22,17 @@ import {
   testBinaryTreeCase2,
   testBST,
   testBST2,
-  testBSTCase1, testBSTOrderedData,
+  testBSTCase1,
+  testBSTOrderedData,
   testSymmetricTree,
   testSymmetricTreeCase2,
-  testTreeMultiset, testTrie, testTrie3, testTrie4, testTrieCase1, testTrieCase3, testTrieCase4,
+  testTreeMultiset,
+  testTrie,
+  testTrie3,
+  testTrie4,
+  testTrieCase1,
+  testTrieCase3,
+  testTrieCase4,
   treeData,
   treeMaxDepth,
   trimABST,
@@ -68,7 +75,11 @@ export const TreePage = () => {
       <AlgorithmPanel algorithm={testTreeMultiset} testCase={testBSTCase1} buttonLabel={'Test TreeMultiset'} />
 
       <AlgorithmPanel algorithm={testBST2} testCase={[[3, 4, 2, 1, 2, 3, 4]]} buttonLabel={'Test BST II'} />
-      <AlgorithmPanel algorithm={testBSTOrderedData} testCase={[[1, 2, 3, 4, 5, 6, 7, 8]]} buttonLabel={'Test BST ordered data'} />
+      <AlgorithmPanel
+        algorithm={testBSTOrderedData}
+        testCase={[[1, 2, 3, 4, 5, 6, 7, 8]]}
+        buttonLabel={'Test BST ordered data'}
+      />
       <AlgorithmPanel
         algorithm={binaryTreeInorderTraversal}
         testCase={[binaryTree.root]}
@@ -133,11 +144,7 @@ export const TreePage = () => {
       <AlgorithmPanel algorithm={ladderLengthDFS} testCase={ladderLengthCase1} buttonLabel={'Ladder Length'} />
       <AlgorithmPanel algorithm={pathSumIII} testCase={pathSumIIICase5} buttonLabel={'Path Sum III'} />
       <AlgorithmPanel algorithm={testSymmetricTree} testCase={testSymmetricTreeCase2} buttonLabel={'Symmetric Tree'} />
-      <AlgorithmPanel
-        algorithm={testTrie}
-        testCase={testTrieCase1}
-        buttonLabel={'Test Trie'}
-      />
+      <AlgorithmPanel algorithm={testTrie} testCase={testTrieCase1} buttonLabel={'Test Trie'} />
       <AlgorithmPanel
         svgWidth={'100%'}
         svgHeight={1080}

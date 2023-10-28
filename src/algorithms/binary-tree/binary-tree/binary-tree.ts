@@ -1,5 +1,5 @@
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
-import {BinaryTree, BinaryTreeNode, LoopType} from 'data-structure-typed';
+import {BinaryTree, BinaryTreeNode, IterationType} from 'data-structure-typed';
 import {wait, WaitManager} from '../../../utils';
 import {runAlgorithm} from '../../helpers';
 import {deleteLeavesCase1, pathSumIIICase3, testBSTCase1, testSymmetricTreeCase1} from '../bst';
@@ -13,7 +13,7 @@ export async function testBinaryTree(arr: number[], proxyHandler?: TProxyHandler
 
   const proxy: {tree: BinaryTree} = new DeepProxy(
     {
-      tree: new BinaryTree({loopType: LoopType.RECURSIVE})
+      tree: new BinaryTree({iterationType: IterationType.RECURSIVE})
     },
     proxyHandler
   );
@@ -53,8 +53,8 @@ export const runTestBinaryTree = async () => {
 export async function testSymmetricTree(arr: Array<number | null>, proxyHandler?: TProxyHandler) {
   const clonedData = [...arr];
 
-  const proxy: {tree: BinaryTree<BinaryTreeNode<number | null>>} = new DeepProxy(
-    {tree: new BinaryTree<BinaryTreeNode<number | null>>({})},
+  const proxy: {tree: BinaryTree<number | null>} = new DeepProxy(
+    {tree: new BinaryTree<number | null>({})},
     proxyHandler
   );
 
@@ -252,9 +252,9 @@ export async function pathSumIII(
   proxyHandler?: TProxyHandler
 ): Promise<number> {
   const clonedData = [...data];
-  const proxy: {tree: BinaryTree<BinaryTreeNode<number | null>>} = new DeepProxy(
+  const proxy: {tree: BinaryTree<number | null>} = new DeepProxy(
     {
-      tree: new BinaryTree<BinaryTreeNode<number | null>>({
+      tree: new BinaryTree<number | null>({
         // nodeOrData: {
         //     key: 0,
         //     val: clonedData[0]
@@ -306,9 +306,9 @@ export async function deleteLeaves(
   proxyHandler?: TProxyHandler
 ): Promise<BinaryTreeNode<number | null> | null> {
   const clonedData = [...data];
-  const proxy: {bst: BinaryTree<BinaryTreeNode<number | null>>} = new DeepProxy(
+  const proxy: {bst: BinaryTree<number | null>} = new DeepProxy(
     {
-      bst: new BinaryTree<BinaryTreeNode<number | null>>()
+      bst: new BinaryTree<number | null>()
     },
     proxyHandler
   );

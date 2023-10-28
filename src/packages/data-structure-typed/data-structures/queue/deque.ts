@@ -9,7 +9,8 @@ import {DoublyLinkedList} from '../linked-list';
 
 // O(n) time complexity of obtaining the value
 // O(1) time complexity of adding at the beginning and the end
-export class Deque<E = any> extends DoublyLinkedList<E> {}
+export class Deque<E = any> extends DoublyLinkedList<E> {
+}
 
 // O(1) time complexity of obtaining the value
 // O(n) time complexity of adding at the beginning and the end
@@ -19,9 +20,9 @@ export class ObjectDeque<E = number> {
     if (capacity !== undefined) this._capacity = capacity;
   }
 
-  private _nodes: {[key: number]: E} = {};
+  private _nodes: { [key: number]: E } = {};
 
-  get nodes(): {[p: number]: E} {
+  get nodes(): { [p: number]: E } {
     return this._nodes;
   }
 
@@ -156,7 +157,7 @@ export class ObjectDeque<E = number> {
     return this._size <= 0;
   }
 
-  protected _seNodes(value: {[p: number]: E}) {
+  protected _seNodes(value: { [p: number]: E }) {
     this._nodes = value;
   }
 
@@ -277,12 +278,12 @@ export class ArrayDeque<E> {
   }
 
   /**
-   * The remove function removes an element from an array at a specified index.
+   * The delete function removes an element from an array at a specified index.
    * @param {number} index - The index parameter specifies the position of the element to be removed from the array. It
    * is a number that represents the index of the element to be removed.
    * @returns The method is returning an array containing the removed element.
    */
-  remove(index: number) {
+  delete(index: number) {
     return this._nodes.splice(index, 1);
   }
 

@@ -92,7 +92,7 @@ export class NumArrayDC {
 
   constructor(nums: number[]) {
     this._nums = nums;
-    this._tree = new BinaryIndexedTree(nums.length);
+    this._tree = new BinaryIndexedTree({max: nums.length + 1});
     for (let i = 0; i < nums.length; i++) {
       this._tree.update(i + 1, nums[i]);
     }
@@ -143,7 +143,7 @@ export const countSmallerBITPlagiarized = (nums: number[]): number[] => {
 
   const ans: number[] = [];
   // O(log(n))
-  const bit = new BinaryIndexedTree(nums.length);
+  const bit = new BinaryIndexedTree({max: nums.length + 1});
   nums.reverse().forEach(num => {
     const numRank = ranks.get(num);
     if (numRank !== undefined) {
@@ -167,7 +167,7 @@ const countSmallerBIT = function (nums: number[]): number[] {
   const ans: number[] = [];
 
   // O(log(n))
-  const tree = new BinaryIndexedTree(ranks.size);
+  const tree = new BinaryIndexedTree({max: ranks.size});
   const reversed = orgNums.reverse();
 
   for (let i = 0; i < reversed.length; i++) {

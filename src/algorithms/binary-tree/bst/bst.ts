@@ -47,10 +47,10 @@ export async function testBST2(nums: [], proxyHandler?: TProxyHandler) {
   }
 
   await wait(time1);
-  console.log(proxy.tree.remove(1));
+  console.log(proxy.tree.delete(1));
 
   await wait(time1);
-  console.log(proxy.tree.remove(2));
+  console.log(proxy.tree.delete(2));
   console.log(proxy.tree);
 
   return proxy.tree;
@@ -64,7 +64,7 @@ export async function testBSTOrderedData(nums: [], proxyHandler?: TProxyHandler)
     proxyHandler
   );
 
-  proxy.tree.addMany(nums, nums, true)
+  proxy.tree.addMany(nums, nums, true);
 
   return proxy.tree;
 }
@@ -223,7 +223,7 @@ export async function trimABST(
   proxyHandler?: TProxyHandler
 ): Promise<BSTNode<number | null> | null> {
   const clonedData = [...data];
-  const proxy: {tree: BST<BSTNode<number | null>>} = new DeepProxy(
+  const proxy: {tree: BST<number | null>} = new DeepProxy(
     {
       tree: new BST({comparator: (a, b) => a - b})
     },

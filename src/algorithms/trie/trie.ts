@@ -1,15 +1,15 @@
 import {Trie, TrieNode} from 'data-structure-typed';
 import {testTrieCase1, testTrieCase2, trieCase6} from './cases';
 import {runAlgorithm} from '../helpers';
-import {DeepProxy, TProxyHandler} from "@qiwi/deep-proxy";
-import {wait, WaitManager} from "../../utils";
+import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
+import {wait, WaitManager} from '../../utils';
 
 const waitManager = new WaitManager(10);
 const {time10} = waitManager;
 
 export const testTrie = async (words: string[], proxyHandler: TProxyHandler) => {
   const trie = new Trie();
-  const proxy = new DeepProxy<{trie: Trie, current: TrieNode; nodeNeedPrint: TrieNode}>(
+  const proxy = new DeepProxy<{trie: Trie; current: TrieNode; nodeNeedPrint: TrieNode}>(
     {
       trie: new Trie(),
       current: trie.root,
@@ -26,58 +26,57 @@ export const testTrie = async (words: string[], proxyHandler: TProxyHandler) => 
   console.log(proxy.trie.has('doll'), 'Is word: doll');
   console.log(!proxy.trie.has('dor'), 'Is word: dor');
   console.log(!proxy.trie.has('dorf'), 'Is word: dorf');
-  console.log(proxy.trie.isAbsPrefix('dor'), 'Is Absolute prefix: dor');
-  console.log(!proxy.trie.isAbsPrefix('do'), 'Is Absolute prefix: do');
+  console.log(proxy.trie.hasPurePrefix('dor'), 'Is Absolute prefix: dor');
+  console.log(!proxy.trie.hasPurePrefix('do'), 'Is Absolute prefix: do');
   await wait(time10);
-  console.log(proxy.trie.isPrefix('do'), 'Is prefix: do');
+  console.log(proxy.trie.hasPrefix('do'), 'Is prefix: do');
   console.log(proxy.trie.has('do'), 'Is word: do');
-  console.log(proxy.trie.isPrefix('dorm'), 'Is prefix: dorm');
+  console.log(proxy.trie.hasPrefix('dorm'), 'Is prefix: dorm');
   await wait(time10);
   const allPreDor = proxy.trie.getWords('dor');
 
   console.log(allPreDor[0] === 'dork' && allPreDor[1] === 'dorm', 'Get all words with prefix: dor');
-  const all1 = proxy.trie.getWords();
+  const all1 = proxy.trie.getWords('', Number.MAX_SAFE_INTEGER, true);
   await wait(time10);
-
   console.log(all1.length === 8 && all1[4] === 'dorm', 'Get all words');
-  console.log(proxy.trie.remove('dorm'), 'Remove word dorm');
-  const all2 = proxy.trie.getWords();
+  console.log(proxy.trie.delete('dorm'), 'Remove word dorm');
+  const all2 = proxy.trie.getWords('', Number.MAX_SAFE_INTEGER, true);
   await wait(time10);
 
   console.log(all2.length === 7 && all2[4] === 'do', 'Get all words');
-  console.log(proxy.trie.remove('ball'), 'Remove word ball');
-  const all3 = proxy.trie.getWords();
+  console.log(proxy.trie.delete('ball'), 'Remove word ball');
+  const all3 = proxy.trie.getWords('', Number.MAX_SAFE_INTEGER, true);
   await wait(time10);
 
   console.log(all3.length === 6 && all3[0] === 'bat', 'Get all words');
-  console.log(proxy.trie.remove('bat'), 'Remove word bat');
+  console.log(proxy.trie.delete('bat'), 'Remove word bat');
 
-  const all4 = proxy.trie.getWords();
+  const all4 = proxy.trie.getWords('', Number.MAX_SAFE_INTEGER, true);
   await wait(time10);
 
   console.log(all4.length === 5 && all4[0] === 'doll', 'Get all words');
-  console.log(proxy.trie.remove('send'), 'Remove word send');
-  const all5 = proxy.trie.getWords();
+  console.log(proxy.trie.delete('send'), 'Remove word send');
+  const all5 = proxy.trie.getWords('', Number.MAX_SAFE_INTEGER, true);
   await wait(time10);
 
   console.log(all5.length === 4 && all5[3] === 'sense', 'Get all words');
-  console.log(proxy.trie.remove('do'), 'Remove word do');
-  const all6 = proxy.trie.getWords();
+  console.log(proxy.trie.delete('do'), 'Remove word do');
+  const all6 = proxy.trie.getWords('', Number.MAX_SAFE_INTEGER, true);
   await wait(time10);
 
   console.log(all6.length === 3 && all6[2] === 'sense', 'Get all words');
-  console.log(proxy.trie.remove('dork'), 'Remove word dork');
-  const all7 = proxy.trie.getWords();
+  console.log(proxy.trie.delete('dork'), 'Remove word dork');
+  const all7 = proxy.trie.getWords('', Number.MAX_SAFE_INTEGER, true);
   await wait(time10);
 
   console.log(all7.length === 2 && all7[1] === 'sense', 'Get all words');
-  console.log(proxy.trie.remove('doll'), 'Remove word doll');
-  const all8 = proxy.trie.getWords();
+  console.log(proxy.trie.delete('doll'), 'Remove word doll');
+  const all8 = proxy.trie.getWords('', Number.MAX_SAFE_INTEGER, true);
   await wait(time10);
 
   console.log(all8.length === 1 && all8[0] === 'sense', 'Get all words');
-  console.log(proxy.trie.remove('sense'), 'Remove word sense');
-  const all9 = proxy.trie.getWords();
+  console.log(proxy.trie.delete('sense'), 'Remove word sense');
+  const all9 = proxy.trie.getWords('', Number.MAX_SAFE_INTEGER, true);
   await wait(time10);
 
   console.log(all9.length === 0, 'Get all words');
@@ -86,7 +85,7 @@ export const testTrie = async (words: string[], proxyHandler: TProxyHandler) => 
 
 export const testTrie3 = async (words: string[], proxyHandler: TProxyHandler) => {
   const trie = new Trie();
-  const proxy = new DeepProxy<{trie: Trie, current: TrieNode; nodeNeedPrint: TrieNode}>(
+  const proxy = new DeepProxy<{trie: Trie; current: TrieNode; nodeNeedPrint: TrieNode}>(
     {
       trie: new Trie(),
       current: trie.root,
@@ -99,14 +98,14 @@ export const testTrie3 = async (words: string[], proxyHandler: TProxyHandler) =>
     proxy.trie.add(word);
   }
 
-  console.log(proxy.trie.getWords('one'))
+  console.log(proxy.trie.getWords('one'));
 
   return trie;
 };
 
 export const testTrie4 = async (words: string[], proxyHandler: TProxyHandler) => {
   const trie = new Trie();
-  const proxy = new DeepProxy<{trie: Trie, current: TrieNode; nodeNeedPrint: TrieNode}>(
+  const proxy = new DeepProxy<{trie: Trie; current: TrieNode; nodeNeedPrint: TrieNode}>(
     {
       trie: new Trie(),
       current: trie.root,
@@ -119,7 +118,7 @@ export const testTrie4 = async (words: string[], proxyHandler: TProxyHandler) =>
     proxy.trie.add(word);
   }
 
-  console.log(proxy.trie.getWords('air'))
+  console.log(proxy.trie.getWords('air'));
 
   return trie;
 };
@@ -127,8 +126,8 @@ export const testTrie4 = async (words: string[], proxyHandler: TProxyHandler) =>
 const testTrie2 = async (words: string[]) => {
   const trie = new Trie(words);
   console.log(trie.getLongestCommonPrefix() === 'fl', 'is "fl" the longest common prefix');
-  console.log(trie.isCommonPrefix('fl'), 'is "fl" a common prefix');
-  console.log(trie.isCommonPrefix('f'), 'is "f" a common prefix');
+  console.log(trie.hasCommonPrefix('fl'), 'is "fl" a common prefix');
+  console.log(trie.hasCommonPrefix('f'), 'is "f" a common prefix');
   return trie;
 };
 
@@ -157,7 +156,7 @@ export function findWords(board: string[][], words: string[]): string[] {
 
     if (child.isEnd) {
       ans.push(acc + cur);
-      trie.remove(acc + cur);
+      trie.delete(acc + cur);
     }
 
     board[y][x] = '#';

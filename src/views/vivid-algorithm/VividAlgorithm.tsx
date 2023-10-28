@@ -6,7 +6,9 @@ import {
   MapGraph,
   SinglyLinkedListNode,
   Stack,
-  TreeNode, Trie, TrieNode
+  TreeNode,
+  Trie,
+  TrieNode
 } from 'data-structure-typed';
 import {Coordinate} from '../../algorithms';
 import {VividMapGraph} from './VividMapGraph';
@@ -20,7 +22,7 @@ import {VividArray} from './VividArray';
 import {VividObject} from './VividObject';
 import {VividLinkedList} from './VividLinkedList';
 import {SVGOptions, ViewControl} from '../../types';
-import {VividTrie} from "./VividTrie";
+import {VividTrie} from './VividTrie';
 
 export interface VividAlgorithmProps extends SVGOptions {
   data?: {[key in string]: any};
@@ -43,7 +45,7 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
     viewControl
   } = props;
 
-  let relatedNode: TreeNode | TrieNode |undefined;
+  let relatedNode: TreeNode | TrieNode | undefined;
   let relatedBinaryNode: BinaryTreeNode | undefined;
   let relatedMatrixCell: Coordinate | undefined;
   if (relatedNodeKey) {
@@ -79,12 +81,11 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
               viewControl={viewControl}
             />
           );
-        }
-        else if (item instanceof TreeNode) {
+        } else if (item instanceof TreeNode) {
           return (
             <VividTree
               data={item}
-              maxHeight={item.getHeight()}
+              maxHeight={item.getHeight() + 1}
               relatedNode={relatedNode instanceof TreeNode ? relatedNode : undefined}
               svgHeight={svgHeight}
               svgWidth={svgWidth}
@@ -110,7 +111,7 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
           return (
             <VividBinaryTree
               node={item.root}
-              maxHeight={item.getHeight()}
+              maxHeight={item.getHeight() + 1}
               relatedBinaryNode={relatedBinaryNode}
               svgHeight={svgHeight}
               svgWidth={svgWidth}
