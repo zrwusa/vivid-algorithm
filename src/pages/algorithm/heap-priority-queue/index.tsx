@@ -5,8 +5,8 @@ import {runAllTestPriorityQueue, testHeap} from '../../../algorithms';
 export const HeapPriorityQueueScreen = () => {
   return (
     <>
-      <AlgorithmPanel algorithm={testHeap} testCase={[]} buttonLabel={'Test Heap'} />
-      <AlgorithmPanel algorithm={runAllTestPriorityQueue} testCase={[]} buttonLabel={'Test PriorityQueue'} />
+      <AlgorithmPanel algorithm={testHeap} testCase={[]} buttonLabel={'Test Heap'}/>
+      <AlgorithmPanel algorithm={runAllTestPriorityQueue} testCase={[]} buttonLabel={'Test PriorityQueue'}/>
     </>
   );
 };

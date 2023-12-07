@@ -377,7 +377,7 @@ export const fourthQuadrantMoveByIndex = (
 };
 
 export const getRouteByParentsHash = (
-  parents: {[key in string]: Coordinate},
+  parents: { [key in string]: Coordinate },
   leaf: Coordinate,
   hashFunction: (cell: Coordinate) => string
 ) => {
@@ -402,7 +402,7 @@ export type VerticalDirection = 1 | -1 | 0;
 export const getDirectionVector = (
   from?: Coordinate,
   to?: Coordinate
-): {x: HorizontalDirection; y: VerticalDirection} => {
+): { x: HorizontalDirection; y: VerticalDirection } => {
   if (!from || !to) {
     return {x: 0, y: 0};
   }

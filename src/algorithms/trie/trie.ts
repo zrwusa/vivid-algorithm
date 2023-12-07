@@ -9,7 +9,7 @@ const {time10} = waitManager;
 
 export const testTrie = async (words: string[], proxyHandler: TProxyHandler) => {
   const trie = new Trie();
-  const proxy = new DeepProxy<{trie: Trie; current: TrieNode; nodeNeedPrint: TrieNode}>(
+  const proxy = new DeepProxy<{ trie: Trie; current: TrieNode; nodeNeedPrint: TrieNode }>(
     {
       trie: new Trie(),
       current: trie.root,
@@ -85,7 +85,7 @@ export const testTrie = async (words: string[], proxyHandler: TProxyHandler) => 
 
 export const testTrie3 = async (words: string[], proxyHandler: TProxyHandler) => {
   const trie = new Trie();
-  const proxy = new DeepProxy<{trie: Trie; current: TrieNode; nodeNeedPrint: TrieNode}>(
+  const proxy = new DeepProxy<{ trie: Trie; current: TrieNode; nodeNeedPrint: TrieNode }>(
     {
       trie: new Trie(),
       current: trie.root,
@@ -105,7 +105,7 @@ export const testTrie3 = async (words: string[], proxyHandler: TProxyHandler) =>
 
 export const testTrie4 = async (words: string[], proxyHandler: TProxyHandler) => {
   const trie = new Trie();
-  const proxy = new DeepProxy<{trie: Trie; current: TrieNode; nodeNeedPrint: TrieNode}>(
+  const proxy = new DeepProxy<{ trie: Trie; current: TrieNode; nodeNeedPrint: TrieNode }>(
     {
       trie: new Trie(),
       current: trie.root,

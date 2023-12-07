@@ -13,8 +13,8 @@ import {LineWithArrow} from './LineWithArrow';
 import styles from './styles';
 import {SVGOptions, ViewControl} from '../../types';
 
-export const VividGraphIllustrator: React.FC<{graph: AbstractGraph}> = ({graph}) => {
-  const vertices = graph.vertices;
+export const VividGraphIllustrator: React.FC<{ graph: AbstractGraph }> = ({graph}) => {
+  const vertices = graph.vertexMap;
   const vertexCount = vertices.size;
   const edges = graph.edgeSet();
   const coordsMap: Map<AbstractVertex, Coordinate> = new Map<AbstractVertex, Coordinate>();
@@ -149,7 +149,7 @@ export const VividGraph: React.FC<
         backgroundRepeat: 'no-repeat'
       }}
     >
-      {data ? <VividGraphIllustrator graph={data} /> : null}
+      {data ? <VividGraphIllustrator graph={data}/> : null}
     </svg>
   );
 };

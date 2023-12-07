@@ -54,7 +54,7 @@ const CardHorizontalRatings = () => {
               Stumptown Roasters
             </Typography>
             <Box sx={{mb: 4.75, display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
-              <Rating readOnly value={5} name='read-only' sx={{marginRight: 2}} />
+              <Rating readOnly value={5} name='read-only' sx={{marginRight: 2}}/>
               <Typography variant='body2'>5 Star | 98 reviews</Typography>
             </Box>
             <Typography variant='body2' sx={{marginBottom: 4}}>
@@ -69,7 +69,7 @@ const CardHorizontalRatings = () => {
         </StyledGrid1>
         <StyledGrid2 item xs={12} md={6} lg={5}>
           <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <Img alt='Stumptown Roasters' src='/images/cards/analog-clock.jpg' />
+            <Img alt='Stumptown Roasters' src='/images/cards/analog-clock.jpg'/>
           </CardContent>
         </StyledGrid2>
       </Grid>

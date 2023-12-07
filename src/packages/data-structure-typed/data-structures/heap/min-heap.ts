@@ -6,12 +6,13 @@
  * @license MIT License
  */
 
-import {Heap} from './heap';
-import type {Comparator} from '../../types';
+import { Heap } from './heap';
+import type { HeapOptions } from '../../types';
 
 export class MinHeap<E = any> extends Heap<E> {
   constructor(
-    options: { comparator: Comparator<E>; nodes?: E[] } = {
+    elements?: Iterable<E>,
+    options: HeapOptions<E> = {
       comparator: (a: E, b: E) => {
         if (!(typeof a === 'number' && typeof b === 'number')) {
           throw new Error('The a, b params of compare function must be number');
@@ -19,8 +20,7 @@ export class MinHeap<E = any> extends Heap<E> {
           return a - b;
         }
       }
-    }
-  ) {
-    super(options);
+    }) {
+    super(elements, options);
   }
 }

@@ -97,7 +97,7 @@ const TabSecurity = () => {
                           onClick={handleClickShowCurrentPassword}
                           onMouseDown={handleMouseDownCurrentPassword}
                         >
-                          {values.showCurrentPassword ? <EyeOutline /> : <EyeOffOutline />}
+                          {values.showCurrentPassword ? <EyeOutline/> : <EyeOffOutline/>}
                         </IconButton>
                       </InputAdornment>
                     }
@@ -122,7 +122,7 @@ const TabSecurity = () => {
                           aria-label='toggle password visibility'
                           onMouseDown={handleMouseDownNewPassword}
                         >
-                          {values.showNewPassword ? <EyeOutline /> : <EyeOffOutline />}
+                          {values.showNewPassword ? <EyeOutline/> : <EyeOffOutline/>}
                         </IconButton>
                       </InputAdornment>
                     }
@@ -147,7 +147,7 @@ const TabSecurity = () => {
                           onClick={handleClickShowConfirmNewPassword}
                           onMouseDown={handleMouseDownConfirmNewPassword}
                         >
-                          {values.showConfirmNewPassword ? <EyeOutline /> : <EyeOffOutline />}
+                          {values.showConfirmNewPassword ? <EyeOutline/> : <EyeOffOutline/>}
                         </IconButton>
                       </InputAdornment>
                     }
@@ -163,16 +163,16 @@ const TabSecurity = () => {
             xs={12}
             sx={{display: 'flex', marginTop: [7.5, 2.5], alignItems: 'center', justifyContent: 'center'}}
           >
-            <img width={183} alt='avatar' height={256} src='/images/pages/pose-m-1.png' />
+            <img width={183} alt='avatar' height={256} src='/images/pages/pose-m-1.png'/>
           </Grid>
         </Grid>
       </CardContent>
 
-      <Divider sx={{margin: 0}} />
+      <Divider sx={{margin: 0}}/>
 
       <CardContent>
         <Box sx={{mt: 1.75, display: 'flex', alignItems: 'center'}}>
-          <KeyOutline sx={{marginRight: 3}} />
+          <KeyOutline sx={{marginRight: 3}}/>
           <Typography variant='h6'>Two-factor authentication</Typography>
         </Box>
 
@@ -190,7 +190,7 @@ const TabSecurity = () => {
               variant='rounded'
               sx={{width: 48, height: 48, color: 'common.white', backgroundColor: 'primary.main'}}
             >
-              <LockOpenOutline sx={{fontSize: '1.75rem'}} />
+              <LockOpenOutline sx={{fontSize: '1.75rem'}}/>
             </Avatar>
             <Typography sx={{fontWeight: 600, marginTop: 3.5, marginBottom: 3.5}}>
               Two factor authentication is not enabled yet.

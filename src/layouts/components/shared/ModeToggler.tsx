@@ -32,7 +32,7 @@ const ModeToggler = (props: Props) => {
 
   return (
     <IconButton color='inherit' aria-haspopup='true' onClick={handleModeToggle}>
-      {settings.mode === 'dark' ? <WeatherSunny /> : <WeatherNight />}
+      {settings.mode === 'dark' ? <WeatherSunny/> : <WeatherNight/>}
     </IconButton>
   );
 };

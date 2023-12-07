@@ -28,7 +28,7 @@ const ImgStyled = styled('img')(({theme}) => ({
   borderRadius: theme.shape.borderRadius
 }));
 
-const ButtonStyled = styled(Button)<ButtonProps & {component?: ElementType; htmlFor?: string}>(({theme}) => ({
+const ButtonStyled = styled(Button)<ButtonProps & { component?: ElementType; htmlFor?: string }>(({theme}) => ({
   [theme.breakpoints.down('sm')]: {
     width: '100%',
     textAlign: 'center'
@@ -66,7 +66,7 @@ const TabAccount = () => {
         <Grid container spacing={7}>
           <Grid item xs={12} sx={{marginTop: 4.8, marginBottom: 3}}>
             <Box sx={{display: 'flex', alignItems: 'center'}}>
-              <ImgStyled src={imgSrc} alt='Profile Pic' />
+              <ImgStyled src={imgSrc} alt='Profile Pic'/>
               <Box>
                 <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
                   Upload New Photo
@@ -89,10 +89,10 @@ const TabAccount = () => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Username' placeholder='johnDoe' defaultValue='johnDoe' />
+            <TextField fullWidth label='Username' placeholder='johnDoe' defaultValue='johnDoe'/>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Name' placeholder='John Doe' defaultValue='John Doe' />
+            <TextField fullWidth label='Name' placeholder='John Doe' defaultValue='John Doe'/>
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -126,7 +126,7 @@ const TabAccount = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Company' placeholder='ABC Pvt. Ltd.' defaultValue='ABC Pvt. Ltd.' />
+            <TextField fullWidth label='Company' placeholder='ABC Pvt. Ltd.' defaultValue='ABC Pvt. Ltd.'/>
           </Grid>
 
           {openAlert ? (
@@ -136,7 +136,7 @@ const TabAccount = () => {
                 sx={{'& a': {fontWeight: 400}}}
                 action={
                   <IconButton size='small' color='inherit' aria-label='close' onClick={() => setOpenAlert(false)}>
-                    <Close fontSize='inherit' />
+                    <Close fontSize='inherit'/>
                   </IconButton>
                 }
               >

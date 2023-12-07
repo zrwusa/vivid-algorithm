@@ -33,7 +33,7 @@ export const SettingsContext = createContext<SettingsContextValue>({
   settings: initialSettings
 });
 
-export const SettingsProvider = ({children}: {children: ReactNode}) => {
+export const SettingsProvider = ({children}: { children: ReactNode }) => {
   // ** State
   const [settings, setSettings] = useState<Settings>({...initialSettings});
 

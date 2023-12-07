@@ -52,13 +52,13 @@ const TabInfo = () => {
                 showMonthDropdown
                 id='account-settings-date'
                 placeholderText='MM-DD-YYYY'
-                customInput={<CustomInput />}
+                customInput={<CustomInput/>}
                 onChange={(date: Date) => setDate(date)}
               />
             </DatePickerWrapper>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth type='number' label='Phone' placeholder='(123) 456-7890' />
+            <TextField fullWidth type='number' label='Phone' placeholder='(123) 456-7890'/>
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -87,7 +87,7 @@ const TabInfo = () => {
                 defaultValue={['English']}
                 id='account-settings-multiple-select'
                 labelId='account-settings-multiple-select-label'
-                input={<OutlinedInput label='Languages' id='select-multiple-language' />}
+                input={<OutlinedInput label='Languages' id='select-multiple-language'/>}
               >
                 <MenuItem value='English'>English</MenuItem>
                 <MenuItem value='French'>French</MenuItem>
@@ -103,9 +103,9 @@ const TabInfo = () => {
             <FormControl>
               <FormLabel sx={{fontSize: '0.875rem'}}>Gender</FormLabel>
               <RadioGroup row defaultValue='male' aria-label='gender' name='account-settings-info-radio'>
-                <FormControlLabel value='male' label='Male' control={<Radio />} />
-                <FormControlLabel value='female' label='Female' control={<Radio />} />
-                <FormControlLabel value='other' label='Other' control={<Radio />} />
+                <FormControlLabel value='male' label='Male' control={<Radio/>}/>
+                <FormControlLabel value='female' label='Female' control={<Radio/>}/>
+                <FormControlLabel value='other' label='Other' control={<Radio/>}/>
               </RadioGroup>
             </FormControl>
           </Grid>

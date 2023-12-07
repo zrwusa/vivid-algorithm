@@ -27,60 +27,52 @@ export class SkipList<K, V> {
    * level in the skip list. It is used to determine the height of each node in the skip list.
    */
   constructor(maxLevel = 16, probability = 0.5) {
-    this._head = new SkipListNode<K, V>(null as any, null as any, maxLevel);
+    this._head = new SkipListNode<K, V>(undefined as any, undefined as any, maxLevel);
     this._level = 0;
     this._maxLevel = maxLevel;
     this._probability = probability;
   }
 
-  private _head: SkipListNode<K, V>;
+  protected _head: SkipListNode<K, V>;
 
   get head(): SkipListNode<K, V> {
     return this._head;
   }
 
-  set head(value: SkipListNode<K, V>) {
-    this._head = value;
-  }
-
-  private _level: number;
+  protected _level: number;
 
   get level(): number {
     return this._level;
   }
 
-  set level(value: number) {
-    this._level = value;
-  }
-
-  private _maxLevel: number;
+  protected _maxLevel: number;
 
   get maxLevel(): number {
     return this._maxLevel;
   }
 
-  set maxLevel(value: number) {
-    this._maxLevel = value;
-  }
-
-  private _probability: number;
+  protected _probability: number;
 
   get probability(): number {
     return this._probability;
   }
 
-  set probability(value: number) {
-    this._probability = value;
-  }
+  /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   */
 
   /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   *
    * The add function adds a new node with a given key and value to a Skip List data structure.
    * @param {K} key - The key parameter represents the key of the node that needs to be added to the skip list.
    * @param {V} value - The "value" parameter represents the value associated with the key that is being added to the Skip
    * List.
    */
   add(key: K, value: V): void {
-    const newNode = new SkipListNode(key, value, this.randomLevel());
+    const newNode = new SkipListNode(key, value, this._randomLevel());
     const update: SkipListNode<K, V>[] = new Array(this.maxLevel).fill(this.head);
     let current = this.head;
 
@@ -96,12 +88,20 @@ export class SkipList<K, V> {
       update[i].forward[i] = newNode;
     }
 
-    if (newNode.forward[0] !== null) {
-      this.level = Math.max(this.level, newNode.forward.length);
+    if (!newNode.forward[0]) {
+      this._level = Math.max(this.level, newNode.forward.length);
     }
   }
 
   /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   */
+
+  /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   *
    * The function `get` retrieves the value associated with a given key from a skip list data structure.
    * @param {K} key - The `key` parameter is the key of the element that we want to retrieve from the data structure.
    * @returns The method `get(key: K)` returns the value associated with the given key if it exists in the data structure,
@@ -125,6 +125,28 @@ export class SkipList<K, V> {
   }
 
   /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   */
+
+  /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   */
+
+  has(key: K): boolean {
+    return this.get(key) !== undefined;
+  }
+
+  /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   */
+
+  /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   *
    * The `delete` function removes a node with a specific key from a Skip List data structure.
    * @param {K} key - The key parameter represents the key of the node that needs to be removed from the skip list.
    * @returns The `delete` method returns a boolean value. It returns `true` if the key was successfully removed from the
@@ -150,8 +172,8 @@ export class SkipList<K, V> {
         }
         update[i].forward[i] = current.forward[i];
       }
-      while (this.level > 0 && this.head.forward[this.level - 1] === null) {
-        this.level--;
+      while (this.level > 0 && !this.head.forward[this.level - 1]) {
+        this._level--;
       }
       return true;
     }
@@ -160,10 +182,110 @@ export class SkipList<K, V> {
   }
 
   /**
-   * The function "randomLevel" generates a random level based on a given probability and maximum level.
+   * Time Complexity: O(1) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   */
+
+  /**
+   * Time Complexity: O(1) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   *
+   * Get the value of the first element (the smallest element) in the Skip List.
+   * @returns The value of the first element, or undefined if the Skip List is empty.
+   */
+  getFirst(): V | undefined {
+    const firstNode = this.head.forward[0];
+    return firstNode ? firstNode.value : undefined;
+  }
+
+  /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   */
+
+  /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   *
+   * Get the value of the last element (the largest element) in the Skip List.
+   * @returns The value of the last element, or undefined if the Skip List is empty.
+   */
+  getLast(): V | undefined {
+    let current = this.head;
+    for (let i = this.level - 1; i >= 0; i--) {
+      while (current.forward[i]) {
+        current = current.forward[i];
+      }
+    }
+    return current.value;
+  }
+
+  /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   */
+
+  /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   *
+   * Get the value of the first element in the Skip List that is greater than the given key.
+   * @param key - the given key.
+   * @returns The value of the first element greater than the given key, or undefined if there is no such element.
+   */
+  higher(key: K): V | undefined {
+    let current = this.head;
+    for (let i = this.level - 1; i >= 0; i--) {
+      while (current.forward[i] && current.forward[i].key <= key) {
+        current = current.forward[i];
+      }
+    }
+    const nextNode = current.forward[0];
+    return nextNode ? nextNode.value : undefined;
+  }
+
+  /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   */
+
+  /**
+   * Time Complexity: O(log n) - where n is the number of elements in the SkipList, as it traverses the levels of the SkipList.
+   * Space Complexity: O(1) - constant space, as it uses a fixed amount of space regardless of the size of the SkipList.
+   *
+   * Get the value of the last element in the Skip List that is less than the given key.
+   * @param key - the given key.
+   * @returns The value of the last element less than the given key, or undefined if there is no such element.
+   */
+  lower(key: K): V | undefined {
+    let current = this.head;
+    let lastLess = undefined;
+
+    for (let i = this.level - 1; i >= 0; i--) {
+      while (current.forward[i] && current.forward[i].key < key) {
+        current = current.forward[i];
+      }
+      if (current.key < key) {
+        lastLess = current;
+      }
+    }
+
+    return lastLess ? lastLess.value : undefined;
+  }
+
+  /**
+   * Time Complexity: O(maxLevel) - where maxLevel is the maximum level of the SkipList, as it may iterate up to maxLevel times in the worst case.
+   * Space Complexity: O(1) - constant space.
+   */
+
+  /**
+   * Time Complexity: O(maxLevel) - where maxLevel is the maximum level of the SkipList, as it may iterate up to maxLevel times in the worst case.
+   * Space Complexity: O(1) - constant space.
+   *
+   * The function "_randomLevel" generates a random level based on a given probability and maximum level.
    * @returns the level, which is a number.
    */
-  private randomLevel(): number {
+  protected _randomLevel(): number {
     let level = 1;
     while (Math.random() < this.probability && level < this.maxLevel) {
       level++;

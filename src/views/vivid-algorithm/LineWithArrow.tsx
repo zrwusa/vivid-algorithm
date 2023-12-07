@@ -19,7 +19,7 @@ export const LineWithArrow = ({fromV, toV, weight, delta, ...rest}: LineWithArro
     <g>
       <defs>
         <marker id={markerId} viewBox='0 0 10 10' refX='10' refY='5' markerWidth='8' markerHeight='6' orient='auto'>
-          <path d='M 0 0 L 10 5 L 0 10 z' fill={arrowColor} stroke={arrowColor} />
+          <path d='M 0 0 L 10 5 L 0 10 z' fill={arrowColor} stroke={arrowColor}/>
         </marker>
       </defs>
       <path

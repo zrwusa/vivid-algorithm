@@ -13,10 +13,10 @@ import {wait} from '../../utils';
 // 707	Design Linked List	★★★★
 
 //206. Reverse Linked List
-export function reverseList(head: SinglyLinkedListNode | null): SinglyLinkedListNode | null {
-  let prev: SinglyLinkedListNode | null = null; // What we checked
-  let current: SinglyLinkedListNode | null = head; // We are checking this
-  let tempNext: SinglyLinkedListNode | null; // To be checked
+export function reverseList(head: SinglyLinkedListNode | undefined): SinglyLinkedListNode | undefined {
+  let prev: SinglyLinkedListNode | undefined = undefined; // What we checked
+  let current: SinglyLinkedListNode | undefined = head; // We are checking this
+  let tempNext: SinglyLinkedListNode | undefined; // To be checked
   while (current) {
     tempNext = current.next; // Store the node "current" is pointing to.
     current.next = prev; // Make "current" point to the previous node.
@@ -27,16 +27,16 @@ export function reverseList(head: SinglyLinkedListNode | null): SinglyLinkedList
 }
 
 export type ReverseLinkedListVariables = {
-  pre: SinglyLinkedListNode | null;
+  pre: SinglyLinkedListNode | undefined;
 };
 
 export async function reverseLinkedList(
-  head: SinglyLinkedListNode | null,
+  head: SinglyLinkedListNode | undefined,
   proxyHandler: TProxyHandler
-): Promise<SinglyLinkedListNode | null> {
-  const pre = null;
+): Promise<SinglyLinkedListNode | undefined> {
+  const pre = undefined;
   const variables: ReverseLinkedListVariables = {
-    pre: null
+    pre: undefined
   };
   const variablesProxy = new DeepProxy<ReverseLinkedListVariables>(variables, proxyHandler);
   while (head) {
@@ -51,13 +51,13 @@ export async function reverseLinkedList(
 
 // 21. Merge Two Sorted Lists
 export function mergeTwoLists(
-  l1: SinglyLinkedListNode | null,
-  l2: SinglyLinkedListNode | null
-): SinglyLinkedListNode | null {
+  l1: SinglyLinkedListNode | undefined,
+  l2: SinglyLinkedListNode | undefined
+): SinglyLinkedListNode | undefined {
   const dummy = new SinglyLinkedListNode(0);
   let tail = dummy;
   while (l1 && l2) {
-    if (l1.val < l2.val) {
+    if (l1.value < l2.value) {
       tail.next = l1;
       l1 = l1.next;
     } else {

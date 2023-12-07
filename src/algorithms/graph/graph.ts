@@ -19,47 +19,48 @@ import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
 import {canFinishCase1, canFinishCase3, criticalConnectionsCase1} from './cases';
 import _ from 'lodash';
 
-class MyVertex<V extends string> extends DirectedVertex<V> {
+class MyVertex<V = any> extends DirectedVertex<V> {
   constructor(key: VertexKey, val?: V) {
     super(key, val);
     this._data = val;
   }
 
-  private _data: string | undefined;
+  private _data: V | undefined;
 
-  get data(): string | undefined {
+  get data(): V | undefined {
     return this._data;
   }
 
-  set data(value: string | undefined) {
+  set data(value: V | undefined) {
     this._data = value;
   }
 }
 
-class MyEdge<E extends string> extends DirectedEdge<E> {
+class MyEdge<E = any> extends DirectedEdge<E> {
   constructor(v1: VertexKey, v2: VertexKey, weight?: number, val?: E) {
     super(v1, v2, weight, val);
     this._data = val;
   }
 
-  private _data: string | undefined;
+  private _data: E | undefined;
 
-  get data(): string | undefined {
+  get data(): E | undefined {
     return this._data;
   }
 
-  set data(value: string | undefined) {
+  set data(value: E | undefined) {
     this._data = value;
   }
 }
 
-class MyDirectedGraph<V extends MyVertex<string>, E extends MyEdge<string>> extends DirectedGraph<V, E> {}
+class MyDirectedGraph<V = any, E = any> extends DirectedGraph<V, E> {
+}
 
 const waitMan = new WaitManager(10);
 
 export const testGraph = async (proxyHandler: TProxyHandler) => {
-  const proxy: {myGraph: MyDirectedGraph<MyVertex<string>, MyEdge<string>>} = new DeepProxy(
-    {myGraph: new MyDirectedGraph<MyVertex<string>, MyEdge<string>>()},
+  const proxy: { myGraph: MyDirectedGraph<string, string> } = new DeepProxy(
+    {myGraph: new MyDirectedGraph<string, string>()},
     proxyHandler
   );
   await wait(waitMan.time3);
@@ -100,7 +101,7 @@ export const testGraph = async (proxyHandler: TProxyHandler) => {
   await wait(waitMan.time3);
   console.log(`proxy.myGraph.getEdge(1,'100')`, proxy.myGraph.getEdge(1, '100'));
   await wait(waitMan.time3);
-  console.log(JSON.stringify(proxy.myGraph.edgeSet()), proxy.myGraph.vertices);
+  console.log(JSON.stringify(proxy.myGraph.edgeSet()), proxy.myGraph.vertexMap);
   await wait(waitMan.time3);
   console.log(`proxy.myGraph.removeEdgeBetween(1,2)`, proxy.myGraph.deleteEdgeSrcToDest(1, 2));
   await wait(waitMan.time3);
@@ -182,18 +183,18 @@ export const testGraph = async (proxyHandler: TProxyHandler) => {
   await wait(waitMan.time3);
   console.log(proxy.myGraph.bellmanFord(1));
 
-  await wait(waitMan.time3);
-  const floydResult = proxy.myGraph.floyd();
-  console.log(floydResult);
+  // await wait(waitMan.time3);
+  // const floydResult = proxy.myGraph.floyd();
+  // console.log(floydResult);
 
   await wait(waitMan.time3);
   console.log(proxy.myGraph.dijkstra(1, 2, true, true));
 
   await wait(waitMan.time3);
-  console.log(proxy.myGraph.dijkstra(1, null, true, true));
+  console.log(proxy.myGraph.dijkstra(1, undefined, true, true));
 
   await wait(waitMan.time3);
-  console.log(proxy.myGraph.dijkstraWithoutHeap(1, null, true, true));
+  console.log(proxy.myGraph.dijkstraWithoutHeap(1, undefined, true, true));
 
   await wait(waitMan.time3);
   console.log(proxy.myGraph.deleteEdgesBetween(1, 2));
@@ -215,33 +216,495 @@ export const testGraph = async (proxyHandler: TProxyHandler) => {
   console.log(proxy.myGraph.inEdgeMap.size === 6, proxy.myGraph.inEdgeMap);
 };
 
+export const testUndirectedGraph = async (proxyHandler: TProxyHandler) => {
+  const proxy: { myGraph: UndirectedGraph<string, string> } = new DeepProxy(
+    {myGraph: new UndirectedGraph<string, string>()},
+    proxyHandler
+  );
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.addVertex(new MyVertex(1, 'data1'))`, proxy.myGraph.addVertex(new UndirectedVertex(1, 'data1')));
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.addVertex(new UndirectedVertex(2, 'data2'))`, proxy.myGraph.addVertex(new UndirectedVertex(2, 'data2')));
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.addVertex(new UndirectedVertex(3, 'data3'))`, proxy.myGraph.addVertex(new UndirectedVertex(3, 'data3')));
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.addVertex(new UndirectedVertex(4, 'data4'))`, proxy.myGraph.addVertex(new UndirectedVertex(4, 'data4')));
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.addVertex(new UndirectedVertex(5, 'data5'))`, proxy.myGraph.addVertex(new UndirectedVertex(5, 'data5')));
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.addVertex(new UndirectedVertex(6, 'data6'))`, proxy.myGraph.addVertex(new UndirectedVertex(6, 'data6')));
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.addVertex(new UndirectedVertex(7, 'data7'))`, proxy.myGraph.addVertex(new UndirectedVertex(7, 'data7')));
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.addVertex(new UndirectedVertex(8, 'data8'))`, proxy.myGraph.addVertex(new UndirectedVertex(8, 'data8')));
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.addVertex(new UndirectedVertex(9, 'data9'))`, proxy.myGraph.addVertex(new UndirectedVertex(9, 'data9')));
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(1, 2, 10, 'edge-data1-2'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(1, 2, 10, 'edge-data1-2'))
+  );
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(2, 1, 20, 'edge-data2-1'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(2, 1, 20, 'edge-data2-1'))
+  );
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.getEdge(1, 2)`, proxy.myGraph.getEdge(1, 2));
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.getEdge(proxy.myGraph.getVertex(1), proxy.myGraph.getVertex(2))`,
+    proxy.myGraph.getEdge(proxy.myGraph.getVertex(1), proxy.myGraph.getVertex(2))
+  );
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.getEdge(1,'100')`, proxy.myGraph.getEdge(1, '100'));
+  await wait(waitMan.time3);
+  console.log(JSON.stringify(proxy.myGraph.edgeSet()), proxy.myGraph.vertexMap);
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.removeEdgeBetween(1,2)`, proxy.myGraph.deleteEdgeBetween(1, 2));
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.getEdge(1, 2)`, proxy.myGraph.getEdge(1, 2));
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(3, 1, 3, 'edge-data-3-1'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(3, 1, 3, 'edge-data-3-1'))
+  );
+
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(1, 9, 19, 'edge-data1-9'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(1, 9, 19, 'edge-data1-9'))
+  );
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(9, 7, 97, 'edge-data9-7'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(9, 7, 97, 'edge-data9-7'))
+  );
+
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(7, 9, 79, 'edge-data7-9'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(7, 9, 79, 'edge-data7-9'))
+  );
+
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(1, 4, 14, 'edge-data1-4'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(1, 4, 14, 'edge-data1-4'))
+  );
+
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(4, 7, 47, 'edge-data4-7'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(4, 7, 47, 'edge-data4-7'))
+  );
+
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(1, 2, 12, 'edge-data1-2'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(1, 2, 12, 'edge-data1-2'))
+  );
+
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(2, 3, 23, 'edge-data2-3'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(2, 3, 23, 'edge-data2-3'))
+  );
+
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(3, 5, 35, 'edge-data3-5'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(3, 5, 35, 'edge-data3-5'))
+  );
+
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(5, 7, 57, 'edge-data5-7'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(5, 7, 57, 'edge-data5-7'))
+  );
+
+  await wait(waitMan.time3);
+  console.log(
+    `proxy.myGraph.addEdge(new UndirectedEdge(7, 3, 73, 'edge-data7-3'))`,
+    proxy.myGraph.addEdge(new UndirectedEdge(7, 3, 73, 'edge-data7-3'))
+  );
+
+
+  await wait(waitMan.time3);
+  console.log('proxy.myGraph.getMinPathBetween(1, 7)', proxy.myGraph.getMinPathBetween(1, 7));
+
+  await wait(waitMan.time3);
+  console.log(`proxy.myGraph.getAllPaths(1, 7)`, proxy.myGraph.getAllPathsBetween(1, 7));
+
+  await wait(waitMan.time3);
+  console.log(proxy.myGraph.bellmanFord(1));
+
+  // await wait(waitMan.time3);
+  // const floydResult = proxy.myGraph.floyd();
+  // console.log(floydResult);
+
+  await wait(waitMan.time3);
+  console.log(proxy.myGraph.dijkstra(1, 2, true, true));
+
+  await wait(waitMan.time3);
+  console.log(proxy.myGraph.dijkstra(1, undefined, true, true));
+
+  await wait(waitMan.time3);
+  console.log(proxy.myGraph.dijkstraWithoutHeap(1, undefined, true, true));
+
+  await wait(waitMan.time3);
+  console.log(proxy.myGraph.deleteEdgeBetween(1, 2));
+
+  await wait(waitMan.time3);
+  console.log(proxy.myGraph.deleteEdgeBetween(1, 3));
+
+  await wait(waitMan.time3);
+  console.log(proxy.myGraph.deleteEdgeBetween(1, 9));
+
+  await wait(waitMan.time3);
+  console.log(proxy.myGraph.deleteEdgeBetween(9, 7));
+  await wait(waitMan.time3);
+
+  console.log(proxy.myGraph.deleteEdgeBetween(7, 9));
+  await wait(waitMan.time3);
+};
+
+export const testUndirectedGraph2 = async (proxyHandler: TProxyHandler) => {
+  // const start = performance.now();
+
+  const proxy: { graph: UndirectedGraph<{ name: string }, number> } = new DeepProxy(
+    {graph: new UndirectedGraph()},
+    proxyHandler
+  );
+  for (const v of [{"name": "Intersection_1"}, {"name": "Intersection_2"}, {"name": "Intersection_3"}, {"name": "Intersection_4"}, {"name": "Intersection_5"}, {"name": "Intersection_6"}, {"name": "Intersection_7"}, {"name": "Intersection_8"}, {"name": "Intersection_9"}, {"name": "Intersection_10"}, {"name": "Intersection_11"}, {"name": "Intersection_12"}, {"name": "Intersection_13"}, {"name": "Intersection_14"}, {"name": "Intersection_15"}, {"name": "Intersection_16"}, {"name": "Intersection_17"}, {"name": "Intersection_18"}, {"name": "Intersection_19"}, {"name": "Intersection_20"}, {"name": "Intersection_21"}, {"name": "Intersection_22"}, {"name": "Intersection_23"}, {"name": "Intersection_24"}, {"name": "Intersection_25"}, {"name": "Intersection_26"}, {"name": "Intersection_27"}, {"name": "Intersection_28"}, {"name": "Intersection_29"}, {"name": "Intersection_30"}, {"name": "Intersection_31"}, {"name": "Intersection_32"}, {"name": "Intersection_33"}, {"name": "Intersection_34"}, {"name": "Intersection_35"}, {"name": "Intersection_36"}, {"name": "Intersection_37"}, {"name": "Intersection_38"}, {"name": "Intersection_39"}, {"name": "Intersection_40"}, {"name": "Intersection_41"}, {"name": "Intersection_42"}, {"name": "Intersection_43"}, {"name": "Intersection_44"}, {"name": "Intersection_45"}, {"name": "Intersection_46"}, {"name": "Intersection_47"}, {"name": "Intersection_48"}, {"name": "Intersection_49"}, {"name": "Intersection_50"}, {"name": "Intersection_51"}, {"name": "Intersection_52"}, {"name": "Intersection_53"}, {"name": "Intersection_54"}, {"name": "Intersection_55"}, {"name": "Intersection_56"}, {"name": "Intersection_57"}, {"name": "Intersection_58"}, {"name": "Intersection_59"}, {"name": "Intersection_60"}, {"name": "Intersection_61"}, {"name": "Intersection_62"}, {"name": "Intersection_63"}, {"name": "Intersection_64"}, {"name": "Intersection_65"}, {"name": "Intersection_66"}]) {
+    proxy.graph.addVertex(v.name, v);
+  }
+  for (const e of [[{"name": "Intersection_1"}, {
+    "name": "Intersection_2",
+    "weight": 28
+  }], [{"name": "Intersection_1"}, {
+    "name": "Intersection_14",
+    "weight": 44
+  }], [{"name": "Intersection_2"}, {
+    "name": "Intersection_3",
+    "weight": 8
+  }], [{"name": "Intersection_2"}, {
+    "name": "Intersection_14",
+    "weight": 44
+  }], [{"name": "Intersection_3"}, {
+    "name": "Intersection_4",
+    "weight": 31
+  }], [{"name": "Intersection_3"}, {
+    "name": "Intersection_22",
+    "weight": 45
+  }], [{"name": "Intersection_4"}, {
+    "name": "Intersection_5",
+    "weight": 37
+  }], [{"name": "Intersection_4"}, {
+    "name": "Intersection_24",
+    "weight": 40
+  }], [{"name": "Intersection_5"}, {
+    "name": "Intersection_6",
+    "weight": 32
+  }], [{"name": "Intersection_5"}, {
+    "name": "Intersection_26",
+    "weight": 34
+  }], [{"name": "Intersection_6"}, {
+    "name": "Intersection_7",
+    "weight": 30
+  }], [{"name": "Intersection_7"}, {
+    "name": "Intersection_8",
+    "weight": 53
+  }], [{"name": "Intersection_7"}, {
+    "name": "Intersection_27",
+    "weight": 0
+  }], [{"name": "Intersection_8"}, {
+    "name": "Intersection_9",
+    "weight": 33
+  }], [{"name": "Intersection_8"}, {
+    "name": "Intersection_47",
+    "weight": 38
+  }], [{"name": "Intersection_9"}, {
+    "name": "Intersection_10",
+    "weight": 28
+  }], [{"name": "Intersection_9"}, {
+    "name": "Intersection_62",
+    "weight": 31
+  }], [{"name": "Intersection_10"}, {
+    "name": "Intersection_11",
+    "weight": 18
+  }], [{"name": "Intersection_10"}, {
+    "name": "Intersection_59",
+    "weight": 45
+  }], [{"name": "Intersection_11"}, {
+    "name": "Intersection_12",
+    "weight": 28
+  }], [{"name": "Intersection_11"}, {
+    "name": "Intersection_58",
+    "weight": 21
+  }], [{"name": "Intersection_12"}, {
+    "name": "Intersection_13",
+    "weight": 35
+  }], [{"name": "Intersection_12"}, {
+    "name": "Intersection_57",
+    "weight": 22
+  }], [{"name": "Intersection_14"}, {
+    "name": "Intersection_15",
+    "weight": 40
+  }], [{"name": "Intersection_15"}, {
+    "name": "Intersection_16",
+    "weight": 43
+  }], [{"name": "Intersection_15"}, {
+    "name": "Intersection_23",
+    "weight": 27
+  }], [{"name": "Intersection_16"}, {
+    "name": "Intersection_17",
+    "weight": 14
+  }], [{"name": "Intersection_17"}, {
+    "name": "Intersection_18",
+    "weight": 51
+  }], [{"name": "Intersection_18"}, {
+    "name": "Intersection_19",
+    "weight": 29
+  }], [{"name": "Intersection_19"}, {
+    "name": "Intersection_20",
+    "weight": 34
+  }], [{"name": "Intersection_20"}, {
+    "name": "Intersection_21",
+    "weight": 43
+  }], [{"name": "Intersection_20"}, {
+    "name": "Intersection_66",
+    "weight": 24
+  }], [{"name": "Intersection_21"}, {
+    "name": "Intersection_52",
+    "weight": 36
+  }], [{"name": "Intersection_22"}, {
+    "name": "Intersection_23",
+    "weight": 27
+  }], [{"name": "Intersection_23"}, {
+    "name": "Intersection_33",
+    "weight": 10
+  }], [{"name": "Intersection_24"}, {
+    "name": "Intersection_25",
+    "weight": 24
+  }], [{"name": "Intersection_24"}, {
+    "name": "Intersection_22",
+    "weight": 45
+  }], [{"name": "Intersection_25"}, {
+    "name": "Intersection_34",
+    "weight": 23
+  }], [{"name": "Intersection_26"}, {
+    "name": "Intersection_30",
+    "weight": 5
+  }], [{"name": "Intersection_27"}, {
+    "name": "Intersection_28",
+    "weight": 25
+  }], [{"name": "Intersection_27"}, {
+    "name": "Intersection_45",
+    "weight": 6
+  }], [{"name": "Intersection_28"}, {
+    "name": "Intersection_29",
+    "weight": 21
+  }], [{"name": "Intersection_29"}, {
+    "name": "Intersection_26",
+    "weight": 34
+  }], [{"name": "Intersection_29"}, {
+    "name": "Intersection_41",
+    "weight": 23
+  }], [{"name": "Intersection_30"}, {
+    "name": "Intersection_24",
+    "weight": 40
+  }], [{"name": "Intersection_30"}, {
+    "name": "Intersection_31",
+    "weight": 18
+  }], [{"name": "Intersection_31"}, {
+    "name": "Intersection_32",
+    "weight": 11
+  }], [{"name": "Intersection_32"}, {
+    "name": "Intersection_35",
+    "weight": 21
+  }], [{"name": "Intersection_33"}, {
+    "name": "Intersection_25",
+    "weight": 24
+  }], [{"name": "Intersection_33"}, {
+    "name": "Intersection_42",
+    "weight": 32
+  }], [{"name": "Intersection_34"}, {
+    "name": "Intersection_32",
+    "weight": 11
+  }], [{"name": "Intersection_34"}, {
+    "name": "Intersection_42",
+    "weight": 32
+  }], [{"name": "Intersection_35"}, {
+    "name": "Intersection_36",
+    "weight": 25
+  }], [{"name": "Intersection_35"}, {
+    "name": "Intersection_43",
+    "weight": 23
+  }], [{"name": "Intersection_36"}, {
+    "name": "Intersection_37",
+    "weight": 37
+  }], [{"name": "Intersection_37"}, {
+    "name": "Intersection_49",
+    "weight": 19
+  }], [{"name": "Intersection_38"}, {
+    "name": "Intersection_39",
+    "weight": 29
+  }], [{"name": "Intersection_38"}, {
+    "name": "Intersection_46",
+    "weight": 31
+  }], [{"name": "Intersection_39"}, {
+    "name": "Intersection_40",
+    "weight": 22
+  }], [{"name": "Intersection_39"}, {
+    "name": "Intersection_46",
+    "weight": 31
+  }], [{"name": "Intersection_40"}, {
+    "name": "Intersection_41",
+    "weight": 23
+  }], [{"name": "Intersection_41"}, {
+    "name": "Intersection_31",
+    "weight": 18
+  }], [{"name": "Intersection_42"}, {
+    "name": "Intersection_16",
+    "weight": 43
+  }], [{"name": "Intersection_42"}, {
+    "name": "Intersection_43",
+    "weight": 23
+  }], [{"name": "Intersection_43"}, {
+    "name": "Intersection_44",
+    "weight": 23
+  }], [{"name": "Intersection_43"}, {
+    "name": "Intersection_17",
+    "weight": 14
+  }], [{"name": "Intersection_45"}, {
+    "name": "Intersection_39",
+    "weight": 29
+  }], [{"name": "Intersection_46"}, {
+    "name": "Intersection_48",
+    "weight": 4
+  }], [{"name": "Intersection_47"}, {
+    "name": "Intersection_38",
+    "weight": 0
+  }], [{"name": "Intersection_47"}, {
+    "name": "Intersection_45",
+    "weight": 6
+  }], [{"name": "Intersection_48"}, {
+    "name": "Intersection_37",
+    "weight": 37
+  }], [{"name": "Intersection_48"}, {
+    "name": "Intersection_63",
+    "weight": 38
+  }], [{"name": "Intersection_49"}, {
+    "name": "Intersection_19",
+    "weight": 29
+  }], [{"name": "Intersection_49"}, {
+    "name": "Intersection_51",
+    "weight": 42
+  }], [{"name": "Intersection_50"}, {
+    "name": "Intersection_49",
+    "weight": 19
+  }], [{"name": "Intersection_51"}, {
+    "name": "Intersection_66",
+    "weight": 24
+  }], [{"name": "Intersection_52"}, {
+    "name": "Intersection_53",
+    "weight": 31
+  }], [{"name": "Intersection_53"}, {
+    "name": "Intersection_54",
+    "weight": 42
+  }], [{"name": "Intersection_54"}, {
+    "name": "Intersection_55",
+    "weight": 18
+  }], [{"name": "Intersection_54"}, {
+    "name": "Intersection_61",
+    "weight": 28
+  }], [{"name": "Intersection_55"}, {
+    "name": "Intersection_56",
+    "weight": 15
+  }], [{"name": "Intersection_56"}, {
+    "name": "Intersection_13",
+    "weight": 35
+  }], [{"name": "Intersection_57"}, {
+    "name": "Intersection_56",
+    "weight": 15
+  }], [{"name": "Intersection_58"}, {
+    "name": "Intersection_57",
+    "weight": 22
+  }], [{"name": "Intersection_58"}, {
+    "name": "Intersection_65",
+    "weight": 19
+  }], [{"name": "Intersection_59"}, {
+    "name": "Intersection_60",
+    "weight": 40
+  }], [{"name": "Intersection_59"}, {
+    "name": "Intersection_62",
+    "weight": 31
+  }], [{"name": "Intersection_60"}, {
+    "name": "Intersection_53",
+    "weight": 31
+  }], [{"name": "Intersection_61"}, {
+    "name": "Intersection_59",
+    "weight": 45
+  }], [{"name": "Intersection_62"}, {
+    "name": "Intersection_47",
+    "weight": 38
+  }], [{"name": "Intersection_62"}, {
+    "name": "Intersection_63",
+    "weight": 38
+  }], [{"name": "Intersection_63"}, {
+    "name": "Intersection_64",
+    "weight": 16
+  }], [{"name": "Intersection_64"}, {
+    "name": "Intersection_60",
+    "weight": 40
+  }], [{"name": "Intersection_64"}, {
+    "name": "Intersection_51",
+    "weight": 42
+  }], [{"name": "Intersection_65"}, {
+    "name": "Intersection_61",
+    "weight": 28
+  }], [{"name": "Intersection_65"}, {
+    "name": "Intersection_55",
+    "weight": 18
+  }], [{"name": "Intersection_66"}, {"name": "Intersection_52", "weight": 36}]]) {
+    const [s, d] = e;
+    proxy.graph.addEdge(s.name, d.name, d.weight);
+  }
+  console.log('edgeSet', proxy.graph.edgeSet())
+  console.log('edges', proxy.graph.edgeMap)
+  console.log('vertices', proxy.graph.vertexMap)
+  // const result =  proxy.graph.getAllPathsBetween('Intersection_1','Intersection_5');
+  // console.log('---xxx', performance.now() - start, result)
+};
+
 export const testMapGraph = async (proxyHandler: TProxyHandler) => {
-  const proxy: {graph: MapGraph} = new DeepProxy(
+  const proxy: { graph: MapGraph } = new DeepProxy(
     {graph: new MapGraph([5.500338, 100.173665], [5.211458, 100.515407])},
     proxyHandler
   );
 
-  proxy.graph.addVertex(new MapVertex('Surin', 5.466724, 100.274805));
+  proxy.graph.addVertex(new MapVertex('Surin', undefined, 5.466724, 100.274805));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Batu Feringgi Beach', 5.475141, 100.27667));
+  proxy.graph.addVertex(new MapVertex('Batu Feringgi Beach', undefined, 5.475141, 100.27667));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Lotus', 5.459044, 100.308767));
+  proxy.graph.addVertex(new MapVertex('Lotus', undefined, 5.459044, 100.308767));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('The Breeza', 5.454197, 100.307859));
+  proxy.graph.addVertex(new MapVertex('The Breeza', undefined, 5.454197, 100.307859));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Hard Rock Hotel', 5.46785, 100.241876));
+  proxy.graph.addVertex(new MapVertex('Hard Rock Hotel', undefined, 5.46785, 100.241876));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Mira', 5.456749, 100.28665));
+  proxy.graph.addVertex(new MapVertex('Mira', undefined, 5.456749, 100.28665));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Penang Bible Church', 5.428683, 100.314825));
+  proxy.graph.addVertex(new MapVertex('Penang Bible Church', undefined, 5.428683, 100.314825));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Queensbay', 5.33276, 100.306651));
+  proxy.graph.addVertex(new MapVertex('Queensbay', undefined, 5.33276, 100.306651));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Saanen Goat Farm', 5.405738, 100.207699));
+  proxy.graph.addVertex(new MapVertex('Saanen Goat Farm', undefined, 5.405738, 100.207699));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Trinity Auto', 5.401126, 100.303739));
+  proxy.graph.addVertex(new MapVertex('Trinity Auto', undefined, 5.401126, 100.303739));
   await wait(waitMan.time3);
-  proxy.graph.addVertex(new MapVertex('Penang Airport', 5.293185, 100.265772));
+  proxy.graph.addVertex(new MapVertex('Penang Airport', undefined, 5.293185, 100.265772));
   await wait(waitMan.time3);
   proxy.graph.addEdge('Surin', 'Lotus', 4.7);
   await wait(waitMan.time3);
@@ -351,17 +814,17 @@ export function numIslands(grid: string[][]): number {
 // 841	Keys and Rooms	★★	1202					DFS, connected components
 // 207	Course Schedule	★★★	210	802				topology sorting
 export class LinkedNode {
-  val: number;
+  value: number;
   next: LinkedNode | null;
 
   constructor(val: number, next: LinkedNode | null) {
-    this.val = val;
+    this.value = val;
     this.next = next;
   }
 }
 
 function canFinish(numCourses: number, prerequisites: number[][]): boolean {
-  const hash: {[key in number]: number[]} = {};
+  const hash: { [key in number]: number[] } = {};
   for (const [course, preRqt] of prerequisites) {
     if (!hash[preRqt]) hash[preRqt] = [];
     hash[preRqt].push(course);
@@ -457,7 +920,7 @@ export async function networkDelayTime(
 ): Promise<number> {
   let graph;
   if (proxyHandler) {
-    const proxy: {graph: DirectedGraph<DirectedVertex, DirectedEdge>} = new DeepProxy(
+    const proxy: { graph: DirectedGraph<DirectedVertex, DirectedEdge> } = new DeepProxy(
       {graph: new DirectedGraph()},
       proxyHandler
     );
@@ -501,7 +964,7 @@ export async function networkDelayTime(
  * @param connections
  */
 function criticalConnections(n: number, connections: number[][]): number[][] {
-  const graph: {[key in number]: number[]} = {};
+  const graph: { [key in number]: number[] } = {};
 
   const time1 = timeStart();
   for (const conn of connections) {
@@ -590,7 +1053,7 @@ function criticalConnectionsByGraph(n: number, connections: number[][]): number[
 
   const ans: number[][] = [];
   for (const bridge of bridges) {
-    const vertexKeys: number[] = bridge.vertices.map(v => v as number);
+    const vertexKeys: number[] = bridge.vertexMap.map(v => v as number);
     ans.push(vertexKeys);
   }
   return ans;
@@ -660,11 +1123,11 @@ export const runAllRegionsBySlashes = async () => {
 // runAllRegionsBySlashes().then();
 
 class Node {
-  val: number;
+  value: number;
   neighbors: Node[];
 
   constructor(val?: number, neighbors?: Node[]) {
-    this.val = val === undefined ? 0 : val;
+    this.value = val === undefined ? 0 : val;
     this.neighbors = neighbors === undefined ? [] : neighbors;
   }
 }
@@ -675,7 +1138,7 @@ export const cloneGraph = (node: Node | null): Node | null => {
     const copied = map.get(node);
     if (copied) return copied;
 
-    const copy = new Node(node.val);
+    const copy = new Node(node.value);
     map.set(node, copy);
 
     for (const n of node.neighbors) copy.neighbors.push(dfs(n, map));

@@ -81,14 +81,14 @@ const waitManager = new WaitManager(10);
 // 675. Cut Off Trees for Golf Event                BFS  ,A star is a kind of advanced BFS
 export async function cutOffTree(forest: number[][], proxyHandler?: TProxyHandler): Promise<number> {
   const proxy = proxyHandler
-    ? new DeepProxy<{forest: number[][]; cur: Coordinate; route: Coordinate[][]}>(
-        {
-          forest,
-          cur: {y: 0, x: 0},
-          route: []
-        },
-        proxyHandler
-      )
+    ? new DeepProxy<{ forest: number[][]; cur: Coordinate; route: Coordinate[][] }>(
+      {
+        forest,
+        cur: {y: 0, x: 0},
+        route: []
+      },
+      proxyHandler
+    )
     : undefined;
 
   const rowCount = forest.length;
@@ -124,9 +124,9 @@ export async function cutOffTree(forest: number[][], proxyHandler?: TProxyHandle
     let queue: Coordinate[] = [from];
     let level = 0;
     let tempQueue: Coordinate[] = [];
-    const visited: {[key in string]: boolean} = {};
+    const visited: { [key in string]: boolean } = {};
     visited[hashFunction(from)] = true;
-    const parents: {[key in string]: Coordinate} = {};
+    const parents: { [key in string]: Coordinate } = {};
 
     while (queue.length > 0) {
       const front = queue.shift();
@@ -224,7 +224,7 @@ function cutOffTreeByIndex(forest: number[][]): number {
     let queue: MatrixCell[] = [from];
     let level = 0;
     let tempQueue: MatrixCell[] = [];
-    const visited: {[key in string]: boolean} = {};
+    const visited: { [key in string]: boolean } = {};
     visited[hashFunction(from)] = true;
     while (queue.length > 0) {
       const front = queue.shift();

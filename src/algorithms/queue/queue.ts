@@ -2,6 +2,7 @@ import {runAlgorithm} from '../helpers';
 import {LinkedListQueue, Queue} from 'data-structure-typed';
 
 const magnitude = 10000;
+
 export async function testLinkedLIstQueueFIFO() {
   const lQueue = new LinkedListQueue<number>();
   for (let i = 0; i < magnitude; i++) {

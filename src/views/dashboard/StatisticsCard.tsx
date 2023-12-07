@@ -33,25 +33,25 @@ const salesData: DataType[] = [
     stats: '245k',
     title: 'Sales',
     color: 'primary',
-    icon: <TrendingUp sx={{fontSize: '1.75rem'}} />
+    icon: <TrendingUp sx={{fontSize: '1.75rem'}}/>
   },
   {
     stats: '12.5k',
     title: 'Customers',
     color: 'success',
-    icon: <AccountOutline sx={{fontSize: '1.75rem'}} />
+    icon: <AccountOutline sx={{fontSize: '1.75rem'}}/>
   },
   {
     stats: '1.54k',
     color: 'warning',
     title: 'Products',
-    icon: <CellphoneLink sx={{fontSize: '1.75rem'}} />
+    icon: <CellphoneLink sx={{fontSize: '1.75rem'}}/>
   },
   {
     stats: '$88k',
     color: 'info',
     title: 'Revenue',
-    icon: <CurrencyUsd sx={{fontSize: '1.75rem'}} />
+    icon: <CurrencyUsd sx={{fontSize: '1.75rem'}}/>
   }
 ];
 
@@ -88,7 +88,7 @@ const StatisticsCard = () => {
         title='Statistics Card'
         action={
           <IconButton size='small' aria-label='settings' className='card-more-options' sx={{color: 'text.secondary'}}>
-            <DotsVertical />
+            <DotsVertical/>
           </IconButton>
         }
         subheader={

@@ -70,10 +70,10 @@ const UserDropdown = () => {
         overlap='circular'
         onClick={handleDropdownOpen}
         sx={{ml: 2, cursor: 'pointer'}}
-        badgeContent={<BadgeContentSpan />}
+        badgeContent={<BadgeContentSpan/>}
         anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
       >
-        <Avatar alt='John Doe' onClick={handleDropdownOpen} sx={{width: 40, height: 40}} src='/images/avatars/1.png' />
+        <Avatar alt='John Doe' onClick={handleDropdownOpen} sx={{width: 40, height: 40}} src='/images/avatars/1.png'/>
       </Badge>
       <Menu
         anchorEl={anchorEl}
@@ -87,10 +87,10 @@ const UserDropdown = () => {
           <Box sx={{display: 'flex', alignItems: 'center'}}>
             <Badge
               overlap='circular'
-              badgeContent={<BadgeContentSpan />}
+              badgeContent={<BadgeContentSpan/>}
               anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
             >
-              <Avatar alt='John Doe' src='/images/avatars/1.png' sx={{width: '2.5rem', height: '2.5rem'}} />
+              <Avatar alt='John Doe' src='/images/avatars/1.png' sx={{width: '2.5rem', height: '2.5rem'}}/>
             </Badge>
             <Box sx={{display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column'}}>
               <Typography sx={{fontWeight: 600}}>John Doe</Typography>
@@ -100,47 +100,47 @@ const UserDropdown = () => {
             </Box>
           </Box>
         </Box>
-        <Divider sx={{mt: 0, mb: 1}} />
+        <Divider sx={{mt: 0, mb: 1}}/>
         <MenuItem sx={{p: 0}} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
-            <AccountOutline sx={{marginRight: 2}} />
+            <AccountOutline sx={{marginRight: 2}}/>
             Profile
           </Box>
         </MenuItem>
         <MenuItem sx={{p: 0}} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
-            <EmailOutline sx={{marginRight: 2}} />
+            <EmailOutline sx={{marginRight: 2}}/>
             Inbox
           </Box>
         </MenuItem>
         <MenuItem sx={{p: 0}} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
-            <MessageOutline sx={{marginRight: 2}} />
+            <MessageOutline sx={{marginRight: 2}}/>
             Chat
           </Box>
         </MenuItem>
-        <Divider />
+        <Divider/>
         <MenuItem sx={{p: 0}} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
-            <CogOutline sx={{marginRight: 2}} />
+            <CogOutline sx={{marginRight: 2}}/>
             Settings
           </Box>
         </MenuItem>
         <MenuItem sx={{p: 0}} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
-            <CurrencyUsd sx={{marginRight: 2}} />
+            <CurrencyUsd sx={{marginRight: 2}}/>
             Pricing
           </Box>
         </MenuItem>
         <MenuItem sx={{p: 0}} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
-            <HelpCircleOutline sx={{marginRight: 2}} />
+            <HelpCircleOutline sx={{marginRight: 2}}/>
             FAQ
           </Box>
         </MenuItem>
-        <Divider />
+        <Divider/>
         <MenuItem sx={{py: 2}} onClick={() => handleDropdownClose('/pages/login')}>
-          <LogoutVariant sx={{marginRight: 2, fontSize: '1.375rem', color: 'text.secondary'}} />
+          <LogoutVariant sx={{marginRight: 2, fontSize: '1.375rem', color: 'text.secondary'}}/>
           Logout
         </MenuItem>
       </Menu>

@@ -1,4 +1,4 @@
-import {AVLTree, AVLTreeNode, BST, BSTNode, CP, TreeMultiset, TreeMultisetNode} from 'data-structure-typed';
+import {AVLTree, AVLTreeNode, BST, CP, TreeMultimap, TreeMultimapNode} from 'data-structure-typed';
 import {runAlgorithm} from '../../helpers';
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
 import {wait, WaitManager} from '../../../utils';
@@ -42,12 +42,12 @@ export const testAVLTree = async (arr: number[], proxyHandler?: TProxyHandler) =
 export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandler) => {
   const vars = new DeepProxy(
     {
-      treeMultiset: new TreeMultiset()
+      treeMultiset: new TreeMultimap()
     },
     proxyHandler
   );
 
-  console.log(vars.treeMultiset instanceof TreeMultiset);
+  console.log(vars.treeMultiset instanceof TreeMultimap);
   vars.treeMultiset.add(11);
   await wait(time5);
   vars.treeMultiset.add(3);
@@ -74,7 +74,7 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
   await wait(time5);
   vars.treeMultiset.addMany([11, 3, 4, 7, 10, 5]);
   await wait(time5);
-  console.log(vars.treeMultiset.root instanceof TreeMultisetNode);
+  console.log(vars.treeMultiset.root instanceof TreeMultimapNode);
 
   if (vars.treeMultiset.root) console.log(vars.treeMultiset.root.key == 11);
 
@@ -83,21 +83,21 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
   console.log(
     _.isEqual(
       vars.treeMultiset.bfs(node => node.key),
-      [11, 6, 15, 3, 8, 13, 16, 1, 4, 7, 9, 12, 14, 2, 5, 10]
+      [11, 5, 15, 3, 8, 13, 16, 1, 4, 6, 9, 12, 14, 2, 7, 10]
     )
   );
   await wait(time5);
 
   console.log(vars.treeMultiset.has(6));
 
-  console.log(vars.treeMultiset.getHeight(6) === 3);
-  console.log(vars.treeMultiset.getDepth(6) === 1);
+  console.log(vars.treeMultiset.getHeight(6), vars.treeMultiset.getHeight(6) === 1);
+  console.log(vars.treeMultiset.getDepth(6), vars.treeMultiset.getDepth(6) === 3);
   await wait(time5);
-  const nodeKey10 = vars.treeMultiset.get(10);
+  const nodeKey10 = vars.treeMultiset.getNodeByKey(10);
   console.log(nodeKey10?.key === 10);
 
-  const nodeVal9 = vars.treeMultiset.get(9, node => node.val);
-  console.log(nodeVal9?.key === undefined);
+  const nodeVal9 = vars.treeMultiset.get(9);
+  console.log(nodeVal9?.key, nodeVal9?.key === 9);
 
   const nodesByCount1 = vars.treeMultiset.getNodes(1, node => node.count);
   console.log(nodesByCount1.length === 13);
@@ -107,15 +107,15 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
   const leftMost = vars.treeMultiset.getLeftMost();
   console.log(leftMost?.key === 1);
 
-  const node15 = vars.treeMultiset.get(15);
+  const node15 = vars.treeMultiset.getNodeByKey(15);
   const minNodeBySpecificNode = node15 && vars.treeMultiset.getLeftMost(node15);
   console.log(minNodeBySpecificNode?.key === 12);
 
   let subTreeSum = 0;
   node15 &&
-    vars.treeMultiset.subTreeTraverse(node => {
-      subTreeSum += node.key;
-    }, 15);
+  vars.treeMultiset.subTreeTraverse(node => {
+    subTreeSum += node.key;
+  }, 15);
   console.log(subTreeSum === 70);
   let lesserSum = 0;
   vars.treeMultiset.lesserOrGreaterTraverse(
@@ -128,16 +128,16 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
 
   console.log(lesserSum === 45);
 
-  console.log(node15 instanceof TreeMultisetNode);
-  if (node15 instanceof TreeMultisetNode) {
+  console.log(node15 instanceof TreeMultimapNode);
+  if (node15 instanceof TreeMultimapNode) {
     const subTreeAdd = vars.treeMultiset.subTreeTraverse(node => {
       node.count += 1;
     }, 15);
     console.log(subTreeAdd);
   }
-  const node11 = vars.treeMultiset.get(11);
-  console.log(node11 instanceof TreeMultisetNode);
-  if (node11 instanceof TreeMultisetNode) {
+  const node11 = vars.treeMultiset.getNodeByKey(11);
+  console.log(node11 instanceof TreeMultimapNode);
+  if (node11 instanceof TreeMultimapNode) {
     const allGreaterNodesAdded = vars.treeMultiset.lesserOrGreaterTraverse(
       node => {
         node.count += 2;
@@ -326,7 +326,7 @@ export const testTreeMultiset = async (arr: number[], proxyHandler?: TProxyHandl
 };
 const magnitude = 10000;
 
-const bst = new BST<BSTNode<number>>();
+const bst = new BST<number>();
 
 export async function testBSTBalanceAddPerformance() {
   bst.addMany(
@@ -338,7 +338,7 @@ export async function testBSTBalanceAddPerformance() {
 }
 
 export async function testBSTUnbalancePerformance() {
-  const bst1 = new BST<BSTNode<number>>();
+  const bst1 = new BST<number>();
   for (let i = 0; i < magnitude; i++) bst1.add(i);
   return bst1;
 }
@@ -351,15 +351,15 @@ export async function testAVLTreeAddPerformance() {
 }
 
 export async function testAVLTreeSearchPerformance() {
-  const arr: (AVLTreeNode<number> | null)[] = [];
+  const arr: (AVLTreeNode<number> | undefined)[] = [];
   for (let i = 0; i < magnitude; i++) {
-    const node = avl.get(i);
+    const node = avl.getNodeByKey(i);
     arr.push(node);
   }
   return arr;
 }
 
-const treeMultiset = new TreeMultiset<number>();
+const treeMultiset = new TreeMultimap<number>();
 
 export async function testTreeMultisetAddPerformance() {
   for (let i = 0; i < magnitude; i++) treeMultiset.add(i, i, i);

@@ -16,7 +16,7 @@ import MessageOutline from 'mdi-material-ui/MessageOutline';
 const FormLayoutsIcons = () => {
   return (
     <Card>
-      <CardHeader title='Basic with Icons' titleTypographyProps={{variant: 'h6'}} />
+      <CardHeader title='Basic with Icons' titleTypographyProps={{variant: 'h6'}}/>
       <CardContent>
         <form onSubmit={e => e.preventDefault()}>
           <Grid container spacing={5}>
@@ -28,7 +28,7 @@ const FormLayoutsIcons = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
-                      <AccountOutline />
+                      <AccountOutline/>
                     </InputAdornment>
                   )
                 }}
@@ -44,7 +44,7 @@ const FormLayoutsIcons = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
-                      <EmailOutline />
+                      <EmailOutline/>
                     </InputAdornment>
                   )
                 }}
@@ -59,7 +59,7 @@ const FormLayoutsIcons = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
-                      <Phone />
+                      <Phone/>
                     </InputAdornment>
                   )
                 }}
@@ -76,7 +76,7 @@ const FormLayoutsIcons = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
-                      <MessageOutline />
+                      <MessageOutline/>
                     </InputAdornment>
                   )
                 }}

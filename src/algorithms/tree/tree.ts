@@ -71,7 +71,7 @@ export async function binaryTreeInorderTraversal(
 }
 
 export const DFS = async (node: TreeNode, type: OrderType, proxyHandler: TProxyHandler) => {
-  type Variables = {current: TreeNode; nodeNeedPrint: TreeNode};
+  type Variables = { current: TreeNode; nodeNeedPrint: TreeNode };
 
   const variablesProxy = new DeepProxy<Variables>(
     {
@@ -131,7 +131,7 @@ export const DFS = async (node: TreeNode, type: OrderType, proxyHandler: TProxyH
 
 // 102	Binary Tree Level Order Traversal	★★	107	429	872			collecting nodes
 export const BFS = async (node: TreeNode<number>, proxyHandler: TProxyHandler) => {
-  type Variables = {node: TreeNode<number>};
+  type Variables = { node: TreeNode<number> };
 
   const nodes: TreeNode<number>[] = [];
 
@@ -166,7 +166,7 @@ export async function letterCombinations(digits: string, proxyHandler: TProxyHan
 
   type PhoneKeys = '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 
-  const proxyVariables = new DeepProxy<{accumulated: string; result: string[]}>(
+  const proxyVariables = new DeepProxy<{ accumulated: string; result: string[] }>(
     {
       accumulated: '',
       result: []
@@ -174,7 +174,7 @@ export async function letterCombinations(digits: string, proxyHandler: TProxyHan
     proxyHandler
   );
 
-  const digitsMap: {[key in PhoneKeys]: string} = {
+  const digitsMap: { [key in PhoneKeys]: string } = {
     '2': 'abc',
     '3': 'def',
     '4': 'ghi',
@@ -282,7 +282,7 @@ export const combineMN = function <T>(nums: T[], n: number, excludeSelf = true) 
   }
 
   const result: T[][] = [];
-  const hash: {[key in string]: 'exist'} = {};
+  const hash: { [key in string]: 'exist' } = {};
   const dfs = (accumulated: T[], rest: T[], level: number) => {
     if (level === n) {
       const key = [...accumulated].sort().join('');
@@ -370,7 +370,7 @@ export function ladderLengthDFS(
   wordList: string[],
   proxyHandler: TProxyHandler
 ): number {
-  const proxyVariables = new DeepProxy<{tree: TreeNode<string>}>(
+  const proxyVariables = new DeepProxy<{ tree: TreeNode<string> }>(
     {tree: new TreeNode(beginWord, beginWord)},
     proxyHandler
   );
@@ -429,7 +429,7 @@ export const ladderLengthPlagiarized = function (beginWord: string, endWord: str
   if (!wordList.includes(endWord)) {
     return 0;
   }
-  const map: {[key in string]: boolean} = {};
+  const map: { [key in string]: boolean } = {};
   while (queue.length) {
     const diffByOne = [];
     while (queue.length) {

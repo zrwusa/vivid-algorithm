@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-import type {Direction, NavigatorParams, Turning} from '../../types';
+import type { Direction, NavigatorParams, Turning } from '../../types';
 
 export class Character {
   direction: Direction;
@@ -27,17 +27,17 @@ export class Character {
 
 export class Navigator<T = number> {
   onMove: (cur: [number, number]) => void;
-  private readonly _matrix: T[][];
-  private readonly _cur: [number, number];
-  private _character: Character;
-  private readonly _VISITED: T;
+  protected readonly _matrix: T[][];
+  protected readonly _cur: [number, number];
+  protected _character: Character;
+  protected readonly _VISITED: T;
 
   /**
    * The constructor initializes the Navigator object with the given parameters and sets the current position as visited
    * in the matrix.
    * @param  - - `matrix`: a 2D array representing the grid or map
    */
-  constructor({matrix, turning, onMove, init: {cur, charDir, VISITED}}: NavigatorParams<T>) {
+  constructor({ matrix, turning, onMove, init: { cur, charDir, VISITED } }: NavigatorParams<T>) {
     this._matrix = matrix;
     this._cur = cur;
     this._character = new Character(charDir, turning);
@@ -53,7 +53,7 @@ export class Navigator<T = number> {
    */
   start() {
     while (this.check(this._character.direction) || this.check(this._character.turn().direction)) {
-      const {direction} = this._character;
+      const { direction } = this._character;
       if (this.check(direction)) {
         this.move(direction);
       } else if (this.check(this._character.turn().direction)) {

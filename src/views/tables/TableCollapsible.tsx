@@ -41,7 +41,7 @@ const createData = (name: string, calories: number, fat: number, carbs: number, 
   };
 };
 
-const Row = (props: {row: ReturnType<typeof createData>}) => {
+const Row = (props: { row: ReturnType<typeof createData> }) => {
   // ** Props
   const {row} = props;
 
@@ -53,7 +53,7 @@ const Row = (props: {row: ReturnType<typeof createData>}) => {
       <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
         <TableCell>
           <IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)}>
-            {open ? <ChevronUp /> : <ChevronDown />}
+            {open ? <ChevronUp/> : <ChevronDown/>}
           </IconButton>
         </TableCell>
         <TableCell component='th' scope='row'>
@@ -115,7 +115,7 @@ const TableCollapsible = () => {
       <Table aria-label='collapsible table'>
         <TableHead>
           <TableRow>
-            <TableCell />
+            <TableCell/>
             <TableCell>Dessert (100g serving)</TableCell>
             <TableCell align='right'>Calories</TableCell>
             <TableCell align='right'>Fat (g)</TableCell>
@@ -125,7 +125,7 @@ const TableCollapsible = () => {
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <Row key={row.name} row={row} />
+            <Row key={row.name} row={row}/>
           ))}
         </TableBody>
       </Table>

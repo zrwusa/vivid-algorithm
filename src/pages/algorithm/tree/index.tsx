@@ -43,7 +43,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 export const TreePage = () => {
-  const binaryTree = new BinaryTree({});
+  const binaryTree = new BinaryTree();
   binaryTree.refill([1, 2, 3]);
 
   const [binaryTreeDataInput, setBinaryTreeDataInput] = useState(
@@ -70,11 +70,11 @@ export const TreePage = () => {
         svgWidth={'100%'}
         svgHeight={400}
       />
-      <AlgorithmPanel algorithm={testBST} testCase={testBSTCase1} buttonLabel={'Test BST'} />
-      <AlgorithmPanel algorithm={testAVLTree} testCase={testAVLCase1} buttonLabel={'Test AVL'} />
-      <AlgorithmPanel algorithm={testTreeMultiset} testCase={testBSTCase1} buttonLabel={'Test TreeMultiset'} />
+      <AlgorithmPanel algorithm={testBST} testCase={testBSTCase1} buttonLabel={'Test BST'}/>
+      <AlgorithmPanel algorithm={testAVLTree} testCase={testAVLCase1} buttonLabel={'Test AVL'}/>
+      <AlgorithmPanel algorithm={testTreeMultiset} testCase={testBSTCase1} buttonLabel={'Test TreeMultiset'}/>
 
-      <AlgorithmPanel algorithm={testBST2} testCase={[[3, 4, 2, 1, 2, 3, 4]]} buttonLabel={'Test BST II'} />
+      <AlgorithmPanel algorithm={testBST2} testCase={[[3, 4, 2, 1, 2, 3, 4]]} buttonLabel={'Test BST II'}/>
       <AlgorithmPanel
         algorithm={testBSTOrderedData}
         testCase={[[1, 2, 3, 4, 5, 6, 7, 8]]}
@@ -103,10 +103,10 @@ export const TreePage = () => {
         />
       </AlgorithmPanel>
 
-      <AlgorithmPanel algorithm={trimABST} testCase={trimABSTCase2} buttonLabel={'Trim a BST'} />
-      <AlgorithmPanel algorithm={treeMaxDepth} testCase={[treeData]} buttonLabel={'Max Depth'} />
+      <AlgorithmPanel algorithm={trimABST} testCase={trimABSTCase2} buttonLabel={'Trim a BST'}/>
+      <AlgorithmPanel algorithm={treeMaxDepth} testCase={[treeData]} buttonLabel={'Max Depth'}/>
 
-      <AlgorithmPanel algorithm={countSmallerBST} testCase={countSmallerCase1} buttonLabel={'Count Smaller BST'} />
+      <AlgorithmPanel algorithm={countSmallerBST} testCase={countSmallerCase1} buttonLabel={'Count Smaller BST'}/>
       <AlgorithmPanel
         algorithm={DFS}
         testCase={[treeData, 'PreOrder']}
@@ -141,10 +141,10 @@ export const TreePage = () => {
         testCase={deleteLeavesCase1}
         buttonLabel={'Delete Leaves With a Given Value'}
       />
-      <AlgorithmPanel algorithm={ladderLengthDFS} testCase={ladderLengthCase1} buttonLabel={'Ladder Length'} />
-      <AlgorithmPanel algorithm={pathSumIII} testCase={pathSumIIICase5} buttonLabel={'Path Sum III'} />
-      <AlgorithmPanel algorithm={testSymmetricTree} testCase={testSymmetricTreeCase2} buttonLabel={'Symmetric Tree'} />
-      <AlgorithmPanel algorithm={testTrie} testCase={testTrieCase1} buttonLabel={'Test Trie'} />
+      <AlgorithmPanel algorithm={ladderLengthDFS} testCase={ladderLengthCase1} buttonLabel={'Ladder Length'}/>
+      <AlgorithmPanel algorithm={pathSumIII} testCase={pathSumIIICase5} buttonLabel={'Path Sum III'}/>
+      <AlgorithmPanel algorithm={testSymmetricTree} testCase={testSymmetricTreeCase2} buttonLabel={'Symmetric Tree'}/>
+      <AlgorithmPanel algorithm={testTrie} testCase={testTrieCase1} buttonLabel={'Test Trie'}/>
       <AlgorithmPanel
         svgWidth={'100%'}
         svgHeight={1080}

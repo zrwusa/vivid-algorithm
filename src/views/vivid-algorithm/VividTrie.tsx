@@ -1,8 +1,8 @@
 import * as React from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {TrieNode} from 'data-structure-typed';
 import styles from './styles';
 import {SVGOptions, ViewControl} from '../../types';
-import {useEffect, useRef, useState} from 'react';
 
 const {
   textFillColor,
@@ -70,20 +70,20 @@ const VividTrieRecursive: React.FC<{
       ) : null}
       {node.children
         ? Array.from(node.children.entries()).map((child, index, family) => {
-            return (
-              <VividTrieRecursive
-                key={child[0]}
-                node={child[1]}
-                level={level + 1}
-                index={index}
-                familyLength={family.length}
-                parentX={offsetX}
-                parentY={offsetY}
-                maxHeight={maxHeight}
-                relatedNode={relatedNode}
-              />
-            );
-          })
+          return (
+            <VividTrieRecursive
+              key={child[0]}
+              node={child[1]}
+              level={level + 1}
+              index={index}
+              familyLength={family.length}
+              parentX={offsetX}
+              parentY={offsetY}
+              maxHeight={maxHeight}
+              relatedNode={relatedNode}
+            />
+          );
+        })
         : null}
       <circle
         style={{cursor: 'pointer'}}

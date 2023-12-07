@@ -1,3 +1,6 @@
+import { IterableElementBase } from "../base";
+import { ElementCallback } from "../../types";
+
 /**
  * data-structure-typed
  *
@@ -6,74 +9,62 @@
  * @license MIT License
  */
 export class SinglyLinkedListNode<E = any> {
+  value: E;
+  next: SinglyLinkedListNode<E> | undefined;
+
   /**
-   * The constructor function initializes an instance of a class with a given value and sets the next property to null.
-   * @param {E} val - The "val" parameter is of type E, which means it can be any data type. It represents the value that
+   * The constructor function initializes an instance of a class with a given value and sets the next property to undefined.
+   * @param {E} value - The "value" parameter is of type E, which means it can be any data type. It represents the value that
    * will be stored in the node of a linked list.
    */
-  constructor(val: E) {
-    this._val = val;
-    this._next = null;
-  }
-
-  private _val: E;
-
-  get val(): E {
-    return this._val;
-  }
-
-  set val(value: E) {
-    this._val = value;
-  }
-
-  private _next: SinglyLinkedListNode<E> | null;
-
-  get next(): SinglyLinkedListNode<E> | null {
-    return this._next;
-  }
-
-  set next(value: SinglyLinkedListNode<E> | null) {
-    this._next = value;
+  constructor(value: E) {
+    this.value = value;
+    this.next = undefined;
   }
 }
 
-export class SinglyLinkedList<E = any> {
+export class SinglyLinkedList<E = any> extends IterableElementBase<E> {
   /**
    * The constructor initializes the linked list with an empty head, tail, and length.
    */
-  constructor() {
-    this._head = null;
-    this._tail = null;
+  constructor(elements?: Iterable<E>) {
+    super();
+    this._head = undefined;
+    this._tail = undefined;
     this._length = 0;
+    if (elements) {
+      for (const el of elements)
+        this.push(el);
+    }
   }
 
-  private _head: SinglyLinkedListNode<E> | null;
+  protected _head: SinglyLinkedListNode<E> | undefined;
 
-  get head(): SinglyLinkedListNode<E> | null {
+  get head(): SinglyLinkedListNode<E> | undefined {
     return this._head;
   }
 
-  set head(value: SinglyLinkedListNode<E> | null) {
-    this._head = value;
-  }
+  protected _tail: SinglyLinkedListNode<E> | undefined;
 
-  private _tail: SinglyLinkedListNode<E> | null;
-
-  get tail(): SinglyLinkedListNode<E> | null {
+  get tail(): SinglyLinkedListNode<E> | undefined {
     return this._tail;
   }
 
-  set tail(value: SinglyLinkedListNode<E> | null) {
-    this._tail = value;
-  }
-
-  private _length: number;
+  protected _length: number;
 
   get length(): number {
     return this._length;
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the input array, as it performs a loop to push each element into the linked list.
+   * Space Complexity: O(n) - Linear space, as it creates a new node for each element in the array.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the input array, as it performs a loop to push each element into the linked list.
+   * Space Complexity: O(n) - Linear space, as it creates a new node for each element in the array.
+   *
    * The `fromArray` function creates a new SinglyLinkedList instance and populates it with the elements from the given
    * array.
    * @param {E[]} data - The `data` parameter is an array of elements of type `E`.
@@ -87,89 +78,193 @@ export class SinglyLinkedList<E = any> {
     return singlyLinkedList;
   }
 
-  getLength(): number {
-    return this._length;
-  }
+  /**
+   * Time Complexity: O(1) - Constant time, as it involves basic pointer adjustments.
+   * Space Complexity: O(1) - Constant space, as it only creates a new node.
+   */
 
   /**
-   * The `push` function adds a new node with the given data to the end of a singly linked list.
-   * @param {E} data - The "data" parameter represents the value that you want to add to the linked list. It can be of
+   * Time Complexity: O(1) - Constant time, as it involves basic pointer adjustments.
+   * Space Complexity: O(1) - Constant space, as it only creates a new node.
+   *
+   * The `push` function adds a new node with the given value to the end of a singly linked list.
+   * @param {E} value - The "value" parameter represents the value that you want to add to the linked list. It can be of
    * any type (E) as specified in the generic type declaration of the class or function.
    */
-  push(data: E): void {
-    const newNode = new SinglyLinkedListNode(data);
+  push(value: E): void {
+    const newNode = new SinglyLinkedListNode(value);
     if (!this.head) {
-      this.head = newNode;
-      this.tail = newNode;
+      this._head = newNode;
+      this._tail = newNode;
     } else {
       this.tail!.next = newNode;
-      this.tail = newNode;
+      this._tail = newNode;
     }
     this._length++;
   }
 
   /**
+   * Time Complexity: O(1) - Constant time, as it involves basic pointer adjustments.
+   * Space Complexity: O(1) - Constant space, as it only creates a new node.
+   */
+
+  /**
+   * Time Complexity: O(1) - Constant time, as it involves basic pointer adjustments.
+   * Space Complexity: O(1) - Constant space, as it only creates a new node.
+   *
+   * The `push` function adds a new node with the given value to the end of a singly linked list.
+   * @param {E} value - The "value" parameter represents the value that you want to add to the linked list. It can be of
+   * any type (E) as specified in the generic type declaration of the class or function.
+   */
+  addLast(value: E): void {
+    this.push(value);
+  }
+
+  /**
+   * Time Complexity: O(n) - Linear time in the worst case, as it may need to traverse the list to find the last element.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time in the worst case, as it may need to traverse the list to find the last element.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The `pop()` function removes and returns the value of the last element in a linked list, updating the head and tail
    * pointers accordingly.
    * @returns The method `pop()` returns the value of the node that is being removed from the end of the linked list. If
-   * the linked list is empty, it returns `null`.
+   * the linked list is empty, it returns `undefined`.
    */
   pop(): E | undefined {
     if (!this.head) return undefined;
     if (this.head === this.tail) {
-      const val = this.head.val;
-      this.head = null;
-      this.tail = null;
+      const value = this.head.value;
+      this._head = undefined;
+      this._tail = undefined;
       this._length--;
-      return val;
+      return value;
     }
 
     let current = this.head;
     while (current.next !== this.tail) {
       current = current.next!;
     }
-    const val = this.tail!.val;
-    current.next = null;
-    this.tail = current;
+    const value = this.tail!.value;
+    current.next = undefined;
+    this._tail = current;
     this._length--;
-    return val;
+    return value;
   }
 
   /**
+   * Time Complexity: O(n) - Linear time in the worst case, as it may need to traverse the list to find the last element.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time in the worst case, as it may need to traverse the list to find the last element.
+   * Space Complexity: O(1) - Constant space.
+   *
+   * The `pollLast()` function removes and returns the value of the last element in a linked list, updating the head and tail
+   * pointers accordingly.
+   * @returns The method `pop()` returns the value of the node that is being removed from the end of the linked list. If
+   * the linked list is empty, it returns `undefined`.
+   */
+  pollLast(): E | undefined {
+    return this.pop();
+  }
+
+  /**
+   * Time Complexity: O(1) - Constant time, as it involves adjusting pointers at the head.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(1) - Constant time, as it involves adjusting pointers at the head.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The `shift()` function removes and returns the value of the first node in a linked list.
    * @returns The value of the node that is being removed from the beginning of the linked list.
    */
   shift(): E | undefined {
     if (!this.head) return undefined;
     const removedNode = this.head;
-    this.head = this.head.next;
+    this._head = this.head.next;
     this._length--;
-    return removedNode.val;
+    return removedNode.value;
   }
 
   /**
+   * Time Complexity: O(1) - Constant time, as it involves adjusting pointers at the head.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(1) - Constant time, as it involves adjusting pointers at the head.
+   * Space Complexity: O(1) - Constant space.
+   *
+   * The `pollFirst()` function removes and returns the value of the first node in a linked list.
+   * @returns The value of the node that is being removed from the beginning of the linked list.
+   */
+  pollFirst(): E | undefined {
+    return this.shift();
+  }
+
+  /**
+   * Time Complexity: O(1) - Constant time, as it involves adjusting pointers at the head.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(1) - Constant time, as it involves adjusting pointers at the head.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The unshift function adds a new node with the given value to the beginning of a singly linked list.
-   * @param {E} val - The parameter "val" represents the value of the new node that will be added to the beginning of the
+   * @param {E} value - The parameter "value" represents the value of the new node that will be added to the beginning of the
    * linked list.
    */
-  unshift(val: E): void {
-    const newNode = new SinglyLinkedListNode(val);
+  unshift(value: E): void {
+    const newNode = new SinglyLinkedListNode(value);
     if (!this.head) {
-      this.head = newNode;
-      this.tail = newNode;
+      this._head = newNode;
+      this._tail = newNode;
     } else {
       newNode.next = this.head;
-      this.head = newNode;
+      this._head = newNode;
     }
     this._length++;
   }
 
   /**
-   * The function `getAt` returns the value at a specified index in a linked list, or null if the index is out of range.
+   * Time Complexity: O(1) - Constant time, as it involves adjusting pointers at the head.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(1) - Constant time, as it involves adjusting pointers at the head.
+   * Space Complexity: O(1) - Constant space.
+   *
+   * The addFirst function adds a new node with the given value to the beginning of a singly linked list.
+   * @param {E} value - The parameter "value" represents the value of the new node that will be added to the beginning of the
+   * linked list.
+   */
+  addFirst(value: E): void {
+    this.unshift(value);
+  }
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the index, as it may need to traverse the list to find the desired node.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the index, as it may need to traverse the list to find the desired node.
+   * Space Complexity: O(1) - Constant space.
+   *
+   * The function `getAt` returns the value at a specified index in a linked list, or undefined if the index is out of range.
    * @param {number} index - The index parameter is a number that represents the position of the element we want to
    * retrieve from the list.
-   * @returns The method `getAt(index: number): E | null` returns the value at the specified index in the linked list, or
-   * `null` if the index is out of bounds.
+   * @returns The method `getAt(index: number): E | undefined` returns the value at the specified index in the linked list, or
+   * `undefined` if the index is out of bounds.
    */
   getAt(index: number): E | undefined {
     if (index < 0 || index >= this.length) return undefined;
@@ -177,17 +272,25 @@ export class SinglyLinkedList<E = any> {
     for (let i = 0; i < index; i++) {
       current = current!.next;
     }
-    return current!.val;
+    return current!.value;
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the index, as it may need to traverse the list to find the desired node.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the index, as it may need to traverse the list to find the desired node.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The function `getNodeAt` returns the node at a given index in a singly linked list.
    * @param {number} index - The `index` parameter is a number that represents the position of the node we want to
    * retrieve from the linked list. It indicates the zero-based index of the node we want to access.
    * @returns The method `getNodeAt(index: number)` returns a `SinglyLinkedListNode<E>` object if the node at the
-   * specified index exists, or `null` if the index is out of bounds.
+   * specified index exists, or `undefined` if the index is out of bounds.
    */
-  getNodeAt(index: number): SinglyLinkedListNode<E> | null {
+  getNodeAt(index: number): SinglyLinkedListNode<E> | undefined {
     let current = this.head;
     for (let i = 0; i < index; i++) {
       current = current!.next;
@@ -196,10 +299,18 @@ export class SinglyLinkedList<E = any> {
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the index, as it may need to traverse the list to find the desired node.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the index, as it may need to traverse the list to find the desired node.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The `deleteAt` function removes an element at a specified index from a linked list and returns the removed element.
    * @param {number} index - The index parameter represents the position of the element that needs to be deleted in the
    * data structure. It is of type number.
-   * @returns The method `deleteAt` returns the value of the node that was deleted, or `null` if the index is out of
+   * @returns The method `deleteAt` returns the value of the node that was deleted, or `undefined` if the index is out of
    * bounds.
    */
   deleteAt(index: number): E | undefined {
@@ -211,38 +322,46 @@ export class SinglyLinkedList<E = any> {
     const removedNode = prevNode!.next;
     prevNode!.next = removedNode!.next;
     this._length--;
-    return removedNode!.val;
+    return removedNode!.value;
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the index, as it may need to traverse the list to find the desired node.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the index, as it may need to traverse the list to find the desired node.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The delete function removes a node with a specific value from a singly linked list.
    * @param {E | SinglyLinkedListNode<E>} valueOrNode - The `valueOrNode` parameter can accept either a value of type `E`
    * or a `SinglyLinkedListNode<E>` object.
    * @returns The `delete` method returns a boolean value. It returns `true` if the value or node is found and
    * successfully deleted from the linked list, and `false` if the value or node is not found in the linked list.
    */
-  delete(valueOrNode: E | SinglyLinkedListNode<E> | null | undefined): boolean {
+  delete(valueOrNode: E | SinglyLinkedListNode<E> | undefined | undefined): boolean {
     if (!valueOrNode) return false;
     let value: E;
     if (valueOrNode instanceof SinglyLinkedListNode) {
-      value = valueOrNode.val;
+      value = valueOrNode.value;
     } else {
       value = valueOrNode;
     }
     let current = this.head,
-      prev = null;
+      prev = undefined;
 
     while (current) {
-      if (current.val === value) {
-        if (prev === null) {
-          this.head = current.next;
+      if (current.value === value) {
+        if (prev === undefined) {
+          this._head = current.next;
           if (current === this.tail) {
-            this.tail = null;
+            this._tail = undefined;
           }
         } else {
           prev.next = current.next;
           if (current === this.tail) {
-            this.tail = prev;
+            this._tail = prev;
           }
         }
         this._length--;
@@ -256,26 +375,34 @@ export class SinglyLinkedList<E = any> {
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the index, as it may need to traverse the list to find the desired node.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the index, as it may need to traverse the list to find the desired node.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The `insertAt` function inserts a value at a specified index in a singly linked list.
    * @param {number} index - The index parameter represents the position at which the new value should be inserted in the
    * linked list. It is of type number.
-   * @param {E} val - The `val` parameter represents the value that you want to insert into the linked list at the
+   * @param {E} value - The `value` parameter represents the value that you want to insert into the linked list at the
    * specified index.
    * @returns The `insert` method returns a boolean value. It returns `true` if the insertion is successful, and `false`
    * if the index is out of bounds.
    */
-  insertAt(index: number, val: E): boolean {
+  insertAt(index: number, value: E): boolean {
     if (index < 0 || index > this.length) return false;
     if (index === 0) {
-      this.unshift(val);
+      this.unshift(value);
       return true;
     }
     if (index === this.length) {
-      this.push(val);
+      this.push(value);
       return true;
     }
 
-    const newNode = new SinglyLinkedListNode(val);
+    const newNode = new SinglyLinkedListNode(value);
     const prevNode = this.getNodeAt(index - 1);
     newNode.next = prevNode!.next;
     prevNode!.next = newNode;
@@ -293,15 +420,23 @@ export class SinglyLinkedList<E = any> {
   }
 
   /**
-   * The `clear` function resets the linked list by setting the head, tail, and length to null and 0 respectively.
+   * The `clear` function resets the linked list by setting the head, tail, and length to undefined and 0 respectively.
    */
   clear(): void {
-    this._head = null;
-    this._tail = null;
+    this._head = undefined;
+    this._tail = undefined;
     this._length = 0;
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to traverse the entire list to convert it to an array.
+   * Space Complexity: O(n) - Linear space, as it creates an array with the same length as the list.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to traverse the entire list to convert it to an array.
+   * Space Complexity: O(n) - Linear space, as it creates an array with the same length as the list.
+   *
    * The `toArray` function converts a linked list into an array.
    * @returns The `toArray()` method is returning an array of type `E[]`.
    */
@@ -309,22 +444,30 @@ export class SinglyLinkedList<E = any> {
     const array: E[] = [];
     let current = this.head;
     while (current) {
-      array.push(current.val);
+      array.push(current.value);
       current = current.next;
     }
     return array;
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The `reverse` function reverses the order of the nodes in a singly linked list.
    * @returns The reverse() method does not return anything. It has a return type of void.
    */
   reverse(): void {
     if (!this.head || this.head === this.tail) return;
 
-    let prev: SinglyLinkedListNode<E> | null = null;
-    let current: SinglyLinkedListNode<E> | null = this.head;
-    let next: SinglyLinkedListNode<E> | null = null;
+    let prev: SinglyLinkedListNode<E> | undefined = undefined;
+    let current: SinglyLinkedListNode<E> | undefined = this.head;
+    let next: SinglyLinkedListNode<E> | undefined = undefined;
 
     while (current) {
       next = current.next;
@@ -333,28 +476,44 @@ export class SinglyLinkedList<E = any> {
       current = next;
     }
 
-    [this.head, this.tail] = [this.tail!, this.head!];
+    [this._head, this._tail] = [this.tail!, this.head!];
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The `find` function iterates through a linked list and returns the first element that satisfies a given condition.
    * @param callback - A function that takes a value of type E as its parameter and returns a boolean value. This
    * function is used to determine whether a particular value in the linked list satisfies a certain condition.
    * @returns The method `find` returns the first element in the linked list that satisfies the condition specified by
-   * the callback function. If no element satisfies the condition, it returns `null`.
+   * the callback function. If no element satisfies the condition, it returns `undefined`.
    */
-  find(callback: (val: E) => boolean): E | null {
+  find(callback: (value: E) => boolean): E | undefined {
     let current = this.head;
     while (current) {
-      if (callback(current.val)) {
-        return current.val;
+      if (callback(current.value)) {
+        return current.value;
       }
       current = current.next;
     }
-    return null;
+    return undefined;
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The `indexOf` function returns the index of the first occurrence of a given value in a linked list.
    * @param {E} value - The value parameter is the value that you want to find the index of in the linked list.
    * @returns The method is returning the index of the first occurrence of the specified value in the linked list. If the
@@ -365,7 +524,7 @@ export class SinglyLinkedList<E = any> {
     let current = this.head;
 
     while (current) {
-      if (current.val === value) {
+      if (current.value === value) {
         return index;
       }
       index++;
@@ -376,26 +535,42 @@ export class SinglyLinkedList<E = any> {
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The function finds a node in a singly linked list by its value and returns the node if found, otherwise returns
-   * null.
+   * undefined.
    * @param {E} value - The value parameter is the value that we want to search for in the linked list.
    * @returns a `SinglyLinkedListNode<E>` if a node with the specified value is found in the linked list. If no node with
-   * the specified value is found, the function returns `null`.
+   * the specified value is found, the function returns `undefined`.
    */
-  findNode(value: E): SinglyLinkedListNode<E> | null {
+  getNode(value: E): SinglyLinkedListNode<E> | undefined {
     let current = this.head;
 
     while (current) {
-      if (current.val === value) {
+      if (current.value === value) {
         return current;
       }
       current = current.next;
     }
 
-    return null;
+    return undefined;
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The `insertBefore` function inserts a new value before an existing value in a singly linked list.
    * @param {E | SinglyLinkedListNode<E>} existingValueOrNode - The existing value or node that you want to insert the
    * new value before. It can be either the value itself or a node containing the value in the linked list.
@@ -408,18 +583,18 @@ export class SinglyLinkedList<E = any> {
 
     let existingValue: E;
     if (existingValueOrNode instanceof SinglyLinkedListNode) {
-      existingValue = existingValueOrNode.val;
+      existingValue = existingValueOrNode.value;
     } else {
       existingValue = existingValueOrNode;
     }
-    if (this.head.val === existingValue) {
+    if (this.head.value === existingValue) {
       this.unshift(newValue);
       return true;
     }
 
     let current = this.head;
     while (current.next) {
-      if (current.next.val === existingValue) {
+      if (current.next.value === existingValue) {
         const newNode = new SinglyLinkedListNode(newValue);
         newNode.next = current.next;
         current.next = newNode;
@@ -432,10 +607,15 @@ export class SinglyLinkedList<E = any> {
     return false;
   }
 
-  insertAfter(existingValueOrNode: E, newValue: E): boolean;
-  insertAfter(existingValueOrNode: SinglyLinkedListNode<E>, newValue: E): boolean;
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   */
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The `insertAfter` function inserts a new node with a given value after an existing node in a singly linked list.
    * @param {E | SinglyLinkedListNode<E>} existingValueOrNode - The existing value or node in the linked list after which
    * the new value will be inserted. It can be either the value of the existing node or the existing node itself.
@@ -444,12 +624,12 @@ export class SinglyLinkedList<E = any> {
    * existing value or node, and false if the existing value or node was not found in the linked list.
    */
   insertAfter(existingValueOrNode: E | SinglyLinkedListNode<E>, newValue: E): boolean {
-    let existingNode: E | SinglyLinkedListNode<E> | null;
+    let existingNode: E | SinglyLinkedListNode<E> | undefined;
 
     if (existingValueOrNode instanceof SinglyLinkedListNode) {
       existingNode = existingValueOrNode;
     } else {
-      existingNode = this.findNode(existingValueOrNode);
+      existingNode = this.getNode(existingValueOrNode);
     }
 
     if (existingNode) {
@@ -457,7 +637,7 @@ export class SinglyLinkedList<E = any> {
       newNode.next = existingNode.next;
       existingNode.next = newNode;
       if (existingNode === this.tail) {
-        this.tail = newNode;
+        this._tail = newNode;
       }
       this._length++;
       return true;
@@ -467,6 +647,14 @@ export class SinglyLinkedList<E = any> {
   }
 
   /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(n) - Linear time, where n is the length of the list, as it needs to reverse the pointers of each node.
+   * Space Complexity: O(1) - Constant space.
+   *
    * The function counts the number of occurrences of a given value in a linked list.
    * @param {E} value - The value parameter is the value that you want to count the occurrences of in the linked list.
    * @returns The count of occurrences of the given value in the linked list.
@@ -476,7 +664,7 @@ export class SinglyLinkedList<E = any> {
     let current = this.head;
 
     while (current) {
-      if (current.val === value) {
+      if (current.value === value) {
         count++;
       }
       current = current.next;
@@ -485,11 +673,84 @@ export class SinglyLinkedList<E = any> {
     return count;
   }
 
-  * [Symbol.iterator]() {
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   *
+   * The `filter` function creates a new SinglyLinkedList by iterating over the elements of the current
+   * list and applying a callback function to each element to determine if it should be included in the
+   * filtered list.
+   * @param callback - The callback parameter is a function that will be called for each element in the
+   * list. It takes three arguments: the current element, the index of the current element, and the
+   * list itself. The callback function should return a boolean value indicating whether the current
+   * element should be included in the filtered list or not
+   * @param {any} [thisArg] - The `thisArg` parameter is an optional argument that specifies the value
+   * to be used as `this` when executing the `callback` function. If `thisArg` is provided, it will be
+   * passed as the `this` value to the `callback` function. If `thisArg` is
+   * @returns The `filter` method is returning a new `SinglyLinkedList` object that contains the
+   * elements that pass the filter condition specified by the `callback` function.
+   */
+  filter(callback: ElementCallback<E, boolean>, thisArg?: any): SinglyLinkedList<E> {
+    const filteredList = new SinglyLinkedList<E>();
+    let index = 0;
+    for (const current of this) {
+      if (callback.call(thisArg, current, index, this)) {
+        filteredList.push(current);
+      }
+      index++;
+    }
+    return filteredList;
+  }
+
+
+  /**
+   * Time Complexity: O(n), where n is the number of elements in the linked list.
+   * Space Complexity: O(n)
+   */
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   *
+   * The `map` function creates a new SinglyLinkedList by applying a callback function to each element
+   * of the original list.
+   * @param callback - The `callback` parameter is a function that will be called for each element in
+   * the linked list. It takes three arguments:
+   * @param {any} [thisArg] - The `thisArg` parameter is an optional argument that specifies the value
+   * to be used as `this` when executing the `callback` function. If `thisArg` is provided, it will be
+   * passed as the `this` value to the `callback` function. If `thisArg` is
+   * @returns The `map` function is returning a new `SinglyLinkedList` object that contains the results
+   * of applying the provided `callback` function to each element in the original list.
+   */
+  map<T>(callback: ElementCallback<E, T>, thisArg?: any): SinglyLinkedList<T> {
+    const mappedList = new SinglyLinkedList<T>();
+    let index = 0;
+    for (const current of this) {
+      mappedList.push(callback.call(thisArg, current, index, this));
+      index++;
+    }
+
+    return mappedList;
+  }
+
+  /**
+   * Time Complexity: O(n), where n is the number of elements in the linked list.
+   * Space Complexity: O(n)
+   */
+
+  print(): void {
+    console.log([...this]);
+  }
+
+  protected* _getIterator(): IterableIterator<E> {
     let current = this.head;
 
     while (current) {
-      yield current.val;
+      yield current.value;
       current = current.next;
     }
   }

@@ -25,7 +25,7 @@ import {SVGOptions, ViewControl} from '../../types';
 import {VividTrie} from './VividTrie';
 
 export interface VividAlgorithmProps extends SVGOptions {
-  data?: {[key in string]: any};
+  data?: { [key in string]: any };
   referenceData?: any;
   relatedNodeKey?: string | undefined;
   relatedRouteKey?: string | undefined;
@@ -65,9 +65,9 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
 
     switch (typeof item) {
       case 'number':
-        return <VividNumber data={item} />;
+        return <VividNumber data={item}/>;
       case 'string':
-        return <VividString data={item} />;
+        return <VividString data={item}/>;
       case 'object':
         if (item instanceof Trie) {
           return (
@@ -104,9 +104,9 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
             />
           );
         } else if (item instanceof AbstractGraph) {
-          return <VividGraph data={item} svgHeight={svgHeight} svgWidth={svgWidth} />;
+          return <VividGraph data={item} svgHeight={svgHeight} svgWidth={svgWidth}/>;
         } else if (item instanceof BinaryTreeNode) {
-          return <VividBinaryTreeNode data={item} />;
+          return <VividBinaryTreeNode data={item}/>;
         } else if (item instanceof BinaryTree) {
           return (
             <VividBinaryTree
@@ -118,11 +118,11 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
             />
           );
         } else if (item instanceof SinglyLinkedListNode) {
-          return <VividLinkedList data={item} />;
+          return <VividLinkedList data={item}/>;
         } else if (item instanceof Map) {
-          return <VividArray data={Array.from(item.entries())} svgHeight={svgHeight} svgWidth={svgWidth} />;
+          return <VividArray data={Array.from(item.entries())} svgHeight={svgHeight} svgWidth={svgWidth}/>;
         } else if (item instanceof Stack) {
-          return <VividArray data={item.toArray()} svgHeight={svgHeight} svgWidth={svgWidth} />;
+          return <VividArray data={item.toArray()} svgHeight={svgHeight} svgWidth={svgWidth}/>;
         } else if (item instanceof Array) {
           return (
             <VividArray
@@ -134,7 +134,7 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
             />
           );
         } else {
-          return <VividObject data={item} />;
+          return <VividObject data={item}/>;
         }
     }
   };
@@ -144,12 +144,12 @@ export const VividAlgorithm = function (props: VividAlgorithmProps) {
       {referenceData ? renderVariable(referenceData) : null}
       {data
         ? Object.keys(data).map(datumKey => {
-            const item = data[datumKey];
+          const item = data[datumKey];
 
-            return datumKey !== relatedRouteKey && datumKey !== relatedNodeKey ? (
-              <div key={datumKey}>{renderVariable(item)}</div>
-            ) : null;
-          })
+          return datumKey !== relatedRouteKey && datumKey !== relatedNodeKey ? (
+            <div key={datumKey}>{renderVariable(item)}</div>
+          ) : null;
+        })
         : null}
     </div>
   );

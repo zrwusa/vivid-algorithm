@@ -18,16 +18,16 @@ const FormLayouts = () => {
     <DatePickerWrapper>
       <Grid container spacing={6}>
         <Grid item xs={12} md={6}>
-          <FormLayoutsBasic />
+          <FormLayoutsBasic/>
         </Grid>
         <Grid item xs={12} md={6}>
-          <FormLayoutsIcons />
+          <FormLayoutsIcons/>
         </Grid>
         <Grid item xs={12}>
-          <FormLayoutsSeparator />
+          <FormLayoutsSeparator/>
         </Grid>
         <Grid item xs={12}>
-          <FormLayoutsAlignment />
+          <FormLayoutsAlignment/>
         </Grid>
       </Grid>
     </DatePickerWrapper>

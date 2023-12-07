@@ -134,7 +134,7 @@ export function minWindow(s: string, t: string): string {
 }
 
 // 141. Linked List Cycle
-export function hasCycle(head: SinglyLinkedListNode | null): boolean {
+export function hasCycle(head: SinglyLinkedListNode | undefined): boolean {
   let fast = head,
     slow = head;
 
@@ -148,7 +148,7 @@ export function hasCycle(head: SinglyLinkedListNode | null): boolean {
 }
 
 // 876. Middle of the Linked List
-export function middleNode(head: SinglyLinkedListNode | null): SinglyLinkedListNode | null {
+export function middleNode(head: SinglyLinkedListNode | undefined): SinglyLinkedListNode | undefined {
   let fast = head,
     slow = head;
 
@@ -162,21 +162,21 @@ export function middleNode(head: SinglyLinkedListNode | null): SinglyLinkedListN
 
 // 2. Add Two Numbers
 export function addTwoNumbers(
-  l1: SinglyLinkedListNode | null,
-  l2: SinglyLinkedListNode | null
-): SinglyLinkedListNode | null {
+  l1: SinglyLinkedListNode | undefined,
+  l2: SinglyLinkedListNode | undefined
+): SinglyLinkedListNode | undefined {
   const dummy = new SinglyLinkedListNode<number>(0);
   let carry = 0,
     tail = dummy;
 
   while (l1 || l2 || carry) {
-    let sum = (l1?.val || 0) + (l2?.val || 0) + carry;
+    let sum = (l1?.value || 0) + (l2?.value || 0) + carry;
     carry = Math.floor(sum / 10);
     sum = sum % 10;
     tail.next = new SinglyLinkedListNode(sum);
     tail = tail.next;
-    l1 = l1?.next || null;
-    l2 = l2?.next || null;
+    l1 = l1?.next || undefined;
+    l2 = l2?.next || undefined;
   }
 
   return dummy.next;

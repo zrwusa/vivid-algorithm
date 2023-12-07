@@ -9,7 +9,7 @@ import CardActions from '@mui/material/CardActions';
 const CardInfluencer = () => {
   return (
     <Card>
-      <CardHeader title='Influencing The Influencer' />
+      <CardHeader title='Influencing The Influencer'/>
       <CardContent>
         <Typography variant='body2' sx={{marginBottom: 3.25}}>
           Computers have become ubiquitous in almost every facet of our lives. At work, desk jockeys spend hours in

@@ -69,18 +69,18 @@ const VividTreeRecursive: React.FC<{
       ) : null}
       {node.children
         ? node.children.map((child, index, family) => (
-            <VividTreeRecursive
-              key={child.key}
-              node={child}
-              level={level + 1}
-              index={index}
-              familyLength={family.length}
-              parentX={offsetX}
-              parentY={offsetY}
-              maxHeight={maxHeight}
-              relatedNode={relatedNode}
-            />
-          ))
+          <VividTreeRecursive
+            key={child.key}
+            node={child}
+            level={level + 1}
+            index={index}
+            familyLength={family.length}
+            parentX={offsetX}
+            parentY={offsetY}
+            maxHeight={maxHeight}
+            relatedNode={relatedNode}
+          />
+        ))
         : null}
       <circle
         style={{cursor: 'pointer'}}

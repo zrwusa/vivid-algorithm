@@ -11,10 +11,10 @@ import CardActions from '@mui/material/CardActions';
 const CardVerticalRatings = () => {
   return (
     <Card>
-      <CardHeader title='The Best Answers' />
+      <CardHeader title='The Best Answers'/>
       <CardContent>
         <Box sx={{mb: 5, display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
-          <Rating readOnly value={5} name='read-only' sx={{marginRight: 2}} />
+          <Rating readOnly value={5} name='read-only' sx={{marginRight: 2}}/>
           <Typography variant='body2'>5 Star | 98 reviews</Typography>
         </Box>
         <Typography variant='body2' sx={{marginBottom: 3.25}}>

@@ -62,9 +62,9 @@ const App = (props: ExtendedAppProps) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <title>{`${themeConfig.templateName}`}</title>
-        <meta name='description' content={`${themeConfig.templateName}`} />
-        <meta name='keywords' content='' />
-        <meta name='viewport' content='initial-scale=1, width=device-width' />
+        <meta name='description' content={`${themeConfig.templateName}`}/>
+        <meta name='keywords' content=''/>
+        <meta name='viewport' content='initial-scale=1, width=device-width'/>
       </Head>
 
       <SettingsProvider>

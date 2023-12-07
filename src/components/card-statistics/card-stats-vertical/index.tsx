@@ -24,7 +24,7 @@ const CardStatsVertical = (props: CardStatsVerticalProps) => {
             {icon}
           </Avatar>
           <IconButton size='small' aria-label='settings' className='card-more-options' sx={{color: 'text.secondary'}}>
-            <DotsVertical />
+            <DotsVertical/>
           </IconButton>
         </Box>
         <Typography sx={{fontWeight: 600, fontSize: '0.875rem'}}>{title}</Typography>

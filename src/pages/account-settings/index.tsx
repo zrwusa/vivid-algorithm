@@ -61,7 +61,7 @@ const AccountSettings = () => {
             value='account'
             label={
               <Box sx={{display: 'flex', alignItems: 'center'}}>
-                <AccountOutline />
+                <AccountOutline/>
                 <TabName>Account</TabName>
               </Box>
             }
@@ -70,7 +70,7 @@ const AccountSettings = () => {
             value='security'
             label={
               <Box sx={{display: 'flex', alignItems: 'center'}}>
-                <LockOpenOutline />
+                <LockOpenOutline/>
                 <TabName>Security</TabName>
               </Box>
             }
@@ -79,7 +79,7 @@ const AccountSettings = () => {
             value='info'
             label={
               <Box sx={{display: 'flex', alignItems: 'center'}}>
-                <InformationOutline />
+                <InformationOutline/>
                 <TabName>Info</TabName>
               </Box>
             }
@@ -87,13 +87,13 @@ const AccountSettings = () => {
         </TabList>
 
         <TabPanel sx={{p: 0}} value='account'>
-          <TabAccount />
+          <TabAccount/>
         </TabPanel>
         <TabPanel sx={{p: 0}} value='security'>
-          <TabSecurity />
+          <TabSecurity/>
         </TabPanel>
         <TabPanel sx={{p: 0}} value='info'>
-          <TabInfo />
+          <TabInfo/>
         </TabPanel>
       </TabContext>
     </Card>

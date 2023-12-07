@@ -59,12 +59,12 @@ const FormLayoutsBasic = () => {
 
   return (
     <Card>
-      <CardHeader title='Basic' titleTypographyProps={{variant: 'h6'}} />
+      <CardHeader title='Basic' titleTypographyProps={{variant: 'h6'}}/>
       <CardContent>
         <form onSubmit={e => e.preventDefault()}>
           <Grid container spacing={5}>
             <Grid item xs={12}>
-              <TextField fullWidth label='Name' placeholder='Leonard Carter' />
+              <TextField fullWidth label='Name' placeholder='Leonard Carter'/>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -93,7 +93,7 @@ const FormLayoutsBasic = () => {
                         onMouseDown={handleMouseDownPassword}
                         aria-label='toggle password visibility'
                       >
-                        {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
+                        {values.showPassword ? <EyeOutline/> : <EyeOffOutline/>}
                       </IconButton>
                     </InputAdornment>
                   }
@@ -121,7 +121,7 @@ const FormLayoutsBasic = () => {
                         onMouseDown={handleMouseDownPassword}
                         aria-label='toggle password visibility'
                       >
-                        {confirmPassValues.showPassword ? <EyeOutline /> : <EyeOffOutline />}
+                        {confirmPassValues.showPassword ? <EyeOutline/> : <EyeOffOutline/>}
                       </IconButton>
                     </InputAdornment>
                   }

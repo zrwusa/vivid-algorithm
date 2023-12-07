@@ -19,7 +19,7 @@ export const testHeap = () => {
   console.log(arrFromHeap[3] === 6);
   console.log(_.isEqual(minNumHeap.sort(), [2, 5, 6, 9]));
 
-  const minObjHeap = new MinHeap<{a: string}>({
+  const minObjHeap = new MinHeap<{ a: string }>([], {
     comparator: (a, b) => Number(a.a.substring(a.a.length - 1)) - Number(b.a.substring(b.a.length - 1))
   });
 
@@ -37,7 +37,7 @@ export const testHeap = () => {
     i++;
   }
 
-  const maxObjHeap = new MaxHeap<{a: string}>({
+  const maxObjHeap = new MaxHeap<{ a: string }>([], {
     comparator: (a, b) => Number(b.a.substring(b.a.length - 1)) - Number(a.a.substring(a.a.length - 1))
   });
   maxObjHeap.add({a: 'a1'});

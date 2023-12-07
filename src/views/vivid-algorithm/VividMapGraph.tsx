@@ -12,7 +12,7 @@ const VividMapGraphIllustrator: React.FC<{
   viewControl?: ViewControl;
 }> = ({graph, viewControl}) => {
   const {scale: {y: scaleY = 1, x: scaleX = 1} = {}, offset: {y: offsetY = 0, x: offsetX = 0} = {}} = viewControl ?? {};
-  const vertices = graph.vertices;
+  const vertices = graph.vertexMap;
   const edges = graph.edgeSet();
   const coordsMap: Map<MapVertex, Coordinate> = new Map<MapVertex, Coordinate>();
 
@@ -28,8 +28,8 @@ const VividMapGraphIllustrator: React.FC<{
   const vertexR = 12;
 
   vertices.forEach((vertex: MapVertex) => {
-    const y = (graph.origin[0] - vertex.lat) * 3300 * scaleY + offsetY;
-    const x = (vertex.long - graph.origin[1]) * 3300 * scaleX + offsetX;
+    const y = (graph.originCoord[0] - vertex.lat) * 3300 * scaleY + offsetY;
+    const x = (vertex.long - graph.originCoord[1]) * 3300 * scaleX + offsetX;
     coordsMap.set(vertex, new Coordinate(y, x));
   });
 
@@ -111,7 +111,7 @@ export const VividMapGraph: React.FC<
         backgroundRepeat: 'no-repeat'
       }}
     >
-      {data ? <VividMapGraphIllustrator graph={data} viewControl={viewControl} /> : null}
+      {data ? <VividMapGraphIllustrator graph={data} viewControl={viewControl}/> : null}
     </svg>
   );
 };

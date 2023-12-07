@@ -26,7 +26,7 @@ export function lengthOfLongestSubstring(s: string): number {
 export function lengthOfLongestSubstringByMap(s: string): number {
   if (s.length < 2) return s.length;
 
-  const map: {[key: string]: number} = {};
+  const map: { [key: string]: number } = {};
   let start = 0,
     ans = 0;
 

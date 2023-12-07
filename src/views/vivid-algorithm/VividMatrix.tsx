@@ -76,26 +76,26 @@ export const VividMatrix: React.FC<{
         })}
         {relatedMatrixRoutes
           ? relatedMatrixRoutes.map((route, routeIndex) => {
-              return route.map((cell, cellIndex) => {
-                const from = cell;
-                const to = relatedMatrixRoutes?.[routeIndex]?.[cellIndex + 1];
-                const deviationVector = getDirectionVector(from, to);
-                if (from && to) {
-                  const src = new Coordinate(
-                    (from.y + 0.5 + deviationVector.y * arrowCut) * rectSize,
-                    (from.x + 0.5 + deviationVector.x * arrowCut) * rectSize
-                  );
-                  const dest = new Coordinate(
-                    (to.y + 0.5 - deviationVector.y * arrowCut) * rectSize,
-                    (to.x + 0.5 - deviationVector.x * arrowCut) * rectSize
-                  );
+            return route.map((cell, cellIndex) => {
+              const from = cell;
+              const to = relatedMatrixRoutes?.[routeIndex]?.[cellIndex + 1];
+              const deviationVector = getDirectionVector(from, to);
+              if (from && to) {
+                const src = new Coordinate(
+                  (from.y + 0.5 + deviationVector.y * arrowCut) * rectSize,
+                  (from.x + 0.5 + deviationVector.x * arrowCut) * rectSize
+                );
+                const dest = new Coordinate(
+                  (to.y + 0.5 - deviationVector.y * arrowCut) * rectSize,
+                  (to.x + 0.5 - deviationVector.x * arrowCut) * rectSize
+                );
 
-                  return <LineWithArrow key={src.y + ',' + src.x + dest.y + dest.x} fromV={src} toV={dest} />;
-                } else {
-                  return null;
-                }
-              });
-            })
+                return <LineWithArrow key={src.y + ',' + src.x + dest.y + dest.x} fromV={src} toV={dest}/>;
+              } else {
+                return null;
+              }
+            });
+          })
           : null}
       </g>
     </svg>

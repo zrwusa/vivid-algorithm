@@ -1,4 +1,4 @@
-import {BinaryTreeNode} from '../../../data-structures';
+import { BinaryTree, BinaryTreeNode } from '../../../data-structures';
 
 /**
  * Enum representing different loop types.
@@ -22,14 +22,15 @@ export enum FamilyPosition {
   MAL_NODE = 'MAL_NODE'
 }
 
-export type BinaryTreeNodeKey = number;
+export type BiTreeDeleteResult<N> = { deleted: N | null | undefined; needBalanced: N | null | undefined };
 
-export type BFSCallback<N, D = any> = (node: N, level?: number) => D;
+export type BinaryTreeNodeNested<K, V> = BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, BinaryTreeNode<K, V, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-export type BFSCallbackReturn<N> = ReturnType<BFSCallback<N>>;
+export type BinaryTreeNested<K, V, N extends BinaryTreeNode<K, V, N>> = BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, BinaryTree<K, V, N, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-export type BinaryTreeDeletedResult<N> = { deleted: N | null | undefined; needBalanced: N | null };
+export type BinaryTreeOptions<K> = {
+  iterationType: IterationType,
+  extractor: (key: K) => number
+}
 
-export type BinaryTreeNodeNested<T> = BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, BinaryTreeNode<T, any>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-export type BinaryTreeOptions = { iterationType?: IterationType }
+export type NodeDisplayLayout = [string[], number, number, number];

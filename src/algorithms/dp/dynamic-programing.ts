@@ -88,7 +88,7 @@ export function minDistance(word1: string, word2: string): number {
 // 494. Target Sum
 export function findTargetSumWays(nums: number[], target: number): number {
   const len = nums.length;
-  const dp: {[key: string]: number} = {};
+  const dp: { [key: string]: number } = {};
 
   const dfs = (i: number, total: number): number => {
     if (i === len) return total === target ? 1 : 0;
@@ -161,7 +161,7 @@ export function change(amount: number, coins: number[]): number {
 // 983. Minimum Cost For Tickets Unbounded Knapsack
 function minCostTickets(days: number[], costs: number[]): number {
   const len = days.length;
-  const dp: {[key: number]: number} = {};
+  const dp: { [key: number]: number } = {};
   const dfs = (i: number) => {
     if (i === len) return 0;
 
@@ -282,7 +282,7 @@ export function numDistinct2(s: string, t: string): number {
     return indices;
   };
 
-  const dp: {[key: string]: number} = {};
+  const dp: { [key: string]: number } = {};
   let hit = 0,
     rcs = 0;
 
@@ -311,7 +311,7 @@ export function numDistinct2(s: string, t: string): number {
 function numDistinct3(s: string, t: string): number {
   const m = s.length,
     n = t.length;
-  const dp: {[key in string]: number} = {};
+  const dp: { [key in string]: number } = {};
 
   let hit = 0,
     rcs = 0;
@@ -488,7 +488,7 @@ export function longestPalindromeSubseq2(s: string): number {
   };
   const len = s.length;
 
-  const dp: {[key: string]: number} = {};
+  const dp: { [key: string]: number } = {};
   const dfs = (i: number, acc: string): number => {
     if (i > len - 1) return getLongestLen(acc);
     if (dp[acc] !== undefined) return dp[acc];

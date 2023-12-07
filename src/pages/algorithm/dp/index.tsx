@@ -5,7 +5,7 @@ import {fibonacci} from '../../../algorithms';
 export const DpScreen = () => {
   return (
     <>
-      <AlgorithmPanel algorithm={fibonacci} testCase={[6]} buttonLabel='Test fibonacci' />
+      <AlgorithmPanel algorithm={fibonacci} testCase={[6]} buttonLabel='Test fibonacci'/>
     </>
   );
 };

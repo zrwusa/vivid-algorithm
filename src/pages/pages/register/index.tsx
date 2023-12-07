@@ -167,8 +167,8 @@ const RegisterPage = () => {
             <Typography variant='body2'>Make your app management easy and fun!</Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='username' label='Username' sx={{marginBottom: 4}} />
-            <TextField fullWidth type='email' label='Email' sx={{marginBottom: 4}} />
+            <TextField autoFocus fullWidth id='username' label='Username' sx={{marginBottom: 4}}/>
+            <TextField fullWidth type='email' label='Email' sx={{marginBottom: 4}}/>
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-register-password'>Password</InputLabel>
               <OutlinedInput
@@ -185,14 +185,14 @@ const RegisterPage = () => {
                       onMouseDown={handleMouseDownPassword}
                       aria-label='toggle password visibility'
                     >
-                      {values.showPassword ? <EyeOutline fontSize='small' /> : <EyeOffOutline fontSize='small' />}
+                      {values.showPassword ? <EyeOutline fontSize='small'/> : <EyeOffOutline fontSize='small'/>}
                     </IconButton>
                   </InputAdornment>
                 }
               />
             </FormControl>
             <FormControlLabel
-              control={<Checkbox />}
+              control={<Checkbox/>}
               label={
                 <Fragment>
                   <span>I agree to </span>
@@ -221,12 +221,12 @@ const RegisterPage = () => {
             <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
               <Link href='/' passHref>
                 <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                  <Facebook sx={{color: '#497ce2'}} />
+                  <Facebook sx={{color: '#497ce2'}}/>
                 </IconButton>
               </Link>
               <Link href='/' passHref>
                 <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                  <Twitter sx={{color: '#1da1f2'}} />
+                  <Twitter sx={{color: '#1da1f2'}}/>
                 </IconButton>
               </Link>
               <Link href='/' passHref>
@@ -238,14 +238,14 @@ const RegisterPage = () => {
               </Link>
               <Link href='/' passHref>
                 <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                  <Google sx={{color: '#db4437'}} />
+                  <Google sx={{color: '#db4437'}}/>
                 </IconButton>
               </Link>
             </Box>
           </form>
         </CardContent>
       </Card>
-      <FooterIllustrationsV1 />
+      <FooterIllustrationsV1/>
     </Box>
   );
 };

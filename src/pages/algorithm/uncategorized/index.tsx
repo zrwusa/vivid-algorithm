@@ -18,14 +18,16 @@ export function UncategorizedScreen() {
     try {
       const w = JSON.parse(words);
       if (w instanceof Array) setWordsArr(w);
-    } catch (e) {}
+    } catch (e) {
+    }
   }, [words]);
 
   useEffect(() => {
     try {
       const p = JSON.parse(phrases);
       if (p instanceof Array) setPhrasesArr(p);
-    } catch (e) {}
+    } catch (e) {
+    }
   }, [phrases]);
 
   return (
@@ -47,8 +49,8 @@ export function UncategorizedScreen() {
         buttonLabel={`Keywords 'a', 'b', 'c'`}
       />
       <AlgorithmPanel algorithm={findBestWordOrder} testCase={[wordsArr, phrasesArr]} buttonLabel={`Keywords 7`}>
-        <TextField fullWidth label='Words' value={words} onChange={e => setWords(e.target.value)} />
-        <TextField fullWidth label='Phrases' value={phrases} onChange={e => setPhrases(e.target.value)} />
+        <TextField fullWidth label='Words' value={words} onChange={e => setWords(e.target.value)}/>
+        <TextField fullWidth label='Phrases' value={phrases} onChange={e => setPhrases(e.target.value)}/>
       </AlgorithmPanel>
       <AlgorithmPanel
         algorithm={findBestWordOrder}

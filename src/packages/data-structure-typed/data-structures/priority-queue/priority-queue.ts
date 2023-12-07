@@ -6,11 +6,11 @@
  * @license MIT License
  */
 
-import {Heap} from '../heap';
-import {Comparator} from '../../types';
+import { Heap } from '../heap';
+import { PriorityQueueOptions } from '../../types';
 
 export class PriorityQueue<E = any> extends Heap<E> {
-  constructor(options: { comparator: Comparator<E>; nodes?: E[] }) {
-    super(options);
+  constructor(elements?: Iterable<E>, options?: PriorityQueueOptions<E>) {
+    super(elements, options);
   }
 }

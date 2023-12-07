@@ -313,5 +313,3 @@ export class Vector2D {
     this.y = 0;
   }
 }
-
-export default Vector2D;

@@ -29,7 +29,7 @@ const partition = (arr: number[], low: number, high: number) => {
 
 export const quickSortIterative = (arr: number[]) => {
   //Stack for storing start and end index
-  const stack: Array<{x: number; y: number}> = [];
+  const stack: Array<{ x: number; y: number }> = [];
 
   //Get the start and end index
   const start = 0;

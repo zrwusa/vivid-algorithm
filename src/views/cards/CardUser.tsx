@@ -11,7 +11,7 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 const CardUser = () => {
   return (
     <Card sx={{position: 'relative'}}>
-      <CardMedia sx={{height: '12.625rem'}} image='/images/cards/background-user.png' />
+      <CardMedia sx={{height: '12.625rem'}} image='/images/cards/background-user.png'/>
       <Avatar
         alt='Robert Meyer'
         src='/images/avatars/1.png'
@@ -46,13 +46,13 @@ const CardUser = () => {
             18 mutual friends
           </Typography>
           <AvatarGroup max={4}>
-            <Avatar src='/images/avatars/8.png' alt='Alice Cobb' />
-            <Avatar src='/images/avatars/7.png' alt='Jeffery Warner' />
-            <Avatar src='/images/avatars/3.png' alt='Howard Lloyd' />
-            <Avatar src='/images/avatars/2.png' alt='Bettie Dunn' />
-            <Avatar src='/images/avatars/4.png' alt='Olivia Sparks' />
-            <Avatar src='/images/avatars/5.png' alt='Jimmy Hanson' />
-            <Avatar src='/images/avatars/6.png' alt='Hallie Richards' />
+            <Avatar src='/images/avatars/8.png' alt='Alice Cobb'/>
+            <Avatar src='/images/avatars/7.png' alt='Jeffery Warner'/>
+            <Avatar src='/images/avatars/3.png' alt='Howard Lloyd'/>
+            <Avatar src='/images/avatars/2.png' alt='Bettie Dunn'/>
+            <Avatar src='/images/avatars/4.png' alt='Olivia Sparks'/>
+            <Avatar src='/images/avatars/5.png' alt='Jimmy Hanson'/>
+            <Avatar src='/images/avatars/6.png' alt='Hallie Richards'/>
           </AvatarGroup>
         </Box>
       </CardContent>

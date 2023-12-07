@@ -63,7 +63,7 @@ const TotalEarning = () => {
         titleTypographyProps={{sx: {lineHeight: '1.6 !important', letterSpacing: '0.15px !important'}}}
         action={
           <IconButton size='small' aria-label='settings' className='card-more-options' sx={{color: 'text.secondary'}}>
-            <DotsVertical />
+            <DotsVertical/>
           </IconButton>
         }
       />
@@ -73,7 +73,7 @@ const TotalEarning = () => {
             $24,895
           </Typography>
           <Box sx={{display: 'flex', alignItems: 'center', color: 'success.main'}}>
-            <MenuUp sx={{fontSize: '1.875rem', verticalAlign: 'middle'}} />
+            <MenuUp sx={{fontSize: '1.875rem', verticalAlign: 'middle'}}/>
             <Typography variant='body2' sx={{fontWeight: 600, color: 'success.main'}}>
               10%
             </Typography>
@@ -103,7 +103,7 @@ const TotalEarning = () => {
                   backgroundColor: theme => `rgba(${theme.palette.customColors.main}, 0.04)`
                 }}
               >
-                <img src={item.imgSrc} alt={item.title} height={item.imgHeight} />
+                <img src={item.imgSrc} alt={item.title} height={item.imgHeight}/>
               </Avatar>
               <Box
                 sx={{
@@ -125,7 +125,7 @@ const TotalEarning = () => {
                   <Typography variant='body2' sx={{mb: 2, fontWeight: 600, color: 'text.primary'}}>
                     {item.amount}
                   </Typography>
-                  <LinearProgress color={item.color} value={item.progress} variant='determinate' />
+                  <LinearProgress color={item.color} value={item.progress} variant='determinate'/>
                 </Box>
               </Box>
             </Box>

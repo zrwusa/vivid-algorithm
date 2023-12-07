@@ -1,31 +1,31 @@
 export type AnyFunction<A extends any[] = any[], R = any> = (...args: A) => R;
 export type Primitive = number | string | boolean | symbol | undefined | null | void | AnyFunction | Date;
 
-export type Cast<T, TComplex> = {[M in keyof TComplex]: T};
+export type Cast<T, TComplex> = { [M in keyof TComplex]: T };
 
 export type DeepLeavesWrap<T, TComplex> = T extends string
   ? Cast<string, TComplex>
   : T extends number
-  ? Cast<number, TComplex>
-  : T extends boolean
-  ? Cast<boolean, TComplex>
-  : T extends undefined
-  ? Cast<undefined, TComplex>
-  : T extends null
-  ? Cast<null, TComplex>
-  : T extends void
-  ? Cast<void, TComplex>
-  : T extends symbol
-  ? Cast<symbol, TComplex>
-  : T extends AnyFunction
-  ? Cast<AnyFunction, TComplex>
-  : T extends Date
-  ? Cast<Date, TComplex>
-  : {
-      [K in keyof T]: T[K] extends (infer U)[] ? DeepLeavesWrap<U, TComplex>[] : DeepLeavesWrap<T[K], TComplex>;
-    };
+    ? Cast<number, TComplex>
+    : T extends boolean
+      ? Cast<boolean, TComplex>
+      : T extends undefined
+        ? Cast<undefined, TComplex>
+        : T extends null
+          ? Cast<null, TComplex>
+          : T extends void
+            ? Cast<void, TComplex>
+            : T extends symbol
+              ? Cast<symbol, TComplex>
+              : T extends AnyFunction
+                ? Cast<AnyFunction, TComplex>
+                : T extends Date
+                  ? Cast<Date, TComplex>
+                  : {
+                    [K in keyof T]: T[K] extends (infer U)[] ? DeepLeavesWrap<U, TComplex>[] : DeepLeavesWrap<T[K], TComplex>;
+                  };
 
-export type Json = null | string | number | boolean | Json[] | {[name: string]: Json};
+export type Json = null | string | number | boolean | Json[] | { [name: string]: Json };
 
 export type JSONSerializable = {
   [key: string]: any;
@@ -40,14 +40,14 @@ export interface JSONObject {
 export type TypeName<T> = T extends string
   ? 'string'
   : T extends number
-  ? 'number'
-  : T extends boolean
-  ? 'boolean'
-  : T extends undefined
-  ? 'undefined'
-  : T extends AnyFunction
-  ? 'function'
-  : 'object';
+    ? 'number'
+    : T extends boolean
+      ? 'boolean'
+      : T extends undefined
+        ? 'undefined'
+        : T extends AnyFunction
+          ? 'function'
+          : 'object';
 
 export type JsonKeys<T> = keyof {
   [P in keyof T]: number;
@@ -83,7 +83,7 @@ export type MonthKey =
   | 'November'
   | 'December';
 
-export type Month = {[key in MonthKey]: string};
+export type Month = { [key in MonthKey]: string };
 
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
@@ -92,8 +92,8 @@ export type OrderType = 'InOrder' | 'PreOrder' | 'PostOrder';
 export type DeepProxy<T> = T extends (...args: any[]) => infer R
   ? (...args: [...Parameters<T>]) => DeepProxy<R>
   : T extends object
-  ? {[K in keyof T]: DeepProxy<T[K]>}
-  : T;
+    ? { [K in keyof T]: DeepProxy<T[K]> }
+    : T;
 
 export type DeepProxyOnChange = (
   target: any,

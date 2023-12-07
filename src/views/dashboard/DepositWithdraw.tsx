@@ -134,7 +134,7 @@ const DepositWithdraw = () => {
                 sx={{display: 'flex', alignItems: 'center', mb: index !== depositData.length - 1 ? 6 : 0}}
               >
                 <Box sx={{minWidth: 38, display: 'flex', justifyContent: 'center'}}>
-                  <img src={item.logo} alt={item.title} width={item.logoWidth} height={item.logoHeight} />
+                  <img src={item.logo} alt={item.title} width={item.logoWidth} height={item.logoHeight}/>
                 </Box>
                 <Box
                   sx={{
@@ -160,7 +160,7 @@ const DepositWithdraw = () => {
         </CardContent>
       </Box>
 
-      <Divider flexItem />
+      <Divider flexItem/>
 
       <Box sx={{width: '100%'}}>
         <CardHeader
@@ -180,7 +180,7 @@ const DepositWithdraw = () => {
                 sx={{display: 'flex', alignItems: 'center', mb: index !== depositData.length - 1 ? 6 : 0}}
               >
                 <Box sx={{minWidth: 36, display: 'flex', justifyContent: 'center'}}>
-                  <img src={item.logo} alt={item.title} width={item.logoWidth} height={item.logoHeight} />
+                  <img src={item.logo} alt={item.title} width={item.logoWidth} height={item.logoHeight}/>
                 </Box>
                 <Box
                   sx={{

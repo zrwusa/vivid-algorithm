@@ -22,19 +22,19 @@ export interface AlgorithmPanelProps extends SVGOptions {
 }
 
 export const AlgorithmPanel: React.FC<AlgorithmPanelProps> = ({
-  algorithm,
-  testCase,
-  buttonLabel = 'default',
-  relatedNodeKey,
-  referenceData,
-  relatedRouteKey,
-  children,
-  svgHeight: svgHeightProp,
-  svgWidth: svgWidthProp,
-  svgBg,
-  viewControl
-}) => {
-  const [values, setValues] = useState<{[key in string]: unknown}>();
+                                                                algorithm,
+                                                                testCase,
+                                                                buttonLabel = 'default',
+                                                                relatedNodeKey,
+                                                                referenceData,
+                                                                relatedRouteKey,
+                                                                children,
+                                                                svgHeight: svgHeightProp,
+                                                                svgWidth: svgWidthProp,
+                                                                svgBg,
+                                                                viewControl
+                                                              }) => {
+  const [values, setValues] = useState<{ [key in string]: unknown }>();
   const [loading, setLoading] = React.useState(false);
   const runClickHandler = async () => {
     setLoading(true);
@@ -82,7 +82,7 @@ export const AlgorithmPanel: React.FC<AlgorithmPanelProps> = ({
                 onClick={runClickHandler}
                 loading={loading}
                 loadingPosition='start'
-                startIcon={<PlayCircleOutlineIcon />}
+                startIcon={<PlayCircleOutlineIcon/>}
                 variant='contained'
                 style={{textTransform: 'none'}}
               >

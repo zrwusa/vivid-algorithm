@@ -1,22 +1,51 @@
+import { IterableElementBase } from "../base";
+import { ElementCallback } from "../../types";
+
 /**
  * @license MIT
  * @copyright Tyler Zeng <zrwusa@gmail.com>
  * @class
  */
-export class Stack<E = any> {
-  protected _elements: E[];
-
+export class Stack<E = any> extends IterableElementBase<E> {
   /**
    * The constructor initializes an array of elements, which can be provided as an optional parameter.
    * @param {E[]} [elements] - The `elements` parameter is an optional parameter of type `E[]`, which represents an array
    * of elements of type `E`. It is used to initialize the `_elements` property of the class. If the `elements` parameter
    * is provided and is an array, it is assigned to the `_elements
    */
-  constructor(elements?: E[]) {
-    this._elements = Array.isArray(elements) ? elements : [];
+  constructor(elements?: Iterable<E>) {
+    super();
+    this._elements = [];
+    if (elements) {
+      for (const el of elements) {
+        this.push(el);
+      }
+    }
+  }
+
+  protected _elements: E[];
+
+  get elements(): E[] {
+    return this._elements;
   }
 
   /**
+   * Time Complexity: O(n), where n is the number of elements in the input array. Similar to the constructor, it requires iterating through each element.
+   * Space Complexity: O(n), as it creates a new stack with the elements from the input array.
+   */
+
+  /**
+   * The size() function returns the number of elements in an array.
+   * @returns The size of the elements array.
+   */
+  get size(): number {
+    return this.elements.length;
+  }
+
+  /**
+   * Time Complexity: O(n), where n is the number of elements in the input array. Similar to the constructor, it requires iterating through each element.
+   * Space Complexity: O(n), as it creates a new stack with the elements from the input array.
+   *
    * The function "fromArray" creates a new Stack object from an array of elements.
    * @param {E[]} elements - The `elements` parameter is an array of elements of type `E`.
    * @returns {Stack} The method is returning a new instance of the Stack class, initialized with the elements from the input
@@ -31,54 +60,78 @@ export class Stack<E = any> {
    * @returns A boolean value indicating whether the `_elements` array is empty or not.
    */
   isEmpty(): boolean {
-    return this._elements.length === 0;
+    return this.elements.length === 0;
   }
 
   /**
-   * The size() function returns the number of elements in an array.
-   * @returns The size of the elements array.
+   * Time Complexity: O(1), as it only involves accessing the last element of the array.
+   * Space Complexity: O(1), as it does not use any additional space.
    */
-  size(): number {
-    return this._elements.length;
-  }
 
   /**
-   * The `peek` function returns the last element of an array, or null if the array is empty.
-   * @returns The `peek()` function returns the last element of the `_elements` array, or `null` if the array is empty.
+   * Time Complexity: O(1), as it only involves accessing the last element of the array.
+   * Space Complexity: O(1), as it does not use any additional space.
+   *
+   * The `peek` function returns the last element of an array, or undefined if the array is empty.
+   * @returns The `peek()` function returns the last element of the `_elements` array, or `undefined` if the array is empty.
    */
-  peek(): E | null {
-    if (this.isEmpty()) return null;
+  peek(): E | undefined {
+    if (this.isEmpty()) return undefined;
 
-    return this._elements[this._elements.length - 1];
+    return this.elements[this.elements.length - 1];
   }
 
   /**
+   * Time Complexity: O(1), as it only involves accessing the last element of the array.
+   * Space Complexity: O(1), as it does not use any additional space.
+   */
+
+  /**
+   * Time Complexity: O(1), as it only involves accessing the last element of the array.
+   * Space Complexity: O(1), as it does not use any additional space.
+   *
    * The push function adds an element to the stack and returns the updated stack.
    * @param {E} element - The parameter "element" is of type E, which means it can be any data type.
    * @returns The `push` method is returning the updated `Stack<E>` object.
    */
   push(element: E): Stack<E> {
-    this._elements.push(element);
+    this.elements.push(element);
     return this;
   }
 
   /**
-   * The `pop` function removes and returns the last element from an array, or returns null if the array is empty.
-   * @returns The `pop()` method is returning the last element of the array `_elements` if the array is not empty. If the
-   * array is empty, it returns `null`.
+   * Time Complexity: O(1), as it only involves accessing the last element of the array.
+   * Space Complexity: O(1), as it does not use any additional space.
    */
-  pop(): E | null {
-    if (this.isEmpty()) return null;
 
-    return this._elements.pop() || null;
+  /**
+   * Time Complexity: O(1), as it only involves accessing the last element of the array.
+   * Space Complexity: O(1), as it does not use any additional space.
+   *
+   * The `pop` function removes and returns the last element from an array, or returns undefined if the array is empty.
+   * @returns The `pop()` method is returning the last element of the array `_elements` if the array is not empty. If the
+   * array is empty, it returns `undefined`.
+   */
+  pop(): E | undefined {
+    if (this.isEmpty()) return undefined;
+
+    return this.elements.pop() || undefined;
   }
 
   /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   *
    * The toArray function returns a copy of the elements in an array.
    * @returns An array of type E.
    */
   toArray(): E[] {
-    return this._elements.slice();
+    return this.elements.slice();
   }
 
   /**
@@ -89,10 +142,93 @@ export class Stack<E = any> {
   }
 
   /**
+   * Time Complexity: O(n), where n is the number of elements in the stack, as it creates a new stack and copies all elements into it.
+   * Space Complexity: O(n), as it creates a new stack.
+   */
+
+  /**
+   * Time Complexity: O(n), where n is the number of elements in the stack, as it creates a new stack and copies all elements into it.
+   * Space Complexity: O(n), as it creates a new stack.
+   *
    * The `clone()` function returns a new `Stack` object with the same elements as the original stack.
    * @returns The `clone()` method is returning a new `Stack` object with a copy of the `_elements` array.
    */
   clone(): Stack<E> {
-    return new Stack(this._elements.slice());
+    return new Stack(this.elements.slice());
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   *
+   * The `filter` function creates a new stack containing elements from the original stack that satisfy
+   * a given predicate function.
+   * @param predicate - The `predicate` parameter is a callback function that takes three arguments:
+   * the current element being iterated over, the index of the current element, and the stack itself.
+   * It should return a boolean value indicating whether the element should be included in the filtered
+   * stack or not.
+   * @param {any} [thisArg] - The `thisArg` parameter is an optional argument that specifies the value
+   * to be used as `this` when executing the `predicate` function. If `thisArg` is provided, it will be
+   * passed as the `this` value to the `predicate` function. If `thisArg` is
+   * @returns The `filter` method is returning a new `Stack` object that contains the elements that
+   * satisfy the given predicate function.
+   */
+  filter(predicate: ElementCallback<E, boolean>, thisArg?: any): Stack<E> {
+    const newStack = new Stack<E>();
+    let index = 0;
+    for (const el of this) {
+      if (predicate.call(thisArg, el, index, this)) {
+        newStack.push(el);
+      }
+      index++;
+    }
+    return newStack;
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   *
+   * The `map` function takes a callback function and applies it to each element in the stack,
+   * returning a new stack with the results.
+   * @param callback - The `callback` parameter is a function that will be called for each element in
+   * the stack. It takes three arguments:
+   * @param {any} [thisArg] - The `thisArg` parameter is an optional argument that specifies the value
+   * to be used as `this` when executing the `callback` function. If `thisArg` is provided, it will be
+   * passed as the `this` value to the `callback` function. If `thisArg` is
+   * @returns The `map` method is returning a new `Stack` object.
+   */
+  map<T>(callback: ElementCallback<E, T>, thisArg?: any): Stack<T> {
+    const newStack = new Stack<T>();
+    let index = 0;
+    for (const el of this) {
+      newStack.push(callback.call(thisArg, el, index, this));
+      index++;
+    }
+    return newStack;
+  }
+
+  print(): void {
+    console.log([...this]);
+  }
+
+  /**
+   * Custom iterator for the Stack class.
+   * @returns An iterator object.
+   */
+  protected* _getIterator() {
+    for (let i = 0; i < this.elements.length; i++) {
+      yield this.elements[i];
+    }
   }
 }

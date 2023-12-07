@@ -23,9 +23,9 @@ const CardNavigationCenter = () => {
     <Card>
       <TabContext value={value}>
         <TabList centered onChange={handleChange} aria-label='card navigation example'>
-          <Tab value='1' label='Item One' />
-          <Tab value='2' label='Item Two' />
-          <Tab value='3' label='Item Three' />
+          <Tab value='1' label='Item One'/>
+          <Tab value='2' label='Item Two'/>
+          <Tab value='3' label='Item Three'/>
         </TabList>
         <CardContent sx={{textAlign: 'center'}}>
           <TabPanel value='1' sx={{p: 0}}>

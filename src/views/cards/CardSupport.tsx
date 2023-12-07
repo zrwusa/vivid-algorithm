@@ -23,7 +23,7 @@ const CardSupport = () => {
         <Avatar
           sx={{width: 50, height: 50, marginBottom: 2.25, color: 'common.white', backgroundColor: 'primary.main'}}
         >
-          <HelpCircleOutline sx={{fontSize: '2rem'}} />
+          <HelpCircleOutline sx={{fontSize: '2rem'}}/>
         </Avatar>
         <Typography variant='h6' sx={{marginBottom: 2.75}}>
           Support

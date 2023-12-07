@@ -41,7 +41,7 @@
     "@qiwi/deep-proxy": "^2.0.3",
     "apexcharts-clevision": "3.28.5",
     "clsx": "^1.1.1",
-    "data-structure-typed": "^1.39.0",
+    "data-structure-typed": "^1.48.7",
     "lodash": "^4.17.21",
     "mdi-material-ui": "^7.1.0",
     "next": "12.0.4",
@@ -59,8 +59,8 @@
     "@types/nprogress": "^0.2.0",
     "@types/react": "17.0.37",
     "@types/react-datepicker": "^4.3.2",
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
-    "@typescript-eslint/parser": "^5.11.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
     "eslint": "^7.32.0",
     "eslint-config-next": "12.0.4",
     "eslint-config-prettier": "^8.3.0",
@@ -69,6 +69,6 @@
     "eslint-plugin-import": "^2.25.4",
     "next-transpile-modules": "^9.0.0",
     "prettier": "2.5.1",
-    "typescript": "4.5.2"
+    "typescript": "^5.3.3"
   }
 }

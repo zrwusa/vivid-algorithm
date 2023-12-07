@@ -2,14 +2,14 @@ import {wait, WaitManager} from '../../../utils';
 import {AVLTree, CP} from 'data-structure-typed';
 
 export const testAVLTreeCase1 = [];
-export const testAVLCase6 = async (proxy: {tree: AVLTree}) => {
+export const testAVLCase6 = async (proxy: { tree: AVLTree }) => {
   const waitManager = new WaitManager(10);
   const {time1, time2, time3} = waitManager;
-  const node6 = proxy.tree.get(6);
+  const node6 = proxy.tree.getNodeByKey(6);
   console.log(node6 && proxy.tree.getHeight(node6) === 3, 'getHeight(getNode 6)');
   console.log(node6 && proxy.tree.getDepth(node6) === 1, 'getDepth(getNode 6)');
   await wait(time2);
-  const getNodeByKey = proxy.tree.get(10);
+  const getNodeByKey = proxy.tree.getNodeByKey(10);
   console.log(getNodeByKey?.key === 10, 'getNode, 10, key', getNodeByKey);
 
   await wait(time2);
@@ -17,16 +17,16 @@ export const testAVLCase6 = async (proxy: {tree: AVLTree}) => {
   console.log(getMinNodeByRoot?.key === 1, 'getLeftMost');
 
   await wait(time2);
-  const node15 = proxy.tree.get(15);
+  const node15 = proxy.tree.getNodeByKey(15);
   const getMinNodeBySpecificNode = node15 && proxy.tree.getLeftMost(node15);
   console.log(getMinNodeBySpecificNode?.key === 12, 'getLeftMost, 15');
 
   await wait(time2);
   let subTreeSum = 0;
   node15 &&
-    proxy.tree.subTreeTraverse(node => {
-      subTreeSum += node.key;
-    }, node15);
+  proxy.tree.subTreeTraverse(node => {
+    subTreeSum += node.key;
+  }, node15);
   console.log(subTreeSum === 70, 'subTreeSum, 15');
 
   await wait(time2);
@@ -41,7 +41,7 @@ export const testAVLCase6 = async (proxy: {tree: AVLTree}) => {
   console.log(lesserSum === 45, 'lesserSum, 10');
 
   await wait(time3);
-  const node11 = proxy.tree.get(11);
+  const node11 = proxy.tree.getNodeByKey(11);
   console.log(node11?.key === 11);
 
   await wait(time3);

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export const VividObject: React.FC<{data: {[key in string]: any}}> = ({data}) => {
+export const VividObject: React.FC<{ data: { [key in string]: any } }> = ({data}) => {
   return (
     <div>
       {Object.keys(data).map(key => {

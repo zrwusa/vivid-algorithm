@@ -34,7 +34,7 @@ interface State {
 }
 
 const CustomInput = forwardRef((props, ref) => {
-  return <TextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off' />;
+  return <TextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off'/>;
 });
 
 const FormLayoutsSeparator = () => {
@@ -77,8 +77,8 @@ const FormLayoutsSeparator = () => {
 
   return (
     <Card>
-      <CardHeader title='Multi Column with Form Separator' titleTypographyProps={{variant: 'h6'}} />
-      <Divider sx={{margin: 0}} />
+      <CardHeader title='Multi Column with Form Separator' titleTypographyProps={{variant: 'h6'}}/>
+      <Divider sx={{margin: 0}}/>
       <form onSubmit={e => e.preventDefault()}>
         <CardContent>
           <Grid container spacing={5}>
@@ -88,10 +88,10 @@ const FormLayoutsSeparator = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Username' placeholder='carterLeonard' />
+              <TextField fullWidth label='Username' placeholder='carterLeonard'/>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth type='email' label='Email' placeholder='carterleonard@gmail.com' />
+              <TextField fullWidth type='email' label='Email' placeholder='carterleonard@gmail.com'/>
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
@@ -110,7 +110,7 @@ const FormLayoutsSeparator = () => {
                         onMouseDown={handleMouseDownPassword}
                         aria-label='toggle password visibility'
                       >
-                        {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
+                        {values.showPassword ? <EyeOutline/> : <EyeOffOutline/>}
                       </IconButton>
                     </InputAdornment>
                   }
@@ -134,7 +134,7 @@ const FormLayoutsSeparator = () => {
                         onClick={handleClickShowConfirmPassword}
                         onMouseDown={handleMouseDownConfirmPassword}
                       >
-                        {values.showPassword2 ? <EyeOutline /> : <EyeOffOutline />}
+                        {values.showPassword2 ? <EyeOutline/> : <EyeOffOutline/>}
                       </IconButton>
                     </InputAdornment>
                   }
@@ -142,7 +142,7 @@ const FormLayoutsSeparator = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Divider sx={{marginBottom: 0}} />
+              <Divider sx={{marginBottom: 0}}/>
             </Grid>
             <Grid item xs={12}>
               <Typography variant='body2' sx={{fontWeight: 600}}>
@@ -150,10 +150,10 @@ const FormLayoutsSeparator = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='First Name' placeholder='Leonard' />
+              <TextField fullWidth label='First Name' placeholder='Leonard'/>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Last Name' placeholder='Carter' />
+              <TextField fullWidth label='Last Name' placeholder='Carter'/>
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
@@ -180,7 +180,7 @@ const FormLayoutsSeparator = () => {
                   onChange={handleSelectChange}
                   id='form-layouts-separator-multiple-select'
                   labelId='form-layouts-separator-multiple-select-label'
-                  input={<OutlinedInput label='Language' id='select-multiple-language' />}
+                  input={<OutlinedInput label='Language' id='select-multiple-language'/>}
                 >
                   <MenuItem value='English'>English</MenuItem>
                   <MenuItem value='French'>French</MenuItem>
@@ -198,17 +198,17 @@ const FormLayoutsSeparator = () => {
                 showYearDropdown
                 showMonthDropdown
                 placeholderText='MM-DD-YYYY'
-                customInput={<CustomInput />}
+                customInput={<CustomInput/>}
                 id='form-layouts-separator-date'
                 onChange={(date: Date) => setDate(date)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Phone No.' placeholder='+1-123-456-8790' />
+              <TextField fullWidth label='Phone No.' placeholder='+1-123-456-8790'/>
             </Grid>
           </Grid>
         </CardContent>
-        <Divider sx={{margin: 0}} />
+        <Divider sx={{margin: 0}}/>
         <CardActions>
           <Button size='large' type='submit' sx={{mr: 2}} variant='contained'>
             Submit

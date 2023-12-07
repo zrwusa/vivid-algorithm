@@ -169,7 +169,7 @@ const LoginPage = () => {
             <Typography variant='body2'>Please sign-in to your account and start the adventure</Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='email' label='Email' sx={{marginBottom: 4}} />
+            <TextField autoFocus fullWidth id='email' label='Email' sx={{marginBottom: 4}}/>
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
               <OutlinedInput
@@ -186,14 +186,14 @@ const LoginPage = () => {
                       onMouseDown={handleMouseDownPassword}
                       aria-label='toggle password visibility'
                     >
-                      {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
+                      {values.showPassword ? <EyeOutline/> : <EyeOffOutline/>}
                     </IconButton>
                   </InputAdornment>
                 }
               />
             </FormControl>
             <Box sx={{mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between'}}>
-              <FormControlLabel control={<Checkbox />} label='Remember Me' />
+              <FormControlLabel control={<Checkbox/>} label='Remember Me'/>
               <Link passHref href='/'>
                 <LinkStyled onClick={e => e.preventDefault()}>Forgot Password?</LinkStyled>
               </Link>
@@ -215,12 +215,12 @@ const LoginPage = () => {
             <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
               <Link href='/' passHref>
                 <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                  <Facebook sx={{color: '#497ce2'}} />
+                  <Facebook sx={{color: '#497ce2'}}/>
                 </IconButton>
               </Link>
               <Link href='/' passHref>
                 <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                  <Twitter sx={{color: '#1da1f2'}} />
+                  <Twitter sx={{color: '#1da1f2'}}/>
                 </IconButton>
               </Link>
               <Link href='/' passHref>
@@ -232,14 +232,14 @@ const LoginPage = () => {
               </Link>
               <Link href='/' passHref>
                 <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                  <Google sx={{color: '#db4437'}} />
+                  <Google sx={{color: '#db4437'}}/>
                 </IconButton>
               </Link>
             </Box>
           </form>
         </CardContent>
       </Card>
-      <FooterIllustrationsV1 />
+      <FooterIllustrationsV1/>
     </Box>
   );
 };

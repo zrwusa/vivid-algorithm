@@ -25,18 +25,18 @@ export const deleteLeavesCase1: DeleteLeavesParams = [[1, 2, 3, 2, null, 2, 4], 
 export const deleteLeavesCase2: DeleteLeavesParams = [[1, 3, 3, 3, 2], 3];
 export const deleteLeavesCase3: DeleteLeavesParams = [[1, 2, null, 2, null, 2], 2];
 
-export const testBSTCase6 = async (proxy: {tree: BST}) => {
+export const testBSTCase6 = async (proxy: { tree: BST }) => {
   const waitManager = new WaitManager(100);
   const {time1, time2, time3} = waitManager;
   await wait(time2);
 
   console.log(proxy.tree.has(6), 'tree.has(6)');
 
-  const node6 = proxy.tree.get(6);
+  const node6 = proxy.tree.getNodeByKey(6);
   console.log(node6 && proxy.tree.getHeight(node6) === 2, 'getHeight(getNode 6)');
   console.log(node6 && proxy.tree.getDepth(node6) === 3, 'getDepth(getNode 6)');
   await wait(time2);
-  const getNodeByKey = proxy.tree.get(10, node => node.key);
+  const getNodeByKey = proxy.tree.getNodeByKey(10);
   console.log(getNodeByKey?.key === 10, 'getNode, 10, key', getNodeByKey);
 
   await wait(time2);
@@ -44,16 +44,16 @@ export const testBSTCase6 = async (proxy: {tree: BST}) => {
   console.log(getMinNodeByRoot?.key === 1, 'getLeftMost');
 
   await wait(time2);
-  const node15 = proxy.tree.get(15);
+  const node15 = proxy.tree.getNodeByKey(15);
   const getMinNodeBySpecificNode = node15 && proxy.tree.getLeftMost(node15);
   console.log(getMinNodeBySpecificNode?.key === 12, 'getLeftMost, 15');
 
   await wait(time2);
   let subTreeSum = 0;
   node15 &&
-    proxy.tree.subTreeTraverse(node => {
-      subTreeSum += node.key;
-    }, node15);
+  proxy.tree.subTreeTraverse(node => {
+    subTreeSum += node.key;
+  }, node15);
   console.log(subTreeSum === 70, 'subTreeSum, 15');
 
   await wait(time2);

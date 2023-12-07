@@ -11,9 +11,9 @@ const {time1, time2, time5, time10} = waitManager;
 export async function testBinaryTree(arr: number[], proxyHandler?: TProxyHandler) {
   const clonedData = [...arr];
 
-  const proxy: {tree: BinaryTree} = new DeepProxy(
+  const proxy: { tree: BinaryTree } = new DeepProxy(
     {
-      tree: new BinaryTree({iterationType: IterationType.RECURSIVE})
+      tree: new BinaryTree<number, number>([], {iterationType: IterationType.RECURSIVE})
     },
     proxyHandler
   );
@@ -32,7 +32,7 @@ export async function testBinaryTree(arr: number[], proxyHandler?: TProxyHandler
 
 export async function showBinaryTree(arr: number[], proxyHandler?: TProxyHandler) {
   const clonedData = [...arr];
-  const proxy: {tree: BinaryTree} = new DeepProxy(
+  const proxy: { tree: BinaryTree } = new DeepProxy(
     {
       tree: new BinaryTree()
     },
@@ -53,8 +53,8 @@ export const runTestBinaryTree = async () => {
 export async function testSymmetricTree(arr: Array<number | null>, proxyHandler?: TProxyHandler) {
   const clonedData = [...arr];
 
-  const proxy: {tree: BinaryTree<number | null>} = new DeepProxy(
-    {tree: new BinaryTree<number | null>({})},
+  const proxy: { tree: BinaryTree<number, number | null> } = new DeepProxy(
+    {tree: new BinaryTree<number, number | null>()},
     proxyHandler
   );
 
@@ -77,7 +77,7 @@ export async function testSymmetricTree(arr: Array<number | null>, proxyHandler?
       return false;
     } else {
       return (
-        left.val === right.val && symmetricHelper(left.left, right.right) && symmetricHelper(left.right, right.left)
+        left.value === right.value && symmetricHelper(left.left, right.right) && symmetricHelper(left.right, right.left)
       );
     }
   }
@@ -113,10 +113,10 @@ export function longestUnivaluePath(root: BinaryTreeNode<number> | null): number
     if (!cur) {
       return 0;
     }
-    const leftH = dfs(cur.left, cur.val || NaN);
-    const rightH = dfs(cur.right, cur.val || NaN);
+    const leftH = dfs(cur.left, cur.value || NaN);
+    const rightH = dfs(cur.right, cur.value || NaN);
     ans = Math.max(leftH + rightH, ans);
-    if (cur.val === parentVal) {
+    if (cur.value === parentVal) {
       return Math.max(leftH, rightH) + 1;
     } else {
       return 0;
@@ -124,7 +124,7 @@ export function longestUnivaluePath(root: BinaryTreeNode<number> | null): number
   }
 
   if (root) {
-    dfs(root, root.val || NaN);
+    dfs(root, root.value || NaN);
   }
   return ans;
 }
@@ -138,7 +138,7 @@ export function rob(root: BinaryTreeNode<number> | null | undefined): number {
     const maxArrLeft = dfs(cur.left);
     const maxArrRight = dfs(cur.right);
 
-    return [Math.max(...maxArrLeft) + Math.max(...maxArrRight), maxArrLeft[0] + maxArrRight[0] + (cur.val || 0)];
+    return [Math.max(...maxArrLeft) + Math.max(...maxArrRight), maxArrLeft[0] + maxArrRight[0] + (cur.value || 0)];
   }
 
   return Math.max(...dfs(root));
@@ -150,7 +150,7 @@ export function distributeCoins(root: BinaryTreeNode<number> | null): number {
 
   function reqDFS(cur: BinaryTreeNode<number> | null | undefined): number {
     if (!cur) return 0;
-    const cR = cur.val || 0 - 1;
+    const cR = cur.value || 0 - 1;
     const lR = reqDFS(cur.left);
     const rR = reqDFS(cur.right);
     const totalR = cR + lR + rR;
@@ -167,8 +167,8 @@ export function pathSum(root: BinaryTreeNode<number> | null, targetSum: number):
   const ans: number[][] = [];
 
   function dfs(cur: BinaryTreeNode<number>, acc: number[], rest: number) {
-    acc.push(cur.val || NaN);
-    rest -= cur.val || 0;
+    acc.push(cur.value || NaN);
+    rest -= cur.value || 0;
 
     if (cur.left === null && cur.right === null && rest === 0) {
       ans.push([...acc]);
@@ -203,7 +203,7 @@ export function pathSumIIIBruteForce1(root: BinaryTreeNode<number> | null, targe
 
   function pathDFS(cur: BinaryTreeNode<number> | null, rest: number): void {
     if (cur) {
-      rest -= cur.val || NaN;
+      rest -= cur.value || NaN;
       if (rest === 0) {
         ans += 1;
       }
@@ -224,7 +224,7 @@ export function pathSumIIIBruteForce2(root: BinaryTreeNode<number> | null, targe
 
   function pathDFS(cur: BinaryTreeNode<number> | null, rest: number): void {
     if (cur) {
-      rest -= cur.val || 0;
+      rest -= cur.value || 0;
       if (rest === 0) {
         ans += 1;
       }
@@ -252,14 +252,9 @@ export async function pathSumIII(
   proxyHandler?: TProxyHandler
 ): Promise<number> {
   const clonedData = [...data];
-  const proxy: {tree: BinaryTree<number | null>} = new DeepProxy(
+  const proxy: { tree: BinaryTree<number | null> } = new DeepProxy(
     {
-      tree: new BinaryTree<number | null>({
-        // nodeOrData: {
-        //     key: 0,
-        //     val: clonedData[0]
-        // }
-      })
+      tree: new BinaryTree<number | null>()
     },
     proxyHandler
   );
@@ -268,13 +263,13 @@ export async function pathSumIII(
   await wait(time1);
   const root = proxy.tree.root;
 
-  const freq: {[key in number]: number} = {0: 1};
+  const freq: { [key in number]: number } = {0: 1};
   let ans = 0;
 
   async function dfs(cur: BinaryTreeNode<number | null>, sum: number): Promise<void> {
     await wait(time1);
 
-    sum += cur.val || 0;
+    sum += cur.value || 0;
     const x = sum - targetSum;
     if (freq[x]) {
       ans += freq[x];
@@ -304,24 +299,24 @@ export async function deleteLeaves(
   data: Array<number | null>,
   target: number,
   proxyHandler?: TProxyHandler
-): Promise<BinaryTreeNode<number | null> | null> {
+): Promise<BinaryTreeNode<number, number | null> | null> {
   const clonedData = [...data];
-  const proxy: {bst: BinaryTree<number | null>} = new DeepProxy(
+  const proxy: { bst: BinaryTree<number, number | null> } = new DeepProxy(
     {
-      bst: new BinaryTree<number | null>()
+      bst: new BinaryTree<number, number | null>()
     },
     proxyHandler
   );
 
   proxy.bst.refill(clonedData);
 
-  function dfs(root: BinaryTreeNode<number | null> | null) {
+  function dfs(root: BinaryTreeNode<number, number | null> | null | undefined) {
     if (!root) return null;
 
     if (root.left !== undefined) root.left = dfs(root.left);
     if (root.right !== undefined) root.right = dfs(root.right);
 
-    if (!root.left && !root.right && root.val === target) return null;
+    if (!root.left && !root.right && root.value === target) return null;
     return root;
   }
 
@@ -343,9 +338,9 @@ export function maxPathSum(root: BinaryTreeNode<number> | null): number {
 
     const lPMax = asPortionMax(curr.left);
     const rPMax = asPortionMax(curr.right);
-    if (typeof curr.val === 'number') {
-      maxSum = Math.max(maxSum, curr.val + Math.max(0, lPMax, rPMax, lPMax + rPMax));
-      return curr.val + Math.max(0, lPMax, rPMax);
+    if (typeof curr.value === 'number') {
+      maxSum = Math.max(maxSum, curr.value + Math.max(0, lPMax, rPMax, lPMax + rPMax));
+      return curr.value + Math.max(0, lPMax, rPMax);
     }
     return 0;
   };

@@ -53,7 +53,7 @@ const CardMobile = () => {
       <Grid container spacing={6}>
         <StyledGrid item md={5} xs={12}>
           <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <img width={137} height={176} alt='Apple iPhone 11 Pro' src='/images/cards/iPhone-11-pro.png' />
+            <img width={137} height={176} alt='Apple iPhone 11 Pro' src='/images/cards/iPhone-11-pro.png'/>
           </CardContent>
         </StyledGrid>
         <Grid
@@ -82,7 +82,7 @@ const CardMobile = () => {
           <CardActions className='card-action-dense'>
             <Box sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
               <Button>
-                <CartPlus fontSize='small' sx={{marginRight: 2}} />
+                <CartPlus fontSize='small' sx={{marginRight: 2}}/>
                 Add to Card
               </Button>
               <IconButton
@@ -93,7 +93,7 @@ const CardMobile = () => {
                 aria-controls='long-menu'
                 aria-expanded={open ? 'true' : undefined}
               >
-                <ShareVariant fontSize='small' />
+                <ShareVariant fontSize='small'/>
               </IconButton>
               <Menu
                 open={open}
@@ -105,16 +105,16 @@ const CardMobile = () => {
                 }}
               >
                 <MenuItem onClick={handleClose}>
-                  <Facebook />
+                  <Facebook/>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Twitter />
+                  <Twitter/>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Linkedin />
+                  <Linkedin/>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <GooglePlus />
+                  <GooglePlus/>
                 </MenuItem>
               </Menu>
             </Box>

@@ -7,7 +7,7 @@
  */
 // todo need to be improved
 export class MatrixNTI2D<V = any> {
-  private readonly _matrix: Array<Array<V>>;
+  protected readonly _matrix: Array<Array<V>>;
 
   /**
    * The constructor creates a matrix with the specified number of rows and columns, and initializes all elements to a
@@ -15,7 +15,7 @@ export class MatrixNTI2D<V = any> {
    * @param options - An object containing the following properties:
    */
   constructor(options: { row: number; col: number; initialVal?: V }) {
-    const {row, col, initialVal} = options;
+    const { row, col, initialVal } = options;
     this._matrix = new Array(row).fill(undefined).map(() => new Array(col).fill(initialVal || 0));
   }
 

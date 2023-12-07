@@ -26,7 +26,7 @@ export const isValidParenthesis = async function (input: string, proxyHandler: T
     proxyHandler
   );
 
-  const hash: {[key in HashKey]: string} = {
+  const hash: { [key in HashKey]: string } = {
     '(': ')',
     '{': '}',
     '[': ']'
@@ -38,13 +38,13 @@ export const isValidParenthesis = async function (input: string, proxyHandler: T
       variablesProxy.stack.push(char as HashKey);
     } else {
       const top = variablesProxy.stack.pop();
-      if (top === null || hash[top] !== char) {
+      if (top === undefined || hash[top] !== char) {
         return false;
       }
     }
   }
 
-  return !variablesProxy.stack.size();
+  return !variablesProxy.stack.size;
 };
 
 /* --- end stack --- */

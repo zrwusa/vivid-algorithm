@@ -104,7 +104,7 @@ export async function runGroupAnagrams() {
 }
 
 function topKFrequentHash(nums: number[], k: number): number[] {
-  const hash: {[key: string]: number} = {};
+  const hash: { [key: string]: number } = {};
 
   for (let i = 0; i < nums.length; i++) {
     const si = nums[i].toString();
@@ -160,7 +160,7 @@ export async function runTopKFrequentBucket() {
 
 // 451. Sort Characters By Frequency
 export function frequencySortBucket(s: string): string {
-  const freq: {[key in string]: number} = {},
+  const freq: { [key in string]: number } = {},
     n = s.length;
   let max = 0,
     min = Number.MAX_SAFE_INTEGER;

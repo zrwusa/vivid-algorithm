@@ -122,7 +122,7 @@ const Icons = () => {
           <Tooltip arrow title={key} placement='top'>
             <Card>
               <CardContent sx={{display: 'flex'}}>
-                <IconTag />
+                <IconTag/>
               </CardContent>
             </Card>
           </Tooltip>

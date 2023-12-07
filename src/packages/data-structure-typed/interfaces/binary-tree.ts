@@ -1,10 +1,21 @@
-import {BinaryTreeNode} from '../data-structures';
-import {BinaryTreeDeletedResult, BinaryTreeNodeKey, BinaryTreeNodeNested, MapCallback} from '../types';
+import { BinaryTree, BinaryTreeNode } from '../data-structures';
+import {
+  BinaryTreeNested,
+  BinaryTreeNodeNested,
+  BinaryTreeOptions,
+  BiTreeDeleteResult,
+  BTNCallback,
+  BTNodeExemplar,
+} from '../types';
 
-export interface IBinaryTree<V = any, N extends BinaryTreeNode<V, N> = BinaryTreeNodeNested<V>> {
-  createNode(key: BinaryTreeNodeKey, val?: N['val']): N;
+export interface IBinaryTree<K = number, V = any, N extends BinaryTreeNode<K, V, N> = BinaryTreeNodeNested<K, V>, TREE extends BinaryTree<K, V, N, TREE> = BinaryTreeNested<K, V, N>> {
+  createNode(key: K, value?: N['value']): N;
 
-  add(keyOrNode: BinaryTreeNodeKey | N | null, val?: N['val']): N | null | undefined;
+  createTree(options?: Partial<BinaryTreeOptions<K>>): TREE;
 
-  delete<C extends MapCallback<N>>(identifier: ReturnType<C> | N, callback: C): BinaryTreeDeletedResult<N>[];
+  add(keyOrNodeOrEntry: BTNodeExemplar<K, V, N>, value?: V, count?: number): N | null | undefined;
+
+  addMany(nodes: Iterable<BTNodeExemplar<K, V, N>>, values?: Iterable<V | undefined>): (N | null | undefined)[];
+
+  delete<C extends BTNCallback<N>>(identifier: ReturnType<C> | null, callback: C): BiTreeDeleteResult<N>[];
 }

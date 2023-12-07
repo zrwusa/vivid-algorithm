@@ -23,7 +23,7 @@ const UserIcon = (props: UserIconProps) => {
   } */
 
   // @ts-ignore
-  return <IconTag {...iconProps} style={{...styles}} />;
+  return <IconTag {...iconProps} style={{...styles}}/>;
 };
 
 export default UserIcon;

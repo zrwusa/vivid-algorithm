@@ -400,7 +400,7 @@ export function mergeIntervals(intervals: number[][]): number[][] {
 
 // (todo looks like O(n) ?)
 export function mergeIntervalsBigON(intervals: number[][]): number[][] {
-  const counts: {[key: number]: [number, number]} = {};
+  const counts: { [key: number]: [number, number] } = {};
   let max = -1;
 
   for (const [start, end] of intervals) {

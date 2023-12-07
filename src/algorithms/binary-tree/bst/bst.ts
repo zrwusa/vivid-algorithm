@@ -1,4 +1,4 @@
-import {BinaryTreeNodeKey, BST, BSTNode} from 'data-structure-typed';
+import {BST, BSTNode} from 'data-structure-typed';
 import {DeepProxy, TProxyHandler} from '@qiwi/deep-proxy';
 import {testBSTCase1, testBSTCase6, trimABSTCase1} from './cases';
 import {runAlgorithm} from '../../helpers';
@@ -11,14 +11,7 @@ export async function testBST(arr: number[], proxyHandler?: TProxyHandler) {
   const clonedData = [...arr];
   const proxy = new DeepProxy(
     {
-      tree: new BST({
-        // nodeOrData: {
-        //     key: clonedData[0],
-        //     val: clonedData[0]
-        // },
-        // comparator: (a, b) => b - a,
-        // loopType: LoopType.recursive
-      })
+      tree: new BST()
     },
     proxyHandler
   );
@@ -81,7 +74,7 @@ export const runTestBST = async () => {
 export const isValidBST = (root: BSTNode<number> | null | undefined): boolean => {
   if (!root) return true;
 
-  function dfs(cur: BSTNode<number> | null | undefined, min: BinaryTreeNodeKey, max: BinaryTreeNodeKey): boolean {
+  function dfs(cur: BSTNode<number> | null | undefined, min: number, max: number): boolean {
     if (!cur) return true;
     if (cur.key <= min || cur.key >= max) return false;
     return dfs(cur.left, min, cur.key) && dfs(cur.right, cur.key, max);
@@ -127,9 +120,9 @@ export function kthSmallest(root: BSTNode<number> | null, k: number): number {
 // 99	Recover Binary Search Tree	★★★						inorder
 export function recoverTree(root: BSTNode<number> | null | undefined): void {
   const swap = (nodeA: BSTNode<number>, nodeB: BSTNode<number>) => {
-    const tempVal = nodeA.val;
-    nodeA.val = nodeB.val;
-    nodeB.val = tempVal;
+    const tempVal = nodeA.value;
+    nodeA.value = nodeB.value;
+    nodeB.value = tempVal;
   };
 
   let firstBad: BSTNode<number> | null | undefined = undefined;
@@ -149,12 +142,12 @@ export function recoverTree(root: BSTNode<number> | null | undefined): void {
         cur = cur.left;
         continue;
       } else {
-        pred.right = null;
+        pred.right = undefined;
       }
     }
 
     if (prev) {
-      if (prev.val && cur.val && prev?.val > cur?.val) {
+      if (prev.value && cur.value && prev?.value > cur?.value) {
         if (!firstBad) {
           firstBad = prev;
           secondBad = cur;
@@ -174,9 +167,9 @@ export function recoverTree(root: BSTNode<number> | null | undefined): void {
 }
 
 // 108  Convert Sorted Array to Binary Search Tree ★★★				build BST
-export function sortedArrayToBST(nums: number[]): BSTNode<number> | null {
-  const dfs = (left: number, right: number): BSTNode<number> | null => {
-    if (left > right) return null;
+export function sortedArrayToBST(nums: number[]): BSTNode<number> | undefined {
+  const dfs = (left: number, right: number): BSTNode<number> | undefined => {
+    if (left > right) return undefined;
     const mid = left + Math.floor((right - left) / 2);
     const cur = new BSTNode<number>(nums[mid], nums[mid]);
     cur.left = dfs(left, mid - 1);
@@ -221,26 +214,26 @@ export async function trimABST(
   low: number,
   high: number,
   proxyHandler?: TProxyHandler
-): Promise<BSTNode<number | null> | null> {
+): Promise<BSTNode<number, number | null> | undefined> {
   const clonedData = [...data];
-  const proxy: {tree: BST<number | null>} = new DeepProxy(
+  const proxy: { tree: BST<number, number | null> } = new DeepProxy(
     {
-      tree: new BST({comparator: (a, b) => a - b})
+      tree: new BST<number, number | null>([], {})
     },
     proxyHandler
   );
   proxy.tree.refill(clonedData);
 
   async function trimBST(
-    cur: BSTNode<number | null> | null | undefined,
+    cur: BSTNode<number, number | null> | undefined,
     low: number,
     high: number
-  ): Promise<BSTNode<number | null> | null> {
+  ): Promise<BSTNode<number, number | null> | undefined> {
     await wait(time1);
-    if (!cur) return null;
+    if (!cur) return undefined;
 
-    if (cur.val && cur.val < low) return await trimBST(cur.right, low, high);
-    if (cur.val && cur.val > high) return await trimBST(cur.left, low, high);
+    if (cur.value && cur.value < low) return await trimBST(cur.right, low, high);
+    if (cur.value && cur.value > high) return await trimBST(cur.left, low, high);
 
     cur.left = await trimBST(cur.left, low, high);
     cur.right = await trimBST(cur.right, low, high);

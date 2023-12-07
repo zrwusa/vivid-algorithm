@@ -8,7 +8,9 @@ import {
   networkDelayTimeCase3,
   regionsBySlashes,
   testGraph,
-  testMapGraph
+  testMapGraph,
+  testUndirectedGraph,
+  testUndirectedGraph2
 } from '../../../algorithms';
 import TextField from '@mui/material/TextField';
 import {AlgorithmPanel} from '../../../views/algorithm-panel';
@@ -19,7 +21,9 @@ export const GraphScreen = () => {
 
   return (
     <>
-      <AlgorithmPanel algorithm={testGraph} testCase={[]} buttonLabel={'Test Graph'} />
+      <AlgorithmPanel algorithm={testUndirectedGraph} testCase={[]} buttonLabel={'Test UndirectedGraph'}/>
+      <AlgorithmPanel algorithm={testUndirectedGraph2} testCase={[]} buttonLabel={'Test UndirectedGraph1'}/>
+      <AlgorithmPanel algorithm={testGraph} testCase={[]} buttonLabel={'Test Graph'}/>
       <AlgorithmPanel
         algorithm={testMapGraph}
         testCase={[]}
@@ -59,8 +63,8 @@ export const GraphScreen = () => {
         testCase={networkDelayTimeCase3}
         buttonLabel={'Network Delay Time'}
       />
-      <AlgorithmPanel algorithm={regionsBySlashes} testCase={[[]]} buttonLabel={'Regions by Slashes'} />
-      <AlgorithmPanel algorithm={regionsBySlashes} testCase={[]} buttonLabel={'Regions by Slashes'} />
+      <AlgorithmPanel algorithm={regionsBySlashes} testCase={[[]]} buttonLabel={'Regions by Slashes'}/>
+      <AlgorithmPanel algorithm={regionsBySlashes} testCase={[]} buttonLabel={'Regions by Slashes'}/>
     </>
   );
 };

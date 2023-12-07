@@ -55,7 +55,7 @@ const FormLayoutsAlignment = () => {
 
   return (
     <Card>
-      <CardHeader title='Form Alignment' titleTypographyProps={{variant: 'h6'}} />
+      <CardHeader title='Form Alignment' titleTypographyProps={{variant: 'h6'}}/>
       <CardContent sx={{minHeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <Form onSubmit={e => e.preventDefault()}>
           <Grid container spacing={5}>
@@ -63,7 +63,7 @@ const FormLayoutsAlignment = () => {
               <Typography variant='h5'>Sign In</Typography>
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label='Username' placeholder='carterLeonard' />
+              <TextField fullWidth label='Username' placeholder='carterLeonard'/>
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
@@ -82,7 +82,7 @@ const FormLayoutsAlignment = () => {
                         onMouseDown={handleMouseDownPassword}
                         aria-label='toggle password visibility'
                       >
-                        {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
+                        {values.showPassword ? <EyeOutline/> : <EyeOffOutline/>}
                       </IconButton>
                     </InputAdornment>
                   }
@@ -92,7 +92,7 @@ const FormLayoutsAlignment = () => {
             <Grid item xs={12}>
               <FormControlLabel
                 label='Remember me'
-                control={<Checkbox name='form-layouts-alignment-checkbox' />}
+                control={<Checkbox name='form-layouts-alignment-checkbox'/>}
                 sx={{'& .MuiButtonBase-root': {paddingTop: 0, paddingBottom: 0}}}
               />
             </Grid>

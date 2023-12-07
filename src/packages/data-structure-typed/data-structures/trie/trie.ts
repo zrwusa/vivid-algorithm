@@ -6,62 +6,51 @@
  * @license MIT License
  */
 
+import { IterableElementBase } from "../base";
+import { ElementCallback } from "../../types";
+
 /**
  * TrieNode represents a node in the Trie data structure. It holds a character key, a map of children nodes,
  * and a flag indicating whether it's the end of a word.
  */
 export class TrieNode {
+  key: string;
+  children: Map<string, TrieNode>;
+  isEnd: boolean;
+
   constructor(key: string) {
-    this._key = key;
-    this._isEnd = false;
-    this._children = new Map<string, TrieNode>();
-  }
-
-  private _key;
-
-  get key(): string {
-    return this._key;
-  }
-
-  set key(v: string) {
-    this._key = v;
-  }
-
-  protected _children: Map<string, TrieNode>;
-
-  get children(): Map<string, TrieNode> {
-    return this._children;
-  }
-
-  set children(v: Map<string, TrieNode>) {
-    this._children = v;
-  }
-
-  protected _isEnd: boolean;
-
-  get isEnd(): boolean {
-    return this._isEnd;
-  }
-
-  set isEnd(v: boolean) {
-    this._isEnd = v;
+    this.key = key;
+    this.isEnd = false;
+    this.children = new Map<string, TrieNode>();
   }
 }
 
 /**
  * Trie represents a Trie data structure. It provides basic Trie operations and additional methods.
  */
-export class Trie {
-  private readonly _caseSensitive: boolean;
-
+export class Trie extends IterableElementBase<string> {
   constructor(words?: string[], caseSensitive = true) {
+    super();
     this._root = new TrieNode('');
     this._caseSensitive = caseSensitive;
+    this._size = 0;
     if (words) {
-      for (const i of words) {
-        this.add(i);
+      for (const word of words) {
+        this.add(word);
       }
     }
+  }
+
+  protected _size: number;
+
+  get size(): number {
+    return this._size;
+  }
+
+  protected _caseSensitive: boolean;
+
+  get caseSensitive(): boolean {
+    return this._caseSensitive;
   }
 
   protected _root: TrieNode;
@@ -70,11 +59,15 @@ export class Trie {
     return this._root;
   }
 
-  set root(v: TrieNode) {
-    this._root = v;
-  }
+  /**
+   * Time Complexity: O(M), where M is the length of the word being added.
+   * Space Complexity: O(M) - Each character in the word adds a TrieNode.
+   */
 
   /**
+   * Time Complexity: O(M), where M is the length of the word being added.
+   * Space Complexity: O(M) - Each character in the word adds a TrieNode.
+   *
    * Add a word to the Trie structure.
    * @param {string} word - The word to add.
    * @returns {boolean} True if the word was successfully added.
@@ -82,6 +75,7 @@ export class Trie {
   add(word: string): boolean {
     word = this._caseProcess(word);
     let cur = this.root;
+    let isNewWord = false;
     for (const c of word) {
       let nodeC = cur.children.get(c);
       if (!nodeC) {
@@ -90,11 +84,23 @@ export class Trie {
       }
       cur = nodeC;
     }
-    cur.isEnd = true;
-    return true;
+    if (!cur.isEnd) {
+      isNewWord = true;
+      cur.isEnd = true;
+      this._size++;
+    }
+    return isNewWord;
   }
 
   /**
+   * Time Complexity: O(M), where M is the length of the input word.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(M), where M is the length of the input word.
+   * Space Complexity: O(1) - Constant space.
+   *
    * Check if the Trie contains a given word.
    * @param {string} word - The word to check for.
    * @returns {boolean} True if the word is present in the Trie.
@@ -111,6 +117,14 @@ export class Trie {
   }
 
   /**
+   * Time Complexity: O(M), where M is the length of the word being deleted.
+   * Space Complexity: O(M) - Due to the recursive DFS approach.
+   */
+
+  /**
+   * Time Complexity: O(M), where M is the length of the word being deleted.
+   * Space Complexity: O(M) - Due to the recursive DFS approach.
+   *
    * Remove a word from the Trie structure.
    * @param{string} word - The word to delete.
    * @returns {boolean} True if the word was successfully removed.
@@ -145,9 +159,22 @@ export class Trie {
     };
 
     dfs(this.root, 0);
+    if (isDeleted) {
+      this._size--;
+    }
     return isDeleted;
   }
 
+  /**
+   * Time Complexity: O(N), where N is the total number of nodes in the trie.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(N), where N is the total number of nodes in the trie.
+   * Space Complexity: O(1) - Constant space.
+   *
+   */
   getHeight() {
     const beginRoot = this.root;
     let maxDepth = 0;
@@ -156,7 +183,7 @@ export class Trie {
         if (level > maxDepth) {
           maxDepth = level;
         }
-        const {children} = node;
+        const { children } = node;
         if (children) {
           for (const child of children.entries()) {
             bfs(child[1], level + 1);
@@ -168,8 +195,15 @@ export class Trie {
     return maxDepth;
   }
 
-  // --- start additional methods ---
   /**
+   * Time Complexity: O(M), where M is the length of the input prefix.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(M), where M is the length of the input prefix.
+   * Space Complexity: O(1) - Constant space.
+   *
    * Check if a given input string has an absolute prefix in the Trie, meaning it's not a complete word.
    * @param {string} input - The input string to check.
    * @returns {boolean} True if it's an absolute prefix in the Trie.
@@ -186,6 +220,14 @@ export class Trie {
   }
 
   /**
+   * Time Complexity: O(M), where M is the length of the input prefix.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(M), where M is the length of the input prefix.
+   * Space Complexity: O(1) - Constant space.
+   *
    * Check if a given input string is a prefix of any existing word in the Trie, whether as an absolute prefix or a complete word.
    * @param {string} input - The input string representing the prefix to check.
    * @returns {boolean} True if it's a prefix in the Trie.
@@ -202,6 +244,14 @@ export class Trie {
   }
 
   /**
+   * Time Complexity: O(N), where N is the total number of nodes in the trie.
+   * Space Complexity: O(M), where M is the length of the input prefix.
+   */
+
+  /**
+   * Time Complexity: O(N), where N is the total number of nodes in the trie.
+   * Space Complexity: O(M), where M is the length of the input prefix.
+   *
    * Check if the input string is a common prefix in the Trie, meaning it's a prefix shared by all words in the Trie.
    * @param {string} input - The input string representing the common prefix to check for.
    * @returns {boolean} True if it's a common prefix in the Trie.
@@ -221,6 +271,14 @@ export class Trie {
   }
 
   /**
+   * Time Complexity: O(N), where N is the total number of nodes in the trie.
+   * Space Complexity: O(M), where M is the length of the longest common prefix.
+   */
+
+  /**
+   * Time Complexity: O(N), where N is the total number of nodes in the trie.
+   * Space Complexity: O(M), where M is the length of the longest common prefix.
+   *
    * Get the longest common prefix among all the words stored in the Trie.
    * @returns {string} The longest common prefix found in the Trie.
    */
@@ -237,6 +295,14 @@ export class Trie {
   }
 
   /**
+   * Time Complexity: O(K * L), where K is the number of words retrieved, and L is the average length of the words.
+   * Space Complexity: O(K * L) - The space required for the output array.
+   */
+
+  /**
+   * Time Complexity: O(K * L), where K is the number of words retrieved, and L is the average length of the words.
+   * Space Complexity: O(K * L) - The space required for the output array.
+   *
    * The `getAll` function returns an array of all words in a Trie data structure that start with a given prefix.
    * @param {string} prefix - The `prefix` parameter is a string that represents the prefix that we want to search for in the
    * trie. It is an optional parameter, so if no prefix is provided, it will default to an empty string.
@@ -277,12 +343,98 @@ export class Trie {
     return words;
   }
 
-  private _caseProcess(str: string) {
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   *
+   * The `filter` function takes a predicate function and returns a new array containing all the
+   * elements for which the predicate function returns true.
+   * @param predicate - The `predicate` parameter is a callback function that takes three arguments:
+   * `word`, `index`, and `this`. It should return a boolean value indicating whether the current
+   * element should be included in the filtered results or not.
+   * @param {any} [thisArg] - The `thisArg` parameter is an optional argument that allows you to
+   * specify the value of `this` within the `predicate` function. It is used when you want to bind a
+   * specific object as the context for the `predicate` function. If `thisArg` is provided, it will be
+   * @returns The `filter` method is returning an array of strings (`string[]`).
+   */
+  filter(predicate: ElementCallback<string, boolean>, thisArg?: any): string[] {
+    const results: string[] = [];
+    let index = 0;
+    for (const word of this) {
+      if (predicate.call(thisArg, word, index, this)) {
+        results.push(word);
+      }
+      index++;
+    }
+    return results;
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   *
+   * The `map` function creates a new Trie by applying a callback function to each element in the Trie.
+   * @param callback - The callback parameter is a function that will be called for each element in the
+   * Trie. It takes three arguments: the current element in the Trie, the index of the current element,
+   * and the Trie itself. The callback function should return a new value for the element.
+   * @param {any} [thisArg] - The `thisArg` parameter is an optional argument that specifies the value
+   * to be used as `this` when executing the `callback` function. If `thisArg` is provided, it will be
+   * passed as the `this` value to the `callback` function. If `thisArg` is
+   * @returns The `map` function is returning a new Trie object.
+   */
+  map(callback: ElementCallback<string, string>, thisArg?: any): Trie {
+    const newTrie = new Trie();
+    let index = 0;
+    for (const word of this) {
+      newTrie.add(callback.call(thisArg, word, index, this));
+      index++;
+    }
+    return newTrie;
+  }
+
+  print() {
+    console.log([...this]);
+  }
+
+  protected* _getIterator(): IterableIterator<string> {
+    function* _dfs(node: TrieNode, path: string): IterableIterator<string> {
+      if (node.isEnd) {
+        yield path;
+      }
+      for (const [char, childNode] of node.children) {
+        yield* _dfs(childNode, path + char);
+      }
+    }
+
+    yield* _dfs(this.root, '');
+  }
+
+  /**
+   * Time Complexity: O(M), where M is the length of the input string.
+   * Space Complexity: O(1) - Constant space.
+   */
+
+  /**
+   * Time Complexity: O(M), where M is the length of the input string.
+   * Space Complexity: O(1) - Constant space.
+   *
+   * @param str
+   * @protected
+   */
+  protected _caseProcess(str: string) {
     if (!this._caseSensitive) {
       str = str.toLowerCase(); // Convert str to lowercase if case-insensitive
     }
     return str;
   }
-
-  // --- end additional methods ---
 }

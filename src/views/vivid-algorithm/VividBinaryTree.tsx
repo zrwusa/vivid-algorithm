@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useEffect, useRef, useState} from 'react';
-import {BinaryTreeNode, TreeMultisetNode} from 'data-structure-typed';
+import {BinaryTreeNode, TreeMultimapNode} from 'data-structure-typed';
 import styles from './styles';
 import {SVGOptions} from '../../types';
 
@@ -34,16 +34,16 @@ const VividBinaryTreeRecursive: React.FC<{
   containerWidth?: number;
   relatedBinaryNode?: BinaryTreeNode;
 }> = ({
-  node,
-  level = 1,
-  index = 0,
-  familyLength = 1,
-  parentX,
-  parentY,
-  maxHeight,
-  relatedBinaryNode,
-  containerWidth
-}) => {
+        node,
+        level = 1,
+        index = 0,
+        familyLength = 1,
+        parentX,
+        parentY,
+        maxHeight,
+        relatedBinaryNode,
+        containerWidth
+      }) => {
   if (!node) {
     return null;
   }
@@ -133,7 +133,7 @@ const VividBinaryTreeRecursive: React.FC<{
           </tspan>
         </text>
       ) : null}
-      {node instanceof TreeMultisetNode ? (
+      {node instanceof TreeMultimapNode ? (
         <circle
           style={{cursor: 'pointer'}}
           stroke={secondaryTextFillColor}
@@ -146,7 +146,7 @@ const VividBinaryTreeRecursive: React.FC<{
           }}
         />
       ) : null}
-      {node instanceof TreeMultisetNode ? (
+      {node instanceof TreeMultimapNode ? (
         <text
           fill='none'
           stroke={isActive ? secondaryFillActiveColor : secondaryTextFillColor}

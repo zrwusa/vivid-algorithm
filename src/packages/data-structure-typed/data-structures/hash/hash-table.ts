@@ -8,77 +8,65 @@
 
 export class HashTableNode<K, V> {
   key: K;
-  val: V;
-  next: HashTableNode<K, V> | null;
+  value: V;
+  next: HashTableNode<K, V> | undefined;
 
-  constructor(key: K, val: V) {
+  constructor(key: K, value: V) {
     this.key = key;
-    this.val = val;
-    this.next = null;
+    this.value = value;
+    this.next = undefined;
   }
 }
 
-import {HashFunction} from '../../types';
+import { HashFunction } from '../../types';
 
-export class HashTable<K, V> {
-  private static readonly DEFAULT_CAPACITY = 16;
-  private static readonly LOAD_FACTOR = 0.75;
+export class HashTable<K = any, V = any> {
+  protected static readonly DEFAULT_CAPACITY = 16;
+  protected static readonly LOAD_FACTOR = 0.75;
 
   constructor(capacity: number = HashTable.DEFAULT_CAPACITY, hashFn?: HashFunction<K>) {
     this._hashFn = hashFn || this._defaultHashFn;
     this._capacity = Math.max(capacity, HashTable.DEFAULT_CAPACITY);
     this._size = 0;
-    this._buckets = new Array<HashTableNode<K, V> | null>(this._capacity).fill(null);
+    this._buckets = new Array<HashTableNode<K, V> | undefined>(this._capacity).fill(undefined);
   }
 
-  private _capacity: number;
+  protected _capacity: number;
 
   get capacity(): number {
     return this._capacity;
   }
 
-  set capacity(value: number) {
-    this._capacity = value;
-  }
-
-  private _size: number;
+  protected _size: number;
 
   get size(): number {
     return this._size;
   }
 
-  private _buckets: Array<HashTableNode<K, V> | null>;
+  protected _buckets: Array<HashTableNode<K, V> | undefined>;
 
-  get buckets(): Array<HashTableNode<K, V> | null> {
+  get buckets(): Array<HashTableNode<K, V> | undefined> {
     return this._buckets;
   }
 
-  set buckets(value: Array<HashTableNode<K, V> | null>) {
-    this._buckets = value;
-  }
-
-  private _hashFn: HashFunction<K>;
+  protected _hashFn: HashFunction<K>;
 
   get hashFn(): HashFunction<K> {
     return this._hashFn;
-  }
-
-  set hashFn(value: HashFunction<K>) {
-    this._hashFn = value;
   }
 
   /**
    * The set function adds a key-value pair to the hash table, handling collisions and resizing if necessary.
    * @param {K} key - The key parameter represents the key of the key-value pair that you want to insert into the hash
    * table. It is of type K, which is a generic type representing the key's data type.
-   * @param {V} val - The parameter `val` represents the value that you want to associate with the given key in the hash
+   * @param {V} value - The parameter `value` represents the value that you want to associate with the given key in the hash
    * table.
    * @returns Nothing is being returned. The return type of the `put` method is `void`, which means it does not return any
    * value.
    */
-  set(key: K, val: V): void {
+  set(key: K, value: V): void {
     const index = this._hash(key);
-    const newNode = new HashTableNode<K, V>(key, val);
+    const newNode = new HashTableNode<K, V>(key, value);
 
     if (!this._buckets[index]) {
       this._buckets[index] = newNode;
@@ -88,7 +76,7 @@ export class HashTable<K, V> {
       while (currentNode) {
         if (currentNode.key === key) {
           // If the key already exists, update the value
-          currentNode.val = val;
+          currentNode.value = value;
           return;
         }
         if (!currentNode.next) {
@@ -120,7 +108,7 @@ export class HashTable<K, V> {
 
     while (currentNode) {
       if (currentNode.key === key) {
-        return currentNode.val;
+        return currentNode.value;
       }
       currentNode = currentNode.next;
     }
@@ -137,7 +125,7 @@ export class HashTable<K, V> {
   delete(key: K): void {
     const index = this._hash(key);
     let currentNode = this._buckets[index];
-    let prevNode: HashTableNode<K, V> | null = null;
+    let prevNode: HashTableNode<K, V> | undefined = undefined;
 
     while (currentNode) {
       if (currentNode.key === key) {
@@ -147,12 +135,62 @@ export class HashTable<K, V> {
           this._buckets[index] = currentNode.next;
         }
         this._size--;
-        currentNode.next = null; // Release memory
+        currentNode.next = undefined; // Release memory
         return;
       }
       prevNode = currentNode;
       currentNode = currentNode.next;
     }
+  }
+
+  * [Symbol.iterator](): Generator<[K, V], void, undefined> {
+    for (const bucket of this._buckets) {
+      let currentNode = bucket;
+      while (currentNode) {
+        yield [currentNode.key, currentNode.value];
+        currentNode = currentNode.next;
+      }
+    }
+  }
+
+  forEach(callback: (entry: [K, V], index: number, table: HashTable<K, V>) => void): void {
+    let index = 0;
+    for (const entry of this) {
+      callback(entry, index, this);
+      index++;
+    }
+  }
+
+  filter(predicate: (entry: [K, V], index: number, table: HashTable<K, V>) => boolean): HashTable<K, V> {
+    const newTable = new HashTable<K, V>();
+    let index = 0;
+    for (const [key, value] of this) {
+      if (predicate([key, value], index, this)) {
+        newTable.set(key, value);
+      }
+      index++;
+    }
+    return newTable;
+  }
+
+  map<T>(callback: (entry: [K, V], index: number, table: HashTable<K, V>) => T): HashTable<K, T> {
+    const newTable = new HashTable<K, T>();
+    let index = 0;
+    for (const [key, value] of this) {
+      newTable.set(key, callback([key, value], index, this));
+      index++;
+    }
+    return newTable;
+  }
+
+  reduce<T>(callback: (accumulator: T, entry: [K, V], index: number, table: HashTable<K, V>) => T, initialValue: T): T {
+    let accumulator = initialValue;
+    let index = 0;
+    for (const entry of this) {
+      accumulator = callback(accumulator, entry, index, this);
+      index++;
+    }
+    return accumulator;
   }
 
   /**
@@ -253,13 +291,13 @@ export class HashTable<K, V> {
    */
   protected _expand(): void {
     const newCapacity = this._capacity * 2;
-    const newBuckets = new Array<HashTableNode<K, V> | null>(newCapacity).fill(null);
+    const newBuckets = new Array<HashTableNode<K, V> | undefined>(newCapacity).fill(undefined);
 
     for (const bucket of this._buckets) {
       let currentNode = bucket;
       while (currentNode) {
         const newIndex = this._hash(currentNode.key);
-        const newNode = new HashTableNode<K, V>(currentNode.key, currentNode.val);
+        const newNode = new HashTableNode<K, V>(currentNode.key, currentNode.value);
 
         if (!newBuckets[newIndex]) {
           newBuckets[newIndex] = newNode;

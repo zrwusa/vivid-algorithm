@@ -41,7 +41,7 @@ const AppBarContent = (props: Props) => {
       <Box className='actions-left' sx={{mr: 2, display: 'flex', alignItems: 'center'}}>
         {hidden ? (
           <IconButton color='inherit' onClick={toggleNavVisibility} sx={{ml: -2.75, ...(hiddenSm ? {} : {mr: 3.5})}}>
-            <Menu />
+            <Menu/>
           </IconButton>
         ) : null}
         {/*<TextField*/}

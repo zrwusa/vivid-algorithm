@@ -36,7 +36,7 @@ interface Props {
 
 // ** Styled Components
 const MenuNavLink = styled(ListItemButton)<
-  ListItemButtonProps & {component?: ElementType; target?: '_blank' | undefined}
+  ListItemButtonProps & { component?: ElementType; target?: '_blank' | undefined }
 >(({theme}) => ({
   width: '100%',
   borderTopRightRadius: 100,
@@ -104,7 +104,7 @@ const VerticalNavLink = ({item, navVisible, toggleNavVisibility}: Props) => {
               transition: 'margin .25s ease-in-out'
             }}
           >
-            <UserIcon icon={IconTag} />
+            <UserIcon icon={IconTag}/>
           </ListItemIcon>
 
           <MenuItemTextMetaWrapper>

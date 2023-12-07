@@ -252,7 +252,7 @@ export const wait = async (ms: number, resolveValue?: any) => {
   });
 };
 
-export function extractValue<Item>(data: {key: string; value: Item}[]) {
+export function extractValue<Item>(data: { key: string; value: Item }[]) {
   let result: Item[] = [];
   if (data && data.length > 0) {
     result = data.map(item => item.value);
@@ -261,7 +261,7 @@ export function extractValue<Item>(data: {key: string; value: Item}[]) {
   return result;
 }
 
-export function keyValueToArray<Item>(data: {[key: string]: Item}) {
+export function keyValueToArray<Item>(data: { [key: string]: Item }) {
   const itemArray: Array<Item> = [];
   const keys = Object.keys(data);
   for (const i of keys) {
@@ -449,7 +449,7 @@ export const deepRemoveByKey = (obj: any, keysToBeRemoved: string[]) => {
   return result as typeof obj;
 };
 
-export const deepRenameKeys = (obj: JSONSerializable, keysMap: {[key in string]: string}) => {
+export const deepRenameKeys = (obj: JSONSerializable, keysMap: { [key in string]: string }) => {
   return _.transform(obj, function (result: JSONSerializable, value: any, key: string | number) {
     const currentKey = keysMap[key] || key;
     result[currentKey] = _.isObject(value) ? deepRenameKeys(value, keysMap) : value;
@@ -458,7 +458,7 @@ export const deepRenameKeys = (obj: JSONSerializable, keysMap: {[key in string]:
 
 export const deepReplaceValues = (
   obj: JSONSerializable,
-  keyReducerMap: {[key in string]: (item: JSONSerializable) => any}
+  keyReducerMap: { [key in string]: (item: JSONSerializable) => any }
 ) => {
   const newObject = _.clone(obj) as JSONSerializable;
   _.each(obj, (val: any, key: string) => {
@@ -477,7 +477,7 @@ export const deepReplaceValues = (
 // TODO determine depth and pass root node as a param through callback
 export const deepAdd = (
   obj: JSONSerializable,
-  keyReducerMap: {[key in string]: (item: JSONSerializable) => any},
+  keyReducerMap: { [key in string]: (item: JSONSerializable) => any },
   isItemRootParent?: boolean
 ) => {
   const newObject = _.clone(obj) as JSONObject | [];
@@ -545,7 +545,7 @@ export const arrayRemove = function <T>(array: T[], predicate: (item: T, index: 
 };
 
 export function memo() {
-  const cache: {[k: string]: any} = {};
+  const cache: { [k: string]: any } = {};
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   return function (target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
@@ -562,9 +562,9 @@ export function memo() {
   };
 }
 
-export function zip<T = number, T1 = number>(array1: T[], array2: T1[], options?: {isToObj: boolean}) {
+export function zip<T = number, T1 = number>(array1: T[], array2: T1[], options?: { isToObj: boolean }) {
   const zipped: [T, T1][] = [];
-  const zippedObjCoords: {x: T; y: T1}[] = [];
+  const zippedObjCoords: { x: T; y: T1 }[] = [];
   const {isToObj} = options ? options : {isToObj: false};
   for (let i = 0; i < array1.length; i++) {
     if (isToObj) {
