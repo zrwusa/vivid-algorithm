@@ -1,4 +1,4 @@
-import {BST, CP} from 'data-structure-typed';
+import {BST} from 'data-structure-typed';
 import {wait, WaitManager} from '../../../utils';
 
 export const testBSTCase1: [number[]] = [[11, 3, 15, 1, 8, 13, 16, 2, 6, 9, 12, 14, 4, 7, 10, 5]];
@@ -51,9 +51,9 @@ export const testBSTCase6 = async (proxy: { tree: BST }) => {
   await wait(time2);
   let subTreeSum = 0;
   node15 &&
-  proxy.tree.subTreeTraverse(node => {
+  proxy.tree.dfs(node => {
     subTreeSum += node.key;
-  }, node15);
+  }, 'IN', node15);
   console.log(subTreeSum === 70, 'subTreeSum, 15');
 
   await wait(time2);
@@ -62,7 +62,7 @@ export const testBSTCase6 = async (proxy: { tree: BST }) => {
     node => {
       lesserSum += node.key;
     },
-    CP.lt,
+    'LT',
     10
   );
   console.log(lesserSum === 45, 'lesserSum, 10');
@@ -73,7 +73,7 @@ export const testBSTCase6 = async (proxy: { tree: BST }) => {
   await wait(time3);
 
   await wait(time3);
-  const dfs = proxy.tree.dfs(node => node, 'in');
+  const dfs = proxy.tree.dfs(node => node, 'IN');
   console.log(dfs[0].key === 1 && dfs[dfs.length - 1].key === 16, 'dfs ,in, node', dfs);
   await wait(time3);
   proxy.tree.perfectlyBalance();

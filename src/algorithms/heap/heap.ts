@@ -3,7 +3,12 @@ import _ from 'lodash';
 
 export const testHeap = () => {
   const minNumHeap = new MinHeap<number>();
-  minNumHeap.add(1).add(6).add(2).add(0).add(5).add(9);
+  minNumHeap.add(1);
+  minNumHeap.add(6);
+  minNumHeap.add(2);
+  minNumHeap.add(0);
+  minNumHeap.add(5);
+  minNumHeap.add(9);
   console.log(minNumHeap.has(1));
   console.log(minNumHeap.has(2));
   console.log(minNumHeap.poll() === 0);

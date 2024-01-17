@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-import type { Thunk, ToThunkFn, TrlAsyncFn, TrlFn } from '../types';
+import type {Thunk, ToThunkFn, TrlAsyncFn, TrlFn} from '../types';
 
 export const uuidV4 = function () {
   return 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(/[x]/g, function (c) {
@@ -57,7 +57,7 @@ export const trampoline = (fn: TrlFn) => {
 
       return result;
     },
-    { cont }
+    {cont}
   );
 };
 
@@ -74,7 +74,7 @@ export const trampolineAsync = (fn: TrlAsyncFn) => {
 
       return result;
     },
-    { cont }
+    {cont}
   );
 };
 
@@ -98,4 +98,10 @@ export const isWeakKey = (input: unknown): input is object => {
   return (inputType === 'object' && input !== null) || inputType === 'function';
 };
 
-export const calcMinUnitsRequired = (totalQuantity: number, unitSize: number) => Math.floor((totalQuantity + unitSize - 1) / unitSize)
+export const calcMinUnitsRequired = (totalQuantity: number, unitSize: number) =>
+  Math.floor((totalQuantity + unitSize - 1) / unitSize);
+
+export const roundFixed = (num: number, digit: number = 10) => {
+  const multiplier = Math.pow(10, digit);
+  return Math.round(num * multiplier) / multiplier;
+};

@@ -5,10 +5,10 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-import { arrayRemove } from '../../utils';
-import { AbstractEdge, AbstractGraph, AbstractVertex } from './abstract-graph';
-import type { TopologicalStatus, VertexKey } from '../../types';
-import { IGraph } from '../../interfaces';
+import type {TopologicalStatus, VertexKey} from '../../types';
+import {AbstractEdge, AbstractGraph, AbstractVertex} from './abstract-graph';
+import {IGraph} from '../../interfaces';
+import {arrayRemove} from '../../utils';
 
 export class DirectedVertex<V = any> extends AbstractVertex<V> {
   /**
@@ -66,10 +66,18 @@ export class DirectedGraph<
     return this._outEdgeMap;
   }
 
+  set outEdgeMap(v: Map<VO, EO[]>) {
+    this._outEdgeMap = v;
+  }
+
   protected _inEdgeMap: Map<VO, EO[]> = new Map<VO, EO[]>();
 
   get inEdgeMap(): Map<VO, EO[]> {
     return this._inEdgeMap;
+  }
+
+  set inEdgeMap(v: Map<VO, EO[]>) {
+    this._inEdgeMap = v;
   }
 
   /**
@@ -182,7 +190,6 @@ export class DirectedGraph<
    * Space Complexity: O(1)
    */
 
-
   /**
    * Time Complexity: O(E) where E is the number of edgeMap
    * Space Complexity: O(1)
@@ -240,7 +247,7 @@ export class DirectedGraph<
    * (`VertexKey`).
    * @returns The method is returning a boolean value.
    */
-  override deleteVertex(vertexOrKey: VO | VertexKey): boolean {
+  deleteVertex(vertexOrKey: VO | VertexKey): boolean {
     let vertexKey: VertexKey;
     let vertex: VO | undefined;
     if (this.isVertexKey(vertexOrKey)) {
@@ -248,12 +255,16 @@ export class DirectedGraph<
       vertexKey = vertexOrKey;
     } else {
       vertex = vertexOrKey;
-      vertexKey = this._getVertexKey(vertexOrKey)
+      vertexKey = this._getVertexKey(vertexOrKey);
     }
 
     if (vertex) {
-      this._outEdgeMap.delete(vertex)
-      this._inEdgeMap.delete(vertex)
+      const neighbors = this.getNeighbors(vertex);
+      for (const neighbor of neighbors) {
+        this._inEdgeMap.delete(neighbor);
+      }
+      this._outEdgeMap.delete(vertex);
+      this._inEdgeMap.delete(vertex);
     }
 
     return this._vertexMap.delete(vertexKey);
@@ -597,6 +608,15 @@ export class DirectedGraph<
   }
 
   /**
+   * The isEmpty function checks if the graph is empty.
+   *
+   * @return A boolean value
+   */
+  isEmpty(): boolean {
+    return this.vertexMap.size === 0 && this.inEdgeMap.size === 0 && this.outEdgeMap.size === 0;
+  }
+
+  /**
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    */
@@ -605,13 +625,148 @@ export class DirectedGraph<
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
-   * The function `_addEdgeOnly` adds an edge to a graph if the source and destination vertexMap exist.
+   * The clear function resets the vertex map, in-edge map, and out-edge map.
+   */
+  clear() {
+    this._vertexMap = new Map<VertexKey, VO>();
+    this._inEdgeMap = new Map<VO, EO[]>();
+    this._outEdgeMap = new Map<VO, EO[]>();
+  }
+
+  /**
+   * The clone function creates a new DirectedGraph object with the same vertices and edges as the original.
+   *
+   * @return A new instance of the directedgraph class
+   */
+  clone(): DirectedGraph<V, E, VO, EO> {
+    const cloned = new DirectedGraph<V, E, VO, EO>();
+    cloned.vertexMap = new Map<VertexKey, VO>(this.vertexMap);
+    cloned.inEdgeMap = new Map<VO, EO[]>(this.inEdgeMap);
+    cloned.outEdgeMap = new Map<VO, EO[]>(this.outEdgeMap);
+    return cloned;
+  }
+
+  /**
+   *  Time Complexity: O(V + E)
+   *  Space Complexity: O(V)
+   *  Tarjan is an algorithm based on dfs,which is used to solve the connectivity problem of graphs.
+   *  Tarjan can find the SSC(strongly connected components), articulation points, and bridges of directed graphs.
+   */
+
+  /**
+   *  Time Complexity: O(V + E)
+   *  Space Complexity: O(V)
+   *  Tarjan is an algorithm based on dfs,which is used to solve the connectivity problem of graphs.
+   *  Tarjan can find the SSC(strongly connected components), articulation points, and bridges of directed graphs.
+   *
+   * The function `tarjan` implements the Tarjan's algorithm to find strongly connected components in a
+   * graph.
+   * @returns The function `tarjan()` returns an object with three properties: `dfnMap`, `lowMap`, and
+   * `SCCs`.
+   */
+  tarjan(): { dfnMap: Map<VO, number>; lowMap: Map<VO, number>; SCCs: Map<number, VO[]> } {
+    const dfnMap = new Map<VO, number>();
+    const lowMap = new Map<VO, number>();
+    const SCCs = new Map<number, VO[]>();
+
+    let time = 0;
+
+    const stack: VO[] = [];
+    const inStack: Set<VO> = new Set();
+
+    const dfs = (vertex: VO) => {
+      dfnMap.set(vertex, time);
+      lowMap.set(vertex, time);
+      time++;
+
+      stack.push(vertex);
+      inStack.add(vertex);
+
+      const neighbors = this.getNeighbors(vertex);
+      for (const neighbor of neighbors) {
+        if (!dfnMap.has(neighbor)) {
+          dfs(neighbor);
+          lowMap.set(vertex, Math.min(lowMap.get(vertex)!, lowMap.get(neighbor)!));
+        } else if (inStack.has(neighbor)) {
+          lowMap.set(vertex, Math.min(lowMap.get(vertex)!, dfnMap.get(neighbor)!));
+        }
+      }
+
+      if (dfnMap.get(vertex) === lowMap.get(vertex)) {
+        const SCC: VO[] = [];
+        let poppedVertex: VO | undefined;
+
+        do {
+          poppedVertex = stack.pop();
+          inStack.delete(poppedVertex!);
+          SCC.push(poppedVertex!);
+        } while (poppedVertex !== vertex);
+
+        SCCs.set(SCCs.size, SCC);
+      }
+    };
+
+    for (const vertex of this.vertexMap.values()) {
+      if (!dfnMap.has(vertex)) {
+        dfs(vertex);
+      }
+    }
+
+    return {dfnMap, lowMap, SCCs};
+  }
+
+  /**
+   * Time Complexity: O(V + E) - Depends on the implementation (Tarjan's algorithm).
+   * Space Complexity: O(V) - Depends on the implementation (Tarjan's algorithm).
+   */
+
+  /**
+   * Time Complexity: O(V + E) - Depends on the implementation (Tarjan's algorithm).
+   * Space Complexity: O(V) - Depends on the implementation (Tarjan's algorithm).
+   *
+   * The function returns a map that associates each vertex object with its corresponding depth-first
+   * number.
+   * @returns A Map object with keys of type VO and values of type number.
+   */
+  getDFNMap(): Map<VO, number> {
+    return this.tarjan().dfnMap;
+  }
+
+  /**
+   * The function returns a Map object that contains the low values of each vertex in a Tarjan
+   * algorithm.
+   * @returns The method `getLowMap()` is returning a `Map` object with keys of type `VO` and values of
+   * type `number`.
+   */
+  getLowMap(): Map<VO, number> {
+    return this.tarjan().lowMap;
+  }
+
+  /**
+   * The function "getSCCs" returns a map of strongly connected components (SCCs) using the Tarjan
+   * algorithm.
+   * @returns a map where the keys are numbers and the values are arrays of VO objects.
+   */
+  getSCCs(): Map<number, VO[]> {
+    return this.tarjan().SCCs;
+  }
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The function `_addEdge` adds an edge to a graph if the source and destination vertexMap exist.
    * @param {EO} edge - The parameter `edge` is of type `EO`, which represents an edge in a graph. It is the edge that
    * needs to be added to the graph.
    * @returns a boolean value. It returns true if the edge was successfully added to the graph, and false if either the
    * source or destination vertex does not exist in the graph.
    */
-  protected _addEdgeOnly(edge: EO): boolean {
+  protected _addEdge(edge: EO): boolean {
     if (!(this.hasVertex(edge.src) && this.hasVertex(edge.dest))) {
       return false;
     }

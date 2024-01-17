@@ -5,13 +5,12 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-import { uuidV4 } from '../../utils';
-import { PriorityQueue } from '../priority-queue';
-import type { DijkstraResult, VertexKey } from '../../types';
-import { EntryCallback } from "../../types";
-import { IGraph } from '../../interfaces';
-import { Queue } from '../queue';
-import { IterableEntryBase } from "../base";
+import type {DijkstraResult, EntryCallback, VertexKey} from '../../types';
+import {uuidV4} from '../../utils';
+import {IterableEntryBase} from '../base';
+import {IGraph} from '../../interfaces';
+import {Heap} from '../heap';
+import {Queue} from '../queue';
 
 export abstract class AbstractVertex<V = any> {
   key: VertexKey;
@@ -66,7 +65,9 @@ export abstract class AbstractGraph<
   E = any,
   VO extends AbstractVertex<V> = AbstractVertex<V>,
   EO extends AbstractEdge<E> = AbstractEdge<E>
-> extends IterableEntryBase<VertexKey, V | undefined> implements IGraph<V, E, VO, EO> {
+>
+  extends IterableEntryBase<VertexKey, V | undefined>
+  implements IGraph<V, E, VO, EO> {
   constructor() {
     super();
   }
@@ -75,6 +76,14 @@ export abstract class AbstractGraph<
 
   get vertexMap(): Map<VertexKey, VO> {
     return this._vertexMap;
+  }
+
+  set vertexMap(v: Map<VertexKey, VO>) {
+    this._vertexMap = v;
+  }
+
+  get size(): number {
+    return this._vertexMap.size;
   }
 
   /**
@@ -157,16 +166,16 @@ export abstract class AbstractGraph<
 
   addVertex(keyOrVertex: VertexKey | VO, value?: V): boolean {
     if (keyOrVertex instanceof AbstractVertex) {
-      return this._addVertexOnly(keyOrVertex);
+      return this._addVertex(keyOrVertex);
     } else {
       const newVertex = this.createVertex(keyOrVertex, value);
-      return this._addVertexOnly(newVertex);
+      return this._addVertex(newVertex);
     }
   }
 
   isVertexKey(potentialKey: any): potentialKey is VertexKey {
     const potentialKeyType = typeof potentialKey;
-    return potentialKeyType === "string" || potentialKeyType === "number"
+    return potentialKeyType === 'string' || potentialKeyType === 'number';
   }
 
   /**
@@ -174,19 +183,7 @@ export abstract class AbstractGraph<
    * Space Complexity: O(1) - Constant space, as it creates only a few variables.
    */
 
-  /**
-   * Time Complexity: O(1) - Constant time for Map operations.
-   * Space Complexity: O(1) - Constant space, as it creates only a few variables.
-   *
-   * The `deleteVertex` function removes a vertex from a graph by its ID or by the vertex object itself.
-   * @param {VO | VertexKey} vertexOrKey - The parameter `vertexOrKey` can be either a vertex object (`VO`) or a vertex ID
-   * (`VertexKey`).
-   * @returns The method is returning a boolean value.
-   */
-  deleteVertex(vertexOrKey: VO | VertexKey): boolean {
-    const vertexKey = this._getVertexKey(vertexOrKey);
-    return this._vertexMap.delete(vertexKey);
-  }
+  abstract deleteVertex(vertexOrKey: VO | VertexKey): boolean;
 
   /**
    * Time Complexity: O(K), where K is the number of vertexMap to be removed.
@@ -243,14 +240,14 @@ export abstract class AbstractGraph<
 
   addEdge(srcOrEdge: VO | VertexKey | EO, dest?: VO | VertexKey, weight?: number, value?: E): boolean {
     if (srcOrEdge instanceof AbstractEdge) {
-      return this._addEdgeOnly(srcOrEdge);
+      return this._addEdge(srcOrEdge);
     } else {
       if (dest instanceof AbstractVertex || typeof dest === 'string' || typeof dest === 'number') {
         if (!(this.hasVertex(srcOrEdge) && this.hasVertex(dest))) return false;
         if (srcOrEdge instanceof AbstractVertex) srcOrEdge = srcOrEdge.key;
         if (dest instanceof AbstractVertex) dest = dest.key;
         const newEdge = this.createEdge(srcOrEdge, dest, weight, value);
-        return this._addEdgeOnly(newEdge);
+        return this._addEdge(newEdge);
       } else {
         throw new Error('dest must be a Vertex or vertex key while srcOrEdge is an Edge');
       }
@@ -312,10 +309,10 @@ export abstract class AbstractGraph<
     }
 
     const stack: { vertex: VO; path: VO[] }[] = [];
-    stack.push({ vertex: vertex1, path: [vertex1] });
+    stack.push({vertex: vertex1, path: [vertex1]});
 
     while (stack.length > 0) {
-      const { vertex, path } = stack.pop()!;
+      const {vertex, path} = stack.pop()!;
 
       if (vertex === vertex2) {
         paths.push(path);
@@ -326,7 +323,7 @@ export abstract class AbstractGraph<
       for (const neighbor of neighbors) {
         if (!path.includes(neighbor)) {
           const newPath = [...path, neighbor];
-          stack.push({ vertex: neighbor, path: newPath });
+          stack.push({vertex: neighbor, path: newPath});
         }
       }
     }
@@ -527,14 +524,10 @@ export abstract class AbstractGraph<
    */
   dijkstraWithoutHeap(
     src: VO | VertexKey,
-    dest?: VO | VertexKey | undefined,
-    getMinDist?: boolean,
-    genPaths?: boolean
+    dest: VO | VertexKey | undefined = undefined,
+    getMinDist: boolean = false,
+    genPaths: boolean = false
   ): DijkstraResult<VO> {
-    if (getMinDist === undefined) getMinDist = false;
-    if (genPaths === undefined) genPaths = false;
-
-    if (dest === undefined) dest = undefined;
     let minDist = Infinity;
     let minDest: VO | undefined = undefined;
     let minPath: VO[] = [];
@@ -602,7 +595,7 @@ export abstract class AbstractGraph<
           if (genPaths) {
             getPaths(destVertex);
           }
-          return { distMap, preMap, seen, paths, minDist, minPath };
+          return {distMap, preMap, seen, paths, minDist, minPath};
         }
         const neighbors = this.getNeighbors(cur);
         for (const neighbor of neighbors) {
@@ -636,7 +629,7 @@ export abstract class AbstractGraph<
 
     genPaths && getPaths(minDest);
 
-    return { distMap, preMap, seen, paths, minDist, minPath };
+    return {distMap, preMap, seen, paths, minDist, minPath};
   }
 
   /**
@@ -675,14 +668,10 @@ export abstract class AbstractGraph<
    */
   dijkstra(
     src: VO | VertexKey,
-    dest?: VO | VertexKey | undefined,
-    getMinDist?: boolean,
-    genPaths?: boolean
+    dest: VO | VertexKey | undefined = undefined,
+    getMinDist: boolean = false,
+    genPaths: boolean = false
   ): DijkstraResult<VO> {
-    if (getMinDist === undefined) getMinDist = false;
-    if (genPaths === undefined) genPaths = false;
-
-    if (dest === undefined) dest = undefined;
     let minDist = Infinity;
     let minDest: VO | undefined = undefined;
     let minPath: VO[] = [];
@@ -702,8 +691,8 @@ export abstract class AbstractGraph<
       if (vertexOrKey instanceof AbstractVertex) distMap.set(vertexOrKey, Infinity);
     }
 
-    const heap = new PriorityQueue<{ key: number; value: VO }>([], { comparator: (a, b) => a.key - b.key });
-    heap.add({ key: 0, value: srcVertex });
+    const heap = new Heap<{ key: number; value: VO }>([], {comparator: (a, b) => a.key - b.key});
+    heap.add({key: 0, value: srcVertex});
 
     distMap.set(srcVertex, 0);
     preMap.set(srcVertex, undefined);
@@ -744,7 +733,7 @@ export abstract class AbstractGraph<
             if (genPaths) {
               getPaths(destVertex);
             }
-            return { distMap, preMap, seen, paths, minDist, minPath };
+            return {distMap, preMap, seen, paths, minDist, minPath};
           }
           const neighbors = this.getNeighbors(cur);
           for (const neighbor of neighbors) {
@@ -754,7 +743,7 @@ export abstract class AbstractGraph<
                 const distSrcToNeighbor = distMap.get(neighbor);
                 if (distSrcToNeighbor) {
                   if (dist + weight < distSrcToNeighbor) {
-                    heap.add({ key: dist + weight, value: neighbor });
+                    heap.add({key: dist + weight, value: neighbor});
                     preMap.set(neighbor, cur);
                     distMap.set(neighbor, dist + weight);
                   }
@@ -781,7 +770,7 @@ export abstract class AbstractGraph<
       getPaths(minDest);
     }
 
-    return { distMap, preMap, seen, paths, minDist, minPath };
+    return {distMap, preMap, seen, paths, minDist, minPath};
   }
 
   /**
@@ -821,7 +810,7 @@ export abstract class AbstractGraph<
     // TODO
     let hasNegativeCycle: boolean | undefined;
     if (scanNegativeCycle) hasNegativeCycle = false;
-    if (!srcVertex) return { hasNegativeCycle, distMap, preMap, paths, min, minPath };
+    if (!srcVertex) return {hasNegativeCycle, distMap, preMap, paths, min, minPath};
 
     const vertexMap = this._vertexMap;
     const numOfVertices = vertexMap.size;
@@ -893,7 +882,7 @@ export abstract class AbstractGraph<
       }
     }
 
-    return { hasNegativeCycle, distMap, preMap, paths, min, minPath };
+    return {hasNegativeCycle, distMap, preMap, paths, min, minPath};
   }
 
   /**
@@ -966,208 +955,57 @@ export abstract class AbstractGraph<
         }
       }
     }
-    return { costs, predecessor };
+    return {costs, predecessor};
   }
 
   /**
-   * Time Complexity: O(V + E) - Linear time (Tarjan's algorithm).
-   * Space Complexity: O(V) - Linear space (Tarjan's algorithm).
-   * Tarjan is an algorithm based on dfs,which is used to solve the connectivity problem of graphs.
-   * Tarjan can find cycles in directed or undirected graph
-   * Tarjan can find the articulation points and bridges(critical edgeMap) of undirected graphs in linear time,
-   * Tarjan solve the bi-connected components of undirected graphs;
-   * Tarjan can find the SSC(strongly connected components), articulation points, and bridges of directed graphs.
-   * /
-
-   /**
-   * Time Complexity: O(V + E) - Linear time (Tarjan's algorithm).
-   * Space Complexity: O(V) - Linear space (Tarjan's algorithm).
-   *
-   * Tarjan is an algorithm based on dfs,which is used to solve the connectivity problem of graphs.
-   * Tarjan can find cycles in directed or undirected graph
-   * Tarjan can find the articulation points and bridges(critical edgeMap) of undirected graphs in linear time,
-   * Tarjan solve the bi-connected components of undirected graphs;
-   * Tarjan can find the SSC(strongly connected components), articulation points, and bridges of directed graphs.
-   * The `tarjan` function is used to perform various graph analysis tasks such as finding articulation points, bridges,
-   * strongly connected components (SCCs), and cycles in a graph.
-   * @param {boolean} [needCutVertexes] - A boolean value indicating whether or not to calculate and return the
-   * articulation points in the graph. Articulation points are the vertexMap in a graph whose removal would increase the
-   * number of connected components in the graph.
-   * @param {boolean} [needBridges] - A boolean flag indicating whether the algorithm should find and return the bridges
-   * (edgeMap whose removal would increase the number of connected components in the graph).
-   * @param {boolean} [needSCCs] - A boolean value indicating whether the Strongly Connected Components (SCCs) of the
-   * graph are needed. If set to true, the function will calculate and return the SCCs of the graph. If set to false, the
-   * SCCs will not be calculated or returned.
-   * @param {boolean} [needCycles] - A boolean flag indicating whether the algorithm should find cycles in the graph. If
-   * set to true, the algorithm will return a map of cycles, where the keys are the low values of the SCCs and the values
-   * are arrays of vertexMap that form cycles within the SCCs.
-   * @returns The function `tarjan` returns an object with the following properties:
+   * O(V+E+C)
+   * O(V+C)
    */
-  tarjan(
-    needCutVertexes: boolean = false,
-    needBridges: boolean = false,
-    needSCCs: boolean = true,
-    needCycles: boolean = false
-  ) {
-    // !! in undirected graph we will not let child visit parent when dfs
-    // !! articulation point(in dfs search tree not in graph): (cur !== root && cur.has(child)) && (low(child) >= dfn(cur)) || (cur === root && cur.children() >= 2)
-    // !! bridge: low(child) > dfn(cur)
+  getCycles(isInclude2Cycle: boolean = false): VertexKey[][] {
+    const cycles: VertexKey[][] = [];
+    const visited: Set<VO> = new Set();
 
-    const defaultConfig = false;
-    if (needCutVertexes === undefined) needCutVertexes = defaultConfig;
-    if (needBridges === undefined) needBridges = defaultConfig;
-    if (needSCCs === undefined) needSCCs = defaultConfig;
-    if (needCycles === undefined) needCycles = defaultConfig;
-
-    const dfnMap: Map<VO, number> = new Map();
-    const lowMap: Map<VO, number> = new Map();
-    const vertexMap = this._vertexMap;
-    vertexMap.forEach(v => {
-      dfnMap.set(v, -1);
-      lowMap.set(v, Infinity);
-    });
-
-    const [root] = vertexMap.values();
-
-    const cutVertexes: VO[] = [];
-    const bridges: EO[] = [];
-    let dfn = 0;
-    const dfs = (cur: VO, parent: VO | undefined) => {
-      dfn++;
-      dfnMap.set(cur, dfn);
-      lowMap.set(cur, dfn);
-
-      const neighbors = this.getNeighbors(cur);
-      let childCount = 0; // child in dfs tree not child in graph
-      for (const neighbor of neighbors) {
-        if (neighbor !== parent) {
-          if (dfnMap.get(neighbor) === -1) {
-            childCount++;
-            dfs(neighbor, cur);
-          }
-          const childLow = lowMap.get(neighbor);
-          const curLow = lowMap.get(cur);
-          // TODO after no-non-undefined-assertion not ensure the logic
-          if (curLow !== undefined && childLow !== undefined) {
-            lowMap.set(cur, Math.min(curLow, childLow));
-          }
-          const curFromMap = dfnMap.get(cur);
-          if (childLow !== undefined && curFromMap !== undefined) {
-            if (needCutVertexes) {
-              if ((cur === root && childCount >= 2) || (cur !== root && childLow >= curFromMap)) {
-                // todo not ensure the logic if (cur === root && childCount >= 2 || ((cur !== root) && (childLow >= curFromMap))) {
-                cutVertexes.push(cur);
-              }
-            }
-
-            if (needBridges) {
-              if (childLow > curFromMap) {
-                const edgeCurToNeighbor = this.getEdge(cur, neighbor);
-                if (edgeCurToNeighbor) {
-                  bridges.push(edgeCurToNeighbor);
-                }
-              }
-            }
-          }
+    const dfs = (vertex: VO, currentPath: VertexKey[], visited: Set<VO>) => {
+      if (visited.has(vertex)) {
+        if (
+          ((!isInclude2Cycle && currentPath.length > 2) || (isInclude2Cycle && currentPath.length >= 2)) &&
+          currentPath[0] === vertex.key
+        ) {
+          cycles.push([...currentPath]);
         }
-      }
-    };
-
-    dfs(root, undefined);
-
-    let SCCs: Map<number, VO[]> = new Map();
-
-    const getSCCs = () => {
-      const SCCs: Map<number, VO[]> = new Map();
-      lowMap.forEach((low, vertex) => {
-        if (!SCCs.has(low)) {
-          SCCs.set(low, [vertex]);
-        } else {
-          SCCs.get(low)?.push(vertex);
-        }
-      });
-      return SCCs;
-    };
-
-    if (needSCCs) {
-      SCCs = getSCCs();
-    }
-
-    const cycles: Map<number, VO[]> = new Map();
-    if (needCycles) {
-      let SCCs: Map<number, VO[]> = new Map();
-      if (SCCs.size < 1) {
-        SCCs = getSCCs();
+        return;
       }
 
-      SCCs.forEach((SCC, low) => {
-        if (SCC.length > 1) {
-          cycles.set(low, SCC);
-        }
-      });
+      visited.add(vertex);
+      currentPath.push(vertex.key);
+
+      for (const neighbor of this.getNeighbors(vertex)) {
+        neighbor && dfs(neighbor, currentPath, visited);
+      }
+
+      visited.delete(vertex);
+      currentPath.pop();
+    };
+
+    for (const vertex of this.vertexMap.values()) {
+      dfs(vertex, [], visited);
     }
 
-    return { dfnMap, lowMap, bridges, cutVertexes, SCCs, cycles };
-  }
+    // Use a set to eliminate duplicate cycles
+    const uniqueCycles = new Map<string, VertexKey[]>();
 
-  /**
-   * Time Complexity: O(V + E) - Depends on the implementation (Tarjan's algorithm).
-   * Space Complexity: O(V) - Depends on the implementation (Tarjan's algorithm).
-   */
+    for (const cycle of cycles) {
+      const sorted = [...cycle].sort().toString();
 
-  /**
-   * Time Complexity: O(V + E) - Depends on the implementation (Tarjan's algorithm).
-   * Space Complexity: O(V) - Depends on the implementation (Tarjan's algorithm).
-   *
-   * The function returns a map that associates each vertex object with its corresponding depth-first
-   * number.
-   * @returns A Map object with keys of type VO and values of type number.
-   */
-  getDFNMap(): Map<VO, number> {
-    return this.tarjan(false, false, false, false).dfnMap;
-  }
+      if (uniqueCycles.has(sorted)) continue;
+      else {
+        uniqueCycles.set(sorted, cycle);
+      }
+    }
 
-  /**
-   * The function returns a Map object that contains the low values of each vertex in a Tarjan
-   * algorithm.
-   * @returns The method `getLowMap()` is returning a `Map` object with keys of type `VO` and values of
-   * type `number`.
-   */
-  getLowMap(): Map<VO, number> {
-    return this.tarjan(false, false, false, false).lowMap;
-  }
-
-  /**
-   * The function `getCycles` returns a map of cycles found using the Tarjan algorithm.
-   * @returns The function `getCycles()` is returning a `Map<number, VO[]>`.
-   */
-  getCycles(): Map<number, VO[]> {
-    return this.tarjan(false, false, false, true).cycles;
-  }
-
-  /**
-   * The function "getCutVertexes" returns an array of cut vertexes using the Tarjan algorithm.
-   * @returns an array of VO objects, specifically the cut vertexes.
-   */
-  getCutVertexes(): VO[] {
-    return this.tarjan(true, false, false, false).cutVertexes;
-  }
-
-  /**
-   * The function "getSCCs" returns a map of strongly connected components (SCCs) using the Tarjan
-   * algorithm.
-   * @returns a map where the keys are numbers and the values are arrays of VO objects.
-   */
-  getSCCs(): Map<number, VO[]> {
-    return this.tarjan(false, false, true, false).SCCs;
-  }
-
-  /**
-   * The function "getBridges" returns an array of bridges using the Tarjan algorithm.
-   * @returns the bridges found using the Tarjan algorithm.
-   */
-  getBridges() {
-    return this.tarjan(false, true, false, false).bridges;
+    // Convert the unique cycles back to an array
+    return [...uniqueCycles].map(cycleString => cycleString[1]);
   }
 
   /**
@@ -1237,9 +1075,9 @@ export abstract class AbstractGraph<
     }
   }
 
-  protected abstract _addEdgeOnly(edge: EO): boolean;
+  protected abstract _addEdge(edge: EO): boolean;
 
-  protected _addVertexOnly(newVertex: VO): boolean {
+  protected _addVertex(newVertex: VO): boolean {
     if (this.hasVertex(newVertex)) {
       return false;
       // throw (new Error('Duplicated vertex key is not allowed'));

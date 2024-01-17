@@ -5,67 +5,138 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-
-
-import { ElementCallback, IterableWithSizeOrLength } from "../../types";
-import { calcMinUnitsRequired, rangeCheck } from "../../utils";
-import { IterableElementBase } from "../base";
+import type {DequeOptions, ElementCallback, IterableWithSizeOrLength} from '../../types';
+import {IterableElementBase} from '../base';
+import {calcMinUnitsRequired, rangeCheck} from '../../utils';
 
 /**
- * Deque can provide random access with O(1) time complexity
- * Deque is usually more compact and efficient in memory usage because it does not require additional space to store pointers.
- * Deque may experience performance jitter, but DoublyLinkedList will not
- * Deque is implemented using a dynamic array. Inserting or deleting beyond both ends of the array may require moving elements or reallocating space.
+ * 1. Operations at Both Ends: Supports adding and removing elements at both the front and back of the queue. This allows it to be used as a stack (last in, first out) and a queue (first in, first out).
+ * 2. Efficient Random Access: Being based on an array, it offers fast random access capability, allowing constant time access to any element.
+ * 3. Continuous Memory Allocation: Since it is based on an array, all elements are stored contiguously in memory, which can bring cache friendliness and efficient memory access.
+ * 4. Efficiency: Adding and removing elements at both ends of a deque is usually very fast. However, when the dynamic array needs to expand, it may involve copying the entire array to a larger one, and this operation has a time complexity of O(n).
+ * 5. Performance jitter: Deque may experience performance jitter, but DoublyLinkedList will not
  */
-
 export class Deque<E> extends IterableElementBase<E> {
-  protected _bucketFirst = 0;
-  protected _firstInBucket = 0;
-  protected _bucketLast = 0;
-  protected _lastInBucket = 0;
-  protected _bucketCount = 0;
-  protected readonly _bucketSize: number;
-
   /**
-   * The constructor initializes a data structure with a specified bucket size and populates it with
-   * elements from an iterable.
-   * @param elements - The `elements` parameter is an iterable object (such as an array or a Set) that
-   * contains the initial elements to be stored in the data structure. It can also be an object with a
-   * `length` property or a `size` property, which represents the number of elements in the iterable.
-   * @param bucketSize - The `bucketSize` parameter is the maximum number of elements that can be
-   * stored in each bucket. It determines the size of each bucket in the data structure.
+   * The constructor initializes a Deque object with an optional iterable of elements and options.
+   * @param elements - An iterable object (such as an array or a Set) that contains the initial
+   * elements to be added to the deque. It can also be an object with a `length` or `size` property
+   * that represents the number of elements in the iterable object. If no elements are provided, an
+   * empty deque
+   * @param {DequeOptions} [options] - The `options` parameter is an optional object that can contain
+   * configuration options for the deque. In this code, it is used to set the `bucketSize` option,
+   * which determines the size of each bucket in the deque. If the `bucketSize` option is not provided
+   * or is not a number
    */
-  constructor(elements: IterableWithSizeOrLength<E> = [], bucketSize = (1 << 12)) {
+  constructor(elements: IterableWithSizeOrLength<E> = [], options?: DequeOptions) {
     super();
-    let _size: number;
-    if ('length' in elements) {
-      if (elements.length instanceof Function) _size = elements.length(); else _size = elements.length;
-    } else {
-      if (elements.size instanceof Function) _size = elements.size(); else _size = elements.size;
+
+    if (options) {
+      const {bucketSize} = options;
+      if (typeof bucketSize === 'number') this._bucketSize = bucketSize;
     }
 
-    this._bucketSize = bucketSize;
+    let _size: number;
+    if ('length' in elements) {
+      if (elements.length instanceof Function) _size = elements.length();
+      else _size = elements.length;
+    } else {
+      if (elements.size instanceof Function) _size = elements.size();
+      else _size = elements.size;
+    }
+
     this._bucketCount = calcMinUnitsRequired(_size, this._bucketSize) || 1;
     for (let i = 0; i < this._bucketCount; ++i) {
       this._buckets.push(new Array(this._bucketSize));
     }
     const needBucketNum = calcMinUnitsRequired(_size, this._bucketSize);
     this._bucketFirst = this._bucketLast = (this._bucketCount >> 1) - (needBucketNum >> 1);
-    this._firstInBucket = this._lastInBucket = (this._bucketSize - _size % this._bucketSize) >> 1;
+    this._firstInBucket = this._lastInBucket = (this._bucketSize - (_size % this._bucketSize)) >> 1;
 
     for (const element of elements) {
       this.push(element);
     }
   }
 
+  protected _bucketSize: number = 1 << 12;
+
+  /**
+   * The bucketSize function returns the size of the bucket.
+   *
+   * @return The size of the bucket
+   */
+  get bucketSize() {
+    return this._bucketSize;
+  }
+
+  protected _bucketFirst = 0;
+
+  /**
+   * The function returns the value of the protected variable `_bucketFirst`.
+   * @returns The value of the `_bucketFirst` property.
+   */
+  get bucketFirst(): number {
+    return this._bucketFirst;
+  }
+
+  protected _firstInBucket = 0;
+
+  /**
+   * The function returns the value of the protected variable _firstInBucket.
+   * @returns The method is returning the value of the variable `_firstInBucket`, which is of type
+   * `number`.
+   */
+  get firstInBucket(): number {
+    return this._firstInBucket;
+  }
+
+  protected _bucketLast = 0;
+
+  /**
+   * The function returns the value of the protected variable `_bucketLast`.
+   * @returns The value of the `_bucketLast` property, which is a number.
+   */
+  get bucketLast(): number {
+    return this._bucketLast;
+  }
+
+  protected _lastInBucket = 0;
+
+  /**
+   * The function returns the value of the protected variable _lastInBucket.
+   * @returns The method is returning the value of the variable `_lastInBucket`, which is of type
+   * `number`.
+   */
+  get lastInBucket(): number {
+    return this._lastInBucket;
+  }
+
+  protected _bucketCount = 0;
+
+  /**
+   * The function returns the number of buckets.
+   * @returns The number of buckets.
+   */
+  get bucketCount(): number {
+    return this._bucketCount;
+  }
+
   protected _buckets: E[][] = [];
 
+  /**
+   * The buckets function returns the buckets property of the object.
+   * @return The buckets property
+   */
   get buckets() {
     return this._buckets;
   }
 
   protected _size = 0;
 
+  /**
+   * The size function returns the number of items in the stack.
+   * @return The number of values in the set
+   */
   get size() {
     return this._size;
   }
@@ -80,109 +151,13 @@ export class Deque<E> extends IterableElementBase<E> {
     return this._buckets[this._bucketFirst][this._firstInBucket];
   }
 
+  /**
+   * The last function returns the last element in the queue.
+   * @return The last element in the array
+   */
   get last(): E | undefined {
     if (this.size === 0) return;
     return this._buckets[this._bucketLast][this._lastInBucket];
-  }
-
-  /**
-   * Time Complexity: O(1) - Removes the last element.
-   * Space Complexity: O(1) - Operates in-place.
-   */
-
-  isEmpty() {
-    return this.size === 0;
-  }
-
-  /**
-   * Time Complexity: Amortized O(1) - Similar to push, resizing leads to O(n).
-   * Space Complexity: O(n) - Due to potential resizing.
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(n) - In worst case, resizing doubles the array size.
-   *
-   * The addLast function adds an element to the end of an array.
-   * @param {E} element - The element parameter represents the element that you want to add to the end of the
-   * data structure.
-   */
-  addLast(element: E): void {
-    this.push(element);
-  }
-
-  /**
-   * Time Complexity: O(1) - Removes the first element.
-   * Space Complexity: O(1) - In-place operation.
-   */
-
-  /**
-   * Time Complexity: O(1) - Removes the last element.
-   * Space Complexity: O(1) - Operates in-place.
-   *
-   * The function "pollLast" removes and returns the last element of an array.
-   * @returns The last element of the array is being returned.
-   */
-  pollLast(): E | undefined {
-    return this.pop();
-  }
-
-  /**
-   * Time Complexity: O(1).
-   * Space Complexity: O(n) - Due to potential resizing.
-   *
-   * The "addFirst" function adds an element to the beginning of an array.
-   * @param {E} element - The parameter "element" represents the element that you want to add to the
-   * beginning of the data structure.
-   */
-  addFirst(element: E): void {
-    this.unshift(element);
-  }
-
-  /**
-   * Time Complexity: O(1) - Removes the first element.
-   * Space Complexity: O(1) - In-place operation.
-   *
-   * The function "pollFirst" removes and returns the first element of an array.
-   * @returns The method `pollFirst()` is returning the first element of the array after removing it
-   * from the beginning. If the array is empty, it will return `undefined`.
-   */
-  pollFirst(): E | undefined {
-    return this.shift();
-  }
-
-  /**
-   * The clear() function resets the state of the object by initializing all variables to their default
-   * values.
-   */
-  clear() {
-    this._buckets = [new Array(this._bucketSize)];
-    this._bucketCount = 1;
-    this._bucketFirst = this._bucketLast = this._size = 0;
-    this._firstInBucket = this._lastInBucket = this._bucketSize >> 1;
-  }
-
-  /**
-   * The below function is a generator that yields elements from a collection one by one.
-   */
-  * begin(): Generator<E> {
-    let index = 0;
-    while (index < this.size) {
-      yield this.getAt(index);
-      index++;
-    }
-  }
-
-  /**
-   * The function `reverseBegin()` is a generator that yields elements in reverse order starting from
-   * the last element.
-   */
-  * reverseBegin(): Generator<E> {
-    let index = this.size - 1;
-    while (index >= 0) {
-      yield this.getAt(index);
-      index--;
-    }
   }
 
   /**
@@ -199,7 +174,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * structure.
    * @returns The size of the data structure after the element has been pushed.
    */
-  push(element: E) {
+  push(element: E): boolean {
     if (this.size) {
       if (this._lastInBucket < this._bucketSize - 1) {
         this._lastInBucket += 1;
@@ -210,14 +185,11 @@ export class Deque<E> extends IterableElementBase<E> {
         this._bucketLast = 0;
         this._lastInBucket = 0;
       }
-      if (
-        this._bucketLast === this._bucketFirst &&
-        this._lastInBucket === this._firstInBucket
-      ) this._reallocate();
+      if (this._bucketLast === this._bucketFirst && this._lastInBucket === this._firstInBucket) this._reallocate();
     }
     this._size += 1;
     this._buckets[this._bucketLast][this._lastInBucket] = element;
-    return this.size;
+    return true;
   }
 
   /**
@@ -233,7 +205,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * internal state variables accordingly.
    * @returns The element that was removed from the data structure is being returned.
    */
-  pop() {
+  pop(): E | undefined {
     if (this.size === 0) return;
     const element = this._buckets[this._bucketLast][this._lastInBucket];
     if (this.size !== 1) {
@@ -266,7 +238,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * beginning of the data structure.
    * @returns The size of the data structure after the element has been added.
    */
-  unshift(element: E) {
+  unshift(element: E): boolean {
     if (this.size) {
       if (this._firstInBucket > 0) {
         this._firstInBucket -= 1;
@@ -277,16 +249,12 @@ export class Deque<E> extends IterableElementBase<E> {
         this._bucketFirst = this._bucketCount - 1;
         this._firstInBucket = this._bucketSize - 1;
       }
-      if (
-        this._bucketFirst === this._bucketLast &&
-        this._firstInBucket === this._lastInBucket
-      ) this._reallocate();
+      if (this._bucketFirst === this._bucketLast && this._firstInBucket === this._lastInBucket) this._reallocate();
     }
     this._size += 1;
     this._buckets[this._bucketFirst][this._firstInBucket] = element;
-    return this.size;
+    return true;
   }
-
 
   /**
    * Time Complexity: O(1)
@@ -302,7 +270,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns The element that is being removed from the beginning of the data structure is being
    * returned.
    */
-  shift() {
+  shift(): E | undefined {
     if (this.size === 0) return;
     const element = this._buckets[this._bucketFirst][this._firstInBucket];
     if (this.size !== 1) {
@@ -320,6 +288,21 @@ export class Deque<E> extends IterableElementBase<E> {
     return element;
   }
 
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The function checks if the size of an object is equal to zero and returns a boolean value.
+   * @returns A boolean value indicating whether the size of the object is 0 or not.
+   */
+  isEmpty(): boolean {
+    return this.size === 0;
+  }
 
   /**
    * Time Complexity: O(1)
@@ -330,21 +313,59 @@ export class Deque<E> extends IterableElementBase<E> {
    * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
-   * The `getAt` function retrieves an element at a specified position in an array-like data structure.
+   * The clear() function resets the state of the object by initializing all variables to their default
+   * values.
+   */
+  clear(): void {
+    this._buckets = [new Array(this._bucketSize)];
+    this._bucketCount = 1;
+    this._bucketFirst = this._bucketLast = this._size = 0;
+    this._firstInBucket = this._lastInBucket = this._bucketSize >> 1;
+  }
+
+  /**
+   * The below function is a generator that yields elements from a collection one by one.
+   */
+  * begin(): Generator<E> {
+    let index = 0;
+    while (index < this.size) {
+      yield this.at(index);
+      index++;
+    }
+  }
+
+  /**
+   * The function `reverseBegin()` is a generator that yields elements in reverse order starting from
+   * the last element.
+   */
+  * reverseBegin(): Generator<E> {
+    let index = this.size - 1;
+    while (index >= 0) {
+      yield this.at(index);
+      index--;
+    }
+  }
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1)
+   *
+   * The `at` function retrieves an element at a specified position in an array-like data structure.
    * @param {number} pos - The `pos` parameter represents the position of the element that you want to
    * retrieve from the data structure. It is of type `number` and should be a valid index within the
    * range of the data structure.
    * @returns The element at the specified position in the data structure is being returned.
    */
-  getAt(pos: number): E {
+  at(pos: number): E {
     rangeCheck(pos, 0, this.size - 1);
-    const {
-      bucketIndex,
-      indexInBucket
-    } = this._getBucketAndPosition(pos);
+    const {bucketIndex, indexInBucket} = this._getBucketAndPosition(pos);
     return this._buckets[bucketIndex][indexInBucket]!;
   }
-
 
   /**
    * Time Complexity: O(1)
@@ -361,13 +382,11 @@ export class Deque<E> extends IterableElementBase<E> {
    * @param {E} element - The `element` parameter is the value that you want to set at the specified
    * position in the data structure.
    */
-  setAt(pos: number, element: E) {
+  setAt(pos: number, element: E): boolean {
     rangeCheck(pos, 0, this.size - 1);
-    const {
-      bucketIndex,
-      indexInBucket
-    } = this._getBucketAndPosition(pos);
+    const {bucketIndex, indexInBucket} = this._getBucketAndPosition(pos);
     this._buckets[bucketIndex][indexInBucket] = element;
+    return true;
   }
 
   /**
@@ -379,7 +398,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * Time Complexity: O(n)
    * Space Complexity: O(n)
    *
-   * The `insertAt` function inserts one or more elements at a specified position in an array-like data
+   * The `addAt` function inserts one or more elements at a specified position in an array-like data
    * structure.
    * @param {number} pos - The `pos` parameter represents the position at which the element(s) should
    * be inserted. It is of type `number`.
@@ -390,7 +409,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * will be inserted once. However, you can provide a different value for `num` if you want
    * @returns The size of the array after the insertion is being returned.
    */
-  insertAt(pos: number, element: E, num = 1) {
+  addAt(pos: number, element: E, num = 1): boolean {
     const length = this.size;
     rangeCheck(pos, 0, length);
     if (pos === 0) {
@@ -400,13 +419,13 @@ export class Deque<E> extends IterableElementBase<E> {
     } else {
       const arr: E[] = [];
       for (let i = pos; i < this.size; ++i) {
-        arr.push(this.getAt(i));
+        arr.push(this.at(i));
       }
-      this.cut(pos - 1);
+      this.cut(pos - 1, true);
       for (let i = 0; i < num; ++i) this.push(element);
       for (let i = 0; i < arr.length; ++i) this.push(arr[i]);
     }
-    return this.size;
+    return true;
   }
 
   /**
@@ -422,31 +441,81 @@ export class Deque<E> extends IterableElementBase<E> {
    * updated size.
    * @param {number} pos - The `pos` parameter represents the position at which the string should be
    * cut. It is a number that indicates the index of the character where the cut should be made.
+   * @param {boolean} isCutSelf - If true, the original deque will not be cut, and return a new deque
    * @returns The method is returning the updated size of the data structure.
    */
-  cut(pos: number) {
-    if (pos < 0) {
-      this.clear();
-      return 0;
+  cut(pos: number, isCutSelf = false): Deque<E> {
+    if (isCutSelf) {
+      if (pos < 0) {
+        this.clear();
+        return this;
+      }
+      const {bucketIndex, indexInBucket} = this._getBucketAndPosition(pos);
+      this._bucketLast = bucketIndex;
+      this._lastInBucket = indexInBucket;
+      this._size = pos + 1;
+      return this;
+    } else {
+      const newDeque = new Deque<E>([], {bucketSize: this._bucketSize});
+
+      for (let i = 0; i <= pos; i++) {
+        newDeque.push(this.at(i));
+      }
+
+      return newDeque;
     }
-    const {
-      bucketIndex,
-      indexInBucket
-    } = this._getBucketAndPosition(pos);
-    this._bucketLast = bucketIndex;
-    this._lastInBucket = indexInBucket;
-    this._size = pos + 1;
-    return this.size;
+  }
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1) or O(n)
+   */
+
+  /**
+   * Time Complexity: O(1)
+   * Space Complexity: O(1) or O(n)
+   *
+   * The `cutRest` function cuts the elements from a specified position in a deque and returns a new
+   * deque with the cut elements.
+   * @param {number} pos - The `pos` parameter represents the position from which to cut the Deque. It
+   * is a number that indicates the index of the element in the Deque where the cut should start.
+   * @param [isCutSelf=false] - isCutSelf is a boolean parameter that determines whether the original
+   * Deque should be modified or a new Deque should be created. If isCutSelf is true, the original
+   * Deque will be modified by cutting off elements starting from the specified position. If isCutSelf
+   * is false, a new De
+   * @returns The function `cutRest` returns either the modified original deque (`this`) or a new deque
+   * (`newDeque`) depending on the value of the `isCutSelf` parameter.
+   */
+  cutRest(pos: number, isCutSelf = false): Deque<E> {
+    if (isCutSelf) {
+      if (pos < 0) {
+        this.clear();
+        return this;
+      }
+      const {bucketIndex, indexInBucket} = this._getBucketAndPosition(pos);
+      this._bucketFirst = bucketIndex;
+      this._firstInBucket = indexInBucket;
+      this._size = this._size - pos;
+      return this;
+    } else {
+      const newDeque = new Deque<E>([], {bucketSize: this._bucketSize});
+
+      for (let i = pos; i < this.size; i++) {
+        newDeque.push(this.at(i));
+      }
+
+      return newDeque;
+    }
   }
 
   /**
    * Time Complexity: O(n)
-   * Space Complexity: O(1)
+   * Space Complexity: O(1) or O(n)
    */
 
   /**
    * Time Complexity: O(n)
-   * Space Complexity: O(1)
+   * Space Complexity: O(1) or O(n)
    *
    * The `deleteAt` function removes an element at a specified position in an array-like data
    * structure.
@@ -455,28 +524,22 @@ export class Deque<E> extends IterableElementBase<E> {
    * the index of the element to be deleted.
    * @returns The size of the data structure after the deletion operation is performed.
    */
-  deleteAt(pos: number) {
+  deleteAt(pos: number): boolean {
     rangeCheck(pos, 0, this.size - 1);
     if (pos === 0) this.shift();
     else if (pos === this.size - 1) this.pop();
     else {
       const length = this.size - 1;
-      let {
-        bucketIndex: curBucket,
-        indexInBucket: curPointer
-      } = this._getBucketAndPosition(pos);
+      let {bucketIndex: curBucket, indexInBucket: curPointer} = this._getBucketAndPosition(pos);
       for (let i = pos; i < length; ++i) {
-        const {
-          bucketIndex: nextBucket,
-          indexInBucket: nextPointer
-        } = this._getBucketAndPosition(pos + 1);
+        const {bucketIndex: nextBucket, indexInBucket: nextPointer} = this._getBucketAndPosition(pos + 1);
         this._buckets[curBucket][curPointer] = this._buckets[nextBucket][nextPointer];
         curBucket = nextBucket;
         curPointer = nextPointer;
       }
       this.pop();
     }
-    return this.size;
+    return true;
   }
 
   /**
@@ -494,21 +557,21 @@ export class Deque<E> extends IterableElementBase<E> {
    * the data structure.
    * @returns The size of the data structure after the element has been deleted.
    */
-  delete(element: E) {
+  delete(element: E): boolean {
     const size = this.size;
-    if (size === 0) return 0;
+    if (size === 0) return false;
     let i = 0;
     let index = 0;
     while (i < size) {
-      const oldElement = this.getAt(i);
+      const oldElement = this.at(i);
       if (oldElement !== element) {
         this.setAt(index, oldElement!);
         index += 1;
       }
       i += 1;
     }
-    this.cut(index - 1);
-    return this.size;
+    this.cut(index - 1, true);
+    return true;
   }
 
   /**
@@ -525,11 +588,11 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns The reverse() method is returning the object itself (this) after performing the reverse
    * operation on the buckets and updating the relevant properties.
    */
-  reverse() {
+  reverse(): this {
     this._buckets.reverse().forEach(function (bucket) {
       bucket.reverse();
     });
-    const { _bucketFirst, _bucketLast, _firstInBucket, _lastInBucket } = this;
+    const {_bucketFirst, _bucketLast, _firstInBucket, _lastInBucket} = this;
     this._bucketFirst = this._bucketCount - _bucketLast - 1;
     this._bucketLast = this._bucketCount - _bucketFirst - 1;
     this._firstInBucket = this._bucketSize - _lastInBucket - 1;
@@ -550,21 +613,21 @@ export class Deque<E> extends IterableElementBase<E> {
    * the number of unique elements.
    * @returns The size of the modified array is being returned.
    */
-  unique() {
+  unique(): this {
     if (this.size <= 1) {
-      return this.size;
+      return this;
     }
     let index = 1;
-    let prev = this.getAt(0);
+    let prev = this.at(0);
     for (let i = 1; i < this.size; ++i) {
-      const cur = this.getAt(i);
+      const cur = this.at(i);
       if (cur !== prev) {
         prev = cur;
         this.setAt(index++, cur);
       }
     }
-    this.cut(index - 1);
-    return this.size;
+    this.cut(index - 1, true);
+    return this;
   }
 
   /**
@@ -580,12 +643,12 @@ export class Deque<E> extends IterableElementBase<E> {
    * @param [comparator] - The `comparator` parameter is a function that takes in two elements `x` and
    * `y` of type `E` and returns a number. The comparator function is used to determine the order of
    * the elements in the sorted array.
-   * @returns The method is returning the sorted instance of the object on which the method is called.
+   * @returns Deque<E>
    */
-  sort(comparator?: (x: E, y: E) => number) {
+  sort(comparator?: (x: E, y: E) => number): this {
     const arr: E[] = [];
     for (let i = 0; i < this.size; ++i) {
-      arr.push(this.getAt(i));
+      arr.push(this.at(i));
     }
     arr.sort(comparator);
     for (let i = 0; i < this.size; ++i) {
@@ -608,7 +671,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns Nothing is being returned. The function is using the `return` statement to exit early if
    * `this.size` is 0, but it does not return any value.
    */
-  shrinkToFit() {
+  shrinkToFit(): void {
     if (this.size === 0) return;
     const newBuckets = [];
     if (this._bucketFirst === this._bucketLast) return;
@@ -638,32 +701,6 @@ export class Deque<E> extends IterableElementBase<E> {
    * Time Complexity: O(n)
    * Space Complexity: O(1)
    *
-   * The `find` function iterates over the elements in a deque and returns the first element for which
-   * the callback function returns true, or undefined if no such element is found.
-   * @param callback - A function that takes three parameters: element, index, and deque. It should
-   * return a boolean value indicating whether the element satisfies a certain condition.
-   * @returns The method `find` returns the first element in the deque that satisfies the condition
-   * specified by the callback function. If no element satisfies the condition, it returns `undefined`.
-   */
-  find(callback: (element: E, index: number, deque: Deque<E>) => boolean): E | undefined {
-    for (let i = 0; i < this.size; ++i) {
-      const element = this.getAt(i);
-      if (callback(element, i, this)) {
-        return element;
-      }
-    }
-    return undefined;
-  }
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(1)
-   *
    * The function "indexOf" returns the index of the first occurrence of a given element in an array,
    * or -1 if the element is not found.
    * @param {E} element - The "element" parameter represents the element that you want to find the
@@ -673,7 +710,7 @@ export class Deque<E> extends IterableElementBase<E> {
    */
   indexOf(element: E): number {
     for (let i = 0; i < this.size; ++i) {
-      if (this.getAt(i) === element) {
+      if (this.at(i) === element) {
         return i;
       }
     }
@@ -693,17 +730,32 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns The `toArray()` method is returning an array of elements of type `E`.
    */
   toArray(): E[] {
-    const arr: E[] = [];
-    for (let i = 0; i < this.size; ++i) {
-      arr.push(this.getAt(i));
-    }
-    return arr;
+    return [...this];
   }
 
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(n)
    */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   *
+   * The `clone()` function returns a new instance of the `Deque` class with the same elements and
+   * bucket size as the original instance.
+   * @returns The `clone()` method is returning a new instance of the `Deque` class with the same
+   * elements as the original deque (`this`) and the same bucket size.
+   */
+  clone(): Deque<E> {
+    return new Deque<E>([...this], {bucketSize: this.bucketSize});
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   */
+
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(n)
@@ -721,7 +773,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * satisfy the given predicate function.
    */
   filter(predicate: ElementCallback<E, boolean>, thisArg?: any): Deque<E> {
-    const newDeque = new Deque<E>([], this._bucketSize);
+    const newDeque = new Deque<E>([], {bucketSize: this._bucketSize});
     let index = 0;
     for (const el of this) {
       if (predicate.call(thisArg, el, index, this)) {
@@ -750,7 +802,7 @@ export class Deque<E> extends IterableElementBase<E> {
    * @returns a new Deque object with the mapped values.
    */
   map<T>(callback: ElementCallback<E, T>, thisArg?: any): Deque<T> {
-    const newDeque = new Deque<T>([], this._bucketSize);
+    const newDeque = new Deque<T>([], {bucketSize: this._bucketSize});
     let index = 0;
     for (const el of this) {
       newDeque.push(callback.call(thisArg, el, index, this));
@@ -761,23 +813,19 @@ export class Deque<E> extends IterableElementBase<E> {
 
   /**
    * Time Complexity: O(n)
-   * Space Complexity: O(n)
-   */
+   * Space Complexity: O(1)
+   * /
 
-  print(): void {
-    console.log([...this])
-  }
-
-  /**
+   /**
    * Time Complexity: O(n)
    * Space Complexity: O(1)
    *
    * The above function is an implementation of the iterator protocol in TypeScript, allowing the
    * object to be iterated over using a for...of loop.
    */
-  protected* _getIterator() {
+  protected* _getIterator(): IterableIterator<E> {
     for (let i = 0; i < this.size; ++i) {
-      yield this.getAt(i);
+      yield this.at(i);
     }
   }
 
@@ -842,201 +890,11 @@ export class Deque<E> extends IterableElementBase<E> {
       bucketIndex -= this._bucketCount;
     }
 
-    indexInBucket = (overallIndex + 1) % this._bucketSize - 1;
+    indexInBucket = ((overallIndex + 1) % this._bucketSize) - 1;
     if (indexInBucket < 0) {
       indexInBucket = this._bucketSize - 1;
     }
 
-    return { bucketIndex, indexInBucket };
-  }
-}
-
-// O(1) time complexity of obtaining the element
-// O(n) time complexity of adding at the beginning and the end
-// todo tested slowest one
-export class ObjectDeque<E = number> {
-  constructor(capacity?: number) {
-    if (capacity !== undefined) this._capacity = capacity;
-  }
-
-  protected _nodes: { [key: number]: E } = {};
-
-  get nodes(): { [p: number]: E } {
-    return this._nodes;
-  }
-
-  protected _capacity = Number.MAX_SAFE_INTEGER;
-
-  get capacity(): number {
-    return this._capacity;
-  }
-
-  protected _first = -1;
-
-  get first(): number {
-    return this._first;
-  }
-
-  protected _last = -1;
-
-  get last(): number {
-    return this._last;
-  }
-
-  protected _size = 0;
-
-  get size(): number {
-    return this._size;
-  }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   *
-   * The "addFirst" function adds an element to the beginning of an array-like data structure.
-   * @param {E} element - The `element` parameter represents the element that you want to add to the beginning of the data
-   * structure.
-   */
-  addFirst(element: E) {
-    if (this.size === 0) {
-      const mid = Math.floor(this.capacity / 2);
-      this._first = mid;
-      this._last = mid;
-    } else {
-      this._first--;
-    }
-    this.nodes[this.first] = element;
-    this._size++;
-  }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   *
-   * The addLast function adds an element to the end of an array-like data structure.
-   * @param {E} element - The `element` parameter represents the element that you want to add to the end of the data structure.
-   */
-  addLast(element: E) {
-    if (this.size === 0) {
-      const mid = Math.floor(this.capacity / 2);
-      this._first = mid;
-      this._last = mid;
-    } else {
-      this._last++;
-    }
-    this.nodes[this.last] = element;
-    this._size++;
-  }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   *
-   * The function `pollFirst()` removes and returns the first element in a data structure.
-   * @returns The element of the first element in the data structure.
-   */
-  pollFirst() {
-    if (!this.size) return;
-    const element = this.getFirst();
-    delete this.nodes[this.first];
-    this._first++;
-    this._size--;
-    return element;
-  }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   *
-   * The `getFirst` function returns the first element in an array-like data structure if it exists.
-   * @returns The element at the first position of the `_nodes` array.
-   */
-  getFirst() {
-    if (this.size) return this.nodes[this.first];
-  }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   *
-   * The `pollLast()` function removes and returns the last element in a data structure.
-   * @returns The element that was removed from the data structure.
-   */
-  pollLast() {
-    if (!this.size) return;
-    const element = this.getLast();
-    delete this.nodes[this.last];
-    this._last--;
-    this._size--;
-
-    return element;
-  }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   *
-   * The `getLast()` function returns the last element in an array-like data structure.
-   * @returns The last element in the array "_nodes" is being returned.
-   */
-  getLast() {
-    if (this.size) return this.nodes[this.last];
-  }
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   *
-   * The get function returns the element at the specified index in an array-like data structure.
-   * @param {number} index - The index parameter is a number that represents the position of the element you want to
-   * retrieve from the array.
-   * @returns The element at the specified index in the `_nodes` array is being returned. If there is no element at that
-   * index, `undefined` is returned.
-   */
-  get(index: number) {
-    return this.nodes[this.first + index] || undefined;
-  }
-
-  /**
-   * The function checks if the size of a data structure is less than or equal to zero.
-   * @returns The method is returning a boolean element indicating whether the size of the object is less than or equal to 0.
-   */
-  isEmpty() {
-    return this.size <= 0;
+    return {bucketIndex, indexInBucket};
   }
 }

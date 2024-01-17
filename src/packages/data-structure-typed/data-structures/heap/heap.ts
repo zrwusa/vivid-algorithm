@@ -5,40 +5,69 @@
  * @license MIT License
  */
 
-import type { Comparator, DFSOrderPattern, ElementCallback } from '../../types';
-import { HeapOptions } from "../../types";
-import { IterableElementBase } from "../base";
+import type {Comparator, DFSOrderPattern, ElementCallback, HeapOptions} from '../../types';
+import {IterableElementBase} from '../base';
 
+/**
+ * 1. Complete Binary Tree: Heaps are typically complete binary trees, meaning every level is fully filled except possibly for the last level, which has nodes as far left as possible.
+ * 2. Heap Properties: Each node in a heap follows a specific order property, which varies depending on the type of heap:
+ * Max Heap: The value of each parent node is greater than or equal to the value of its children.
+ * Min Heap: The value of each parent node is less than or equal to the value of its children.
+ * 3. Root Node Access: In a heap, the largest element (in a max heap) or the smallest element (in a min heap) is always at the root of the tree.
+ * 4. Efficient Insertion and Deletion: Due to its structure, a heap allows for insertion and deletion operations in logarithmic time (O(log n)).
+ * 5. Managing Dynamic Data Sets: Heaps effectively manage dynamic data sets, especially when frequent access to the largest or smallest elements is required.
+ * 6. Non-linear Search: While a heap allows rapid access to its largest or smallest element, it is less efficient for other operations, such as searching for a specific element, as it is not designed for these tasks.
+ * 7. Efficient Sorting Algorithms: For example, heap sort. Heap sort uses the properties of a heap to sort elements.
+ * 8. Graph Algorithms: Such as Dijkstra's shortest path algorithm and Prim's minimum spanning tree algorithm, which use heaps to improve performance.
+ */
 export class Heap<E = any> extends IterableElementBase<E> {
-  options: HeapOptions<E>;
-
-  constructor(elements?: Iterable<E>, options?: HeapOptions<E>) {
+  /**
+   * The constructor initializes a heap data structure with optional elements and options.
+   * @param elements - The `elements` parameter is an iterable object that contains the initial
+   * elements to be added to the heap. It is an optional parameter and if not provided, the heap will
+   * be initialized as empty.
+   * @param [options] - The `options` parameter is an optional object that can contain additional
+   * configuration options for the heap. In this case, it is used to specify a custom comparator
+   * function for comparing elements in the heap. The comparator function is used to determine the
+   * order of elements in the heap.
+   */
+  constructor(elements: Iterable<E> = [], options?: HeapOptions<E>) {
     super();
-    const defaultComparator = (a: E, b: E) => {
-      if (!(typeof a === 'number' && typeof b === 'number')) {
-        throw new Error('The a, b params of compare function must be number');
-      } else {
-        return a - b;
-      }
-    }
+
     if (options) {
-      this.options = options
-    } else {
-      this.options = {
-        comparator: defaultComparator
-      }
+      const {comparator} = options;
+      if (comparator) this._comparator = comparator;
     }
 
     if (elements) {
       for (const el of elements) {
-        this.push(el);
+        this.add(el);
       }
-      // this.fix();
     }
+  }
+
+  protected _comparator = (a: E, b: E) => {
+    if (!(typeof a === 'number' && typeof b === 'number')) {
+      throw new Error('The a, b params of compare function must be number');
+    } else {
+      return a - b;
+    }
+  };
+
+  /**
+   * The function returns the value of the _comparator property.
+   * @returns The `_comparator` property is being returned.
+   */
+  get comparator() {
+    return this._comparator;
   }
 
   protected _elements: E[] = [];
 
+  /**
+   * The function returns an array of elements.
+   * @returns The elements array is being returned.
+   */
   get elements(): E[] {
     return this._elements;
   }
@@ -69,46 +98,31 @@ export class Heap<E = any> extends IterableElementBase<E> {
   }
 
   /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Time Complexity: O(log n)
    * Space Complexity: O(1)
+   * where n is the number of elements in the heap.
    */
 
   /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Time Complexity: O(log n)
    * Space Complexity: O(1)
    *
    * Insert an element into the heap and maintain the heap properties.
    * @param element - The element to be inserted.
    */
-  add(element: E): Heap<E> {
-    return this.push(element);
-  }
-
-  /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
-   * Space Complexity: O(1)
-   */
-
-  /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
-   * Space Complexity: O(1)
-   *
-   * Insert an element into the heap and maintain the heap properties.
-   * @param element - The element to be inserted.
-   */
-  push(element: E): Heap<E> {
+  add(element: E): boolean {
     this._elements.push(element);
-    this._bubbleUp(this.elements.length - 1);
-    return this;
+    return this._bubbleUp(this.elements.length - 1);
   }
 
   /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Time Complexity: O(log n)
    * Space Complexity: O(1)
+   * where n is the number of elements in the heap.
    */
 
   /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Time Complexity: O(log n)
    * Space Complexity: O(1)
    *
    * Remove and return the top element (smallest or largest element) from the heap.
@@ -126,22 +140,14 @@ export class Heap<E = any> extends IterableElementBase<E> {
   }
 
   /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Time Complexity: O(1)
    * Space Complexity: O(1)
    */
 
   /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Time Complexity: O(1)
    * Space Complexity: O(1)
    *
-   * Remove and return the top element (smallest or largest element) from the heap.
-   * @returns The top element or undefined if the heap is empty.
-   */
-  pop(): E | undefined {
-    return this.poll();
-  }
-
-  /**
    * Peek at the top element of the heap without removing it.
    * @returns The top element or undefined if the heap is empty.
    */
@@ -153,58 +159,59 @@ export class Heap<E = any> extends IterableElementBase<E> {
    * Check if the heap is empty.
    * @returns True if the heap is empty, otherwise false.
    */
-  isEmpty() {
+  isEmpty(): boolean {
     return this.size === 0;
   }
 
   /**
    * Reset the elements of the heap. Make the elements empty.
    */
-  clear() {
+  clear(): void {
     this._elements = [];
   }
 
   /**
-   * Time Complexity: O(n), where n is the number of elements in the elements array.
+   * Time Complexity: O(n)
    * Space Complexity: O(n)
    */
 
   /**
-   * Time Complexity: O(n), where n is the number of elements in the elements array.
+   * Time Complexity: O(n)
    * Space Complexity: O(n)
    *
    * Clear and add elements of the heap
    * @param elements
    */
-  refill(elements: E[]) {
+  refill(elements: E[]): boolean[] {
     this._elements = elements;
-    this.fix();
+    return this.fix();
   }
 
   /**
-   * Time Complexity: O(n), where n is the number of elements in the heap.
+   * Time Complexity: O(n)
    * Space Complexity: O(1)
    */
 
   /**
-   * Time Complexity: O(n), where n is the number of elements in the heap.
+   * Time Complexity: O(n)
    * Space Complexity: O(1)
    *
    * Use a comparison function to check whether a binary heap contains a specific element.
    * @param element - the element to check.
    * @returns Returns true if the specified element is contained; otherwise, returns false.
    */
-  has(element: E): boolean {
+  override has(element: E): boolean {
     return this.elements.includes(element);
   }
 
   /**
-   * Time Complexity:  O(n). The worst-case  O(n), where n is the number of elements in the heap. This is because, in the worst case, the element to be deleted is located at the end of the heap (not the root), and after deletion, we may need to reorganize the elements by performing a sinkDown operation.
+   * Time Complexity:  O(n)
    * Space Complexity: O(1)
+   * The worst-case  O(n) This is because, in the worst case, the element to be deleted is located at the end of the heap (not the root), and after deletion, we may need to reorganize the elements by performing a sinkDown operation.
    */
 
   /**
-   * Time Complexity:  O(n). The worst-case  O(n), where n is the number of elements in the heap. This is because, in the worst case, the element to be deleted is located at the end of the heap (not the root), and after deletion, we may need to reorganize the elements by performing a sinkDown operation.
+   * Time Complexity:  O(n)
    * Space Complexity: O(1)
    *
    * The `delete` function removes an element from an array-like data structure, maintaining the order
@@ -214,11 +221,11 @@ export class Heap<E = any> extends IterableElementBase<E> {
    * @returns The `delete` function is returning a boolean value. It returns `true` if the element was
    * successfully deleted from the array, and `false` if the element was not found in the array.
    */
-  delete(element: E) {
+  delete(element: E): boolean {
     const index = this.elements.indexOf(element);
     if (index < 0) return false;
     if (index === 0) {
-      this.pop();
+      this.poll();
     } else if (index === this.elements.length - 1) {
       this.elements.pop();
     } else {
@@ -230,34 +237,36 @@ export class Heap<E = any> extends IterableElementBase<E> {
   }
 
   /**
-   * Time Complexity: O(n), where n is the number of elements in the heap.
-   * Space Complexity: O(h), where h is the height of the heap.
+   * Time Complexity: O(n)
+   * Space Complexity: O(log n)
+   * where log n is the height of the heap.
    */
 
   /**
-   * Time Complexity: O(n), where n is the number of elements in the heap.
-   * Space Complexity: O(h), where h is the height of the heap.
+   * Time Complexity: O(n)
+   * Space Complexity: O(log n)
    *
    * Depth-first search (DFS) method, different traversal orders can be selected。
-   * @param order - Traverse order parameter: 'in' (in-order), 'pre' (pre-order) or 'post' (post-order).
+   * @param order - Traverse order parameter: 'IN' (in-order), 'PRE' (pre-order) or 'POST' (post-order).
    * @returns An array containing elements traversed in the specified order.
    */
-  dfs(order: DFSOrderPattern = 'pre'): E[] {
+  dfs(order: DFSOrderPattern = 'PRE'): E[] {
     const result: E[] = [];
 
     // Auxiliary recursive function, traverses the binary heap according to the traversal order
     const _dfs = (index: number) => {
-      const left = 2 * index + 1, right = left + 1;
+      const left = 2 * index + 1,
+        right = left + 1;
       if (index < this.size) {
-        if (order === 'in') {
+        if (order === 'IN') {
           _dfs(left);
           result.push(this.elements[index]);
           _dfs(right);
-        } else if (order === 'pre') {
+        } else if (order === 'PRE') {
           result.push(this.elements[index]);
           _dfs(left);
           _dfs(right);
-        } else if (order === 'post') {
+        } else if (order === 'POST') {
           _dfs(left);
           _dfs(right);
           result.push(this.elements[index]);
@@ -299,7 +308,7 @@ export class Heap<E = any> extends IterableElementBase<E> {
    * @returns A new Heap instance containing the same elements.
    */
   clone(): Heap<E> {
-    const clonedHeap = new Heap<E>([], this.options);
+    const clonedHeap = new Heap<E>([], {comparator: this.comparator});
     clonedHeap._elements = [...this.elements];
     return clonedHeap;
   }
@@ -327,18 +336,20 @@ export class Heap<E = any> extends IterableElementBase<E> {
   }
 
   /**
-   * Time Complexity: O(log n)
-   * Space Complexity: O(1)
+   * Time Complexity: O(n log n)
+   * Space Complexity: O(n)
    */
 
   /**
-   * Time Complexity: O(n)
-   * Space Complexity: O(1)
+   * Time Complexity: O(n log n)
+   * Space Complexity: O(n)
    *
    * Fix the entire heap to maintain heap properties.
    */
-  fix() {
-    for (let i = Math.floor(this.size / 2); i >= 0; i--) this._sinkDown(i, this.elements.length >> 1);
+  fix(): boolean[] {
+    const results: boolean[] = [];
+    for (let i = Math.floor(this.size / 2); i >= 0; i--) results.push(this._sinkDown(i, this.elements.length >> 1));
+    return results;
   }
 
   /**
@@ -367,7 +378,7 @@ export class Heap<E = any> extends IterableElementBase<E> {
     let index = 0;
     for (const current of this) {
       if (callback.call(thisArg, current, index, this)) {
-        filteredList.push(current);
+        filteredList.add(current);
       }
       index++;
     }
@@ -400,8 +411,7 @@ export class Heap<E = any> extends IterableElementBase<E> {
    * original Heap.
    */
   map<T>(callback: ElementCallback<E, T>, comparator: Comparator<T>, thisArg?: any): Heap<T> {
-
-    const mappedHeap: Heap<T> = new Heap<T>([], { comparator: comparator });
+    const mappedHeap: Heap<T> = new Heap<T>([], {comparator: comparator});
     let index = 0;
     for (const el of this) {
       mappedHeap.add(callback.call(thisArg, el, index, this));
@@ -411,22 +421,16 @@ export class Heap<E = any> extends IterableElementBase<E> {
   }
 
   /**
-   * Time Complexity: O(log n)
-   * Space Complexity: O(1)
+   * The function `_getIterator` returns an iterable iterator for the elements in the class.
    */
-
-  print(): void {
-    console.log([...this]);
-  }
-
-  protected* _getIterator() {
+  protected* _getIterator(): IterableIterator<E> {
     for (const element of this.elements) {
       yield element;
     }
   }
 
   /**
-   * Time Complexity: O(n)
+   * Time Complexity: O(log n)
    * Space Complexity: O(1)
    */
 
@@ -437,17 +441,23 @@ export class Heap<E = any> extends IterableElementBase<E> {
    * Float operation to maintain heap properties after adding an element.
    * @param index - The index of the newly added element.
    */
-  protected _bubbleUp(index: number) {
+  protected _bubbleUp(index: number): boolean {
     const element = this.elements[index];
     while (index > 0) {
       const parent = (index - 1) >> 1;
       const parentItem = this.elements[parent];
-      if (this.options.comparator(parentItem, element) <= 0) break;
+      if (this.comparator(parentItem, element) <= 0) break;
       this.elements[index] = parentItem;
       index = parent;
     }
     this.elements[index] = element;
+    return true;
   }
+
+  /**
+   * Time Complexity: O(log n)
+   * Space Complexity: O(1)
+   */
 
   /**
    * Time Complexity: O(log n)
@@ -457,24 +467,22 @@ export class Heap<E = any> extends IterableElementBase<E> {
    * @param index - The index from which to start sinking.
    * @param halfLength
    */
-  protected _sinkDown(index: number, halfLength: number) {
+  protected _sinkDown(index: number, halfLength: number): boolean {
     const element = this.elements[index];
     while (index < halfLength) {
-      let left = index << 1 | 1;
+      let left = (index << 1) | 1;
       const right = left + 1;
       let minItem = this.elements[left];
-      if (
-        right < this.elements.length &&
-        this.options.comparator(minItem, this.elements[right]) > 0
-      ) {
+      if (right < this.elements.length && this.comparator(minItem, this.elements[right]) > 0) {
         left = right;
         minItem = this.elements[right];
       }
-      if (this.options.comparator(minItem, element) >= 0) break;
+      if (this.comparator(minItem, element) >= 0) break;
       this.elements[index] = minItem;
       index = left;
     }
     this.elements[index] = element;
+    return true;
   }
 }
 
@@ -487,6 +495,16 @@ export class FibonacciHeapNode<E> {
   parent?: FibonacciHeapNode<E>;
   marked: boolean;
 
+  /**
+   * The constructor function initializes an object with an element and a degree, and sets the marked
+   * property to false.
+   * @param {E} element - The "element" parameter represents the value or data that will be stored in
+   * the node of a data structure. It can be any type of data, such as a number, string, object, or
+   * even another data structure.
+   * @param [degree=0] - The degree parameter represents the degree of the element in a data structure
+   * called a Fibonacci heap. The degree of a node is the number of children it has. By default, the
+   * degree is set to 0 when a new node is created.
+   */
   constructor(element: E, degree = 0) {
     this.element = element;
     this.degree = degree;
@@ -495,6 +513,13 @@ export class FibonacciHeapNode<E> {
 }
 
 export class FibonacciHeap<E> {
+  /**
+   * The constructor function initializes a FibonacciHeap object with an optional comparator function.
+   * @param [comparator] - The `comparator` parameter is an optional argument that represents a
+   * function used to compare elements in the FibonacciHeap. If a comparator function is provided, it
+   * will be used to determine the order of elements in the heap. If no comparator function is
+   * provided, a default comparator function will be used.
+   */
   constructor(comparator?: Comparator<E>) {
     this.clear();
     this._comparator = comparator || this._defaultComparator;
@@ -506,24 +531,41 @@ export class FibonacciHeap<E> {
 
   protected _root?: FibonacciHeapNode<E>;
 
+  /**
+   * The function returns the root node of a Fibonacci heap.
+   * @returns The method is returning either a FibonacciHeapNode object or undefined.
+   */
   get root(): FibonacciHeapNode<E> | undefined {
     return this._root;
   }
 
   protected _size = 0;
 
+  /**
+   * The function returns the size of an object.
+   * @returns The size of the object, which is a number.
+   */
   get size(): number {
     return this._size;
   }
 
   protected _min?: FibonacciHeapNode<E>;
 
+  /**
+   * The function returns the minimum node in a Fibonacci heap.
+   * @returns The method is returning the minimum node of the Fibonacci heap, which is of type
+   * `FibonacciHeapNode<E>`. If there is no minimum node, it will return `undefined`.
+   */
   get min(): FibonacciHeapNode<E> | undefined {
     return this._min;
   }
 
   protected _comparator: Comparator<E>;
 
+  /**
+   * The function returns the comparator used for comparing elements.
+   * @returns The `_comparator` property of the object.
+   */
   get comparator(): Comparator<E> {
     return this._comparator;
   }
@@ -652,12 +694,12 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Time Complexity: O(log n)
    * Space Complexity: O(1)
    */
 
   /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Time Complexity: O(log n)
    * Space Complexity: O(1)
    *
    * Remove and return the top element (smallest or largest element) from the heap.
@@ -668,12 +710,12 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Time Complexity: O(log n)
    * Space Complexity: O(1)
    */
 
   /**
-   * Time Complexity: O(log n), where n is the number of elements in the heap.
+   * Time Complexity: O(log n)
    * Space Complexity: O(1)
    *
    * Remove and return the top element (smallest or largest element) from the heap.
@@ -837,12 +879,12 @@ export class FibonacciHeap<E> {
   }
 
   /**
-   * Time Complexity: O(n log n), where n is the number of elements in the heap.
+   * Time Complexity: O(n log n)
    * Space Complexity: O(n)
    */
 
   /**
-   * Time Complexity: O(n log n), where n is the number of elements in the heap.
+   * Time Complexity: O(n log n)
    * Space Complexity: O(n)
    *
    * Remove and return the top element (smallest or largest element) from the heap.

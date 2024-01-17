@@ -6,21 +6,21 @@ const magnitude = 10000;
 export async function testLinkedLIstQueueFIFO() {
   const lQueue = new LinkedListQueue<number>();
   for (let i = 0; i < magnitude; i++) {
-    lQueue.enqueue(i);
+    lQueue.push(i);
   }
   for (let i = 0; i < magnitude; i++) {
-    lQueue.dequeue();
+    lQueue.shift();
   }
 }
 
 export async function testLinkedLIstQueueAccess() {
   const lQueue = new LinkedListQueue<number>();
   for (let i = 0; i < magnitude; i++) {
-    lQueue.enqueue(i);
+    lQueue.push(i);
   }
   let val: number | undefined = 0;
   for (let i = 0; i < magnitude; i++) {
-    val = lQueue.getAt(i);
+    val = lQueue.at(i);
     // console.log(val);
   }
   return val;
@@ -29,21 +29,21 @@ export async function testLinkedLIstQueueAccess() {
 export async function testQueueFIFO() {
   const queue = new Queue<number>();
   for (let i = 0; i < magnitude; i++) {
-    queue.enqueue(i);
+    queue.push(i);
   }
   for (let i = 0; i < magnitude; i++) {
-    queue.dequeue();
+    queue.shift();
   }
 }
 
 export async function testQueueAccess() {
   const queue = new Queue<number>();
   for (let i = 0; i < magnitude; i++) {
-    queue.enqueue(i);
+    queue.push(i);
   }
   let val: number | undefined = 0;
   for (let i = 0; i < magnitude; i++) {
-    val = queue.getAt(i);
+    val = queue.at(i);
     // console.log(val);
   }
   return val;

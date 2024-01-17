@@ -1,6 +1,6 @@
 import {runAlgorithm} from '../helpers';
 import {maxSlidingWindowCase6} from './cases';
-import {BST, BSTVariant, Deque, IterationType, ObjectDeque, PriorityQueue} from 'data-structure-typed';
+import {BST, Deque, PriorityQueue} from 'data-structure-typed';
 
 // 239. Sliding Window Maximum
 export function maxSlidingWindow(nums: number[], k: number): number[] {
@@ -11,11 +11,11 @@ export function maxSlidingWindow(nums: number[], k: number): number[] {
   let l = 0;
 
   for (let r = 0; r < n; r++) {
-    while (!dq.isEmpty() && nums[r] >= nums[dq.last!]) dq.pollLast();
+    while (!dq.isEmpty() && nums[r] >= nums[dq.last!]) dq.pop();
 
-    dq.addLast(r);
+    dq.push(r);
 
-    if (l > dq.first!) dq.pollFirst();
+    if (l > dq.first!) dq.shift();
 
     if (r + 1 >= k) {
       ans.push(nums[dq.first!]);
@@ -32,26 +32,26 @@ export function maxSlidingWindowLinkedDeque(nums: number[], k: number): number[]
   if (k === 1) ans.push(nums[0]);
 
   for (let i = 1; i < nums.length; i++) {
-    if (i - deque.getAt(0)![1] >= k) deque.shift();
-    while (deque.size !== 0 && nums[i] >= deque.getAt(deque.size - 1)![0]) deque.pop();
+    if (i - deque.at(0)![1] >= k) deque.shift();
+    while (deque.size !== 0 && nums[i] >= deque.at(deque.size - 1)![0]) deque.pop();
     deque.push([nums[i], i]);
-    if (i >= k - 1) ans.push(deque.getAt(0)![0]);
+    if (i >= k - 1) ans.push(deque.at(0)![0]);
   }
 
   return ans;
 }
 
 export function maxSlidingWindowObjectDeque(nums: number[], k: number): number[] {
-  const deque: ObjectDeque<[number, number]> = new ObjectDeque<[number, number]>(nums.length);
+  const deque: Deque<[number, number]> = new Deque<[number, number]>();
   const ans: number[] = [];
-  deque.addLast([nums[0], 0]);
+  deque.push([nums[0], 0]);
   if (k === 1) ans.push(nums[0]);
 
   for (let i = 1; i < nums.length; i++) {
-    if (i - deque.get(0)![1] >= k) deque.pollFirst();
-    while (deque.size !== 0 && nums[i] >= deque.get(deque.size - 1)![0]) deque.pollLast();
-    deque.addLast([nums[i], i]);
-    if (i >= k - 1) ans.push(deque.get(0)![0]);
+    if (i - deque.at(0)![1] >= k) deque.shift();
+    while (deque.size !== 0 && nums[i] >= deque.at(deque.size - 1)![0]) deque.pop();
+    deque.push([nums[i], i]);
+    if (i >= k - 1) ans.push(deque.at(0)![0]);
   }
 
   return ans;
@@ -75,8 +75,8 @@ export function maxSlidingWindowBST(nums: number[], k: number): number[] {
   const n = nums.length,
     ans: number[] = [],
     bst: BST = new BST<number>([], {
-      variant: BSTVariant.MAX,
-      iterationType: IterationType.ITERATIVE
+      variant: 'INVERSE',
+      iterationType: 'ITERATIVE'
     });
 
   let j = 0;
@@ -95,8 +95,8 @@ export function maxSlidingWindowBST2(nums: number[], k: number): number[] {
   const n = nums.length,
     ans: number[] = [],
     bst: BST<number> = new BST<number>([], {
-      variant: BSTVariant.MAX,
-      iterationType: IterationType.RECURSIVE
+      variant: 'INVERSE',
+      iterationType: 'RECURSIVE'
     });
 
   let j = 0;
@@ -119,8 +119,8 @@ export function maxSlidingWindowBST3(nums: number[], k: number): number[] {
   const n = nums.length,
     ans: number[] = [],
     bst: BST<number> = new BST<number>([], {
-      variant: BSTVariant.MAX,
-      iterationType: IterationType.ITERATIVE
+      variant: 'INVERSE',
+      iterationType: 'ITERATIVE'
     });
 
   const removeElement = (x: number) => {
@@ -146,8 +146,8 @@ export function maxSlidingWindowBST4(nums: number[], k: number): number[] {
   const n = nums.length,
     ans: number[] = [],
     bst: BST<number> = new BST<number>([], {
-      variant: BSTVariant.MAX,
-      iterationType: IterationType.RECURSIVE
+      variant: 'INVERSE',
+      iterationType: 'RECURSIVE'
     });
 
   const removeElement = (x: number) => {

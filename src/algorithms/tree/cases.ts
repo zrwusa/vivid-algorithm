@@ -1,4 +1,26 @@
-import {TreeNode} from 'data-structure-typed';
+import {BinaryTree, TreeNode} from "data-structure-typed";
+
+const binaryTree = new BinaryTree<string, string>();
+binaryTree.addMany([['1', '1'],
+  ['1-1', '2'],
+  ['1-2', '3'],
+  ['1-1-1', '4'],
+  ['1-1-2', '5'],
+  ['1-2-1', '6'],
+  ['1-2-2', '7'],
+  ['1-1-1-1', '8'],
+  ['1-1-1-2', '9'],
+  ['1-1-2-1', '10'],
+  ['1-1-2-2', '11'],
+  ['1-2-1-1', '12'],
+  ['1-2-1-2', '13'],
+  ['1-2-2-1', '14'],
+  ['1-2-2-2', '15'],
+  ['1-2-2-2-1', '16'],
+  ['1-2-2-2-2', '17']
+]);
+
+export const binaryTreeRoot = binaryTree.root;
 
 export const treeData: TreeNode<string> = new TreeNode('1', '1', [
   new TreeNode('1-1', '2', [

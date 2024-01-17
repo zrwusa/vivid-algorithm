@@ -68,82 +68,82 @@ export function UncategorizedScreen() {
         ]}
         buttonLabel={`Keywords 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'`}
       />
-      <AlgorithmPanel
-        algorithm={findBestWordOrder}
-        testCase={[
-          [
-            'Binary',
-            'Search',
-            'Tree',
-            'BST',
-            'Data',
-            'Structure',
-            'JavaScript',
-            'TypeScript',
-            'Traversal',
-            'Algorithm',
-            'Sorting',
-            'Node.js',
-            'ES6',
-            'Insertion',
-            'Deletion',
-            'Efficiency',
-            'Performance',
-            'OOP',
-            'Documentation',
-            'Usage',
-            'Guide',
-            'Examples',
-            'Computer',
-            'Science',
-            'Visualization',
-            'DFS',
-            'DFSIterative',
-            'BFS',
-            'Sorted',
-            'Ordered',
-            'Depth',
-            'Height',
-            'Balanced',
-            'Minimum',
-            'Maximum',
-            'Successor',
-            'Predecessor'
-          ],
-          [
-            'Binary Search Tree',
-            'BST',
-            'Tree Data Structure',
-            'JavaScript Tree',
-            'TypeScript Tree',
-            'Tree Traversal',
-            'Search Algorithm',
-            'Data Structure',
-            'Algorithm',
-            'Search',
-            'Sorting',
-            'TypeScript',
-            'JavaScript',
-            'Node.js',
-            'ES6',
-            'Insertion',
-            'Deletion',
-            'Searching',
-            'Sorting',
-            'Tree Node',
-            'Binary Tree',
-            'Efficiency',
-            'Performance',
-            'OOP',
-            'Documentation',
-            'Usage Guide',
-            'Examples',
-            'Computer Science',
-            'Algorithm Visualization'
-          ]
-        ]}
-        buttonLabel={`Keywords real one`}
-      />
+      {/*<AlgorithmPanel*/}
+      {/*  algorithm={findBestWordOrder}*/}
+      {/*  testCase={[*/}
+      {/*    [*/}
+      {/*      'Binary',*/}
+      {/*      'Search',*/}
+      {/*      'Tree',*/}
+      {/*      'BST',*/}
+      {/*      'Data',*/}
+      {/*      'Structure',*/}
+      {/*      'JavaScript',*/}
+      {/*      'TypeScript',*/}
+      {/*      'Traversal',*/}
+      {/*      'Algorithm',*/}
+      {/*      'Sorting',*/}
+      {/*      'Node.js',*/}
+      {/*      'ES6',*/}
+      {/*      'Insertion',*/}
+      {/*      'Deletion',*/}
+      {/*      'Efficiency',*/}
+      {/*      'Performance',*/}
+      {/*      'OOP',*/}
+      {/*      'Documentation',*/}
+      {/*      'Usage',*/}
+      {/*      'Guide',*/}
+      {/*      'Examples',*/}
+      {/*      'Computer',*/}
+      {/*      'Science',*/}
+      {/*      'Visualization',*/}
+      {/*      'DFS',*/}
+      {/*      'DFSIterative',*/}
+      {/*      'BFS',*/}
+      {/*      'Sorted',*/}
+      {/*      'Ordered',*/}
+      {/*      'Depth',*/}
+      {/*      'Height',*/}
+      {/*      'Balanced',*/}
+      {/*      'Minimum',*/}
+      {/*      'Maximum',*/}
+      {/*      'Successor',*/}
+      {/*      'Predecessor'*/}
+      {/*    ],*/}
+      {/*    [*/}
+      {/*      'Binary Search Tree',*/}
+      {/*      'BST',*/}
+      {/*      'Tree Data Structure',*/}
+      {/*      'JavaScript Tree',*/}
+      {/*      'TypeScript Tree',*/}
+      {/*      'Tree Traversal',*/}
+      {/*      'Search Algorithm',*/}
+      {/*      'Data Structure',*/}
+      {/*      'Algorithm',*/}
+      {/*      'Search',*/}
+      {/*      'Sorting',*/}
+      {/*      'TypeScript',*/}
+      {/*      'JavaScript',*/}
+      {/*      'Node.js',*/}
+      {/*      'ES6',*/}
+      {/*      'Insertion',*/}
+      {/*      'Deletion',*/}
+      {/*      'Searching',*/}
+      {/*      'Sorting',*/}
+      {/*      'Tree Node',*/}
+      {/*      'Binary Tree',*/}
+      {/*      'Efficiency',*/}
+      {/*      'Performance',*/}
+      {/*      'OOP',*/}
+      {/*      'Documentation',*/}
+      {/*      'Usage Guide',*/}
+      {/*      'Examples',*/}
+      {/*      'Computer Science',*/}
+      {/*      'Algorithm Visualization'*/}
+      {/*    ]*/}
+      {/*  ]}*/}
+      {/*  buttonLabel={`Keywords real one`}*/}
+      {/*/>*/}
     </>
   );
 }

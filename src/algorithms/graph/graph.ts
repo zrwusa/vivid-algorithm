@@ -1048,12 +1048,12 @@ function criticalConnectionsByGraph(n: number, connections: number[][]): number[
   timeEnd(time1, 'construct graph');
 
   const time2 = timeStart();
-  const {bridges} = graph.tarjan(false, true);
+  const {bridges} = graph.tarjan();
   timeEnd(time2, 'tarjan');
 
   const ans: number[][] = [];
   for (const bridge of bridges) {
-    const vertexKeys: number[] = bridge.vertexMap.map(v => v as number);
+    const vertexKeys: number[] = bridge.endpoints.map(v => v as number);
     ans.push(vertexKeys);
   }
   return ans;

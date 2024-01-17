@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useEffect, useRef, useState} from 'react';
-import {BinaryTreeNode, TreeMultimapNode} from 'data-structure-typed';
+import {BinaryTreeNode, TreeMultiMapNode} from 'data-structure-typed';
 import styles from './styles';
 import {SVGOptions} from '../../types';
 
@@ -81,7 +81,7 @@ const VividBinaryTreeRecursive: React.FC<{
           strokeWidth={lineStrokeWidth}
         />
       ) : null}
-      {node.left ? (
+      {node.left && !isNaN(node.left.key) ? (
         <VividBinaryTreeRecursive
           node={node.left}
           level={level + 1}
@@ -93,7 +93,7 @@ const VividBinaryTreeRecursive: React.FC<{
           relatedBinaryNode={relatedBinaryNode}
         />
       ) : null}
-      {node.right ? (
+      {node.right && !isNaN(node.right.key) ? (
         <VividBinaryTreeRecursive
           node={node.right}
           level={level + 1}
@@ -133,7 +133,7 @@ const VividBinaryTreeRecursive: React.FC<{
           </tspan>
         </text>
       ) : null}
-      {node instanceof TreeMultimapNode ? (
+      {node instanceof TreeMultiMapNode ? (
         <circle
           style={{cursor: 'pointer'}}
           stroke={secondaryTextFillColor}
@@ -146,7 +146,7 @@ const VividBinaryTreeRecursive: React.FC<{
           }}
         />
       ) : null}
-      {node instanceof TreeMultimapNode ? (
+      {node instanceof TreeMultiMapNode ? (
         <text
           fill='none'
           stroke={isActive ? secondaryFillActiveColor : secondaryTextFillColor}

@@ -70,8 +70,8 @@ export async function binaryTreeInorderTraversal(
   }
 }
 
-export const DFS = async (node: TreeNode, type: OrderType, proxyHandler: TProxyHandler) => {
-  type Variables = { current: TreeNode; nodeNeedPrint: TreeNode };
+export const DFS = async (node: BinaryTreeNode, type: OrderType, proxyHandler: TProxyHandler) => {
+  type Variables = { current: BinaryTreeNode; nodeNeedPrint: BinaryTreeNode };
 
   const variablesProxy = new DeepProxy<Variables>(
     {
@@ -81,7 +81,7 @@ export const DFS = async (node: TreeNode, type: OrderType, proxyHandler: TProxyH
     proxyHandler
   );
 
-  const dfs = async (node: TreeNode, type: OrderType) => {
+  const dfs = async (node: BinaryTreeNode, type: OrderType) => {
     if (!node) return;
 
     variablesProxy.current = node;
@@ -91,67 +91,61 @@ export const DFS = async (node: TreeNode, type: OrderType, proxyHandler: TProxyH
 
     await wait(time5);
 
-    const {children} = node;
-    if (children && children.length > 0) {
-      const left = children[0];
-      const right = children[1];
-      switch (type) {
-        case 'InOrder':
-          await dfs(left, type);
-          variablesProxy.current = node;
-          variablesProxy.nodeNeedPrint = node;
-          variablesProxy.current = node;
-          variablesProxy.nodeNeedPrint = node;
-          await wait(time5);
-          await dfs(right, type);
-          break;
-        case 'PreOrder':
-          variablesProxy.current = node;
-          variablesProxy.nodeNeedPrint = node;
-          variablesProxy.current = node;
-          variablesProxy.nodeNeedPrint = node;
-          await wait(time5);
-          await dfs(left, type);
-          await dfs(right, type);
-          break;
-        case 'PostOrder':
-          await dfs(left, type);
-          await dfs(right, type);
-          variablesProxy.current = node;
-          variablesProxy.nodeNeedPrint = node;
-          variablesProxy.current = node;
-          variablesProxy.nodeNeedPrint = node;
-          await wait(time5);
-          break;
-      }
+    const left = node.left;
+    const right = node.right;
+    switch (type) {
+      case 'InOrder':
+        left && await dfs(left, type);
+        variablesProxy.current = node;
+        variablesProxy.nodeNeedPrint = node;
+        variablesProxy.current = node;
+        variablesProxy.nodeNeedPrint = node;
+        await wait(time5);
+        right && await dfs(right, type);
+        break;
+      case 'PreOrder':
+        variablesProxy.current = node;
+        variablesProxy.nodeNeedPrint = node;
+        variablesProxy.current = node;
+        variablesProxy.nodeNeedPrint = node;
+        await wait(time5);
+        left && await dfs(left, type);
+        right && await dfs(right, type);
+        break;
+      case 'PostOrder':
+        left && await dfs(left, type);
+        right && await dfs(right, type);
+        variablesProxy.current = node;
+        variablesProxy.nodeNeedPrint = node;
+        variablesProxy.current = node;
+        variablesProxy.nodeNeedPrint = node;
+        await wait(time5);
+        break;
     }
   };
   await dfs(variablesProxy.current, type);
 };
 
 // 102	Binary Tree Level Order Traversal	★★	107	429	872			collecting nodes
-export const BFS = async (node: TreeNode<number>, proxyHandler: TProxyHandler) => {
-  type Variables = { node: TreeNode<number> };
+export const BFS = async (node: BinaryTreeNode<number>, proxyHandler: TProxyHandler) => {
+  type Variables = { node: BinaryTreeNode<number> };
 
-  const nodes: TreeNode<number>[] = [];
+  const nodes: BinaryTreeNode<number>[] = [];
 
   const variablesProxy = new DeepProxy<Variables>({node: node}, proxyHandler);
 
   if (node) {
-    const queue = new Queue<TreeNode<number>>();
-    queue.enqueue(node);
+    const queue = new Queue<BinaryTreeNode<number>>();
+    queue.push(node);
     while (!queue.isEmpty()) {
-      const item = queue.dequeue() as TreeNode<number>;
+      const item = queue.shift() as BinaryTreeNode<number>;
       nodes.push(item);
       variablesProxy.node = item;
       variablesProxy.node = item;
       await wait(time2);
-      const {children} = item;
-      if (children) {
-        for (let i = 0; i < children.length; i++) {
-          queue.enqueue(children[i]);
-        }
-      }
+      const {left, right} = item;
+      left && queue.push(left);
+      right && queue.push(right);
     }
   }
   return nodes;
@@ -684,21 +678,16 @@ export const runAllUpdateMatrix = async () => {
 // 124	Binary Tree Maximum Path Sum	★★★	543	687	Use both children, return one
 // 968	Binary Tree Cameras	★★★★	337	979
 
-export const treeMaxDepth = (node: TreeNode<number>): number => {
+export const treeMaxDepth = (node: BinaryTreeNode<number>): number => {
   if (!node) {
     return 0;
   }
-  const {children} = node;
-  if (children && children.length > 0) {
-    const left = children[0];
-    const right = children[1];
-    const maxLeft = treeMaxDepth(left);
-    console.log(node.key);
-    const maxRight = treeMaxDepth(right);
-    return Math.max(maxLeft, maxRight) + 1;
-  } else {
-    return 1;
-  }
+  const left = node.left;
+  const right = node.right;
+  const maxLeft = left ? treeMaxDepth(left) : 1;
+  console.log(node.key);
+  const maxRight = right ? treeMaxDepth(right) : 1;
+  return Math.max(maxLeft, maxRight) + 1;
 };
 
 export const combination = (nums: number[]): number[][] => {

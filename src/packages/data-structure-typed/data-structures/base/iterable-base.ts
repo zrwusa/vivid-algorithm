@@ -1,11 +1,12 @@
-import { ElementCallback, EntryCallback, ReduceElementCallback, ReduceEntryCallback } from "../../types";
+import {ElementCallback, EntryCallback, ReduceElementCallback, ReduceEntryCallback} from '../../types';
 
 export abstract class IterableEntryBase<K = any, V = any> {
-
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(1)
    */
+
+  abstract get size(): number;
 
   /**
    * Time Complexity: O(n)
@@ -130,6 +131,11 @@ export abstract class IterableEntryBase<K = any, V = any> {
    * Time Complexity: O(n)
    * Space Complexity: O(1)
    */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   */
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(1)
@@ -147,7 +153,7 @@ export abstract class IterableEntryBase<K = any, V = any> {
     let index = 0;
     for (const item of this) {
       const [key, value] = item;
-      callbackfn.call(thisArg, value, key, index++, this)
+      callbackfn.call(thisArg, value, key, index++, this);
     }
   }
 
@@ -155,6 +161,100 @@ export abstract class IterableEntryBase<K = any, V = any> {
    * Time Complexity: O(n)
    * Space Complexity: O(1)
    */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
+   * The `find` function iterates over the entries of a collection and returns the first value for
+   * which the callback function returns true.
+   * @param callbackfn - The callback function that will be called for each entry in the collection. It
+   * takes three arguments: the value of the entry, the key of the entry, and the index of the entry in
+   * the collection. It should return a boolean value indicating whether the current entry matches the
+   * desired condition.
+   * @param {any} [thisArg] - The `thisArg` parameter is an optional argument that specifies the value
+   * to be used as `this` when executing the `callbackfn` function. If `thisArg` is provided, it will
+   * be passed as the `this` value to the `callbackfn` function. If `thisArg
+   * @returns The method `find` returns the value of the first element in the iterable that satisfies
+   * the provided callback function. If no element satisfies the callback function, `undefined` is
+   * returned.
+   */
+  find(callbackfn: EntryCallback<K, V, [K, V]>, thisArg?: any): [K, V] | undefined {
+    let index = 0;
+    for (const item of this) {
+      const [key, value] = item;
+      if (callbackfn.call(thisArg, value, key, index++, this)) return item;
+    }
+    return;
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
+   * The function checks if a given key exists in a collection.
+   * @param {K} key - The parameter "key" is of type K, which means it can be any type. It represents
+   * the key that we want to check for existence in the data structure.
+   * @returns a boolean value. It returns true if the key is found in the collection, and false
+   * otherwise.
+   */
+  has(key: K): boolean {
+    for (const item of this) {
+      const [itemKey] = item;
+      if (itemKey === key) return true;
+    }
+    return false;
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
+   * The function checks if a given value exists in a collection.
+   * @param {V} value - The parameter "value" is the value that we want to check if it exists in the
+   * collection.
+   * @returns a boolean value, either true or false.
+   */
+  hasValue(value: V): boolean {
+    for (const [, elementValue] of this) {
+      if (elementValue === value) return true;
+    }
+    return false;
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
+   * The `get` function retrieves the value associated with a given key from a collection.
+   * @param {K} key - K (the type of the key) - This parameter represents the key that is being
+   * searched for in the collection.
+   * @returns The `get` method returns the value associated with the specified key if it exists in the
+   * collection, otherwise it returns `undefined`.
+   */
+  get(key: K): V | undefined {
+    for (const item of this) {
+      const [itemKey, value] = item;
+      if (itemKey === key) return value;
+    }
+    return;
+  }
+
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(1)
@@ -176,15 +276,34 @@ export abstract class IterableEntryBase<K = any, V = any> {
     let index = 0;
     for (const item of this) {
       const [key, value] = item;
-      accumulator = callbackfn(accumulator, value, key, index++, this)
+      accumulator = callbackfn(accumulator, value, key, index++, this);
     }
     return accumulator;
   }
 
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   */
+  print(): void {
+    console.log([...this]);
+  }
+
+  abstract isEmpty(): boolean;
+
+  abstract clear(): void;
+
+  abstract clone(): any;
+
+  abstract map(...args: any[]): any;
+
+  abstract filter(...args: any[]): any;
+
   protected abstract _getIterator(...args: any[]): IterableIterator<[K, V]>;
 }
 
-export abstract class IterableElementBase<V> {
+export abstract class IterableElementBase<E = any, C = any> {
+  abstract get size(): number;
 
   /**
    * Time Complexity: O(n)
@@ -199,7 +318,7 @@ export abstract class IterableElementBase<V> {
    * allows the function to accept any number of arguments as an array. In this case, the `args`
    * parameter is used to pass any number of arguments to the `_getIterator` method.
    */
-  * [Symbol.iterator](...args: any[]): IterableIterator<V> {
+  * [Symbol.iterator](...args: any[]): IterableIterator<E> {
     yield* this._getIterator(...args);
   }
 
@@ -213,7 +332,7 @@ export abstract class IterableElementBase<V> {
    *
    * The function returns an iterator that yields all the values in the object.
    */
-  * values(): IterableIterator<V> {
+  * values(): IterableIterator<E> {
     for (const item of this) {
       yield item;
     }
@@ -237,15 +356,20 @@ export abstract class IterableElementBase<V> {
    * @returns The `every` method is returning a boolean value. It returns `true` if every element in
    * the array satisfies the provided predicate function, and `false` otherwise.
    */
-  every(predicate: ElementCallback<V, boolean>, thisArg?: any): boolean {
+  every(predicate: ElementCallback<E, boolean>, thisArg?: any): boolean {
     let index = 0;
     for (const item of this) {
-      if (!predicate.call(thisArg, item as V, index++, this)) {
+      if (!predicate.call(thisArg, item, index++, this)) {
         return false;
       }
     }
     return true;
   }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   */
 
   /**
    * Time Complexity: O(n)
@@ -265,10 +389,10 @@ export abstract class IterableElementBase<V> {
    * @returns a boolean value. It returns true if the predicate function returns true for any element
    * in the collection, and false otherwise.
    */
-  some(predicate: ElementCallback<V, boolean>, thisArg?: any): boolean {
+  some(predicate: ElementCallback<E, boolean>, thisArg?: any): boolean {
     let index = 0;
     for (const item of this) {
-      if (predicate.call(thisArg, item as V, index++, this)) {
+      if (predicate.call(thisArg, item, index++, this)) {
         return true;
       }
     }
@@ -279,6 +403,7 @@ export abstract class IterableElementBase<V> {
    * Time Complexity: O(n)
    * Space Complexity: O(1)
    */
+
   /**
    * Time Complexity: O(n)
    * Space Complexity: O(1)
@@ -292,11 +417,58 @@ export abstract class IterableElementBase<V> {
    * to be used as `this` when executing the `callbackfn` function. If `thisArg` is provided, it will
    * be passed as the `this` value to the `callbackfn` function. If `thisArg
    */
-  forEach(callbackfn: ElementCallback<V, void>, thisArg?: any): void {
+  forEach(callbackfn: ElementCallback<E, void>, thisArg?: any): void {
     let index = 0;
     for (const item of this) {
-      callbackfn.call(thisArg, item as V, index++, this)
+      callbackfn.call(thisArg, item, index++, this);
     }
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   */
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
+   * The `find` function iterates over the elements of an array-like object and returns the first
+   * element that satisfies the provided callback function.
+   * @param callbackfn - The callbackfn parameter is a function that will be called for each element in
+   * the array. It takes three arguments: the current element being processed, the index of the current
+   * element, and the array itself. The function should return a boolean value indicating whether the
+   * current element matches the desired condition.
+   * @param {any} [thisArg] - The `thisArg` parameter is an optional argument that specifies the value
+   * to be used as `this` when executing the `callbackfn` function. If `thisArg` is provided, it will
+   * be passed as the `this` value to the `callbackfn` function. If `thisArg
+   * @returns The `find` method returns the first element in the array that satisfies the provided
+   * callback function. If no element satisfies the callback function, `undefined` is returned.
+   */
+  find(callbackfn: ElementCallback<E, boolean>, thisArg?: any): E | undefined {
+    let index = 0;
+    for (const item of this) {
+      if (callbackfn.call(thisArg, item, index++, this)) return item;
+    }
+
+    return;
+  }
+
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(1)
+   *
+   * The function checks if a given element exists in a collection.
+   * @param {E} element - The parameter "element" is of type E, which means it can be any type. It
+   * represents the element that we want to check for existence in the collection.
+   * @returns a boolean value. It returns true if the element is found in the collection, and false
+   * otherwise.
+   */
+  has(element: E): boolean {
+    for (const ele of this) {
+      if (ele === element) return true;
+    }
+    return false;
   }
 
   /**
@@ -316,14 +488,32 @@ export abstract class IterableElementBase<V> {
    * @returns The `reduce` method is returning the final value of the accumulator after iterating over
    * all the elements in the array and applying the callback function to each element.
    */
-  reduce<U>(callbackfn: ReduceElementCallback<V, U>, initialValue: U): U {
+  reduce<U>(callbackfn: ReduceElementCallback<E, U>, initialValue: U): U {
     let accumulator = initialValue;
     let index = 0;
     for (const item of this) {
-      accumulator = callbackfn(accumulator, item as V, index++, this)
+      accumulator = callbackfn(accumulator, item as E, index++, this);
     }
     return accumulator;
   }
 
-  protected abstract _getIterator(...args: any[]): IterableIterator<V>;
+  /**
+   * Time Complexity: O(n)
+   * Space Complexity: O(n)
+   */
+  print(): void {
+    console.log([...this]);
+  }
+
+  abstract isEmpty(): boolean;
+
+  abstract clear(): void;
+
+  abstract clone(): C;
+
+  abstract map(...args: any[]): any;
+
+  abstract filter(...args: any[]): any;
+
+  protected abstract _getIterator(...args: any[]): IterableIterator<E>;
 }

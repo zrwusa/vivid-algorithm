@@ -1,5 +1,5 @@
-import { MapGraphCoordinate, VertexKey } from '../../types';
-import { DirectedEdge, DirectedGraph, DirectedVertex } from './directed-graph';
+import type {MapGraphCoordinate, VertexKey} from '../../types';
+import {DirectedEdge, DirectedGraph, DirectedVertex} from './directed-graph';
 
 export class MapVertex<V = any> extends DirectedVertex<V> {
   lat: number;
@@ -84,7 +84,12 @@ export class MapGraph<
    * @param {number} long - The `long` parameter represents the longitude coordinate of the vertex.
    * @returns The method is returning a new instance of the `MapVertex` class, casted as type `VO`.
    */
-  override createVertex(key: VertexKey, value?: V, lat: number = this.originCoord[0], long: number = this.originCoord[1]): VO {
+  override createVertex(
+    key: VertexKey,
+    value?: V,
+    lat: number = this.originCoord[0],
+    long: number = this.originCoord[1]
+  ): VO {
     return new MapVertex(key, value, lat, long) as VO;
   }
 
@@ -102,5 +107,20 @@ export class MapGraph<
    */
   override createEdge(src: VertexKey, dest: VertexKey, weight?: number, value?: E): EO {
     return new MapEdge(src, dest, weight, value) as EO;
+  }
+
+  /**
+   * The override function is used to override the default behavior of a function.
+   * In this case, we are overriding the clone() function from Graph&lt;V, E&gt;.
+   * The clone() function returns a new graph that is an exact copy of the original graph.
+   *
+   * @return A mapgraph&lt;v, e, vo, eo&gt;
+   */
+  override clone(): MapGraph<V, E, VO, EO> {
+    const cloned = new MapGraph<V, E, VO, EO>(this.originCoord, this.bottomRight);
+    cloned.vertexMap = new Map<VertexKey, VO>(this.vertexMap);
+    cloned.inEdgeMap = new Map<VO, EO[]>(this.inEdgeMap);
+    cloned.outEdgeMap = new Map<VO, EO[]>(this.outEdgeMap);
+    return cloned;
   }
 }

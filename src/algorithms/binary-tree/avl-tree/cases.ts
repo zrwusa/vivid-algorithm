@@ -1,5 +1,5 @@
 import {wait, WaitManager} from '../../../utils';
-import {AVLTree, CP} from 'data-structure-typed';
+import {AVLTree} from 'data-structure-typed';
 
 export const testAVLTreeCase1 = [];
 export const testAVLCase6 = async (proxy: { tree: AVLTree }) => {
@@ -24,9 +24,9 @@ export const testAVLCase6 = async (proxy: { tree: AVLTree }) => {
   await wait(time2);
   let subTreeSum = 0;
   node15 &&
-  proxy.tree.subTreeTraverse(node => {
+  proxy.tree.dfs(node => {
     subTreeSum += node.key;
-  }, node15);
+  }, 'IN', node15);
   console.log(subTreeSum === 70, 'subTreeSum, 15');
 
   await wait(time2);
@@ -35,7 +35,7 @@ export const testAVLCase6 = async (proxy: { tree: AVLTree }) => {
     node => {
       lesserSum += node.key;
     },
-    CP.lt,
+    'LT',
     10
   );
   console.log(lesserSum === 45, 'lesserSum, 10');
@@ -45,7 +45,7 @@ export const testAVLCase6 = async (proxy: { tree: AVLTree }) => {
   console.log(node11?.key === 11);
 
   await wait(time3);
-  const dfs = proxy.tree.dfs(node => node, 'in');
+  const dfs = proxy.tree.dfs(node => node, 'IN');
   console.log(dfs[0].key === 1 && dfs[dfs.length - 1].key === 16, 'dfs ,in, node', dfs);
   await wait(time3);
   proxy.tree.perfectlyBalance();

@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2022 Tyler Zeng <zrwusa@gmail.com>
  * @license MIT License
  */
-import { getMSB } from '../../utils';
+import {getMSB} from '../../utils';
 
 export class BinaryIndexedTree {
   protected readonly _freq: number;
@@ -17,36 +17,58 @@ export class BinaryIndexedTree {
    * @param  - - `frequency`: The default frequency value. It is optional and has a default
    * value of 0.
    */
-  constructor({ frequency = 0, max }: { frequency?: number; max: number }) {
+  constructor({frequency = 0, max}: { frequency?: number; max: number }) {
     this._freq = frequency;
     this._max = max;
-    this._freqMap = { 0: 0 };
+    this._freqMap = {0: 0};
     this._msb = getMSB(max);
     this._negativeCount = frequency < 0 ? max : 0;
   }
 
   protected _freqMap: Record<number, number>;
 
+  /**
+   * The function returns the frequency map of numbers.
+   * @returns The `_freqMap` property, which is a record with number keys and number values, is being
+   * returned.
+   */
   get freqMap(): Record<number, number> {
     return this._freqMap;
   }
 
   protected _msb: number;
 
+  /**
+   * The function returns the value of the _msb property.
+   * @returns The `_msb` property of the object.
+   */
   get msb(): number {
     return this._msb;
   }
 
   protected _negativeCount: number;
 
+  /**
+   * The function returns the value of the _negativeCount property.
+   * @returns The method is returning the value of the variable `_negativeCount`, which is of type
+   * `number`.
+   */
   get negativeCount(): number {
     return this._negativeCount;
   }
 
+  /**
+   * The above function returns the value of the protected variable `_freq`.
+   * @returns The frequency value stored in the protected variable `_freq`.
+   */
   get freq(): number {
     return this._freq;
   }
 
+  /**
+   * The above function returns the maximum value.
+   * @returns The maximum value stored in the variable `_max`.
+   */
   get max(): number {
     return this._max;
   }

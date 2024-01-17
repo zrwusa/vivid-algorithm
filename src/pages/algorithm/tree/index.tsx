@@ -4,6 +4,7 @@ import {AlgorithmPanel} from '../../../views/algorithm-panel';
 import {
   BFS,
   binaryTreeInorderTraversal,
+  binaryTreeRoot,
   countSmallerBST,
   countSmallerCase1,
   deleteLeaves,
@@ -33,7 +34,6 @@ import {
   testTrieCase1,
   testTrieCase3,
   testTrieCase4,
-  treeData,
   treeMaxDepth,
   trimABST,
   trimABSTCase2
@@ -63,17 +63,43 @@ export const TreePage = () => {
 
   return (
     <div style={{width: '100%'}}>
-      <AlgorithmPanel
-        algorithm={testBinaryTree}
-        testCase={testBinaryTreeCase2}
-        buttonLabel={'Test BinaryTree'}
-        svgWidth={'100%'}
-        svgHeight={400}
-      />
       <AlgorithmPanel algorithm={testBST} testCase={testBSTCase1} buttonLabel={'Test BST'}/>
       <AlgorithmPanel algorithm={testAVLTree} testCase={testAVLCase1} buttonLabel={'Test AVL'}/>
-      <AlgorithmPanel algorithm={testTreeMultiset} testCase={testBSTCase1} buttonLabel={'Test TreeMultiset'}/>
+      <AlgorithmPanel algorithm={testTreeMultiset} testCase={testBSTCase1} buttonLabel={'Test TreeMultiMap'}/>
+      <AlgorithmPanel
+        algorithm={DFS}
+        testCase={[binaryTreeRoot, 'PreOrder']}
+        buttonLabel={'DFS PreOrder'}
+        referenceData={binaryTreeRoot}
+        relatedNodeKey='nodeNeedPrint'
+      />
+      <AlgorithmPanel
+        algorithm={DFS}
+        testCase={[binaryTreeRoot, 'InOrder']}
+        buttonLabel={'DFS InOrder'}
+        referenceData={binaryTreeRoot}
+        relatedNodeKey='nodeNeedPrint'
+      />
+      <AlgorithmPanel
+        algorithm={DFS}
+        testCase={[binaryTreeRoot, 'PostOrder']}
+        buttonLabel={'DFS PostOrder'}
+        referenceData={binaryTreeRoot}
+        relatedNodeKey='nodeNeedPrint'
+      />
+      <AlgorithmPanel
+        algorithm={BFS}
+        testCase={[binaryTreeRoot]}
+        buttonLabel={'BFS'}
+        referenceData={binaryTreeRoot}
+        relatedNodeKey='node'
+      />
 
+      <AlgorithmPanel
+        algorithm={deleteLeaves}
+        testCase={deleteLeavesCase1}
+        buttonLabel={'Delete Leaves With a Given Value'}
+      />
       <AlgorithmPanel algorithm={testBST2} testCase={[[3, 4, 2, 1, 2, 3, 4]]} buttonLabel={'Test BST II'}/>
       <AlgorithmPanel
         algorithm={testBSTOrderedData}
@@ -102,45 +128,18 @@ export const TreePage = () => {
           }}
         />
       </AlgorithmPanel>
+      <AlgorithmPanel
+        algorithm={testBinaryTree}
+        testCase={testBinaryTreeCase2}
+        buttonLabel={'Test BinaryTree'}
+        svgWidth={'100%'}
+        svgHeight={400}
+      />
 
       <AlgorithmPanel algorithm={trimABST} testCase={trimABSTCase2} buttonLabel={'Trim a BST'}/>
-      <AlgorithmPanel algorithm={treeMaxDepth} testCase={[treeData]} buttonLabel={'Max Depth'}/>
+      <AlgorithmPanel algorithm={treeMaxDepth} testCase={[binaryTreeRoot]} buttonLabel={'Max Depth'}/>
 
       <AlgorithmPanel algorithm={countSmallerBST} testCase={countSmallerCase1} buttonLabel={'Count Smaller BST'}/>
-      <AlgorithmPanel
-        algorithm={DFS}
-        testCase={[treeData, 'PreOrder']}
-        buttonLabel={'DFS PreOrder'}
-        referenceData={treeData}
-        relatedNodeKey='nodeNeedPrint'
-      />
-      <AlgorithmPanel
-        algorithm={DFS}
-        testCase={[treeData, 'InOrder']}
-        buttonLabel={'DFS InOrder'}
-        referenceData={treeData}
-        relatedNodeKey='nodeNeedPrint'
-      />
-      <AlgorithmPanel
-        algorithm={DFS}
-        testCase={[treeData, 'PostOrder']}
-        buttonLabel={'DFS PostOrder'}
-        referenceData={treeData}
-        relatedNodeKey='nodeNeedPrint'
-      />
-      <AlgorithmPanel
-        algorithm={BFS}
-        testCase={[treeData]}
-        buttonLabel={'BFS'}
-        referenceData={treeData}
-        relatedNodeKey='node'
-      />
-
-      <AlgorithmPanel
-        algorithm={deleteLeaves}
-        testCase={deleteLeavesCase1}
-        buttonLabel={'Delete Leaves With a Given Value'}
-      />
       <AlgorithmPanel algorithm={ladderLengthDFS} testCase={ladderLengthCase1} buttonLabel={'Ladder Length'}/>
       <AlgorithmPanel algorithm={pathSumIII} testCase={pathSumIIICase5} buttonLabel={'Path Sum III'}/>
       <AlgorithmPanel algorithm={testSymmetricTree} testCase={testSymmetricTreeCase2} buttonLabel={'Symmetric Tree'}/>
